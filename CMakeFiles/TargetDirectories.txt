@@ -1,0 +1,3 @@
+/Users/martinpdes/Desktop/GitProject/PyOptik/CMakeFiles/Upload.dir
+/Users/martinpdes/Desktop/GitProject/PyOptik/CMakeFiles/edit_cache.dir
+/Users/martinpdes/Desktop/GitProject/PyOptik/CMakeFiles/rebuild_cache.dir

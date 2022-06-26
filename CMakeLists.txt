@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.4...3.18)
 
-set(Token    "$ENV{PipUsername}")
-set(Password "$ENV{PipPassword}")
-
-
+#Upload Pypi package-----------------------------------------------------------------------
 add_custom_command(
-  OUTPUT HELLO MOFO ${CMAKE_CURRENT_SOURCE_DIR}/UploadPypi.txt
-  COMMAND python3.8 -m twine upload --password ${Password} --username ${Token} --repository pypi ../dist/*
-  COMMENT Upload on Pypi $)
-
-add_custom_target(UploadPypi ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/UploadPypi.txt)
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/Upload.txt
+  COMMAND rm -rf dist/*
+  COMMAND python3 setup.py bdist_wheel --NewMinor
+  COMMAND python3 -m twine upload --password $ENV{PyPiPassword} --username $ENV{PyPiToken} --repository pypi dist/*
+  COMMENT "Upload on Pypi")
+add_custom_target(Upload DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Upload.txt)

@@ -36,13 +36,16 @@ class ExpData:
         "\nVisit the documentation to use Sellmeier's formula"
 
 
-    def GetRI(self, wl):
+    def GetRI(self, wl, Unit='m'):
         """Returns the refractive index of the material from the experimental
         data given the wavelength used.
 
         Arguments:
         wl -- wavelength
         """
+
+        if Unit == 'micro': wl = wl*1e-6
+        if Unit == 'nano': wl = wl*1e-9
 
         if isinstance(wl, float): wl = np.asarray( [wl] )
         self.VerifyRange(wl)

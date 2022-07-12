@@ -7,6 +7,7 @@ import sys
 import numpy
 import pathlib
 from setuptools import setup, Extension, find_packages
+import pkg_resources
 
 
 # Package meta-data.
@@ -20,7 +21,11 @@ EXTRAS = {}
 
 
 
-Major, Mid, Minor = 0, 5, 0
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+with open(os.path.join(__location__, 'Version'), "r+") as f:
+    Version = f.read().rstrip("\n").split(".")
+    Major, Mid, Minor = int(Version[0]), int(Version[1]), int(Version[2])
 
 if '--NewMajor' in sys.argv:
     Major += 1
@@ -34,12 +39,22 @@ if '--NewMinor' in sys.argv:
 
 Version = f'{Major}.{Mid}.{Minor}'
 
-print(f"PyMieSim Version: {Version}")
+print(f"{NAME} Version: {Version}")
+
+with open(os.path.join(__location__, 'Version'), "w+") as f:
+    f.writelines(Version)
 
 
 
 # What packages are required for this module to be executed?
-REQUIRED = ['matplotlib', 'numpy', 'bs4']
+requirementPath = os.path.join(os.path.dirname(__file__), 'requirements.txt')
+
+with open(requirementPath,'r') as requirements_txt:
+    REQUIRED = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirements_txt)
+    ]
 
 here = os.path.abspath(os.path.dirname(__file__))
 

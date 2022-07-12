@@ -129,6 +129,19 @@ Upload/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Upload.dir/build.make CMakeFiles/Upload.dir/build
 .PHONY : Upload/fast
 
+#=============================================================================
+# Target rules for targets named CleanProject
+
+# Build rule for target.
+CleanProject: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CleanProject
+.PHONY : CleanProject
+
+# fast build rule for target.
+CleanProject/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CleanProject.dir/build.make CMakeFiles/CleanProject.dir/build
+.PHONY : CleanProject/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -137,6 +150,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... CleanProject"
 	@echo "... Upload"
 .PHONY : help
 

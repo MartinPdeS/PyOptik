@@ -130,17 +130,17 @@ Upload/fast:
 .PHONY : Upload/fast
 
 #=============================================================================
-# Target rules for targets named CleanProject
+# Target rules for targets named Clean
 
 # Build rule for target.
-CleanProject: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CleanProject
-.PHONY : CleanProject
+Clean: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Clean
+.PHONY : Clean
 
 # fast build rule for target.
-CleanProject/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CleanProject.dir/build.make CMakeFiles/CleanProject.dir/build
-.PHONY : CleanProject/fast
+Clean/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Clean.dir/build.make CMakeFiles/Clean.dir/build
+.PHONY : Clean/fast
 
 # Help Target
 help:
@@ -150,7 +150,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... CleanProject"
+	@echo "... Clean"
 	@echo "... Upload"
 .PHONY : help
 

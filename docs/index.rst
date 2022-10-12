@@ -10,6 +10,9 @@ Welcome to PyRI's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+    Code
+    Examples
+    References
 
 
 Indices and tables

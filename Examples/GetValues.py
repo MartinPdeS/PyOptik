@@ -1,3 +1,5 @@
+"""generic docstring"""
+
 from PyOptik  import DataBank, ExpData
 
 from PyOptik.ExpData import SaveData

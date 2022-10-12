@@ -3,12 +3,13 @@
 **/*.pyc
 **/**/*.pyc
 **/**/**/*.pyc
-/build
+build
+dist
 temp.py
 *Untitled*
 
 _skbuild
-dist
+
 *.svg
 *.so
 /*temp*

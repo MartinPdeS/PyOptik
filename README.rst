@@ -18,3 +18,11 @@ be called and used.
 
 Below is an example of how to import new experimental data and then how to
 use it. For more examples, please visit the Examples section of the documentation.
+
+Installation
+====
+python setup.py install (or develop)
+
+Comment
+====
+Documentatation (docs folder) is dependant on  sphynx to be compiled

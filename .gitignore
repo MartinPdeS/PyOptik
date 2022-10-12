@@ -5,24 +5,15 @@
 **/**/**/*.pyc
 build
 dist
-temp.py
-*Untitled*
-
 _skbuild
 
-*.svg
-*.so
-/*temp*
-*.sh
-*.MA.*
-*.ipynb_checkpoints
-*.gz
-*.whl
-*.pyc
 
+Makefile
 CMakeFiles
 cmake_install.cmake
 CMakeCache.txt
+
+
 **__pycache__**
 docs/build/*
 **.egg*

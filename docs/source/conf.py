@@ -16,6 +16,16 @@ import os
 import sys
 from sphinx_gallery.sorting import ExplicitOrder
 
+
+DocPath = Path( os.getcwd() ).parent
+html_logo = os.path.join(DocPath,"images/Logo.png")
+CSS_path = os.path.join(DocPath,"_static/default.css")
+
+
+def setup(app):
+    app.add_css_file(CSS_path)
+
+
 autodoc_mock_imports = ['numpy',
                         'typing',
                         'matplotlib',
@@ -29,14 +39,15 @@ PATH = os.path.join(os.path.dirname(__file__), '../..' )
 sys.path.insert(0, PATH)
 
 
-project   = 'PyOptic'
+project   = 'PyOptik'
 copyright = '2021, Martin Poinsinet de Sivry-Houle, Pierre-Alexandre Aube'
 author    = 'Martin Poinsinet de Sivry-Houle, Pierre-Alexandre Aube'
 
 
-version    = ''
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+with open(os.path.join(__location__, '../../VERSION'), "r+") as f:
+    version = release = f.read()
 
-release    = '0.1.11'
 
 extensions = [
     'sphinx.ext.napoleon',
@@ -49,22 +60,32 @@ extensions = [
     'sphinx_gallery.gen_gallery'
 ]
 
+
+Examples = ['Example1.py', 'Example2.py']
+ExampleDirectory = ["../../Examples/"]
+
 sphinx_gallery_conf = {
-     'examples_dirs': '../../Examples',   # path to example scripts
-     'gallery_dirs': 'auto_examples',  # path to where to save gallery generated output
-     'image_scrapers': ('matplotlib'),
+     'examples_dirs': ExampleDirectory,   # path to example scripts
+     'gallery_dirs': "./ExamplesGallery/",   # path to where to save gallery generated output
+     'image_scrapers': ('matplotlib', 'mayavi'),
      'ignore_pattern': '/__',
+     'thumbnail_size': [300,300],
      'download_all_examples': False,
-     'default_thumb_file': 'images/Logo.png',
-     'subsection_order': ExplicitOrder(['../../Examples/test']),
+     'line_numbers': True,
+     'remove_config_comments': True,
+     'default_thumb_file': os.path.abspath(html_logo),
+     'subsection_order': ExplicitOrder(ExampleDirectory),
+     'notebook_images': html_logo,
+}
+
+autodoc_default_options = {
+    'members':          True,
+    'undoc-members':    False,
 }
 
 numpydoc_show_class_members = False
-# Add any paths that contain templates here, relative to this directory.
-
-#bibtex_bibfiles = ['refs.bib']
-#bibtex_encoding = 'latin'
-#bibtex_default_style = 'unsrt'
+autodoc_member_order = 'bysource'
+autodoc_typehints = "description"
 
 templates_path = ['_templates']
 

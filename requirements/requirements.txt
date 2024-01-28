@@ -1,0 +1,7 @@
+numpy>=1.18.5
+matplotlib
+bs4
+pandas
+requests
+MPSTools
+MPSPlots

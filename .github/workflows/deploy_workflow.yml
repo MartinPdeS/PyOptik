@@ -26,8 +26,8 @@ jobs:
             with:
                 package-name: PyOptik
                 python-version: "3.10"
-                auth: ${{ secrets.GIST_TOKEN }}
-                gistID: 49dc3e2c41180ac9018ae803a8acd177
+                auth: ${{ secrets.GIST_TOKEN }} 
+                gistID: 8fa5a7d93dc020b1f624012220f6ebbd
 
     publish_documentation:
         if: "contains(github.event.head_commit.message, '[publish]')"

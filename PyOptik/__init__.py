@@ -1,2 +1,2 @@
-from PyOptik.experiment_material import ExpData
+from PyOptik.experiment_material import DataMeasurement
 from PyOptik.sellmeier_material import Sellmeier

@@ -1,25 +1,16 @@
+PyOptik's documentation
+===========================
+
+**Date**: |today|, **Version**: |version|
+
+
 .. include:: ../../README.rst
-    :start-line: 3
+    :start-line: 0
 
+.. toctree::
+    :hidden:
 
-..
-    PyOptic's documentation
-    =========================
-
-
-    .. toctree::
-       :maxdepth: 1
-       :caption: Table of contents:
-
-       Intro
-       Theory
-       Code
-       Examples
-       References
-
-
-    Indices and tables
-    ==================
-
-      * :ref:`genindex`
-      * :ref:`search`
+    theory
+    code
+    gallery/index
+    references

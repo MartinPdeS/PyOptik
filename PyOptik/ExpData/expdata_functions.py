@@ -4,7 +4,8 @@ import pandas as pd
 import numpy as np
 from os.path import join
 
-from PyOptik.Directories import *
+from PyOptik.directories import *
+
 
 def LoadOnline(url):
     """Loads the data from RefractiveIndex.INFO and returns it as a
@@ -20,14 +21,16 @@ def LoadOnline(url):
         index = int(np.where(df == 'wl')[0])
         df = np.delete(df, index, axis=0)
 
-        data = {'wl_n': df[:index][:,0].astype(float),
-                'n':    df[:index][:,1].astype(float),
-                'wl_k': df[index:][:,0].astype(float),
-                'k':    df[index:][:,1].astype(float)}
+        data = {
+            'wl_n': df[:index][:, 0].astype(float),
+            'n': df[:index][:, 1].astype(float),
+            'wl_k': df[index:][:, 0].astype(float),
+            'k': df[index:][:, 1].astype(float)
+        }
 
     else:
         data = {'wl_n': df[:, 0].astype(float),
-                'n':    df[:, 1].astype(float)}
+                'n': df[:, 1].astype(float)}
 
     return data
 
@@ -47,14 +50,15 @@ def SaveData(url, name, unit=1e-6):
                  wl_n = dict_data['wl_n'] * unit,
                  n    = dict_data['n'])
     else:
-        np.savez(directory,
-                 wl_n = dict_data['wl_n'] * unit,
-                 n    = dict_data['n'],
-                 wl_k = dict_data['wl_k'] * unit,
-                 k    = dict_data['k'])
+        np.savez(
+            directory,
+            wl_n=dict_data['wl_n'] * unit,
+            n=dict_data['n'],
+            wl_k=dict_data['wl_k'] * unit,
+            k=dict_data['k'])
 
     with open(join(DataPath, 'meta_expdata.json'), 'r+') as f:
-        meta_expdata                      = json.load(f)
+        meta_expdata=json.load(f)
         meta_expdata['remote_data'][name] = url
         meta_expdata['local_data'][name]  = name + '.npz'
         f.seek(0)

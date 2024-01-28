@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 from os.path import join
 
 
-from PyOptik.Directories import *
+from PyOptik.directories import DataPath
+
 
 class ExpData:
     """The ExpData class is used to import experimental data from the locally
@@ -36,8 +37,7 @@ class ExpData:
         "Range := {self.ExpData['wl_n'][0]: self.ExpData['wl_n'][-1]};" + \
         "\nVisit the documentation to use Sellmeier's formula"
 
-
-    def GetRI(self, wl, Unit='m'):
+    def GetRI(self, wl: float, Unit='m'):
         """Returns the refractive index of the material from the experimental
         data given the wavelength used.
 
@@ -45,10 +45,15 @@ class ExpData:
         wl -- wavelength
         """
 
-        if Unit == 'micro': wl = wl*1e-6
-        if Unit == 'nano': wl = wl*1e-9
+        if Unit == 'micro':
+            wl = wl * 1e-6
 
-        if isinstance(wl, float): wl = np.asarray( [wl] )
+        if Unit == 'nano':
+            wl = wl * 1e-9
+
+        if isinstance(wl, float):
+            wl = np.asarray([wl])
+
         self.VerifyRange(wl)
         x = self.ExpData['wl_n']
         y = self.ExpData['n']
@@ -62,15 +67,16 @@ class ExpData:
 
         return nInterp
 
-
-    def GetEC(self, wl):
+    def GetEC(self, wl: float):
         """Returns the extinction coefficient of the material from the
         experimental data given the wavelength used.
 
         Arguments:
         wl -- wavelength
         """
-        if isinstance(wl, float): wl = np.asarray( [wl] )
+        if isinstance(wl, float):
+            wl = np.asarray([wl])
+
         self.VerifyRange(wl)
         x = self.ExpData['wl_k']
         y = self.ExpData['k']
@@ -78,7 +84,6 @@ class ExpData:
         yinterp = np.interp(wl, x, y)
 
         return yinterp
-
 
     def Plot(self, ri=True, ec=True):
         """Plots the experimental data of the material.
@@ -101,8 +106,12 @@ class ExpData:
             y_ec = self.ExpData['k']
             fig, ax = plt.subplots()
             ax.plot(x_ec, y_ec, label='k')
-            ax.set(xlabel='wavelength (m)', ylabel='k',
-                   title=f'Extinction coefficient graph of {self.__name__}')
+
+            ax.set(
+                xlabel='wavelength (m)',
+                ylabel='k',
+                title=f'Extinction coefficient graph of {self.__name__}'
+            )
             ax.grid()
 
         if ri and ec:
@@ -113,9 +122,13 @@ class ExpData:
             fig, ax = plt.subplots()
             ax.plot(x_ri, y_ri, label='n')
             ax.plot(x_ec, y_ec, label='k')
-            ax.set(xlabel='wavelength (m)', ylabel='n, k',
-                   title='Refractive index and extinction coefficient'
-                   f'graph of {self.__name__}')
+
+            ax.set(
+                xlabel='wavelength (m)',
+                ylabel='n, k',
+                title=f'Refractive index and extinction coefficient, graph of {self.__name__}'
+            )
+
             ax.grid()
         plt.legend()
         plt.show()

@@ -5,7 +5,7 @@ import numpy
 from unittest.mock import patch
 import pytest
 from PyOptik import Sellmeier
-from PyOptik.sellmeier import list_materials
+from PyOptik.sellmeier_material import list_materials
 list_materials()
 
 material_name_list = [

@@ -1,23 +1,15 @@
+*.DS_store
+*.ipynb_checkpoints*
+*__pycache__*
+*.so
+*.pytest_cache
 
-
-**/*.pyc
-**/**/*.pyc
-**/**/**/*.pyc
-build
 dist
-_skbuild
+build
+*.egg*
+perso/
 
-
-Makefile
-CMakeFiles
-cmake_install.cmake
 CMakeCache.txt
-
-
-**__pycache__**
-docs/build/*
-**.egg*
-
-Perso
-*.DS_Store
-_skbuild
+CMakeFiles
+install_manifest.txt
+cmake_install.cmake

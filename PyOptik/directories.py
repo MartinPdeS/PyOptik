@@ -12,7 +12,7 @@ __all__ = [
     'doc_path',
     'doc_css_path',
     'logo_path',
-    'version_path', 
+    'version_path',
 ]
 
 root_path = Path(PyOptik.__path__[0])

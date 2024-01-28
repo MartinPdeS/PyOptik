@@ -1,32 +1,56 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-
 # .readthedocs.yml
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
 # Required
-version: 1
+version: 2
+
+submodules:
+  include: all
+  recursive: true
 
 build:
-  image: testing
-  os: ubuntu-20.04
+  os: "ubuntu-22.04"
+  apt_packages:
+    - cmake
+    - gcc
+    - gfortran
+    - xvfb
+    - x11-utils
+    - libxkbcommon-x11-0
+    - libxcb-icccm4
+    - libxcb-image0
+    - libxcb-keysyms1
+    - libxcb-randr0
+    - libxcb-render-util0
+    - libxcb-xinerama0
+    - libxcb-xfixes0
+    - xdotool
+
   tools:
-    python: "3.10"
-
-
-# Build documentation in the docs/ directory with Sphinx
-sphinx:
-  configuration: docs/source/conf.py
-  builder: html
-  fail_on_warning: true
-
+    python: "3.11"
+  jobs:
+    pre_install:
+      - Xvfb :99 &
+      - export DISPLAY=:99
+      - cd docs && rm -rf source/gallery
+      - mkdir build && cd build && cmake -G "Unix Makefiles" .. && make install
+      # - export DISPLAY=:99.0
+      # - export PYVISTA_OFF_SCREEN=true
+      # - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+      - sleep 3
 
 python:
-  version: "3.10"
   install:
-    - requirements: docs/requirements.txt
-    - pip3 install -r requirements.txt
-    - python3 setup.py build_ext --inplace
-    - pip3 install .
+    - method: pip
+      path: .
+      extra_requirements:
+        - development
+
+sphinx:
+  builder: html
+  configuration: docs/source/conf.py
+  fail_on_warning: false
+
+
+

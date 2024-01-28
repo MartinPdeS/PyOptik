@@ -1,4 +1,19 @@
+graft PyOptik
+
+include MANIFEST.in
+include LICENSE
 include README.rst
-include PyOptik/Data/meta_expdata.json
-include PyOptik/Data/meta_sellmeier.json
-include PyOptik/Data/npz/*
+include setup.py
+include setup.cfg
+include pyproject.toml
+graft tests
+
+global-exclude __pycache__
+global-exclude .DS_Store
+
+exclude *.ipynb
+exclude *.txt
+exclude *.yaml
+exclude *.yml
+
+exclude .git*

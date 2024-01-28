@@ -3,7 +3,6 @@
 
 import sys
 from sphinx_gallery.sorting import FileNameSortKey
-from sphinx_gallery.sorting import ExplicitOrder
 from packaging.version import parse
 from MPSPlots.styles import use_mpsplots_style
 
@@ -12,7 +11,6 @@ from PyOptik.directories import (
     project_path,
     doc_css_path,
     version_path,
-    examples_path
 )
 
 
@@ -53,19 +51,9 @@ def reset_mpl(gallery_conf, fname):
     use_mpsplots_style()
 
 
-examples_dirs = [
-    examples_path.joinpath('clad'),
-    examples_path.joinpath('geometry')
-]
-
-subsection_order = ExplicitOrder(
-    ["../examples/clad", "../examples/geometry"]
-)
-
 sphinx_gallery_conf = {
     'examples_dirs': '../examples',
     'gallery_dirs': 'gallery',
-    'subsection_order': subsection_order,
     'image_scrapers': ('matplotlib'),
     'ignore_pattern': '/__',
     'plot_gallery': True,

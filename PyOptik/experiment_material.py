@@ -8,12 +8,11 @@ from MPSPlots.render2D import SceneList
 
 class DataMeasurement:
     """
-    The Sellmeier class is used to compute the refractive index from the
-    locally saved Sellmeier formula.
+    The DataMeasurement class is used to compute the refractive index from the
+    locally saved measurement data.
 
     Arguments:
-    name -- the name of the material you wish to import
-    unit -- unit use for the wavelength
+    material_name -- the name of the material you wish to import
     """
 
     def __init__(self, material_name: str) -> None:

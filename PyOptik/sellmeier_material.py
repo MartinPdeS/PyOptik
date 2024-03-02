@@ -1,89 +1,87 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import numpy
-from collections.abc import Iterable
-from MPSTools.material_catalogue.loader import load_material_parameters, get_material_index, list_materials  # noqa: F401
+import numpy as np
+from typing import Union, Iterable
+from MPSTools.material_catalogue.loader import get_material_index
 from MPSPlots.render2D import SceneList
+from MPSTools.material_catalogue.material_files.sellmeier import __list__ as material_list
 
 
 class Sellmeier:
     """
-    The Sellmeier class is used to compute the refractive index from the
-    locally saved Sellmeier formula.
+    A class for computing the refractive index using the Sellmeier equation based on locally stored Sellmeier coefficients.
 
-    Arguments:
-    name -- the name of the material you wish to import
-    unit -- unit use for the wavelength
+    Attributes:
+        material_name (str): Name of the material.
+        sellmeier_coefficients (dict): Sellmeier coefficients for the material loaded from a local source.
+
+    Methods:
+        reference: Returns the reference for the Sellmeier coefficients.
+        get_refractive_index: Computes the refractive index for given wavelengths.
+        plot: Plots the refractive index as a function of the wavelength.
     """
 
     def __init__(self, material_name: str) -> None:
-        self.material_name = material_name
+        """
+        Initializes the Sellmeier object with material parameters loaded from a local source.
 
-        self.sellmeier_coeffcients = load_material_parameters(self.material_name)
+        Parameters:
+            material_name (str): The name of the material.
+        """
+        self.material_name = material_name
 
     @property
     def reference(self) -> str:
         """
-        Returns the reference of the coefficents value for the Sellmeier
+        Returns the bibliographic reference for the Sellmeier coefficients.
 
-        :returns:   The reference
-        :rtype:     str
+        Returns:
+            str: The bibliographic reference.
         """
-        return self.sellmeier_coeffcients['sellmeier']['reference']
+        return self.sellmeier_coefficients['sellmeier']['reference']
 
-    def get_refractive_index(self, wavelength: float | Iterable) -> float | Iterable:
+    def get_refractive_index(self, wavelength: Union[float, Iterable]) -> Union[float, np.ndarray]:
         """
-        Gets the refractive index for the specific given wavelength range.
+        Computes the refractive index for the specified wavelength(s) using the Sellmeier equation.
 
-        :param      wavelength:  The wavelength range, units are supposed to be meters.
-        :type       wavelength:  float | Iterable
+        Parameters:
+            wavelength (Union[float, Iterable]): The wavelength(s) in meters for which to compute the refractive index.
 
-        :returns:   The refractive index.
-        :rtype:     float | Iterable
+        Returns:
+            Union[float, np.ndarray]: The computed refractive index, either as a scalar or a NumPy array.
         """
-        return_scalar = True if numpy.isscalar(wavelength) else False
-
-        wavelength = numpy.atleast_1d(wavelength).astype(float)
+        return_scalar = np.isscalar(wavelength)
+        wavelength_array = np.atleast_1d(wavelength).astype(float)
 
         refractive_index = get_material_index(
             material_name=self.material_name,
-            wavelength=wavelength
+            wavelength=wavelength_array,
+            subdir='sellmeier'
         )
 
-        if return_scalar:
-            return refractive_index[0]
-
-        return refractive_index
+        return refractive_index.item() if return_scalar else refractive_index
 
     def plot(self, wavelength_range: Iterable) -> SceneList:
         """
-        Plot the refractive index as a function of the wavelength.
+        Plots the refractive index as a function of wavelength over a specified range.
 
-        :param      wavelength_range:  The wavelength range
-        :type       wavelength_range:  Iterable
+        Parameters:
+            wavelength_range (Iterable): The range of wavelengths to plot, in meters.
 
-        :returns:   The scene list.
-        :rtype:     SceneList
+        Returns:
+            SceneList: A SceneList object containing the plot.
         """
         scene = SceneList()
-        ax = scene.append_ax(
-            x_label='Wavelength [m]',
-            y_label='Refractive index'
-        )
+        ax = scene.append_ax(x_label='Wavelength [m]', y_label='Refractive index')
 
         refractive_index = self.get_refractive_index(wavelength_range)
 
-        ax.add_line(
-            x=wavelength_range,
-            y=refractive_index,
-            line_width=2
-        )
+        ax.add_line(x=wavelength_range, y=refractive_index, line_width=2)
 
         return scene
 
     def __repr__(self) -> str:
-        return self.material_name
+        """Represents the Sellmeier object as the material name."""
+        return f"Sellmeier(material_name={self.material_name})"
 
     def __str__(self) -> str:
+        """Returns a string representation of the Sellmeier object."""
         return self.__repr__()

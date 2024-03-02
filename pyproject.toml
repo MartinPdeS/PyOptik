@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+    '-v',
+    '-ra',
+]
+
+testpaths = "tests"
+
+minversion = 6.0

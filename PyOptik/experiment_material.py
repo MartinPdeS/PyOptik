@@ -85,7 +85,7 @@ class DataMeasurement:
         Returns:
             str: Formal representation of the object, showing the material name.
         """
-        return f"DataMeasurement(material_name={self.material_name})"
+        return str(self.material_name)
 
     def __str__(self) -> str:
         """

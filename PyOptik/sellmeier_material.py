@@ -1,8 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import numpy as np
 from typing import Union, Iterable
 from MPSTools.material_catalogue.loader import get_material_index
 from MPSPlots.render2D import SceneList
-from MPSTools.material_catalogue.material_files.sellmeier import __list__ as material_list
+from MPSTools.tools.directories import sellmeier_file_path
+
+
+def endswith_yaml(string):
+    return string.endswith('yaml')
 
 
 class Sellmeier:
@@ -21,11 +29,17 @@ class Sellmeier:
 
     def __init__(self, material_name: str) -> None:
         """
-        Initializes the Sellmeier object with material parameters loaded from a local source.
+        Initializes the DataMeasurement object with a specified material name.
 
         Parameters:
-            material_name (str): The name of the material.
+            material_name (str): The name of the material for which to compute the refractive index.
         """
+        list_of_available_files = os.listdir(sellmeier_file_path)
+
+        list_of_available_material = [element[:-5] for element in list_of_available_files]
+
+        if material_name not in list_of_available_material:
+            raise ValueError(f"{material_name} is not in the list of available materials.")
         self.material_name = material_name
 
     @property
@@ -79,9 +93,19 @@ class Sellmeier:
         return scene
 
     def __repr__(self) -> str:
-        """Represents the Sellmeier object as the material name."""
-        return f"Sellmeier(material_name={self.material_name})"
+        """
+        Provides a formal string representation of the DataMeasurement object.
+
+        Returns:
+            str: Formal representation of the object, showing the material name.
+        """
+        return str(self.material_name)
 
     def __str__(self) -> str:
-        """Returns a string representation of the Sellmeier object."""
+        """
+        Provides an informal string representation of the DataMeasurement object.
+
+        Returns:
+            str: Informal representation of the object.
+        """
         return self.__repr__()

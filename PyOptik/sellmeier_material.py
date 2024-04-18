@@ -9,8 +9,15 @@ from MPSPlots.render2D import SceneList
 from MPSTools.tools.directories import sellmeier_file_path
 
 
-def endswith_yaml(string):
-    return string.endswith('yaml')
+def valid_name(string):
+    return not string.startswith('_')
+
+
+list_of_available_files = os.listdir(sellmeier_file_path)
+
+material_list = [element[:-5] for element in list_of_available_files]
+
+material_list = list(filter(valid_name, material_list))
 
 
 class Sellmeier:
@@ -34,11 +41,7 @@ class Sellmeier:
         Parameters:
             material_name (str): The name of the material for which to compute the refractive index.
         """
-        list_of_available_files = os.listdir(sellmeier_file_path)
-
-        list_of_available_material = [element[:-5] for element in list_of_available_files]
-
-        if material_name not in list_of_available_material:
+        if material_name not in material_list:
             raise ValueError(f"{material_name} is not in the list of available materials.")
         self.material_name = material_name
 

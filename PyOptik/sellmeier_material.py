@@ -7,6 +7,7 @@ from typing import Union, Iterable
 from MPSTools.material_catalogue.loader import get_material_index
 from MPSPlots.render2D import SceneList
 from MPSTools.tools.directories import sellmeier_file_path
+from pydantic.dataclasses import dataclass
 
 
 def valid_name(string):
@@ -20,7 +21,8 @@ material_list = [element[:-5] for element in list_of_available_files]
 material_list = list(filter(valid_name, material_list))
 
 
-class Sellmeier:
+@dataclass
+class Sellmeier():
     """
     A class for computing the refractive index using the Sellmeier equation based on locally stored Sellmeier coefficients.
 
@@ -33,17 +35,17 @@ class Sellmeier:
         get_refractive_index: Computes the refractive index for given wavelengths.
         plot: Plots the refractive index as a function of the wavelength.
     """
+    material_name: str
 
-    def __init__(self, material_name: str) -> None:
+    def __post_init__(self):
         """
         Initializes the DataMeasurement object with a specified material name.
 
         Parameters:
             material_name (str): The name of the material for which to compute the refractive index.
         """
-        if material_name not in material_list:
-            raise ValueError(f"{material_name} is not in the list of available materials.")
-        self.material_name = material_name
+        if self.material_name not in material_list:
+            raise ValueError(f"{self.material_name} is not in the list of available materials.")
 
     @property
     def reference(self) -> str:
@@ -112,3 +114,5 @@ class Sellmeier:
             str: Informal representation of the object.
         """
         return self.__repr__()
+
+# -

@@ -1,5 +1,7 @@
 from PyOptik.experiment_material import DataMeasurement
 from PyOptik.sellmeier_material import Sellmeier
+import numpy
+import pandas
 
 
 class UsualMaterial:
@@ -15,5 +17,24 @@ class UsualMaterial:
     Polystyrene = DataMeasurement('polystyrene')
     Water = DataMeasurement('water')
     Ethanol = DataMeasurement('ethanol')
+
+    @classmethod
+    def get_from_string(cls, material_str):
+        material_str = numpy.atleast_1d(material_str)
+
+        material_str = [
+            mat for mat in material_str if not pandas.isnull(mat)
+        ]
+
+        values = [
+            getattr(cls, string) for string in material_str
+        ]
+
+        values = numpy.asarray(values)
+
+        if values.size == 0:
+            return numpy.nan
+
+        return values
 
 # -

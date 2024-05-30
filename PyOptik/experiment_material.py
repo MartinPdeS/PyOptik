@@ -7,6 +7,7 @@ from MPSTools.material_catalogue.loader import get_material_index
 from MPSPlots.render2D import SceneList
 
 from MPSTools.tools.directories import measurements_file_path
+from pydantic.dataclasses import dataclass
 
 
 def valid_name(string):
@@ -20,7 +21,8 @@ material_list = [element[:-5] for element in list_of_available_files]
 material_list = list(filter(valid_name, material_list))
 
 
-class DataMeasurement:
+@dataclass
+class DataMeasurement():
     """
     A class for computing the refractive index using locally saved measurement data for specified materials.
 
@@ -33,16 +35,17 @@ class DataMeasurement:
         plot: Visualizes the refractive index as a function of wavelength.
     """
 
-    def __init__(self, material_name: str) -> None:
+    material_name: str
+
+    def __post_init__(self):
         """
         Initializes the DataMeasurement object with a specified material name.
 
         Parameters:
             material_name (str): The name of the material for which to compute the refractive index.
         """
-        if material_name not in material_list:
-            raise ValueError(f"{material_name} is not in the list of available materials.")
-        self.material_name = material_name
+        if self.material_name not in material_list:
+            raise ValueError(f"{self.material_name} is not in the list of available materials.")
 
     @property
     def reference(self) -> str:

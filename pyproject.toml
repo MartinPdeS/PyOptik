@@ -28,6 +28,7 @@ dependencies = [
     "pydantic>=2.6.3",
     "numpy",
     "scipy",
+    "MPSTools",
     "MPSPlots>=1.4.5",
     "tabulate",
 ]

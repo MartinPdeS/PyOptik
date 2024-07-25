@@ -32,6 +32,8 @@ dependencies = [
     "tabulate",
 ]
 
+[tool.setuptools]
+packages = ["PyOptik"]
 
 [tool.setuptools_scm]
 write_to = "PyOptik/_version.py"

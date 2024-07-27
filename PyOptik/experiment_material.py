@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Union, Iterable
+from typing import Union, Iterable, NoReturn
 from MPSTools.material_catalogue.loader import get_material_index
 from MPSPlots.render2D import SceneList
-
+import matplotlib.pyplot as plt
 from MPSTools.tools.directories import measurements_file_path
 from pydantic.dataclasses import dataclass
 
@@ -73,7 +73,7 @@ class DataMeasurement():
             subdir='measurements'
         )
 
-    def plot(self, wavelength_range: Iterable) -> SceneList:
+    def plot(self, wavelength_range: Iterable) -> NoReturn:
         """
         Generates a plot of the refractive index as a function of wavelength for the specified material.
 
@@ -83,13 +83,18 @@ class DataMeasurement():
         Returns:
             SceneList: An object containing the plot of refractive index against wavelength.
         """
-        scene = SceneList()
-        ax = scene.append_ax(x_label='Wavelength [m]', y_label='Refractive index')
+        figure, ax = plt.subplots(1, 1)
+
+        ax.set(
+            xlabel='Wavelength [m]',
+            ylabel='Refractive index'
+        )
 
         refractive_index = self.get_refractive_index(wavelength_range)
-        ax.add_line(x=wavelength_range, y=refractive_index, line_width=2)
 
-        return scene
+        ax.plot(wavelength_range, refractive_index, linewidth=2)
+
+        plt.show()
 
     def __repr__(self) -> str:
         """

@@ -17,6 +17,4 @@ def test_material_plot(patch, material_name: str):
 
     figure = material.plot(wavelength_range=wavelength_range)
 
-    figure.show()
-
 # -

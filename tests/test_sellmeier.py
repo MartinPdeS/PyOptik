@@ -15,7 +15,7 @@ def test_material_plot(patch, material_name: str):
 
     wavelength_range = numpy.linspace(400e-9, 1000e-9, 30)
 
-    figure = material.plot(wavelength_range=wavelength_range)
+    _ = material.plot(wavelength_range=wavelength_range)
 
 
 # -

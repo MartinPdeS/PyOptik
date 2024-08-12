@@ -94,7 +94,8 @@ class Sellmeier:
         ax.set_ylabel('Refractive index')
 
         refractive_index = self.get_refractive_index(wavelength_range)
-        ax.plot(wavelength_range, refractive_index, linewidth=2)
+        ax.plot(wavelength_range, refractive_index.real, linewidth=2, label='real part')
+        ax.plot(wavelength_range, refractive_index.imag, linewidth=2, label='imag part')
         plt.show()
 
     def __repr__(self) -> str:

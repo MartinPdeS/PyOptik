@@ -24,7 +24,7 @@ To test localy (with cloning the GitHub repository) you'll need to install the d
 .. code:: python
 
    >>> git clone https://github.com/MartinPdeS/PyOptik.git
-   >>> cd TradeTide
+   >>> cd PyOptik
    >>> pip install -r requirements/requirements.txt
    >>> pytest
 

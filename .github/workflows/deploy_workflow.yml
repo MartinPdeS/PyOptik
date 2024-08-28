@@ -19,18 +19,6 @@ jobs:
             with:
                 python-version: '3.10'
 
-    publish_coverage:
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        needs: [build_pure_python]
-        runs-on: ubuntu-latest
-        steps:
-          - uses: MartinPdeS/MPSActions/publish_coverage@master
-            with:
-                package-name: PyOptik
-                python-version: "3.10"
-                auth: ${{ secrets.GIST_TOKEN }} 
-                gistID: 8fa5a7d93dc020b1f624012220f6ebbd
-
     publish_documentation:
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         needs: [build_pure_python]
@@ -44,7 +32,7 @@ jobs:
 
     publish_wheel:
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        needs: [build_pure_python, publish_documentation, publish_coverage]
+        needs: [build_pure_python, publish_documentation]
         runs-on: ubuntu-latest
         steps:
           - uses: MartinPdeS/MPSActions/publish_pypi@master

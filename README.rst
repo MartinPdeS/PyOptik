@@ -2,7 +2,7 @@
 
 |python|
 |docs|
-|unittest|
+|coverage|
 |PyPi|
 |PyPi_download|
 
@@ -54,4 +54,7 @@ Email:`martin.poinsinet-de-sivry@polymtl.ca <mailto:martin.poinsinet-de-sivry@po
 .. |PyPi_download| image:: https://img.shields.io/pypi/dm/pyoptik.svg
    :target: https://pypistats.org/packages/pyoptik
 
-.. |unittest| image:: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/MartinPdeS/8fa5a7d93dc020b1f624012220f6ebbd/raw/15873eb6e38185c878026b9474148b8daab96b2e/PyOptik_coverage_badge.json
+.. |coverage| image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/python-coverage-comment-action-data/badge.svg
+   :alt: Unittest coverage
+   :target: https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html
+

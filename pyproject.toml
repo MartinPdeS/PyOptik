@@ -70,7 +70,7 @@ addopts = [
     '-v',
     '-rA',
     '-rw',
-    '--cov=TradeTide',
+    '--cov=PyOptik',
     '--cov-report=html'
 ]
 

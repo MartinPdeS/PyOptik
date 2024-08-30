@@ -2,12 +2,14 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                            |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
-|-------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
-| PyOptik/\_\_init\_\_.py         |       30 |        9 |        4 |        1 |     65% |10-11, 29->28, 30-45 |
-| PyOptik/experiment\_material.py |       34 |        4 |        6 |        2 |     85% |46, 49->48, 59, 101, 110 |
-| PyOptik/sellmeier\_material.py  |       40 |        4 |        6 |        2 |     87% |47, 55->54, 62, 108, 117 |
-|                       **TOTAL** |  **104** |   **17** |   **16** |    **5** | **80%** |           |
+| Name                        |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
+|---------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
+| PyOptik/\_\_init\_\_.py     |        5 |        2 |        0 |        0 |     60% |       6-7 |
+| PyOptik/default.py          |        1 |        0 |        0 |        0 |    100% |           |
+| PyOptik/material.py         |       77 |        6 |       30 |        7 |     88% |55, 70->exit, 91, 112-113, 125->128, 129, 140 |
+| PyOptik/usual\_materials.py |        5 |        0 |        2 |        0 |    100% |           |
+| PyOptik/utils.py            |       22 |       22 |        8 |        0 |      0% |      1-46 |
+|                   **TOTAL** |  **110** |   **30** |   **40** |    **7** | **70%** |           |
 
 
 ## Setup coverage badge

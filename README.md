@@ -9,10 +9,10 @@
 | PyOptik/data/tabulated/default.py |        1 |        0 |        0 |        0 |    100% |           |
 | PyOptik/download.py               |        3 |        3 |        2 |        0 |      0% |       1-5 |
 | PyOptik/material.py               |        2 |        0 |        0 |        0 |    100% |           |
-| PyOptik/sellmeier\_class.py       |       86 |        8 |       36 |        6 |     89% |52, 67->exit, 88, 125-126, 138->141, 142, 164, 179, 188 |
-| PyOptik/tabulated\_class.py       |       54 |       10 |        8 |        0 |     77% |57-66, 96, 109, 118 |
+| PyOptik/sellmeier\_class.py       |       86 |        6 |       36 |        6 |     90% |52, 67->exit, 88, 125-126, 138->141, 142, 164 |
+| PyOptik/tabulated\_class.py       |       54 |        8 |        8 |        0 |     81% |57-66, 118 |
 | PyOptik/utils.py                  |       23 |        9 |        8 |        0 |     52% |31-34, 40-46 |
-|                         **TOTAL** |  **172** |   **30** |   **54** |    **6** | **79%** |           |
+|                         **TOTAL** |  **172** |   **26** |   **54** |    **6** | **81%** |           |
 
 
 ## Setup coverage badge

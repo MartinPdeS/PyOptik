@@ -145,8 +145,6 @@ class Material:
         ax.set_xlabel('Wavelength [m]')
         ax.set_ylabel('Refractive Index')
         ax.plot(wavelength_range, refractive_index.real, linewidth=2, label='Real Part')
-        if numpy.any(refractive_index.imag):
-            ax.plot(wavelength_range, refractive_index.imag, linewidth=2, linestyle='--', label='Imaginary Part')
         ax.legend()
         ax.grid(True)
         plt.tight_layout()

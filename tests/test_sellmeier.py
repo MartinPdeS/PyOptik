@@ -5,6 +5,7 @@ from unittest.mock import patch
 import pytest
 from PyOptik import Material
 from PyOptik.materials import material_list
+from PyOptik.utils import download_yml_file
 import matplotlib.pyplot as plt
 
 
@@ -27,6 +28,9 @@ def test_material_plot(patch, material: str):
 
     plt.close()
 
+
+def test_download_yml():
+    download_yml_file(filename='test', url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml')
 
 if __name__ == "__main__":
     pytest.main([__file__])

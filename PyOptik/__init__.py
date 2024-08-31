@@ -5,3 +5,6 @@ try:
 
 except ImportError:
     __version__ = "0.0.0"
+
+
+from .materials import material_list

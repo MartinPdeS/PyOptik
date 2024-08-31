@@ -3,6 +3,7 @@
 *__pycache__*
 *.so
 *.pytest_cache
+*htmlcov
 
 dist
 build

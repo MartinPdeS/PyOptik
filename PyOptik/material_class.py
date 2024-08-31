@@ -7,12 +7,9 @@ import numpy
 from typing import Tuple, Optional, Union, NoReturn, List
 import yaml
 from PyOptik.directories import sellmeier_data_path
-import os
 import itertools
 import warnings
 
-# Get a list of all filenames in the directory
-material_list = [os.path.splitext(f)[0] for f in os.listdir(sellmeier_data_path) if os.path.isfile(os.path.join(sellmeier_data_path, f)) and f.endswith('.yml')]
 
 
 @dataclass

@@ -41,7 +41,7 @@ class TabulatedMaterial(Material):
         # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
 
-    def interpolate_nk(self, wavelength: Union[float, numpy.ndarray]) -> Tuple[numpy.ndarray, numpy.ndarray]:
+    def compute_refractive_index(self, wavelength: Union[float, numpy.ndarray]) -> Tuple[numpy.ndarray, numpy.ndarray]:
         """
         Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).
 

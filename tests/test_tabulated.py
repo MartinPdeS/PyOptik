@@ -18,6 +18,8 @@ def test_init_material():
 
     material.print()
 
+    material.compute_refractive_index(wavelength=1550e-9)
+
     assert material is not None
 
 @pytest.mark.parametrize('material', material_list, ids=material_list)

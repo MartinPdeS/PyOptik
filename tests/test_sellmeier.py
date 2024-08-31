@@ -13,21 +13,23 @@ import matplotlib.pyplot as plt
 def test_init_material():
     material = Material('water')
 
+    material.__str__()
+
+    material.__repr__()
+
+    material.print()
+
     assert material is not None
 
 @pytest.mark.parametrize('material', material_list, ids=material_list)
 @patch("matplotlib.pyplot.show")
 def test_material_plot(mock_show, material: str):
     material = Material(material)
-    wavelength_range = [1000e-9]
+    wavelength_range = [500e-9]
 
     material.plot(wavelength_range=wavelength_range)
 
     plt.close()
-
-    print(material)
-
-    material.print()
 
 
 def test_download_yml():

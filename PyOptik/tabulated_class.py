@@ -98,21 +98,3 @@ class TabulatedMaterial(Material):
             f"wavelength_range: [{self.wavelength.min()} µm, {self.wavelength.max()} µm],\n"
             f"reference: '{self.reference}')"
         )
-
-    def __str__(self) -> str:
-        """
-        Provides an informal string representation of the TabulatedMaterial object.
-
-        Returns:
-            str: Informal representation of the TabulatedMaterial object.
-        """
-        return f"TabulatedMaterial: {self.filename}"
-
-    def __repr__(self) -> str:
-        """
-        Provides a formal string representation of the TabulatedMaterial object, including key attributes.
-
-        Returns:
-            str: Formal representation of the TabulatedMaterial object.
-        """
-        return self.__str__()

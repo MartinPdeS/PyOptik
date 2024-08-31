@@ -12,6 +12,12 @@ import matplotlib.pyplot as plt
 def test_init_material():
     material = Material('silver')
 
+    material.__str__()
+
+    material.__repr__()
+
+    material.print()
+
     assert material is not None
 
 @pytest.mark.parametrize('material', material_list, ids=material_list)
@@ -22,12 +28,6 @@ def test_material_plot(mock_show, material: str):
     material.plot()
 
     plt.close()
-
-    print(material)
-
-    material.print()
-
-
 
 def test_download_yml():
     download_yml_file(

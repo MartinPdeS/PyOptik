@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from PyOptik.material import Material
+from PyOptik.material_class import Material
 from PyOptik.default import default_material
 
 local = locals()

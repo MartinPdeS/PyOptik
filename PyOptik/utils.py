@@ -1,7 +1,7 @@
 import requests
 from pathlib import Path
 from PyOptik.directories import sellmeier_data_path
-from PyOptik.default import default_material
+from PyOptik.data.default import default_material
 
 def download_yml_file(url: str, filename: str) -> None:
     """
@@ -32,15 +32,3 @@ def download_yml_file(url: str, filename: str) -> None:
         print(f"HTTP error occurred: {http_err}")
     except Exception as err:
         print(f"An error occurred: {err}")
-
-
-def build_default_library() -> None:
-    """
-    Downloads and saves the default materials from the specified URLs.
-    """
-    for name, url in default_material.items():
-        download_yml_file(url=url, filename=name)
-
-
-if __name__ == '__main__':
-    build_default_library()

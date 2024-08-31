@@ -1,4 +1,4 @@
-from .material import Material
+from .material_class import Material
 
 try:
     from ._version import version as __version__  # noqa: F401

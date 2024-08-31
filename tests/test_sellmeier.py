@@ -4,8 +4,7 @@
 from unittest.mock import patch
 import pytest
 from PyOptik import Material
-from PyOptik.material import material_list
-from PyOptik.usual_materials import water
+from PyOptik.material_class import material_list
 import matplotlib.pyplot as plt
 
 

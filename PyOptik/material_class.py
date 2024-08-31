@@ -103,17 +103,26 @@ class Material:
                 for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
                     n_squared += (B * lambda_um**2) / (lambda_um**2 - C**2)
 
+                return numpy.sqrt(n_squared)
+
             case 2:  # Formula 2 computation (extended Sellmeier)
                 n_squared = 1 + self.coefficients[0]
 
                 for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
                     n_squared += (B * lambda_um**2) / (lambda_um**2 - C)
 
+                return numpy.sqrt(n_squared)
+
+            case 5:  # Formula 2 computation (extended Sellmeier)
+                n = 1 + self.coefficients[0]
+
+                for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
+                    n = B * lambda_um**(C)
             case _ :
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
 
         # Compute the refractive index n
-        return numpy.sqrt(n_squared)
+
 
     def plot(self, wavelength_range: Union[List[float], numpy.ndarray]) -> NoReturn:
         """

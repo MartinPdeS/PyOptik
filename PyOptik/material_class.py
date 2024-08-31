@@ -113,11 +113,14 @@ class Material:
 
                 return numpy.sqrt(n_squared)
 
-            case 5:  # Formula 2 computation (extended Sellmeier)
+            case 5:  # Formula 5 computation (extended Sellmeier)
                 n = 1 + self.coefficients[0]
 
                 for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
                     n = B * lambda_um**(C)
+
+                return n
+
             case _ :
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
 

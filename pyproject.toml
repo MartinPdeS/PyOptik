@@ -72,7 +72,6 @@ addopts = [
     '-rw',
     '--cov=PyOptik',
     '--cov-report=html',
-    '-s'
 ]
 
 [tool.coverage.run]

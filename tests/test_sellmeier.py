@@ -25,6 +25,10 @@ def test_material_plot(mock_show, material: str):
 
     plt.close()
 
+    print(material)
+
+    material.print()
+
 
 def test_download_yml():
     download_yml_file(

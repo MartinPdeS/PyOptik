@@ -4,13 +4,13 @@
 
 | Name                         |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |----------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
-| PyOptik/\_\_init\_\_.py      |        5 |        2 |        0 |        0 |     60% |       6-7 |
+| PyOptik/\_\_init\_\_.py      |        6 |        2 |        0 |        0 |     67% |       6-7 |
 | PyOptik/data/\_\_init\_\_.py |        7 |        7 |        4 |        0 |      0% |      1-14 |
 | PyOptik/data/default.py      |        1 |        1 |        0 |        0 |      0% |         1 |
-| PyOptik/material\_class.py   |       83 |        6 |       34 |        7 |     89% |55, 70->exit, 91, 124-125, 137->140, 141, 152 |
-| PyOptik/materials.py         |        5 |        5 |        2 |        0 |      0% |       4-9 |
+| PyOptik/material\_class.py   |       81 |        6 |       34 |        7 |     89% |52, 67->exit, 88, 121-122, 134->137, 138, 149 |
+| PyOptik/materials.py         |       10 |        0 |        2 |        0 |    100% |           |
 | PyOptik/utils.py             |       17 |       17 |        4 |        0 |      0% |      1-34 |
-|                    **TOTAL** |  **118** |   **38** |   **44** |    **7** | **66%** |           |
+|                    **TOTAL** |  **122** |   **33** |   **44** |    **7** | **71%** |           |
 
 
 ## Setup coverage badge

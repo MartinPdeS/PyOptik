@@ -1,9 +1,9 @@
 import requests
-from pathlib import Path
-from PyOptik.directories import sellmeier_data_path
-from PyOptik.data.default import default_material
+from PyOptik.directories import sellmeier_data_path, tabulated_data_path
+from PyOptik.data.sellmeier.default import default_material as sellmeier_default
+from PyOptik.data.tabulated.default import default_material as tabulated_default
 
-def download_yml_file(url: str, filename: str) -> None:
+def download_yml_file(url: str, filename: str, location: str) -> None:
     """
     Downloads a .yml file from a specified URL and saves it locally.
 
@@ -14,7 +14,7 @@ def download_yml_file(url: str, filename: str) -> None:
     Raises:
         HTTPError: If the download fails due to an HTTP error.
     """
-    file_path = sellmeier_data_path / f"{filename}.yml"
+    file_path = location / f"{filename}.yml"
     try:
         # Send a GET request to the URL
         response = requests.get(url)
@@ -32,3 +32,16 @@ def download_yml_file(url: str, filename: str) -> None:
         print(f"HTTP error occurred: {http_err}")
     except Exception as err:
         print(f"An error occurred: {err}")
+
+def build_default_library() -> None:
+    """
+    Downloads and saves the default materials from the specified URLs.
+    """
+    from PyOptik.utils import download_yml_file
+
+    for name, url in sellmeier_default.items():
+        download_yml_file(url=url, filename=name, location=sellmeier_data_path)
+
+    for name, url in tabulated_default.items():
+        download_yml_file(url=url, filename=name, location=tabulated_data_path)
+

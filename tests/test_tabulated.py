@@ -3,15 +3,14 @@
 
 from unittest.mock import patch
 import pytest
-from PyOptik.material import SellmeierMaterial as Material
-from PyOptik.data.sellmeier import material_list
+from PyOptik.material import TabulatedMaterial as Material
+from PyOptik.data.tabulated import material_list
 from PyOptik.utils import download_yml_file
 from PyOptik.directories import tabulated_data_path
 import matplotlib.pyplot as plt
 
-
 def test_init_material():
-    material = Material('water')
+    material = Material('silver')
 
     assert material is not None
 
@@ -19,9 +18,8 @@ def test_init_material():
 @patch("matplotlib.pyplot.show")
 def test_material_plot(mock_show, material: str):
     material = Material(material)
-    wavelength_range = [1000e-9]
 
-    material.plot(wavelength_range=wavelength_range)
+    material.plot()
 
     plt.close()
 

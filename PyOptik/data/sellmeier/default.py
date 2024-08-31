@@ -11,5 +11,6 @@ default_material = dict(
     silicon='https://refractiveindex.info/database/data-nk/main/Si/Salzberg.yml',
     soda_lime_glass='https://refractiveindex.info/database/data-nk/glass/misc/soda-lime/Rubin-clear.yml',
     crown='https://refractiveindex.info/database/data-nk/glass/schott/K7.yml',
-    flint='https://refractiveindex.info/database/data-nk/glass/schott/F2.yml'
+    flint='https://refractiveindex.info/database/data-nk/glass/schott/F2.yml',
+    argon='https://refractiveindex.info/database/data-nk/main/Ar/Bideau-Mehu.yml'
 )

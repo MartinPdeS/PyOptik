@@ -9,11 +9,11 @@ import yaml
 from PyOptik.directories import sellmeier_data_path
 import itertools
 import warnings
-
+from PyOptik.base_class import Material
 
 
 @dataclass
-class Material:
+class SellmeierMaterial(Material):
     filename: str
     coefficients: numpy.ndarray = field(init=False)
     wavelength_range: Optional[Tuple[float, float]] = field(init=False)
@@ -100,7 +100,7 @@ class Material:
                 for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
                     n_squared += (B * lambda_um**2) / (lambda_um**2 - C**2)
 
-                return numpy.sqrt(n_squared)
+                n = numpy.sqrt(n_squared)
 
             case 2:  # Formula 2 computation (extended Sellmeier)
                 n_squared = 1 + self.coefficients[0]
@@ -108,7 +108,7 @@ class Material:
                 for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
                     n_squared += (B * lambda_um**2) / (lambda_um**2 - C)
 
-                return numpy.sqrt(n_squared)
+                n = numpy.sqrt(n_squared)
 
             case 5:  # Formula 5 computation (extended Sellmeier)
                 n = 1 + self.coefficients[0]
@@ -116,12 +116,16 @@ class Material:
                 for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
                     n = B * lambda_um**(C)
 
-                return n
+            case 6:
+                n = 1 + self.coefficients[0]
+
+                for (B, C) in itertools.zip_longest(*[iter(self.coefficients[1:])] * 2):
+                    n = B / (C - lambda_um**-2)
 
             case _ :
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
 
-        # Compute the refractive index n
+        return n
 
 
     def plot(self, wavelength_range: Union[List[float], numpy.ndarray]) -> NoReturn:
@@ -150,7 +154,7 @@ class Material:
         plt.tight_layout()
         plt.show()
 
-    def __repr__(self) -> str:
+    def print(self) -> str:
         """
         Provides a formal string representation of the Material object, including key attributes.
 
@@ -173,3 +177,12 @@ class Material:
             str: Informal representation of the Material object.
         """
         return f"Material: {self.filename}"
+
+    def print(self) -> str:
+        """
+        Provides a formal string representation of the Material object, including key attributes.
+
+        Returns:
+            str: Formal representation of the Material object.
+        """
+        return self.__str__()

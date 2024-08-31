@@ -78,7 +78,7 @@ addopts = [
 [tool.coverage.run]
 source = ['PyOptik']
 omit = [
-    '*\__init__.py',
+    '*/__init__.py',
     '*/_version.py',
     '*/directories.py',
 ]

@@ -5,9 +5,10 @@ import yaml
 from scipy.interpolate import interp1d
 import warnings
 from PyOptik.directories import tabulated_data_path
+from PyOptik.base_class import Material
 
 @dataclass
-class TabulatedMaterial:
+class TabulatedMaterial(Material):
     filename: str
     wavelength: numpy.ndarray = field(init=False)
     n_values: numpy.ndarray = field(init=False)
@@ -64,7 +65,7 @@ class TabulatedMaterial:
 
         return n_interp(wavelength), k_interp(wavelength)
 
-    def plot_nk(self) -> None:
+    def plot(self) -> None:
         """
         Plots the tabulated refractive index (n) and absorption (k) as a function of wavelength.
         """
@@ -115,9 +116,3 @@ class TabulatedMaterial:
             str: Formal representation of the TabulatedMaterial object.
         """
         return self.__str__()
-
-
-m = TabulatedMaterial('silver')
-
-m.plot_nk()
-print(m)

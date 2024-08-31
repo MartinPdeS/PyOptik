@@ -1,0 +1,2 @@
+from PyOptik.sellmeier_class import SellmeierMaterial
+from PyOptik.tabulated_class import TabulatedMaterial

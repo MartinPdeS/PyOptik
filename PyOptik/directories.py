@@ -27,7 +27,8 @@ logo_path = doc_path.joinpath('images/logo.png')
 
 examples_path = root_path.joinpath('examples')
 
-sellmeier_data_path = root_path.joinpath('data')
+sellmeier_data_path = root_path.joinpath('data/sellmeier')
+tabulated_data_path = root_path.joinpath('data/tabulated')
 
 
 if __name__ == '__main__':

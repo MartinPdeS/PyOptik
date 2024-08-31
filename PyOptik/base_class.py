@@ -1,0 +1,3 @@
+
+class Material:
+    pass

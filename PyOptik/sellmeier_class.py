@@ -83,7 +83,7 @@ class SellmeierMaterial(Material):
             ValueError: If the wavelength is outside the specified range or if an unsupported formula type is encountered.
         """
         # Ensure that wavelength is within the allowable range if it's a single value
-        wavelength = numpy.asarray(wavelength)
+        wavelength = numpy.atleast_1d(wavelength)
 
         # Convert wavelength to micrometers
         lambda_um = wavelength * 1e6

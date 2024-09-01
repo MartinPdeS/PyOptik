@@ -58,7 +58,7 @@ class TabulatedMaterial(Material):
 
         wavelength_um = wavelength * 1e6
 
-        if numpy.any(wavelength < self.wavelength.min()) or numpy.any(wavelength > self.wavelength.max()):
+        if numpy.any(wavelength_um < self.wavelength.min()) or numpy.any(wavelength > self.wavelength.max()):
             warnings.warn(f"Wavelength: {wavelength} is outside the tabulated range of {self.wavelength.min()} µm to {self.wavelength.max()} µm. [{self.filename}]")
 
         n_interp = interp1d(self.wavelength, self.n_values, kind='cubic', fill_value='extrapolate')

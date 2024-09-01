@@ -1,5 +1,5 @@
 """
-Plot the Refractive Index of Optical Material: Silica
+Plot the Refractive Index of Optical Material: Water
 =====================================================
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material water over a specified range of wavelengths.

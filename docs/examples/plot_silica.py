@@ -2,7 +2,7 @@
 Plot the Refractive Index of Optical Material: Silica
 =====================================================
 
-This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica over a specified range of wavelengths.
+This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica glass over a specified range of wavelengths.
 
 """
 

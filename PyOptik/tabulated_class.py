@@ -1,6 +1,6 @@
 import numpy
 from dataclasses import dataclass, field
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple, Union, List
 import yaml
 from scipy.interpolate import interp1d
 import warnings
@@ -54,8 +54,7 @@ class TabulatedMaterial(Material):
         Raises:
             ValueError: If the wavelength is outside the tabulated range.
         """
-        if isinstance(wavelength, float):
-            wavelength = numpy.array([wavelength])
+        wavelength = numpy.asarray(wavelength)
 
         wavelength *= 1e6
 
@@ -67,22 +66,32 @@ class TabulatedMaterial(Material):
 
         return n_interp(wavelength) + 1j * k_interp(wavelength)
 
-    def plot(self) -> None:
+    def plot(self, wavelength: Optional[List[float]] = None) -> None:
         """
         Plots the tabulated refractive index (n) and absorption (k) as a function of wavelength.
         """
+        if wavelength is None:
+            wavelength = self.wavelength
+            index = self.compute_refractive_index(wavelength=self.wavelength)
+            n_values = index.real
+            k_values = index.imag
+        else:
+            wavelength = self.wavelength
+            n_values = self.n_values
+            k_values = self.k_values
+
         import matplotlib.pyplot as plt
 
         fig, ax1 = plt.subplots()
 
         ax1.set_xlabel('Wavelength [µm]')
         ax1.set_ylabel('Refractive Index (n)', color='tab:blue')
-        ax1.plot(self.wavelength, self.n_values, 'o-', color='tab:blue', label='n')
+        ax1.plot(wavelength, n_values, 'o-', color='tab:blue', label='n')
         ax1.tick_params(axis='y', labelcolor='tab:blue')
 
         ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
         ax2.set_ylabel('Absorption (k)', color='tab:red')  # we already handled the x-label with ax1
-        ax2.plot(self.wavelength, self.k_values, 'o-', color='tab:red', label='k')
+        ax2.plot(wavelength, k_values, 'o-', color='tab:red', label='k')
         ax2.tick_params(axis='y', labelcolor='tab:red')
 
         fig.tight_layout()  # to prevent the right y-label from being slightly clipped

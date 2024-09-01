@@ -25,9 +25,8 @@ def test_init_material():
 @patch("matplotlib.pyplot.show")
 def test_material_plot(mock_show, material: str):
     material = Material(material)
-    wavelength_range = [500e-9]
 
-    material.plot(wavelength_range=wavelength_range)
+    material.plot(wavelength=[500e-9])
 
     plt.close()
 

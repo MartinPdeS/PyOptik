@@ -84,10 +84,12 @@ class SellmeierMaterial(Material):
             ValueError: If the wavelength is outside the specified range or if an unsupported formula type is encountered.
         """
         # Ensure that wavelength is within the allowable range if it's a single value
+        wavelength = numpy.asarray(wavelength)
+
         if isinstance(wavelength, float):
             self.check_wavelength_range(wavelength)
         else:  # If it's an array, ensure all values are within range
-            for wl in numpy.nditer(wavelength):
+            for wl in wavelength:
                 self.check_wavelength_range(float(wl))
 
         # Convert wavelength to micrometers
@@ -128,27 +130,29 @@ class SellmeierMaterial(Material):
         return n
 
 
-    def plot(self, wavelength_range: Union[List[float], numpy.ndarray]) -> NoReturn:
+    def plot(self, wavelength: Optional[List[float]] = None) -> NoReturn:
         """
         Plots the refractive index as a function of wavelength over a specified range.
 
         Args:
             wavelength_range (Union[List[float], numpy.ndarray]): The range of wavelengths to plot, in meters.
         """
-        if isinstance(wavelength_range, list):
-            wavelength_range = numpy.array(wavelength_range)
+        if wavelength is None:
+            wavelength = numpy.linspace(*self.wavelength_range, 100)
 
-        if wavelength_range.ndim != 1:
-            raise ValueError("wavelength_range must be a 1D array or list of float values.")
+        wavelength = numpy.asarray(wavelength)
+
+        if wavelength.ndim != 1:
+            raise ValueError("wavelength must be a 1D array or list of float values.")
 
         # Calculate the refractive index over the wavelength range
-        refractive_index = self.compute_refractive_index(wavelength_range)
+        refractive_index = self.compute_refractive_index(wavelength)
 
         # Plotting
         fig, ax = plt.subplots()
         ax.set_xlabel('Wavelength [m]')
         ax.set_ylabel('Refractive Index')
-        ax.plot(wavelength_range, refractive_index.real, linewidth=2, label='Real Part')
+        ax.plot(wavelength, refractive_index.real, linewidth=2, label='Real Part')
         ax.legend()
         ax.grid(True)
         plt.tight_layout()

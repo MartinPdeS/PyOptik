@@ -4,6 +4,7 @@
 *.so
 *.pytest_cache
 *htmlcov
+*.coverage
 
 dist
 build

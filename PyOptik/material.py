@@ -1,5 +1,7 @@
+from typing import Union
 from PyOptik.sellmeier_class import SellmeierMaterial
 from PyOptik.tabulated_class import TabulatedMaterial
+from PyOptik import data
 
 class staticproperty(property):
   def __get__(self, owner_self, owner_cls):
@@ -19,7 +21,19 @@ class UsualMaterial:
         'BK7',
         'fused_silica',
         'germanium',
+        'polystyren'
     ]
+
+    @staticmethod
+    def get(material_name: str) -> Union[SellmeierMaterial, TabulatedMaterial]:
+        if material_name in data.sellmeier.material_list:
+            return SellmeierMaterial(material_name)
+
+        if material_name in data.tabulated.material_list:
+            return TabulatedMaterial(material_name)
+
+        raise FileNotFoundError(f'Material: [{material_name}] could not be found.')
+
 
     @staticproperty
     def silver():
@@ -44,6 +58,10 @@ class UsualMaterial:
     @staticproperty
     def iron():
         return TabulatedMaterial('iron')
+
+    @staticproperty
+    def polystyren():
+        return SellmeierMaterial('polystyren')
 
     @staticproperty
     def argon():

@@ -63,7 +63,7 @@ class TabulatedMaterial(Material):
         n_interp = interp1d(self.wavelength, self.n_values, kind='cubic', fill_value='extrapolate')
         k_interp = interp1d(self.wavelength, self.k_values, kind='cubic', fill_value='extrapolate')
 
-        return n_interp(wavelength), k_interp(wavelength)
+        return n_interp(wavelength) + 1j * k_interp(wavelength)
 
     def plot(self) -> None:
         """

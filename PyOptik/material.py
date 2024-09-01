@@ -1,7 +1,9 @@
 from PyOptik.sellmeier_class import SellmeierMaterial
 from PyOptik.tabulated_class import TabulatedMaterial
 
-
+class staticproperty(property):
+  def __get__(self, owner_self, owner_cls):
+    return self.fget()
 
 class UsualMaterial:
     all = [
@@ -19,62 +21,50 @@ class UsualMaterial:
         'germanium',
     ]
 
-    @staticmethod
-    @property
-    def silver(self):
+    @staticproperty
+    def silver():
         return TabulatedMaterial('silver')
 
-    @staticmethod
-    @property
-    def gold(self):
+    @staticproperty
+    def gold():
         return TabulatedMaterial('gold')
 
-    @staticmethod
-    @property
-    def aluminium(self):
+    @staticproperty
+    def aluminium():
         return TabulatedMaterial('aluminium')
 
-    @staticmethod
-    @property
-    def copper(self):
+    @staticproperty
+    def copper():
         return TabulatedMaterial('copper')
 
-    @staticmethod
-    @property
-    def zinc(self):
+    @staticproperty
+    def zinc():
         return TabulatedMaterial('zinc')
 
-    @staticmethod
-    @property
-    def iron(self):
+    @staticproperty
+    def iron():
         return TabulatedMaterial('iron')
 
-    @staticmethod
-    @property
-    def argon(self):
+    @staticproperty
+    def argon():
         return SellmeierMaterial('argon')
 
-    @staticmethod
-    @property
-    def water(self):
+    @staticproperty
+    def water():
         return SellmeierMaterial('water')
 
-    @staticmethod
-    @property
-    def silicon(self):
+    @staticproperty
+    def silicon():
         return SellmeierMaterial('silicon')
 
-    @staticmethod
-    @property
-    def BK7(self):
+    @staticproperty
+    def BK7():
         return SellmeierMaterial('BK7')
 
-    @staticmethod
-    @property
-    def fused_silica(self):
+    @staticproperty
+    def fused_silica():
         return SellmeierMaterial('fused_silica')
 
-    @staticmethod
-    @property
-    def germanium(self):
+    @staticproperty
+    def germanium():
         return SellmeierMaterial('germanium')

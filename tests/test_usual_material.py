@@ -1,5 +1,6 @@
 import pytest
 from PyOptik import UsualMaterial
+from PyOptik.material import SellmeierMaterial, TabulatedMaterial
 
 @pytest.mark.parametrize('material_name', UsualMaterial.all, ids=lambda name: f'Test {name}')
 def test_usual_material(material_name):
@@ -8,7 +9,9 @@ def test_usual_material(material_name):
     """
     material_instance = getattr(UsualMaterial, material_name)
 
-    assert material_instance is not None, f"{material_name} instantiation failed."
+    print(material_instance.__class__)
+
+    assert isinstance(material_instance, (SellmeierMaterial, TabulatedMaterial)), f"{material_name} instantiation failed."
 
 if __name__ == "__main__":
     pytest.main([__file__])

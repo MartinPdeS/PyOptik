@@ -54,7 +54,7 @@ class SellmeierMaterial(Material):
         # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
 
-    def check_wavelength_range(self, wavelength: float) -> None:
+    def check_wavelength_range(self, lambda_um: float) -> None:
         """
         Checks if a wavelength is within the material's allowable range and raises an error if it is not.
 
@@ -65,10 +65,9 @@ class SellmeierMaterial(Material):
             ValueError: If the wavelength is outside the allowable range.
         """
         if self.wavelength_range is not None:
-            wavelength_um = wavelength * 1e6
             min_value, max_value = self.wavelength_range
-            if not min_value <= wavelength_um <= max_value:
-                warnings.warn(f"Wavelength {wavelength_um} µm is outside the allowable range of {min_value} µm to {max_value} µm. [{self.filename}]")
+            if not min_value <= lambda_um <= max_value:
+                warnings.warn(f"Wavelength {lambda_um} µm is outside the allowable range of {min_value} µm to {max_value} µm. [{self.filename}]")
 
     def compute_refractive_index(self, wavelength: Union[float, numpy.ndarray]) -> Union[float, numpy.ndarray]:
         """
@@ -86,14 +85,14 @@ class SellmeierMaterial(Material):
         # Ensure that wavelength is within the allowable range if it's a single value
         wavelength = numpy.asarray(wavelength)
 
-        if isinstance(wavelength, float):
-            self.check_wavelength_range(wavelength)
-        else:  # If it's an array, ensure all values are within range
-            for wl in wavelength:
-                self.check_wavelength_range(float(wl))
-
         # Convert wavelength to micrometers
         lambda_um = wavelength * 1e6
+
+        if isinstance(wavelength, float):
+            self.check_wavelength_range(lambda_um)
+        else:  # If it's an array, ensure all values are within range
+            for wl in lambda_um:
+                self.check_wavelength_range(float(wl))
 
         # Compute the refractive index based on the formula type
         match self.formula_type:
@@ -138,7 +137,7 @@ class SellmeierMaterial(Material):
             wavelength_range (Union[List[float], numpy.ndarray]): The range of wavelengths to plot, in meters.
         """
         if wavelength is None:
-            wavelength = numpy.linspace(*self.wavelength_range, 100)
+            wavelength = numpy.linspace(*self.wavelength_range, 100) * 1e-6
 
         wavelength = numpy.asarray(wavelength)
 

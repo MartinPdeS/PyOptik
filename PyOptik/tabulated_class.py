@@ -56,7 +56,7 @@ class TabulatedMaterial(Material):
         """
         wavelength = numpy.asarray(wavelength)
 
-        wavelength *= 1e6
+        wavelength_um = wavelength * 1e6
 
         if numpy.any(wavelength < self.wavelength.min()) or numpy.any(wavelength > self.wavelength.max()):
             warnings.warn(f"Wavelength: {wavelength} is outside the tabulated range of {self.wavelength.min()} µm to {self.wavelength.max()} µm. [{self.filename}]")
@@ -64,7 +64,7 @@ class TabulatedMaterial(Material):
         n_interp = interp1d(self.wavelength, self.n_values, kind='cubic', fill_value='extrapolate')
         k_interp = interp1d(self.wavelength, self.k_values, kind='cubic', fill_value='extrapolate')
 
-        return n_interp(wavelength) + 1j * k_interp(wavelength)
+        return n_interp(wavelength_um) + 1j * k_interp(wavelength_um)
 
     def plot(self, wavelength: Optional[List[float]] = None) -> None:
         """

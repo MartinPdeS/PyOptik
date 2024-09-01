@@ -6,3 +6,4 @@ except ImportError:
 
 
 from .utils import build_default_library
+from .material import UsualMaterial

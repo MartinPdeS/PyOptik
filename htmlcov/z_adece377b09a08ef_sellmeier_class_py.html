@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_adece377b09a08ef_tabulated_class_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.1">coverage.py v7.6.1</a>,
-            created at 2024-09-01 14:22 +0000
+            created at 2024-09-01 14:24 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -167,7 +167,7 @@
     <p class="pln"><span class="n"><a id="t83" href="#t83">83</a></span><span class="t"><span class="str">            ValueError: If the wavelength is outside the specified range or if an unsupported formula type is encountered.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">        <span class="com"># Ensure that wavelength is within the allowable range if it's a single value</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">        <span class="nam">wavelength</span> <span class="op">=</span> <span class="nam">numpy</span><span class="op">.</span><span class="nam">asarray</span><span class="op">(</span><span class="nam">wavelength</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">        <span class="nam">wavelength</span> <span class="op">=</span> <span class="nam">numpy</span><span class="op">.</span><span class="nam">atleast_1d</span><span class="op">(</span><span class="nam">wavelength</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">        <span class="com"># Convert wavelength to micrometers</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">        <span class="nam">lambda_um</span> <span class="op">=</span> <span class="nam">wavelength</span> <span class="op">*</span> <span class="num">1e6</span>&nbsp;</span><span class="r"></span></p>
@@ -265,7 +265,7 @@
             <a class="nav" href="z_adece377b09a08ef_tabulated_class_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.1">coverage.py v7.6.1</a>,
-            created at 2024-09-01 14:22 +0000
+            created at 2024-09-01 14:24 +0000
         </p>
     </div>
 </footer>

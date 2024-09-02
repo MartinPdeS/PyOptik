@@ -6,6 +6,7 @@
 *htmlcov
 *.coverage
 developments/*
+PyOptik/data/**/test*
 
 dist
 build

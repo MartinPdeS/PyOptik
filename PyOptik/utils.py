@@ -1,6 +1,6 @@
 
-from typing import NoReturn
-import os
+import yaml
+from typing import Optional, List, Tuple, NoReturn
 import requests
 from PyOptik.directories import sellmeier_data_path, tabulated_data_path
 from PyOptik.data.sellmeier.default import default_material as sellmeier_default
@@ -76,6 +76,96 @@ def remove_element(filename: str, location: str = 'any') -> None:
         if tabulated_file.exists():
             tabulated_file.unlink()
 
+def create_sellmeier_file(
+    filename: str,
+    formula_type: int,
+    coefficients: List[float],
+    wavelength_range: Optional[Tuple[float, float]] = None,
+    reference: Optional[str] = None,
+    comments: Optional[str] = None,
+    specs: Optional[dict] = None) -> NoReturn:
+    """
+    Creates a YAML file with custom Sellmeier coefficients in the correct format.
 
+    Args:
+        filename (str): The name of the file to create (without the extension).
+        formula_type (int): The type of Sellmeier formula.
+        coefficients (list[float]): A list of coefficients for the Sellmeier equation.
+        wavelength_range (Tuple[float, float]): The range of wavelengths, in micrometers.
+        reference (str): A reference for the material data.
+        comments (Optional[str]): Additional comments about the material.
+        specs (Optional[dict]): Additional specifications, such as temperature and whether the wavelength is in a vacuum.
+    """
+    reference = 'None' if reference is None else reference
+    wavelength_range = [None, None] if wavelength_range is None else wavelength_range
+    # Create the data dictionary for YAML
+    data = {
+        'REFERENCES': reference,
+        'DATA': [
+            {
+                'type': f'formula {formula_type}',
+                'wavelength_range': f"{wavelength_range[0]} {wavelength_range[1]}",
+                'coefficients': " ".join(map(str, coefficients)),
+            }
+        ]
+    }
 
-remove_element('test')
+    # Add comments if provided
+    if comments:
+        data['COMMENTS'] = comments
+
+    # Add specs if provided
+    if specs:
+        data['SPECS'] = specs
+
+    # Define the file path
+    file_path = sellmeier_data_path / f"{filename}.yml"
+
+    # Write the data to a YAML file
+    with open(file_path, 'w') as file:
+        yaml.dump(data, file, default_flow_style=False)
+
+    print(f"Sellmeier data saved to {file_path}")
+
+def create_tabulated_file(
+    filename: str,
+    data: List[Tuple[float, float, float]],
+    reference: Optional[str] = None,
+    comments: Optional[str] = None) -> NoReturn:
+    """
+    Creates a YAML file with tabulated nk data in the correct format.
+
+    Args:
+        filename (str): The name of the file to create (without the extension).
+        data (List[Tuple[float, float, float]]): The tabulated nk data.
+        reference (Optional[str]): A reference for the material data.
+        comments (Optional[str]): Additional comments about the material.
+    """
+    reference = 'None' if reference is None else reference
+
+    # Convert the data list to a formatted string
+    data_str = "\n".join(" ".join(map(str, row)) for row in data)
+
+    # Create the data dictionary for YAML
+    yaml_data = {
+        'REFERENCES': reference,
+        'DATA': [
+            {
+                'type': 'tabulated nk',
+                'data': data_str,
+            }
+        ]
+    }
+
+    # Add comments if provided
+    if comments:
+        yaml_data['COMMENTS'] = comments
+
+    # Define the file path
+    file_path = tabulated_data_path / f"{filename}.yml"
+
+    # Write the data to a YAML file
+    with open(file_path, 'w') as file:
+        yaml.dump(yaml_data, file, default_flow_style=False)
+
+    print(f"Tabulated nk data saved to {file_path}")

@@ -34,6 +34,6 @@ create_tabulated_file(
 
 print(f"Tabulated YAML file {filename}.yml has been created in {tabulated_data_path}")
 
-m = TabulatedMaterial('example_tabulated')
+m = TabulatedMaterial(filename)
 
 m.plot()

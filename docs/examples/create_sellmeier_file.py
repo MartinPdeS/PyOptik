@@ -27,6 +27,6 @@ create_sellmeier_file(
 
 print(f"Sellmeier YAML file {filename}.yml has been created in {sellmeier_data_path}")
 
-m = SellmeierMaterial('example_download')
+m = SellmeierMaterial(filename)
 
 m.plot()

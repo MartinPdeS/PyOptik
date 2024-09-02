@@ -22,7 +22,7 @@ def test_build_default_library():
     build_default_library()
 
 def test_remove_element():
-    remove_element(filename='test')
+    remove_element(filename='test', location='any')
 
 if __name__ == "__main__":
     pytest.main([__file__])

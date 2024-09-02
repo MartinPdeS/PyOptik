@@ -62,6 +62,29 @@ This code produces the following figure:
 
 |example_bk7|
 
+
+You can also add a custom element to your library providing a URL from `refractiveindex.info <https://refractiveindex.info>`_ website.
+
+.. code:: python
+
+   from PyOptik.utils import download_yml_file
+   from PyOptik.directories import sellmeier_data_path  # or tabulated_data_path for tabulated elements
+
+   download_yml_file(
+      filename='test',
+      url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+      location=tabulated_data_path
+   )
+
+Evidently, you can also remove element from the library using as follows:
+
+
+.. code:: python
+
+   from PyOptik.utils import remove_element
+
+   remove_element(filename='test', location='any')  # location can be "any", "sellmeier" or "tabulated"
+
 Testing
 *******
 

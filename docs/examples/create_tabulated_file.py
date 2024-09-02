@@ -22,7 +22,7 @@ tabulated_data = [
 # Define the file properties
 filename = 'example_tabulated'
 reference = "Example Reference for Tabulated Data"
-comments = "This file contains sample tabulated data for demonstration purposes."
+comments = "This file contains sample tabulated data for demonstration purposes. "
 
 # Call the function to create the file
 create_tabulated_file(

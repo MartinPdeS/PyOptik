@@ -1,21 +1,3 @@
-.. |python| image:: https://img.shields.io/pypi/pyversions/pyoptik.svg
-   :target: https://www.python.org/
-
-.. |Logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
-
-.. |docs| image:: https://readthedocs.org/projects/pyoptik/badge/?version=latest
-   :target: https://pyoptik.readthedocs.io/en/latest/
-
-.. |PyPi| image:: https://badge.fury.io/py/pyoptik.svg
-   :target: https://badge.fury.io/py/pyoptik
-
-.. |PyPi_download| image:: https://img.shields.io/pypi/dm/pyoptik.svg
-   :target: https://pypistats.org/packages/pyoptik
-
-.. |coverage| image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/python-coverage-comment-action-data/badge.svg
-   :alt: Unittest coverage
-   :target: https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html
-
 PyOptik
 =======
 
@@ -55,8 +37,6 @@ After installing PyOptik, you can easily access material properties:
    n = bk7.compute_refractive_index(0.55e-6)
    print(f"Refractive index at 0.55 µm: {n}")
 
-   # Accessing and plotting material properties
-   bk7.plot(wavelength_range=[0.3e-6, 2.5e-6])
 
 Example
 *******
@@ -76,7 +56,11 @@ Here is a quick example demonstrating how to use PyOptik to retrieve and plot th
    n_values = bk7.compute_refractive_index(wavelengths)
 
    # Plot the results
-   bk7.plot(wavelength_range=wavelengths)
+   bk7.plot()
+
+This code produces the following figure:
+
+|example_bk7|
 
 Testing
 *******
@@ -106,3 +90,22 @@ As of 2024, PyOptik is still under development. If you would like to collaborate
 
 
 
+.. |python| image:: https://img.shields.io/pypi/pyversions/pyoptik.svg
+   :target: https://www.python.org/
+
+.. |Logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
+
+.. |example_bk7| image:: https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png
+
+.. |docs| image:: https://readthedocs.org/projects/pyoptik/badge/?version=latest
+   :target: https://pyoptik.readthedocs.io/en/latest/
+
+.. |PyPi| image:: https://badge.fury.io/py/pyoptik.svg
+   :target: https://badge.fury.io/py/pyoptik
+
+.. |PyPi_download| image:: https://img.shields.io/pypi/dm/pyoptik.svg
+   :target: https://pypistats.org/packages/pyoptik
+
+.. |coverage| image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/python-coverage-comment-action-data/badge.svg
+   :alt: Unittest coverage
+   :target: https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html

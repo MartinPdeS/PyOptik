@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import numpy
 from dataclasses import dataclass, field
 from typing import Optional, Tuple, Union, List
@@ -6,6 +9,8 @@ from scipy.interpolate import interp1d
 import warnings
 from PyOptik.directories import tabulated_data_path
 from PyOptik.base_class import Material
+from MPSPlots.styles import mps
+import matplotlib.pyplot as plt
 
 @dataclass
 class TabulatedMaterial(Material):
@@ -80,22 +85,21 @@ class TabulatedMaterial(Material):
             n_values = self.n_values
             k_values = self.k_values
 
-        import matplotlib.pyplot as plt
+        with plt.style.context(mps):
+            fig, ax1 = plt.subplots()
 
-        fig, ax1 = plt.subplots()
+            ax1.set_xlabel('Wavelength [µm]')
+            ax1.set_ylabel('Refractive Index (n)', color='tab:blue')
+            ax1.plot(wavelength, n_values, 'o-', color='tab:blue', label='n')
+            ax1.tick_params(axis='y', labelcolor='tab:blue')
 
-        ax1.set_xlabel('Wavelength [µm]')
-        ax1.set_ylabel('Refractive Index (n)', color='tab:blue')
-        ax1.plot(wavelength, n_values, 'o-', color='tab:blue', label='n')
-        ax1.tick_params(axis='y', labelcolor='tab:blue')
+            ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+            ax2.set_ylabel('Absorption (k)', color='tab:red')  # we already handled the x-label with ax1
+            ax2.plot(wavelength, k_values, 'o-', color='tab:red', label='k')
+            ax2.tick_params(axis='y', labelcolor='tab:red')
 
-        ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-        ax2.set_ylabel('Absorption (k)', color='tab:red')  # we already handled the x-label with ax1
-        ax2.plot(wavelength, k_values, 'o-', color='tab:red', label='k')
-        ax2.tick_params(axis='y', labelcolor='tab:red')
-
-        fig.tight_layout()  # to prevent the right y-label from being slightly clipped
-        plt.show()
+            fig.tight_layout()  # to prevent the right y-label from being slightly clipped
+            plt.show()
 
     def print(self) -> str:
         """

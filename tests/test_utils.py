@@ -5,7 +5,6 @@ import pytest
 from PyOptik.utils import build_default_library, remove_element, download_yml_file
 from PyOptik.directories import tabulated_data_path, sellmeier_data_path
 
-
 def test_download_yml():
     download_yml_file(
         filename='test',

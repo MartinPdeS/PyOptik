@@ -10,7 +10,7 @@ from PyOptik.directories import sellmeier_data_path
 import itertools
 import warnings
 from PyOptik.base_class import Material
-
+from MPSPlots.styles import mps
 
 @dataclass
 class SellmeierMaterial(Material):
@@ -136,26 +136,27 @@ class SellmeierMaterial(Material):
         Args:
             wavelength_range (Union[List[float], numpy.ndarray]): The range of wavelengths to plot, in meters.
         """
-        if wavelength is None:
-            wavelength = numpy.linspace(*self.wavelength_range, 100) * 1e-6
+        with plt.style.context(mps):
+            if wavelength is None:
+                wavelength = numpy.linspace(*self.wavelength_range, 100) * 1e-6
 
-        wavelength = numpy.asarray(wavelength)
+            wavelength = numpy.asarray(wavelength)
 
-        if wavelength.ndim != 1:
-            raise ValueError("wavelength must be a 1D array or list of float values.")
+            if wavelength.ndim != 1:
+                raise ValueError("wavelength must be a 1D array or list of float values.")
 
-        # Calculate the refractive index over the wavelength range
-        refractive_index = self.compute_refractive_index(wavelength)
+            # Calculate the refractive index over the wavelength range
+            refractive_index = self.compute_refractive_index(wavelength)
 
-        # Plotting
-        fig, ax = plt.subplots()
-        ax.set_xlabel('Wavelength [m]')
-        ax.set_ylabel('Refractive Index')
-        ax.plot(wavelength, refractive_index.real, linewidth=2, label='Real Part')
-        ax.legend()
-        ax.grid(True)
-        plt.tight_layout()
-        plt.show()
+            # Plotting
+            fig, ax = plt.subplots()
+            ax.set_xlabel('Wavelength [m]')
+            ax.set_ylabel('Refractive Index')
+            ax.plot(wavelength, refractive_index.real, linewidth=2, label='Real Part')
+            ax.legend()
+            ax.grid(True)
+            plt.tight_layout()
+            plt.show()
 
     def print(self) -> str:
         """

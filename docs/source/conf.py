@@ -50,6 +50,7 @@ sphinx_gallery_conf = {
     'gallery_dirs': 'gallery',
     'image_scrapers': ('matplotlib'),
     'ignore_pattern': '/__',
+    'filename_pattern': r'.*\.py',
     'plot_gallery': True,
     'thumbnail_size': [600, 600],
     'download_all_examples': False,

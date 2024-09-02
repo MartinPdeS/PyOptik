@@ -15,69 +15,137 @@ A gallery of examples and that showcase how PyOptik can be used. Some examples d
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Add hoc docstring">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to create a custom Sellmeier YAML file using the create_sellmeier...">
 
 .. only:: html
 
-  .. image:: /gallery/images/thumb/sphx_glr_add_material_thumb.png
+  .. image:: /gallery/images/thumb/sphx_glr_create_sellmeier_file_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_add_material.py`
+  :ref:`sphx_glr_gallery_create_sellmeier_file.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Add hoc docstring</div>
+      <div class="sphx-glr-thumbnail-title">Example: Create a Custom Sellmeier YAML File</div>
     </div>
 
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Add hoc docstring">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to create a custom YAML file containing tabulated nk data using t...">
 
 .. only:: html
 
-  .. image:: /gallery/images/thumb/sphx_glr_get_values_thumb.png
+  .. image:: /gallery/images/thumb/sphx_glr_create_tabulated_file_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_get_values.py`
+  :ref:`sphx_glr_gallery_create_tabulated_file.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Add hoc docstring</div>
+      <div class="sphx-glr-thumbnail-title">Example: Create a Custom Tabulated Data YAML File</div>
     </div>
 
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Plot refractive index of material: BK7">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to download a YAML file from a URL using the download_yml_file fu...">
 
 .. only:: html
 
-  .. image:: /gallery/images/thumb/sphx_glr_plot_sellmeier_0_thumb.png
+  .. image:: /gallery/images/thumb/sphx_glr_download_yml_file_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_plot_sellmeier_0.py`
+  :ref:`sphx_glr_gallery_download_yml_file.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot refractive index of material: BK7</div>
+      <div class="sphx-glr-thumbnail-title">Example: Download a YAML file</div>
     </div>
 
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Plot refractive index of material: Silica">
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
 
 .. only:: html
 
-  .. image:: /gallery/images/thumb/sphx_glr_plot_sellmeier_1_thumb.png
+  .. image:: /gallery/images/thumb/sphx_glr_plot_bk7_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_plot_sellmeier_1.py`
+  :ref:`sphx_glr_gallery_plot_bk7.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot refractive index of material: Silica</div>
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: BK7</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
+
+.. only:: html
+
+  .. image:: /gallery/images/thumb/sphx_glr_plot_sf5_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_plot_sf5.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: SF5</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
+
+.. only:: html
+
+  .. image:: /gallery/images/thumb/sphx_glr_plot_silica_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_plot_silica.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Silica</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
+
+.. only:: html
+
+  .. image:: /gallery/images/thumb/sphx_glr_plot_silver_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_plot_silver.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Silver</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
+
+.. only:: html
+
+  .. image:: /gallery/images/thumb/sphx_glr_plot_water_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_plot_water.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Water</div>
     </div>
 
 
@@ -89,10 +157,14 @@ A gallery of examples and that showcase how PyOptik can be used. Some examples d
 .. toctree::
    :hidden:
 
-   /gallery/add_material
-   /gallery/get_values
-   /gallery/plot_sellmeier_0
-   /gallery/plot_sellmeier_1
+   /gallery/create_sellmeier_file
+   /gallery/create_tabulated_file
+   /gallery/download_yml_file
+   /gallery/plot_bk7
+   /gallery/plot_sf5
+   /gallery/plot_silica
+   /gallery/plot_silver
+   /gallery/plot_water
 
 
 

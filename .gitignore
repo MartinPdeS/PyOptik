@@ -7,6 +7,7 @@
 *.coverage
 developments/*
 PyOptik/data/**/test*
+PyOptik/data/**/example*
 
 dist
 build

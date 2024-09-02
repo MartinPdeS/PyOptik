@@ -1,4 +1,4 @@
 References
 ==========
 
-Here is a list of useful references:
+All data comes from `refractiveindex.info <https://refractiveindex.info>`_ website.

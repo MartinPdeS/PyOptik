@@ -8,3 +8,5 @@ except ImportError:
 from .utils import build_default_library
 from .material import UsualMaterial
 from .base_class import Material
+from .tabulated_class import TabulatedMaterial
+from .sellmeier_class import SellmeierMaterial

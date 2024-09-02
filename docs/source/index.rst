@@ -10,7 +10,6 @@ PyOptik's documentation
 .. toctree::
     :hidden:
 
-    theory
     code
     gallery/index
     references

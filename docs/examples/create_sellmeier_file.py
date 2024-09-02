@@ -22,7 +22,7 @@ create_sellmeier_file(
     formula_type=formula_type,
     wavelength_range=(0.2, 2.0),
     reference="Sample Reference",
-    comments="This is a sample Sellmeier file created for demonstration purposes."
+    comments="This is a sample Sellmeier file created for demonstration purposes. "
 )
 
 print(f"Sellmeier YAML file {filename}.yml has been created in {sellmeier_data_path}")

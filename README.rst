@@ -61,7 +61,7 @@ After installing PyOptik, you can easily access material properties:
 Example
 *******
 
-Here’s a quick example demonstrating how to use PyOptik to retrieve and plot the refractive index of a material:
+Here is a quick example demonstrating how to use PyOptik to retrieve and plot the refractive index of a material:
 
 .. code:: python
 

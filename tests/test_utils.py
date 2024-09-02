@@ -50,7 +50,9 @@ def test_create_custom_sellmeier_file():
     create_sellmeier_file(
         filename='test_sellmeier_file',
         coefficients=[0, 1, 2, 3, 4],
-        formula_type=1
+        formula_type=1,
+        comments='Dummy comment',
+        specs='Random specs'
     )
 
 def test_create_custom_tabulated_file():

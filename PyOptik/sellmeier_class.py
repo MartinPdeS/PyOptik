@@ -4,7 +4,7 @@
 from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
 import numpy
-from typing import Tuple, Optional, Union, NoReturn, List
+from typing import Tuple, Optional, Union, List
 import yaml
 from PyOptik.directories import sellmeier_data_path
 import itertools
@@ -129,7 +129,7 @@ class SellmeierMaterial(Material):
         return n
 
 
-    def plot(self, wavelength: Optional[List[float]] = None) -> NoReturn:
+    def plot(self, wavelength: Optional[List[float]] = None) -> None:
         """
         Plots the refractive index as a function of wavelength over a specified range.
 

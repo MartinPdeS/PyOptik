@@ -1,12 +1,12 @@
 
 import yaml
-from typing import Optional, List, Tuple, NoReturn
+from typing import Optional, List, Tuple
 import requests
 from PyOptik.directories import sellmeier_data_path, tabulated_data_path
 from PyOptik.data.sellmeier.default import default_material as sellmeier_default
 from PyOptik.data.tabulated.default import default_material as tabulated_default
 
-def download_yml_file(url: str, filename: str, location: str) -> NoReturn:
+def download_yml_file(url: str, filename: str, location: str) -> None:
     """
     Downloads a .yml file from a specified URL and saves it locally.
 
@@ -36,7 +36,7 @@ def download_yml_file(url: str, filename: str, location: str) -> NoReturn:
     except Exception as err:
         print(f"An error occurred: {err}")
 
-def build_default_library() -> NoReturn:
+def build_default_library() -> None:
     """
     Downloads and saves the default materials from the specified URLs.
     """
@@ -83,7 +83,7 @@ def create_sellmeier_file(
     wavelength_range: Optional[Tuple[float, float]] = None,
     reference: Optional[str] = None,
     comments: Optional[str] = None,
-    specs: Optional[dict] = None) -> NoReturn:
+    specs: Optional[dict] = None) -> None:
     """
     Creates a YAML file with custom Sellmeier coefficients in the correct format.
 
@@ -131,7 +131,7 @@ def create_tabulated_file(
     filename: str,
     data: List[Tuple[float, float, float]],
     reference: Optional[str] = None,
-    comments: Optional[str] = None) -> NoReturn:
+    comments: Optional[str] = None) -> None:
     """
     Creates a YAML file with tabulated nk data in the correct format.
 

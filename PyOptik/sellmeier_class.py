@@ -30,9 +30,9 @@ class SellmeierMaterial(Material):
         """
         Loads the Sellmeier coefficients, wavelength range, formula type, and reference from the specified YAML file.
         """
-        file_path = sellmeier_data_path / f'{self.filename}.yml'
+        file_path = sellmeier_data_path / f'{self.filename}'
 
-        with open(file_path, 'r') as file:
+        with open(file_path.with_suffix('.yml'), 'r') as file:
             parsed_yaml = yaml.safe_load(file)
 
         # Extract the formula type

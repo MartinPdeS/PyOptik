@@ -30,9 +30,9 @@ class TabulatedMaterial(Material):
         """
         Loads the tabulated refractive index and absorption values from the specified YAML file.
         """
-        file_path = tabulated_data_path / f'{self.filename}.yml'
+        file_path = tabulated_data_path / f'{self.filename}'
 
-        with open(file_path, 'r') as file:
+        with open(file_path.with_suffix('.yml'), 'r') as file:
             parsed_yaml = yaml.safe_load(file)
 
         # Extract data points

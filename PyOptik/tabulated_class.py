@@ -8,12 +8,12 @@ import yaml
 from scipy.interpolate import interp1d
 import warnings
 from PyOptik.directories import tabulated_data_path
-from PyOptik.base_class import Material
+from PyOptik.base_class import BaseMaterial
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
 
 @dataclass
-class TabulatedMaterial(Material):
+class TabulatedMaterial(BaseMaterial):
     filename: str
     wavelength: numpy.ndarray = field(init=False)
     n_values: numpy.ndarray = field(init=False)

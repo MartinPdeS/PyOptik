@@ -6,6 +6,6 @@ except ImportError:
 
 
 from .utils import build_default_library
-from .material import UsualMaterial
+from .material import Material
 from .tabulated_class import TabulatedMaterial
 from .sellmeier_class import SellmeierMaterial

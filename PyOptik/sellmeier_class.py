@@ -9,11 +9,11 @@ import yaml
 from PyOptik.directories import sellmeier_data_path
 import itertools
 import warnings
-from PyOptik.base_class import Material
+from PyOptik.base_class import BaseMaterial
 from MPSPlots.styles import mps
 
 @dataclass
-class SellmeierMaterial(Material):
+class SellmeierMaterial(BaseMaterial):
     filename: str
     coefficients: numpy.ndarray = field(init=False)
     wavelength_range: Optional[Tuple[float, float]] = field(init=False)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class Material:
+class BaseMaterial:
     def __str__(self) -> str:
         """
         Provides an informal string representation of the Material object.

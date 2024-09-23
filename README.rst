@@ -121,7 +121,7 @@ As of 2024, PyOptik is still under development. If you would like to collaborate
 .. |example_bk7| image:: https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png
 
 .. |docs| image:: https://github.com/martinpdes/pyoptik/actions/workflows/deploy_documentation.yml/badge.svg
-   :target: https://pyoptik.readthedocs.io/en/latest/code.html
+   :target: https://martinpdes.github.io/PyOptik/
    :alt: Documentation Status
 
 .. |PyPi| image:: https://badge.fury.io/py/pyoptik.svg

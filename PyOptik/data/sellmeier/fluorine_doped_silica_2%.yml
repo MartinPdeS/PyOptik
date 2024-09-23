@@ -1,0 +1,9 @@
+# Nomenclature: https://en.wikipedia.org/wiki/Sellmeier_equation
+# Values from : https://opg.optica.org/directpdfaccess/d4c1352d-90ca-4c3e-a7545be751547d7a_26968/ao-22-19-3102.pdf?da=1&id=26968&seq=0&mobile=no
+
+
+REFERENCES: "<a href=\"https://opg.optica.org/directpdfaccess/d4c1352d-90ca-4c3e-a7545be751547d7a_26968/ao-22-19-3102.pdf?da=1&id=26968&seq=0&mobile=no\">SCHOTT Zemax catalog 2017-01-20b</a> (obtained from <a href=\"http://www.schott.com/advanced_optics/english/download/\">http://www.schott.com</a>)<br>See also <a href=\"http://refractiveindex.info/download/data/2017/schott_2017-01-20.pdf\">SCHOTT glass data sheets</a>"
+DATA:
+  - type: formula 1
+    wavelength_range: 0.37 2.5
+    coefficients: 0 0.67744 0.06135 0.40101 0.12030 0.87193 9.8563

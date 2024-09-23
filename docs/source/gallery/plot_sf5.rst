@@ -40,10 +40,10 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
     import numpy
-    from PyOptik import UsualMaterial
+    from PyOptik import Material
 
     # Initialize the material with the Sellmeier model
-    material = UsualMaterial.get('SF5')
+    material = Material.SF5
 
     # Calculate refractive index at specific wavelengths
     RI = material.compute_refractive_index(wavelength=[1310e-9, 1550e-9])
@@ -56,7 +56,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.117 seconds)
+   **Total running time of the script:** (0 minutes 0.105 seconds)
 
 
 .. _sphx_glr_download_gallery_plot_sf5.py:

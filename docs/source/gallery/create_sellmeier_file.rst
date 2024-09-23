@@ -40,6 +40,10 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
     Sellmeier data saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/example_sellmeier.yml
     Sellmeier YAML file example_sellmeier.yml has been created in /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier
+    /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/sellmeier_class.py:70: UserWarning: Wavelength 0.19999999999999998 µm is outside the allowable range of 0.2 µm to 2.0 µm. [example_sellmeier]
+      warnings.warn(f"Wavelength {lambda_um} µm is outside the allowable range of {min_value} µm to {max_value} µm. [{self.filename}]")
+    /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/sellmeier_class.py:104: RuntimeWarning: invalid value encountered in sqrt
+      n = numpy.sqrt(n_squared)
 
 
 
@@ -67,19 +71,19 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
         formula_type=formula_type,
         wavelength_range=(0.2, 2.0),
         reference="Sample Reference",
-        comments="This is a sample Sellmeier file created for demonstration purposes."
+        comments="This is a sample Sellmeier file created for demonstration purposes. "
     )
 
     print(f"Sellmeier YAML file {filename}.yml has been created in {sellmeier_data_path}")
 
-    m = SellmeierMaterial('example_download')
+    m = SellmeierMaterial(filename)
 
     m.plot()
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.146 seconds)
+   **Total running time of the script:** (0 minutes 0.165 seconds)
 
 
 .. _sphx_glr_download_gallery_create_sellmeier_file.py:

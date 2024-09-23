@@ -22,7 +22,7 @@ tabulated_data = [
 # Define the file properties
 filename = 'example_tabulated'
 reference = "Example Reference for Tabulated Data"
-comments = "This file contains sample tabulated data for demonstration purposes."
+comments = "This file contains sample tabulated data for demonstration purposes. "
 
 # Call the function to create the file
 create_tabulated_file(
@@ -34,6 +34,6 @@ create_tabulated_file(
 
 print(f"Tabulated YAML file {filename}.yml has been created in {tabulated_data_path}")
 
-m = TabulatedMaterial('example_tabulated')
+m = TabulatedMaterial(filename)
 
 m.plot()

@@ -67,7 +67,7 @@ This example demonstrates how to create a custom YAML file containing tabulated
     # Define the file properties
     filename = 'example_tabulated'
     reference = "Example Reference for Tabulated Data"
-    comments = "This file contains sample tabulated data for demonstration purposes."
+    comments = "This file contains sample tabulated data for demonstration purposes. "
 
     # Call the function to create the file
     create_tabulated_file(
@@ -79,14 +79,14 @@ This example demonstrates how to create a custom YAML file containing tabulated
 
     print(f"Tabulated YAML file {filename}.yml has been created in {tabulated_data_path}")
 
-    m = TabulatedMaterial('example_tabulated')
+    m = TabulatedMaterial(filename)
 
     m.plot()
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.135 seconds)
+   **Total running time of the script:** (0 minutes 0.134 seconds)
 
 
 .. _sphx_glr_download_gallery_create_tabulated_file.py:

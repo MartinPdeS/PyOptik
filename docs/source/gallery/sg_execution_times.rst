@@ -6,22 +6,22 @@
 
 Computation times
 =================
-**00:01.790** total execution time for **gallery** files:
+**00:00.849** total execution time for **gallery** files:
 
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_download_yml_file.py` (``download_yml_file.py``)         | 00:00.867 | 0.0 MB |
+| :ref:`sphx_glr_gallery_create_sellmeier_file.py` (``create_sellmeier_file.py``) | 00:00.165 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_plot_silver.py` (``plot_silver.py``)                     | 00:00.157 | 0.0 MB |
+| :ref:`sphx_glr_gallery_plot_silver.py` (``plot_silver.py``)                     | 00:00.142 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_create_sellmeier_file.py` (``create_sellmeier_file.py``) | 00:00.146 | 0.0 MB |
+| :ref:`sphx_glr_gallery_create_tabulated_file.py` (``create_tabulated_file.py``) | 00:00.134 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_create_tabulated_file.py` (``create_tabulated_file.py``) | 00:00.135 | 0.0 MB |
+| :ref:`sphx_glr_gallery_plot_water.py` (``plot_water.py``)                       | 00:00.114 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_plot_water.py` (``plot_water.py``)                       | 00:00.131 | 0.0 MB |
+| :ref:`sphx_glr_gallery_plot_sf5.py` (``plot_sf5.py``)                           | 00:00.105 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_plot_silica.py` (``plot_silica.py``)                     | 00:00.119 | 0.0 MB |
+| :ref:`sphx_glr_gallery_plot_bk7.py` (``plot_bk7.py``)                           | 00:00.098 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_plot_bk7.py` (``plot_bk7.py``)                           | 00:00.118 | 0.0 MB |
+| :ref:`sphx_glr_gallery_plot_silica.py` (``plot_silica.py``)                     | 00:00.091 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_plot_sf5.py` (``plot_sf5.py``)                           | 00:00.117 | 0.0 MB |
+| :ref:`sphx_glr_gallery_download_yml_file.py` (``download_yml_file.py``)         | 00:00.000 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+

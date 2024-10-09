@@ -1,0 +1,54 @@
+package:
+  name: pyoptik
+  version: {{ GIT_DESCRIBE_TAG }}
+
+source:
+  path: .
+
+build:
+  noarch: python
+  script: |
+    {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv
+
+requirements:
+  host:
+    - python >=3.10.*
+    - pip
+    - setuptools>=40.8.*
+    - setuptools_scm[toml]>=8.0.*
+  run:
+    - pyyaml==6.0.*
+    - requests==2.31.*
+    - matplotlib==3.8.*
+    - numpy>=1.26.0
+    - pydantic>=2.9.*
+    - scipy
+    - MPSPlots
+    - tabulate==0.9.*
+
+about:
+  home: https://github.com/MartinPdeS/PyOptik
+  license: MIT
+  summary: "A package for refractive index values."
+  description: PyOptik is a library that helps the end-user to build it's own refractive index library.
+  dev_url: https://github.com/MartinPdeS/PyOptik
+  doc_url: https://pyoptik.readthedocs.io
+  license_file: LICENSE
+
+
+test:
+  imports:
+    - PyOptik
+  requires:
+    - scipy==1.11.3
+    - pytest>=0.6
+    - pytest-cov>=2.0
+    - pytest-json-report==1.5.0
+    - mypy>=0.910
+    - flake8>=3.9
+    - tox>=3.24
+    - coverage==7.6.1
+  source_files:
+    - tests
+  commands:
+    - pytest

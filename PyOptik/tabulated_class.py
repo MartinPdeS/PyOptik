@@ -12,13 +12,19 @@ from PyOptik.base_class import BaseMaterial
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
 
-@dataclass
+@dataclass(unsafe_hash=True)
 class TabulatedMaterial(BaseMaterial):
     filename: str
     wavelength: numpy.ndarray = field(init=False)
     n_values: numpy.ndarray = field(init=False)
     k_values: numpy.ndarray = field(init=False)
     reference: Optional[str] = field(init=False)
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    def __str__(self) -> str:
+        return self.filename
 
     def __post_init__(self) -> None:
         """

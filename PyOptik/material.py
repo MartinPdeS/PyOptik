@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union
+from dataclasses import dataclass
 from PyOptik.sellmeier_class import SellmeierMaterial
 from PyOptik.tabulated_class import TabulatedMaterial
 from PyOptik import data
@@ -15,6 +16,7 @@ class staticproperty(property):
     def __get__(self, owner_self, owner_cls):
         return self.fget()
 
+@dataclass(unsafe_hash=True)
 class Material:
     """
     A class representing common materials available in the PyOptik library.

@@ -12,13 +12,19 @@ import warnings
 from PyOptik.base_class import BaseMaterial
 from MPSPlots.styles import mps
 
-@dataclass
+@dataclass(unsafe_hash=True)
 class SellmeierMaterial(BaseMaterial):
     filename: str
     coefficients: numpy.ndarray = field(init=False)
     wavelength_range: Optional[Tuple[float, float]] = field(init=False)
     reference: Optional[str] = field(init=False)
     formula_type: int = field(init=False)
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    def __str__(self) -> str:
+        return self.filename
 
     def __post_init__(self) -> None:
         """

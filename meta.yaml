@@ -6,13 +6,13 @@ source:
   path: .
 
 build:
+  number: 0
   noarch: python
-  script: |
-    {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv
+  script: python -m pip install --no-cache-dir --no-deps -v .
 
 requirements:
   host:
-    - python >=3.10.*
+    - python
     - pip
     - setuptools>=40.8.*
     - setuptools_scm[toml]>=8.0.*
@@ -48,7 +48,11 @@ test:
     - flake8>=3.9
     - tox>=3.24
     - coverage==7.6.1
+  commands:
+    - python -m pytest
   source_files:
     - tests
-  commands:
-    - pytest
+
+extra:
+  recipe-maintainers:
+    - MartinPdeS

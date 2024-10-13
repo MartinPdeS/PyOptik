@@ -19,6 +19,7 @@ requirements:
     - pip
     - martinpdes::mpsplots
   run:
+    - martinpdes::mpsplots
     - pyyaml >=6.0
     - requests >=2.31
     - matplotlib >=3.8

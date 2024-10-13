@@ -45,14 +45,19 @@ class Material:
         """
         Retrieve a material by name.
 
-        Args:
-            material_name (str): The name of the material to retrieve.
+        Parameters
+        ----------
+        material_name : str
+            The name of the material to retrieve.
 
-        Returns:
-            Union[SellmeierMaterial, TabulatedMaterial]: An instance of the material if found.
+        Returns
+        -------
+        Union[SellmeierMaterial, TabulatedMaterial]
+            An instance of the material if found.
 
-        Raises:
-            FileNotFoundError: If the material is not found in either the Sellmeier or Tabulated lists.
+        Raises
+        ------
+        FileNotFoundError: If the material is not found in either the Sellmeier or Tabulated lists.
         """
         if material_name in data.sellmeier.material_list:
             return SellmeierMaterial(material_name)

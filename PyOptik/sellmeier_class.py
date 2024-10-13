@@ -64,11 +64,14 @@ class SellmeierMaterial(BaseMaterial):
         """
         Checks if a wavelength is within the material's allowable range and raises an error if it is not.
 
-        Args:
+        Parameters
+        ----------
             wavelength (float): The wavelength to check in meters.
 
-        Raises:
-            ValueError: If the wavelength is outside the allowable range.
+        Raises
+        ------
+        ValueError
+            If the wavelength is outside the allowable range.
         """
         if self.wavelength_range is not None:
             min_value, max_value = self.wavelength_range
@@ -79,14 +82,20 @@ class SellmeierMaterial(BaseMaterial):
         """
         Computes the refractive index n(λ) using the appropriate formula (either Formula 1 or Formula 2).
 
-        Args:
-            wavelength (Union[float, numpy.ndarray]): The wavelength λ in meters, can be a single float or a numpy array.
+        Parameters
+        ----------
+        wavelength : Union[float, numpy.ndarray])
+            The wavelength λ in meters, can be a single float or a numpy array.
 
-        Returns:
-            Union[float, numpy.ndarray]: The refractive index n(λ) for the given wavelength or array of wavelengths.
+        Returns
+        -------
+        Union[float, numpy.ndarray]
+            The refractive index n(λ) for the given wavelength or array of wavelengths.
 
-        Raises:
-            ValueError: If the wavelength is outside the specified range or if an unsupported formula type is encountered.
+        Raises
+        ------
+        ValueError
+            If the wavelength is outside the specified range or if an unsupported formula type is encountered.
         """
         # Ensure that wavelength is within the allowable range if it's a single value
         wavelength = numpy.atleast_1d(wavelength)
@@ -139,8 +148,10 @@ class SellmeierMaterial(BaseMaterial):
         """
         Plots the refractive index as a function of wavelength over a specified range.
 
-        Args:
-            wavelength_range (Union[List[float], numpy.ndarray]): The range of wavelengths to plot, in meters.
+        Parameters
+        ----------
+        wavelength_range : Union[List[float], numpy.ndarray]
+            The range of wavelengths to plot, in meters.
         """
         with plt.style.context(mps):
             if wavelength is None:
@@ -168,8 +179,10 @@ class SellmeierMaterial(BaseMaterial):
         """
         Provides a formal string representation of the Material object, including key attributes.
 
-        Returns:
-            str: Formal representation of the Material object.
+        Returns
+        -------
+        str
+            Formal representation of the Material object.
         """
         return (
             f"\nMaterial: '{self.filename}',\n"

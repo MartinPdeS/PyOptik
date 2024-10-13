@@ -56,14 +56,19 @@ class TabulatedMaterial(BaseMaterial):
         """
         Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).
 
-        Args:
+        Parameters
+        ----------
             wavelength (Union[float, numpy.ndarray]): Wavelength(s) in micrometers for which to interpolate n and k.
 
-        Returns:
-            Tuple[numpy.ndarray, numpy.ndarray]: Interpolated refractive index (n) and absorption (k) values.
+        Returns
+        -------
+        Tuple[numpy.ndarray, numpy.ndarray]
+            Interpolated refractive index (n) and absorption (k) values.
 
-        Raises:
-            ValueError: If the wavelength is outside the tabulated range.
+        Raises
+        ------
+        ValueError
+            If the wavelength is outside the tabulated range.
         """
         wavelength = numpy.asarray(wavelength)
 
@@ -111,8 +116,10 @@ class TabulatedMaterial(BaseMaterial):
         """
         Provides a formal string representation of the TabulatedMaterial object, including key attributes.
 
-        Returns:
-            str: Formal representation of the TabulatedMaterial object.
+        Returns
+        -------
+        str
+            Formal representation of the TabulatedMaterial object.
         """
         return (
             f"\nTabulatedMaterial: '{self.filename}',\n"

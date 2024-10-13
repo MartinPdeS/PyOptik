@@ -32,7 +32,9 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["PyOptik"]
+packages = {find = {where = ["."], include = ["PyOptik*"]}}
+include-package-data = true
+
 
 [tool.setuptools_scm]
 write_to = "PyOptik/_version.py"

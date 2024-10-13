@@ -10,7 +10,7 @@ PyOptik is a powerful Python tool designed to import refractive indexes and exti
    :header-rows: 1
 
    * - Testing
-     -
+     - |ci/cd|
      - |coverage|
      -
    * - Package
@@ -139,6 +139,10 @@ As of 2024, PyOptik is still under development. If you would like to collaborate
 .. |docs| image:: https://github.com/martinpdes/pyoptik/actions/workflows/deploy_documentation.yml/badge.svg
    :target: https://martinpdes.github.io/PyOptik/
    :alt: Documentation Status
+
+.. |ci/cd| image:: https://github.com/martinpdes/pyoptik/actions/workflows/deploy_coverage.yml/badge.svg
+   :target: https://martinpdes.github.io/PyOptik/actions
+   :alt: Unittest Status
 
 .. |PyPi| image:: https://badge.fury.io/py/pyoptik.svg
    :target: https://badge.fury.io/py/pyoptik

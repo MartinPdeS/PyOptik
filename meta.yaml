@@ -6,16 +6,17 @@ source:
   path: .
 
 build:
-  number: 0
   noarch: python
-  script: python -m pip install --no-cache-dir --no-deps -v .
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
 
 requirements:
   host:
-    - python
+    - python >=3.8
+    - setuptools >=40.8.0
+    - wheel
+    - setuptools-scm >=8.0
     - pip
-    - setuptools>=40.8.*
-    - setuptools_scm[toml]>=8.0.*
   run:
     - pyyaml==6.0.*
     - requests==2.31.*
@@ -40,6 +41,7 @@ test:
   imports:
     - PyOptik
   requires:
+    - pip
     - scipy==1.11.3
     - pytest>=0.6
     - pytest-cov>=2.0

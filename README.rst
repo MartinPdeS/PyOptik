@@ -10,7 +10,7 @@ PyOptik is a powerful Python tool designed to import refractive indexes and exti
    :header-rows: 1
 
    * - Testing
-     - |ci/cd|
+     -
      - |coverage|
      -
    * - Package

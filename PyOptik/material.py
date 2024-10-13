@@ -57,7 +57,8 @@ class Material:
 
         Raises
         ------
-        FileNotFoundError: If the material is not found in either the Sellmeier or Tabulated lists.
+        FileNotFoundError
+            If the material is not found in either the Sellmeier or Tabulated lists.
         """
         if material_name in data.sellmeier.material_list:
             return SellmeierMaterial(material_name)

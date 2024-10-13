@@ -22,7 +22,6 @@ autodoc_mock_imports = [
     'matplotlib',
     'scipy'
     'numpydoc',
-    'MPSPlots',
 ]
 
 
@@ -36,9 +35,18 @@ version = PyOptik.__version__
 
 extensions = [
     'sphinx.ext.mathjax',
-    'numpydoc',
+    'pyvista.ext.plot_directive',
     'sphinx_gallery.gen_gallery',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.intersphinx',
 ]
+
+# Napoleon settings for docstrings
+napoleon_google_docstring = False
+napoleon_numpy_docstring = True
 
 
 def reset_mpl(gallery_conf, fname):

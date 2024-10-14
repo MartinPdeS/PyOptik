@@ -124,6 +124,12 @@ html_theme_options = {
             "url": "https://pypi.org/project/pyoptik/",
             "icon": "fa-solid fa-box",
         },
+        {
+            "name": "Anaconda",
+            "url": "https://anaconda.org/MartinPdeS/pyoptik",
+            "icon": "fa-brands fa-python",
+            # "icon": "_static/anaconda-icon.svg",  # Replace with the path to your logo
+        },
     ],
     "navbar_align": "left",
     "navbar_end": ["version-switcher", "navbar-icon-links"],

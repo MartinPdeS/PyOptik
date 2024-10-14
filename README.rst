@@ -24,6 +24,7 @@ PyOptik is a powerful Python tool designed to import refractive indexes and exti
 
 Features
 ********
+
 - **Comprehensive Database Access**: Seamlessly import refractive index and extinction coefficient data for a wide range of materials.
 - **Simulation Ready**: Ideal for light-matter interaction simulations, particularly in optics and photonics.
 - **Simple API**: Easy-to-use API that integrates well with other Python libraries.
@@ -37,10 +38,10 @@ To install PyOptik, simply use `pip` or `conda`:
 .. code:: bash
 
    pip install PyOptik
-   conda install pyoptik
+   conda install --channels martinpdes pyoptik
 
-Usage
-*****
+Simple Usage
+************
 
 After installing PyOptik, you can easily access material properties:
 

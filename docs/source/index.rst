@@ -1,5 +1,5 @@
 PyOptik's documentation
-===========================
+=======================
 
 **Date**: |today|, **Version**: |version|
 

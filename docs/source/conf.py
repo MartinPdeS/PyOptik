@@ -20,7 +20,6 @@ def setup(app):
 autodoc_mock_imports = [
     'numpy',
     'matplotlib',
-    'scipy'
     'numpydoc',
 ]
 
@@ -53,9 +52,13 @@ def reset_mpl(gallery_conf, fname):
     use_mpsplots_style()
 
 
+examples_files = [
+    'utils', 'sellmeier', 'tabulated'
+]
+
 sphinx_gallery_conf = {
-    'examples_dirs': '../examples',
-    'gallery_dirs': 'gallery',
+    "examples_dirs": ['../examples/' + f for f in examples_files],
+    "gallery_dirs": ['gallery/' + f for f in examples_files],
     'image_scrapers': ('matplotlib'),
     'ignore_pattern': '/__',
     'filename_pattern': r'.*\.py',
@@ -94,7 +97,7 @@ html_theme = "pydata_sphinx_theme"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 exclude_trees = []
-default_role = "autolink"
+# default_role = "autolink"
 pygments_style = "sphinx"
 
 # -- Sphinx-gallery configuration --------------------------------------------

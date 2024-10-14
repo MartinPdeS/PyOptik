@@ -1,40 +1,39 @@
-:orphan:
+
 
 .. _source_code:
 
 Source Code Documentation
 =========================
 
-This section provides an overview of the key classes and functions within the `PyOptik` library, including the `Sellmeier` class. Detailed documentation of each component is generated automatically, showing all available members, inherited members, and their corresponding source code.
+Welcome to the PyOptik Source Code Documentation. This section provides a comprehensive overview of the key classes, functions, and utilities available within the `PyOptik` library. Each component is documented in detail, with information on its members, inherited properties, and direct links to the source code.
 
 Class Documentation
 ===================
 
-Below, you'll find automatically generated documentation for other significant classes and functions in the `PyOptik` library.
+Below, you will find detailed, automatically generated documentation for significant classes and functions in the `PyOptik` library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.
 
 .. _sellmeier_material:
 
 SellmeierMaterial
 -----------------
 
-The `SellmeierMaterial` class extends the `Material` base class to specifically handle materials described by the Sellmeier equation.
+The `SellmeierMaterial` class extends the `Material` base class to handle materials defined by the Sellmeier equation. It allows for precise modeling of refractive indices using parameters from the Sellmeier formula, which is essential for optical design and simulation.
 
 .. autoclass:: PyOptik.SellmeierMaterial
     :members:
-    :inherited-members:
     :member-order: bysource
     :show-inheritance:
     :undoc-members:
 
 
+
 TabulatedMaterial
 -----------------
 
-The `TabulatedMaterial` class extends the `Material` base class to specifically handle materials described by the tabulated values.
+The `TabulatedMaterial` class extends the `Material` base class to handle materials characterized by tabulated refractive index and absorption values. This class is particularly useful when working with empirical data from experiments or literature.
 
 .. autoclass:: PyOptik.TabulatedMaterial
     :members:
-    :inherited-members:
     :member-order: bysource
     :show-inheritance:
     :undoc-members:
@@ -42,19 +41,23 @@ The `TabulatedMaterial` class extends the `Material` base class to specifically 
 Utility Functions
 -----------------
 
-The `PyOptik.utils` module contains utility functions that assist with tasks like downloading data files, creating custom materials, and managing directories.
+The `PyOptik.utils` module contains various utility functions that facilitate tasks like downloading data files, creating custom material definitions, and managing directories effectively.
 
-.. automodule:: PyOptik.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
-    :member-order: bysource
+.. autofunction:: PyOptik.utils.download_yml_file
+
+.. autofunction:: PyOptik.utils.build_default_library
+
+.. autofunction:: PyOptik.utils.remove_element
+
+.. autofunction:: PyOptik.utils.create_sellmeier_file
+
+.. autofunction:: PyOptik.utils.create_tabulated_file
 
 Directives for Sphinx Gallery
 =============================
 
-The following are directives for integrating code examples using Sphinx Gallery:
+To further enhance your understanding of `PyOptik`, we have integrated practical examples throughout the documentation using Sphinx Gallery. These examples demonstrate how to use the library's classes and functions in realistic scenarios.
 
 .. note::
-    You can find example usage of the `SellmeierMaterial` and `TabulatedMaterial` classes, along with utility functions, in the "Examples" section of the documentation. These examples are automatically generated from the code and illustrate practical applications of the library.
+    You can find example usage of the `SellmeierMaterial` and `TabulatedMaterial` classes, as well as utility functions, in the "Examples" section of the documentation. These examples are automatically generated from the source code and provide hands-on insight into the practical applications of the library.
 

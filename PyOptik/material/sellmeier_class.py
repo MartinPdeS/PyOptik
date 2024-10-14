@@ -9,11 +9,9 @@ from typing import Tuple, Optional, Union
 import yaml
 from PyOptik.directories import sellmeier_data_path
 import itertools
-import warnings
 from PyOptik.material.base_class import BaseMaterial
 from MPSPlots.styles import mps
 from PyOptik.units import meter, micrometer, Quantity
-
 
 config_dict = ConfigDict(
     arbitrary_types_allowed=True
@@ -83,54 +81,7 @@ class SellmeierMaterial(BaseMaterial):
         # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
 
-    def _check_wavelength(self, wavelength_range: Quantity) -> None:
-        """
-        Checks if a wavelength is within the material's allowable range and raises a warning if it is not.
-
-        Parameters
-        ----------
-        lambda_um : float
-            The wavelength to check, in micrometers.
-
-        Raises
-        ------
-        UserWarning
-            If the wavelength is outside the allowable range.
-        """
-        if self.wavelength_bound is not None:
-            min_value, max_value = self.wavelength_bound
-
-            if numpy.any((wavelength_range < min_value) | (wavelength_range > max_value)):
-                warnings.warn(
-                    f"Wavelength range goes from {wavelength_range.min().to_compact()} to {wavelength_range.max().to_compact()} "
-                    f"which is outside the allowable range of {min_value.to_compact()} to {max_value.to_compact()} µm. "
-                    f"[Material: {self.filename}]"
-                )
-
-    def ensure_units(func):
-        """
-        Decorator to ensure that the wavelength parameter has the correct units.
-
-        Parameters
-        ----------
-        func : callable
-            The function to wrap.
-
-        Returns
-        -------
-        callable
-            The wrapped function that ensures wavelength is a Quantity in meters.
-        """
-        def wrapper(self, wavelength: Quantity = None, *args, **kwargs):
-            if wavelength is None:
-                wavelength = numpy.linspace(self.wavelength_bound[0].magnitude, self.wavelength_bound[1].magnitude, 100) * self.wavelength_bound.units
-
-            if not isinstance(wavelength, Quantity):
-                wavelength = wavelength * meter
-            return func(self, wavelength, *args, **kwargs)
-        return wrapper
-
-    @ensure_units
+    @BaseMaterial.ensure_units
     def compute_refractive_index(self, wavelength: Union[Quantity]) -> Union[float, numpy.ndarray]:
         r"""
         Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).
@@ -185,7 +136,7 @@ class SellmeierMaterial(BaseMaterial):
 
         return n[0] if is_scalar else n
 
-    @ensure_units
+    @BaseMaterial.ensure_units
     def plot(self, wavelength: Optional[Quantity] = None) -> None:
         """
         Plots the refractive index as a function of wavelength over a specified range.
@@ -204,7 +155,6 @@ class SellmeierMaterial(BaseMaterial):
             raise ValueError("wavelength must be a 1D array or list of float values.")
 
         # Calculate the refractive index over the wavelength range
-
         refractive_index = self.compute_refractive_index(wavelength)
 
         with plt.style.context(mps):

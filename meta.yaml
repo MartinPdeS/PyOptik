@@ -30,7 +30,6 @@ requirements:
     - matplotlib >=3.8
     - numpy >=1.26
     - pydantic >=2.9
-    - scipy
     - tabulate >=0.9
 
 about:
@@ -48,7 +47,7 @@ test:
     - PyOptik
   requires:
     - pip
-    - scipy==1.11.3
+    - pint
     - pytest>=0.6
     - pytest-cov>=2.0
     - pytest-json-report==1.5.0

@@ -81,16 +81,14 @@ autodoc_default_options = {
     'show-inheritance': True,
 }
 
+autosectionlabel_prefix_document = True
 numpydoc_show_class_members = False
+add_module_names = False
 
 source_suffix = '.rst'
-
 master_doc = 'index'
-
 language = 'en'
-
 highlight_language = 'python3'
-
 html_theme = "pydata_sphinx_theme"
 
 # -- Options for HTML output -------------------------------------------------
@@ -128,7 +126,6 @@ html_theme_options = {
             "name": "Anaconda",
             "url": "https://anaconda.org/MartinPdeS/pyoptik",
             "icon": "fa-brands fa-python",
-            # "icon": "_static/anaconda-icon.svg",  # Replace with the path to your logo
         },
     ],
     "navbar_align": "left",

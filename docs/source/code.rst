@@ -13,22 +13,6 @@ Class Documentation
 Below, you will find detailed, automatically generated documentation for significant classes and functions in the `PyOptik` library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.
 
 
-
-MaterialBank
-------------
-
-.. _material_bank:
-
-The `MaterialBank` class extends the `Material` base class to handle materials defined by the Sellmeier equation. It allows for precise modeling of refractive indices using parameters from the Sellmeier formula, which is essential for optical design and simulation.
-
-.. autoclass:: PyOptik._MaterialBank
-    :members:
-    :member-order: bysource
-    :show-inheritance:
-    :undoc-members:
-
-
-
 .. _sellmeier_material:
 
 

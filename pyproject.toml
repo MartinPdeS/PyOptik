@@ -23,9 +23,9 @@ classifiers = [
 keywords = ["refracive index", "optics"]
 
 dependencies = [
+    "pint",
     "pydantic>=2.6.3",
     "numpy",
-    "scipy",
     "pyyaml",
     "MPSPlots",
     "tabulate",

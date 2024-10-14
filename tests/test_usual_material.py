@@ -13,4 +13,4 @@ def test_usual_material(material_name):
 
 
 if __name__ == "__main__":
-    pytest.main([__file__])
+    pytest.main(["-W error", __file__])

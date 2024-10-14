@@ -39,7 +39,7 @@ def test_download_yml():
     )
 
 if __name__ == "__main__":
-    pytest.main([__file__])
+    pytest.main(["-W error", __file__])
 
 
 

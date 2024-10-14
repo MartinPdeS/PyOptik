@@ -5,10 +5,9 @@ import numpy
 from dataclasses import dataclass, field
 from typing import Optional, Tuple, Union, List
 import yaml
-from scipy.interpolate import interp1d
 import warnings
 from PyOptik.directories import tabulated_data_path
-from PyOptik.base_class import BaseMaterial
+from PyOptik.material.base_class import BaseMaterial
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
 
@@ -77,10 +76,10 @@ class TabulatedMaterial(BaseMaterial):
         if numpy.any(wavelength_um < self.wavelength.min()) or numpy.any(wavelength > self.wavelength.max()):
             warnings.warn(f"Wavelength: {wavelength} is outside the tabulated range of {self.wavelength.min()} µm to {self.wavelength.max()} µm. [{self.filename}]")
 
-        n_interp = interp1d(self.wavelength, self.n_values, kind='cubic', fill_value='extrapolate')
-        k_interp = interp1d(self.wavelength, self.k_values, kind='cubic', fill_value='extrapolate')
+        n_interp = numpy.interp(wavelength_um, self.wavelength, self.n_values)
+        k_interp = numpy.interp(wavelength_um, self.wavelength, self.k_values)
 
-        return n_interp(wavelength_um) + 1j * k_interp(wavelength_um)
+        return n_interp + 1j * k_interp
 
     def plot(self, wavelength: Optional[List[float]] = None) -> None:
         """

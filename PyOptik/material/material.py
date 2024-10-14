@@ -3,8 +3,8 @@
 
 from typing import Union
 from dataclasses import dataclass
-from PyOptik.sellmeier_class import SellmeierMaterial
-from PyOptik.tabulated_class import TabulatedMaterial
+from PyOptik.material.sellmeier_class import SellmeierMaterial
+from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik import data
 
 class staticproperty(property):

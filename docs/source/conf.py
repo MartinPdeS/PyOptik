@@ -111,7 +111,7 @@ html_theme_options = {
     "logo": {
         "alt_text": "PyOptik's logo",
         "text": "PyOptik",
-        "link": "https://pyoptik.readthedocs.io/en/latest/",
+        "link": "https://martinpdes.github.io/PyOptik/",
     },
     "icon_links": [
         {

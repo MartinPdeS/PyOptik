@@ -75,9 +75,7 @@ Here is a quick example demonstrating how to use PyOptik to retrieve and plot th
    # Plot the results
    bk7.plot()
 
-This code produces the following figure:
-
-|example_bk7|
+This code produces the following figure: |example_bk7|
 
 
 You can also add a custom element to your library providing a URL from `refractiveindex.info <https://refractiveindex.info>`_ website.
@@ -135,7 +133,8 @@ As of 2024, PyOptik is still under development. If you would like to collaborate
 
 .. |Logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
 
-.. |example_bk7| image:: https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png
+.. |example_bk7| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/example_bk7.png
+   :target: https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png
 
 .. |docs| image:: https://github.com/martinpdes/pyoptik/actions/workflows/deploy_documentation.yml/badge.svg
    :target: https://martinpdes.github.io/PyOptik/

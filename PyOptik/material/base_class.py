@@ -68,6 +68,8 @@ class BaseMaterial:
         """
         def wrapper(self, wavelength: Quantity = None, *args, **kwargs):
             if wavelength is None:
+                if self.wavelength_bound is None:
+                    raise ValueError('Wavelenght must be provided for computation.')
                 wavelength = numpy.linspace(self.wavelength_bound[0].magnitude, self.wavelength_bound[1].magnitude, 100) * self.wavelength_bound.units
 
             if not isinstance(wavelength, Quantity):

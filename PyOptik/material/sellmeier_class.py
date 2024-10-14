@@ -36,6 +36,7 @@ class SellmeierMaterial(BaseMaterial):
         The formula type to use for refractive index calculation.
     """
     filename: str
+
     coefficients: Optional[numpy.ndarray] = Field(default=None)
     wavelength_bound: Optional[Tuple[float, float]] = Field(default=None)
     reference: Optional[str] = Field(default=None)
@@ -73,12 +74,13 @@ class SellmeierMaterial(BaseMaterial):
         # Extract wavelength range
         if 'wavelength_range' in parsed_yaml['DATA'][0]:
             data_str = parsed_yaml['DATA'][0]['wavelength_range'].split()
+
             self.wavelength_bound = numpy.array([float(val) for val in data_str]) * micrometer
 
         else:
             self.wavelength_bound = None
 
-        # Extract reference
+        # # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
 
     @BaseMaterial.ensure_units

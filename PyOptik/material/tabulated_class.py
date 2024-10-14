@@ -5,7 +5,6 @@ import numpy
 from pydantic.dataclasses import dataclass, Field
 from typing import Optional, Union
 import yaml
-import warnings
 from PyOptik.directories import tabulated_data_path
 from PyOptik.material.base_class import BaseMaterial
 from MPSPlots.styles import mps

@@ -5,12 +5,11 @@ import pytest
 import numpy as np
 from unittest.mock import patch
 from PyOptik.material import TabulatedMaterial
-from PyOptik.data.tabulated import material_list
 from PyOptik.units import Quantity, micrometer, meter
 import matplotlib.pyplot as plt
+from PyOptik import MaterialBank
 
-
-print(material_list)
+material_list = MaterialBank.tabulated()
 
 def test_init_material():
     """Test initialization of TabulatedMaterial."""

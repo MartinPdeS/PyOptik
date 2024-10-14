@@ -2,14 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+from PyOptik import MaterialBank
+from PyOptik.directories import tabulated_data_path, sellmeier_data_path
 from PyOptik.utils import (
     build_default_library,
     remove_element,
     download_yml_file,
     create_sellmeier_file,
-    create_tabulated_file
+    create_tabulated_file,
+    clean_data_files
 )
-from PyOptik.directories import tabulated_data_path, sellmeier_data_path
+
 
 def test_download_yml_files():
     """
@@ -40,9 +43,60 @@ def test_remove_element():
     Test the removal of an element from a library. Ensures that an element can
     be removed without errors.
     """
-    remove_element(filename='test', location='any')
+    with pytest.raises(ValueError):
+        remove_element(filename='test', location='invalid_location')
+
+    download_yml_file(
+        filename='test_sellmeier',
+        url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+        location=sellmeier_data_path
+    )
+
+    remove_element(filename='test_sellmeier', location='sellmeier')
+
+    download_yml_file(
+        filename='test_tabulated',
+        url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+        location=sellmeier_data_path
+    )
+
+    remove_element(filename='test_tabulated', location='tabulated')
+
+    download_yml_file(
+        filename='test_sellmeier',
+        url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+        location=sellmeier_data_path
+    )
+
+    clean_data_files(regex='test*', location='sellmeier')
+
+
+#     download_yml_file(
+#         filename='test_tabulated',
+#         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+#         location=sellmeier_data_path
+#     )
+
+#     clean_data_files(regex='test*', location='tabulated')
 
 def test_create_custom_sellmeier_file():
+    """
+    Test the creation of a custom Sellmeier YAML file. Ensures that the file
+    is created with the correct coefficients and formula type.
+    """
+    with pytest.raises(ValueError):
+        create_sellmeier_file(
+            filename='test_sellmeier_file',
+            coefficients=[0, 1, 2, 3, 4],
+            formula_type=9,
+            wavelength_range=[0, 1],
+            comments='Dummy comment',
+            specs='Random specs'
+        )
+
+        MaterialBank.test_sellmeier_file.compute_refractive_index(1e-9)
+
+def test_fail_with_wrong_formula_type():
     """
     Test the creation of a custom Sellmeier YAML file. Ensures that the file
     is created with the correct coefficients and formula type.
@@ -50,10 +104,13 @@ def test_create_custom_sellmeier_file():
     create_sellmeier_file(
         filename='test_sellmeier_file',
         coefficients=[0, 1, 2, 3, 4],
-        formula_type=1,
+        formula_type=2,
+        wavelength_range=[0, 1],
         comments='Dummy comment',
         specs='Random specs'
     )
+
+    MaterialBank.test_sellmeier_file.compute_refractive_index(1e-9)
 
 def test_create_custom_tabulated_file():
     """

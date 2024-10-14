@@ -2,6 +2,8 @@
 import yaml
 from typing import Optional, List, Tuple
 import requests
+import re
+from pathlib import Path
 from PyOptik.directories import sellmeier_data_path, tabulated_data_path
 from PyOptik.data.sellmeier.default import default_material as sellmeier_default
 from PyOptik.data.tabulated.default import default_material as tabulated_default
@@ -115,18 +117,24 @@ def create_sellmeier_file(
         Additional specifications, such as temperature and whether the wavelength is in a vacuum.
     """
     reference = 'None' if reference is None else reference
-    wavelength_range = [None, None] if wavelength_range is None else wavelength_range
+
     # Create the data dictionary for YAML
     data = {
         'REFERENCES': reference,
         'DATA': [
             {
                 'type': f'formula {formula_type}',
-                'wavelength_range': f"{wavelength_range[0]} {wavelength_range[1]}",
                 'coefficients': " ".join(map(str, coefficients)),
             }
         ]
     }
+
+    if wavelength_range is not None:
+
+        min_bound, max_bound = wavelength_range
+
+        data['DATA'].append({'wavelength_range': f"{min_bound} {max_bound}"})
+
 
     # Add comments if provided
     if comments:
@@ -192,3 +200,45 @@ def create_tabulated_file(
         yaml.dump(yaml_data, file, default_flow_style=False)
 
     print(f"Tabulated nk data saved to {file_path}")
+
+def clean_data_files(regex: str, location: str = 'any') -> None:
+    """
+    Remove all files matching the given regex from the specified location.
+
+    Parameters
+    ----------
+    regex : str
+        The regex pattern to match the filenames (without the '.yml' suffix).
+    location : str
+        The location to search for files, either 'sellmeier', 'tabulated', or 'any' (default is 'any').
+
+    Raises
+    ------
+    ValueError
+        If an invalid location is provided.
+    """
+    # Compile the regex pattern
+    pattern = re.compile(regex)
+
+    # Normalize the location parameter
+    location = location.lower()
+
+    if location not in ['any', 'sellmeier', 'tabulated']:
+        raise ValueError("Invalid location. Please choose 'sellmeier', 'tabulated', or 'any'.")
+
+    # Function to remove matching files in a given directory
+    def remove_matching_files(directory: Path):
+        if not directory.exists():
+            return
+        for file in directory.glob("*.yml"):
+            if pattern.match(file.stem):
+                print(f"Removing file: {file}")  # Debug print or logging
+                file.unlink()
+
+    # Remove files from the sellmeier location if specified
+    if location in ['any', 'sellmeier']:
+        remove_matching_files(sellmeier_data_path)
+
+    # Remove files from the tabulated location if specified
+    if location in ['any', 'tabulated']:
+        remove_matching_files(tabulated_data_path)

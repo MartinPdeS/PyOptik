@@ -5,10 +5,11 @@ from unittest.mock import patch
 import pytest
 import numpy as np
 from PyOptik.material import SellmeierMaterial as Material
-from PyOptik.data.sellmeier import material_list
+from PyOptik import MaterialBank
 import matplotlib.pyplot as plt
 from PyOptik.units import meter, micrometer, Quantity
 
+material_list = MaterialBank.sellmeier()
 
 def test_init_material():
     """Test initialization of SellmeierMaterial."""

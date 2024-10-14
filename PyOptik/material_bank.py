@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+import os
+from typing import List
 from PyOptik.material.sellmeier_class import SellmeierMaterial
-from PyOptik.data.sellmeier import material_list as sellmeier_material_list
-from PyOptik.data.tabulated import material_list as tabulated_material_list
 from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik import data
 from PyOptik.utils import download_yml_file, remove_element
@@ -34,11 +35,13 @@ class MaterialBankMeta(type):
         FileNotFoundError
             If the material is not found in either the Sellmeier or Tabulated lists.
         """
-        if material_name in data.sellmeier.material_list:
-            return SellmeierMaterial(material_name)
 
-        if material_name in data.tabulated.material_list:
-            return TabulatedMaterial(material_name)
+        if material_name in cls.sellmeier():
+            print('--'*50, material_name, material_name.__class__)
+            return SellmeierMaterial(filename=material_name)
+
+        if material_name in cls.tabulated():
+            return TabulatedMaterial(filename=material_name)
 
         raise FileNotFoundError(f'Material: [{material_name}] could not be found.')
 
@@ -79,7 +82,21 @@ class MaterialBank(metaclass=MaterialBankMeta):
         If a material is not found in either the Sellmeier or Tabulated material lists.
     """
 
-    all = [*sellmeier_material_list, *tabulated_material_list]
+    @classmethod
+    def sellmeier(cls) -> List[str]:
+        return [
+            os.path.splitext(f)[0] for f in os.listdir(sellmeier_data_path) if os.path.isfile(os.path.join(sellmeier_data_path, f)) and f.endswith('.yml')
+        ]
+
+    @classmethod
+    def tabulated(cls) -> List[str]:
+        return [
+            os.path.splitext(f)[0] for f in os.listdir(tabulated_data_path) if os.path.isfile(os.path.join(tabulated_data_path, f)) and f.endswith('.yml')
+        ]
+
+    @classmethod
+    def all(self) -> List[str]:
+        return self.sellmeier() + self.tabulated()
 
     @classmethod
     def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:

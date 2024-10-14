@@ -6,9 +6,9 @@ except ImportError:
 
 
 from .utils import build_default_library
-from .material import Material
+from .material_bank import _MaterialBank
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial
 from .material import base_class
 
-Material = Material()
+MaterialBank = Material = _MaterialBank()

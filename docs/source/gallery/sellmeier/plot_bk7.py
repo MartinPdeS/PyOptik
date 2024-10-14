@@ -7,11 +7,11 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 """
 
 import numpy
-from PyOptik import Material
+from PyOptik import MaterialBank
 from PyOptik.units import nanometer
 
 # Initialize the material with the Sellmeier model
-material = Material.BK7
+material = MaterialBank.BK7
 
 # Calculate refractive index at specific wavelengths
 RI = material.compute_refractive_index(wavelength=[1310, 1550] * nanometer)

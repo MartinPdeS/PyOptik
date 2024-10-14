@@ -7,39 +7,6 @@ This folder contains examples demonstrating the various utility functions provid
 These utilities are designed to facilitate common tasks such as managing directories, downloading necessary data, and creating custom material definitions.
 The examples provided here aim to help you leverage these utilities effectively in your workflows.
 
-.. Contents
-.. --------
-
-.. - **Downloading Data Files**: Demonstrates how to use the `download_yml_file` function to download material data files from external sources. For example, you can download refractive index data from a URL and use it directly in PyOptik.
-.. - **Creating Custom Sellmeier Materials**: Shows how to use the `create_sellmeier_file` function to define your own Sellmeier material, which can then be utilized in optical simulations.
-.. - **Creating Custom Tabulated Materials**: Demonstrates the `create_tabulated_file` function to create a custom YAML file containing tabulated `nk` data, suitable for empirical modeling of materials.
-.. - **Managing Directories**: Shows how to manage and organize data directories effectively using PyOptik's utility functions.
-
-.. Usage
-.. -----
-
-.. To run these examples, ensure that you have installed all required dependencies as described in the main `PyOptik` README. You can then navigate to this folder and run the Python scripts as follows:
-
-.. .. code-block:: bash
-
-..     python download_data_example.py
-..     python create_sellmeier_material_example.py
-..     python create_tabulated_material_example.py
-..     python manage_directories_example.py
-
-.. These examples are designed to illustrate how utility functions can simplify your workflow, providing practical solutions to everyday tasks in optical simulation and data management.
-
-
-.. Further Information
-.. -------------------
-
-.. For more detailed information about the utility functions available in `PyOptik`, refer to the source code documentation linked below:
-
-.. .. seealso::
-..     - :ref:`source_code`
-
-.. Feel free to experiment with the examples and modify them to better suit your project requirements!
-
 
 
 .. raw:: html

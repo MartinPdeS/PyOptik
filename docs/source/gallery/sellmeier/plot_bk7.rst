@@ -40,11 +40,11 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
     import numpy
-    from PyOptik import Material
+    from PyOptik import MaterialBank
     from PyOptik.units import nanometer
 
     # Initialize the material with the Sellmeier model
-    material = Material.BK7
+    material = MaterialBank.BK7
 
     # Calculate refractive index at specific wavelengths
     RI = material.compute_refractive_index(wavelength=[1310, 1550] * nanometer)
@@ -56,7 +56,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.137 seconds)
+   **Total running time of the script:** (0 minutes 0.115 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_bk7.py:

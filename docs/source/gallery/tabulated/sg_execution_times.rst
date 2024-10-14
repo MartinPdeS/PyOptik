@@ -6,10 +6,10 @@
 
 Computation times
 =================
-**00:00.339** total execution time for **gallery_tabulated** files:
+**00:00.273** total execution time for **gallery_tabulated** files:
 
 +-----------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``plot_silver.py``) | 00:00.188 | 0.0 MB |
+| :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``plot_silver.py``) | 00:00.148 | 0.0 MB |
 +-----------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_gallery_tabulated_plot_sf5.py` (``plot_sf5.py``)       | 00:00.151 | 0.0 MB |
+| :ref:`sphx_glr_gallery_tabulated_plot_sf5.py` (``plot_sf5.py``)       | 00:00.125 | 0.0 MB |
 +-----------------------------------------------------------------------+-----------+--------+

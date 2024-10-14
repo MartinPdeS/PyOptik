@@ -12,7 +12,7 @@ from PyOptik import SellmeierMaterial
 
 # Define the file properties
 filename = 'example_sellmeier'
-coefficients = [1.0, 0.5, 0.2, 0.1, 0.05]
+coefficients = [1.86e-06, 1.31e-08, -1.37e-11, 4.34e-07, 6.27e-10, 0.17]
 formula_type = 1
 
 # Call the function to create the file

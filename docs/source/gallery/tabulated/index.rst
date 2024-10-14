@@ -3,40 +3,15 @@
 Examples: Tabulated Material
 ============================
 
-.. This folder contains examples demonstrating how to use the `TabulatedMaterial` class from the PyOptik library. These examples illustrate the practical applications of working with tabulated refractive index and absorption data, which is useful for analyzing materials based on empirical measurements.
+This folder contains examples demonstrating how to use the `TabulatedMaterial` class from the PyOptik library.
+These examples illustrate the practical applications of working with tabulated refractive index and absorption data, which is useful for analyzing materials based on empirical measurements.
 
-.. Contents
-.. --------
+Contents
+--------
 
-.. - **Basic Tabulated Material Usage**: Shows how to create an instance of the `TabulatedMaterial` class and access the refractive index and absorption values.
-.. - **Interpolating Refractive Index**: Demonstrates how to interpolate the refractive index and absorption values for a given range of wavelengths.
-.. - **Visualization Example**: Provides an example of plotting the refractive index and absorption over a range of wavelengths using the `plot` method.
-
-.. Usage
-.. -----
-
-.. To run these examples, ensure that all required dependencies have been installed as outlined in the main `PyOptik` README. Then navigate to this folder and run the Python scripts as shown:
-
-.. .. code-block:: python
-
-..     import numpy
-..     from PyOptik import Material
-..     from PyOptik.units import nanometer
-
-..     material = Material.BK7
-
-..     RI = material.compute_refractive_index(wavelength=[1310, 1550] * nanometer)
-
-..     material.plot(
-..         wavelength=numpy.linspace(300, 1500, 300) * nanometer
-..     )
-
-.. These examples are designed to help you understand how to use tabulated material data effectively for simulations and analysis.
-
-.. Further Information
-.. -------------------
-
-.. For more detailed information on the `TabulatedMaterial` class, refer to the source code documentation linked below:
+- **Basic Tabulated Material Usage**: Shows how to create an instance of the `TabulatedMaterial` class and access the refractive index and absorption values.
+- **Interpolating Refractive Index**: Demonstrates how to interpolate the refractive index and absorption values for a given range of wavelengths.
+- **Visualization Example**: Provides an example of plotting the refractive index and absorption over a range of wavelengths using the `plot` method.
 
 
 

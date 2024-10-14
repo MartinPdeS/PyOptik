@@ -40,10 +40,10 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
     import numpy
-    from PyOptik import Material
+    from PyOptik import MaterialBank
 
     # Initialize the material with the Sellmeier model
-    material = Material.fused_silica
+    material = MaterialBank.fused_silica
 
     # Calculate refractive index at specific wavelengths
     RI = material.compute_refractive_index(wavelength=[1310e-9, 1550e-9])
@@ -56,7 +56,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.118 seconds)
+   **Total running time of the script:** (0 minutes 0.109 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_silica.py:

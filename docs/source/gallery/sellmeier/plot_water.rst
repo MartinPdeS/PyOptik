@@ -40,10 +40,10 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
     import numpy
-    from PyOptik import Material
+    from PyOptik import MaterialBank
 
     # Initialize the material with the Sellmeier model
-    material = Material.water
+    material = MaterialBank.water
 
     # Calculate refractive index at specific wavelengths
     RI = material.compute_refractive_index(wavelength=[800e-9, 900e-9])
@@ -57,7 +57,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.165 seconds)
+   **Total running time of the script:** (0 minutes 0.134 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_water.py:

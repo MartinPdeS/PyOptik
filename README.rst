@@ -47,10 +47,10 @@ After installing PyOptik, you can easily access material properties:
 
 .. code:: python
 
-   from PyOptik import Material
+   from PyOptik import MaterialBank
 
    # Access the refractive index of BK7 glass
-   bk7 = Material.BK7
+   bk7 = MaterialBank.BK7
    n = bk7.compute_refractive_index(0.55e-6)
    print(f"Refractive index at 0.55 µm: {n}")
 
@@ -63,13 +63,13 @@ Here is a quick example demonstrating how to use PyOptik to retrieve and plot th
 .. code:: python
 
    import numpy as np
-   from PyOptik import Material
+   from PyOptik import MaterialBank
 
    # Define wavelength range
    wavelengths = np.linspace(0.3e-6, 2.5e-6, 100)
 
    # Retrieve refractive index for BK7 glass
-   bk7 = Material.BK7
+   bk7 = MaterialBank.BK7
    n_values = bk7.compute_refractive_index(wavelengths)
 
    # Plot the results

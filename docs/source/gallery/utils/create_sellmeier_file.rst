@@ -40,8 +40,6 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
     Sellmeier data saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/example_sellmeier.yml
     Sellmeier YAML file example_sellmeier.yml has been created in /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier
-    /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/material/sellmeier_class.py:115: RuntimeWarning: divide by zero encountered in divide
-      n_squared += (B * wavelength.to(micrometer).magnitude**2) / (wavelength.to(micrometer).magnitude**2 - C**2)
 
 
 
@@ -59,7 +57,7 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
     # Define the file properties
     filename = 'example_sellmeier'
-    coefficients = [1.0, 0.5, 0.2, 0.1, 0.05]
+    coefficients = [1.86e-06, 1.31e-08, -1.37e-11, 4.34e-07, 6.27e-10, 0.17]
     formula_type = 1
 
     # Call the function to create the file
@@ -81,7 +79,7 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.219 seconds)
+   **Total running time of the script:** (0 minutes 0.168 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_create_sellmeier_file.py:

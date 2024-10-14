@@ -17,30 +17,6 @@ Usage
 
 To run these examples, make sure you have installed all required dependencies as outlined in the main `PyOptik` README. Navigate to this folder and execute the Python scripts as follows:
 
-.. .. code-block:: python
-
-..     import numpy
-..     from PyOptik import Material
-..     from PyOptik.units import nanometer, micrometer
-
-..     material = Material.BK7
-
-..     RI = material.compute_refractive_index(wavelength=[1310, 1550] * nanometer)
-
-..     material.plot(
-..         wavelength=numpy.linspace(300, 1500, 300) * nanometer
-..     )
-
-
-.. Each example is designed to be educational, guiding you through the usage of the `SellmeierMaterial` class for different practical cases.
-
-.. Further Information
-.. -------------------
-
-.. For more details on the `SellmeierMaterial` class, refer to the comprehensive source code documentation available at the following link:
-
-
-
 
 
 .. raw:: html

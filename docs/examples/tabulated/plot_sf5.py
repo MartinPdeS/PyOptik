@@ -7,10 +7,10 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 """
 
 import numpy
-from PyOptik import Material
+from PyOptik import MaterialBank
 
 # Initialize the material with the Sellmeier model
-material = Material.SF5
+material = MaterialBank.SF5
 
 # Calculate refractive index at specific wavelengths
 RI = material.compute_refractive_index(wavelength=[1310e-9, 1550e-9])

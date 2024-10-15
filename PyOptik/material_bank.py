@@ -80,6 +80,9 @@ class _MaterialBank():
 
         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{material_name}'")
 
+    def get(self, filename: str) ->  Union[SellmeierMaterial, TabulatedMaterial]:
+        return self.__getattr__(filename)
+
     @property
     def sellmeier(self) -> List[str]:
         return [

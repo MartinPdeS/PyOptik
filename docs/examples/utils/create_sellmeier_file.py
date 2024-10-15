@@ -7,17 +7,17 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 """
 
 # %%
-from PyOptik.utils import create_sellmeier_file
 from PyOptik.directories import sellmeier_data_path
 from PyOptik import SellmeierMaterial
+from PyOptik import MaterialBank
 
 # Define the file properties
 filename = 'example_sellmeier'
-coefficients = [1.86e-06, 1.31e-08, -1.37e-11, 4.34e-07, 6.27e-10, 0.17]
+coefficients = [1.86e-06, 1.31e-08, -1.37e-11, 4.34e-07, 6.27e-1, 0.17]
 formula_type = 1
 
 # Call the function to create the file
-create_sellmeier_file(
+MaterialBank.create_sellmeier_file(
     filename=filename,
     coefficients=coefficients,
     formula_type=formula_type,
@@ -28,6 +28,6 @@ create_sellmeier_file(
 
 print(f"Sellmeier YAML file {filename}.yml has been created in {sellmeier_data_path}")
 
-m = SellmeierMaterial(filename)
+m = MaterialBank.get(filename)
 
 m.plot()

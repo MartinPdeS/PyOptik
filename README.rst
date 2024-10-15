@@ -61,10 +61,10 @@ In this example, we will download the `others` category of materials and remove 
 
 .. code:: python
 
-   from PyOptik.utils import build_library
+   from PyOptik import MaterialBank
 
-   # Download the 'others' category and remove previous files
-   build_library('others', remove_previous=True)
+   # Download the 'classics' category and remove previous files
+   MaterialBank.build_library('classics', remove_previous=True)
 
 **Available Categories:**
 
@@ -73,14 +73,14 @@ To download materials from another category, simply pass the category name as an
 .. code:: python
 
    # Download materials from the 'glasses' category
-   build_library('glasses')
+   MaterialBank.build_library('glasses')
 
 To download all material categories at once:
 
 .. code:: python
 
    # Download all available material categories
-   build_library('all')
+   MaterialBank.build_library('all')
 
 You can also set the `remove_previous` parameter to `True` to remove old data before downloading new material data.
 

@@ -54,7 +54,7 @@ PyOptik allows you to build and customize a local material library, importing ma
 
 To build a material library, use the `build_library` function. This will download and save the material data to your local machine.
 
-### Example: Building the Material Library
+**Example: Building the Material Library:**
 
 In this example, we will download the `others` category of materials and remove any previously existing data in that category:
 
@@ -65,7 +65,7 @@ In this example, we will download the `others` category of materials and remove 
    # Download the 'others' category and remove previous files
    build_library('others', remove_previous=True)
 
-### Available Categories
+**Available Categories:**
 
 To download materials from another category, simply pass the category name as an argument to `build_library`. For example:
 
@@ -88,7 +88,7 @@ Viewing Available Materials
 
 Once you have built the material library, you can view all the available materials using the `MaterialBank` class. This will print a list of materials stored in your local library.
 
-### Example:
+**Example:**
 
 .. code:: python
 
@@ -138,7 +138,7 @@ Adding and Removing Custom Materials
 
 You can add a custom material to your library by providing a URL from `refractiveindex.info <https://refractiveindex.info>`_.
 
-### Adding a Custom Material:
+**Adding a Custom Material:**
 
 .. code:: python
 
@@ -151,7 +151,7 @@ You can add a custom material to your library by providing a URL from `refractiv
       location=tabulated_data_path
    )
 
-### Removing a Material:
+**Removing a Material:**
 
 You can also remove a material from the library as follows:
 

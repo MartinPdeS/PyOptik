@@ -57,6 +57,8 @@ test:
     - coverage==7.6.1
   commands:
     - python -m pytest
+  source_files:
+    - tests
 
 extra:
   recipe-maintainers:

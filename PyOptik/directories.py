@@ -30,6 +30,8 @@ examples_path = root_path.joinpath('examples')
 sellmeier_data_path = root_path.joinpath('data/sellmeier')
 tabulated_data_path = root_path.joinpath('data/tabulated')
 
+data_path = root_path.joinpath('data')
+
 
 if __name__ == '__main__':
     for path_name in __all__:

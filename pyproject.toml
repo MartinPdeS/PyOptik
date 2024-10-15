@@ -61,6 +61,7 @@ documentation = [
 ]
 
 [tool.pytest.ini_options]
+python_functions = "test*"
 minversion = "6.0"
 xfail_strict = true
 log_cli_level = "INFO"
@@ -71,6 +72,7 @@ addopts = [
     '-v',
     '-rA',
     '-rw',
+    '-Werror',
     '--cov=PyOptik',
     '--cov-report=html',
 ]

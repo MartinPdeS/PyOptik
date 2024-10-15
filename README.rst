@@ -3,7 +3,7 @@ PyOptik
 
 PyOptik is a powerful Python tool designed to import refractive indexes and extinction coefficients for various materials across different wavelengths. The data provided by PyOptik can be used in numerous applications, including simulating light interactions with particles. All data is sourced from the reputable RefractiveIndex.INFO database.
 
-|Logo|
+|logo|
 
 .. list-table::
    :widths: 10 25 25 25
@@ -40,10 +40,67 @@ To install PyOptik, simply use `pip` or `conda`:
    pip install PyOptik
    conda install --channels martinpdes pyoptik
 
+Building the Material Library
+*****************************
+
+PyOptik allows you to build and customize a local material library, importing material data from various categories. You can download the following categories of materials from the RefractiveIndex.INFO database:
+
+- `classics`: Commonly used optical materials.
+- `glasses`: Various types of glass materials.
+- `metals`: Different metal materials for optical simulations.
+- `organics`: Organic materials with optical properties.
+- `others`: Other optical materials.
+- `all`: Download all available categories at once.
+
+To build a material library, use the `build_library` function. This will download and save the material data to your local machine.
+
+### Example: Building the Material Library
+
+In this example, we will download the `others` category of materials and remove any previously existing data in that category:
+
+.. code:: python
+
+   from PyOptik.utils import build_library
+
+   # Download the 'others' category and remove previous files
+   build_library('others', remove_previous=True)
+
+### Available Categories
+
+To download materials from another category, simply pass the category name as an argument to `build_library`. For example:
+
+.. code:: python
+
+   # Download materials from the 'glasses' category
+   build_library('glasses')
+
+To download all material categories at once:
+
+.. code:: python
+
+   # Download all available material categories
+   build_library('all')
+
+You can also set the `remove_previous` parameter to `True` to remove old data before downloading new material data.
+
+Viewing Available Materials
+***************************
+
+Once you have built the material library, you can view all the available materials using the `MaterialBank` class. This will print a list of materials stored in your local library.
+
+### Example:
+
+.. code:: python
+
+   from PyOptik import MaterialBank
+
+   # Print the available materials in a tabulated format
+   MaterialBank.print_materials()
+
 Simple Usage
 ************
 
-After installing PyOptik, you can easily access material properties:
+After installing PyOptik and building the material library, you can easily access material properties:
 
 .. code:: python
 
@@ -53,7 +110,6 @@ After installing PyOptik, you can easily access material properties:
    bk7 = MaterialBank.BK7
    n = bk7.compute_refractive_index(0.55e-6)
    print(f"Refractive index at 0.55 µm: {n}")
-
 
 Example
 *******
@@ -77,8 +133,12 @@ Here is a quick example demonstrating how to use PyOptik to retrieve and plot th
 
 This code produces the following figure: |example_bk7|
 
+Adding and Removing Custom Materials
+************************************
 
-You can also add a custom element to your library providing a URL from `refractiveindex.info <https://refractiveindex.info>`_ website.
+You can add a custom material to your library by providing a URL from `refractiveindex.info <https://refractiveindex.info>`_.
+
+### Adding a Custom Material:
 
 .. code:: python
 
@@ -91,8 +151,9 @@ You can also add a custom element to your library providing a URL from `refracti
       location=tabulated_data_path
    )
 
-Evidently, you can also remove element from the library using as follows:
+### Removing a Material:
 
+You can also remove a material from the library as follows:
 
 .. code:: python
 
@@ -126,12 +187,10 @@ As of 2024, PyOptik is still under development. If you would like to collaborate
 
 **Email**: `martin.poinsinet.de.sivry@gmail.com <mailto:martin.poinsinet.de.sivry@gmail.com?subject=PyOptik>`_
 
-
-
 .. |python| image:: https://img.shields.io/pypi/pyversions/pyoptik.svg
    :target: https://www.python.org/
 
-.. |Logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
+.. |logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
 
 .. |example_bk7| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/example_bk7.png
    :target: https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png

@@ -8,8 +8,12 @@ from PyOptik.material import SellmeierMaterial as Material
 from PyOptik import MaterialBank
 import matplotlib.pyplot as plt
 from PyOptik.units import meter, micrometer, Quantity
+from PyOptik.utils import build_library
+
+build_library('minimal', remove_previous=True)
 
 material_list = MaterialBank.sellmeier()
+
 
 def test_init_material():
     """Test initialization of SellmeierMaterial."""

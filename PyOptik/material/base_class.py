@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from typing import Callable
 from PyOptik.units import Quantity, meter
 import numpy
 import warnings
@@ -28,13 +29,13 @@ class BaseMaterial:
         """
         return self.__str__()
 
-    def _check_wavelength(self, wavelength_range: Quantity) -> None:
+    def _check_wavelength(self, wavelength: Quantity) -> None:
         """
         Checks if a wavelength is within the material's allowable range and raises a warning if it is not.
 
         Parameters
         ----------
-        lambda_um : float
+        wavelength : Quantity
             The wavelength to check, in micrometers.
 
         Raises
@@ -45,25 +46,25 @@ class BaseMaterial:
         if self.wavelength_bound is not None:
             min_value, max_value = self.wavelength_bound
 
-            if numpy.any((wavelength_range < min_value) | (wavelength_range > max_value)):
+            if numpy.any((wavelength < min_value) | (wavelength > max_value)):
                 warnings.warn(
-                    f"Wavelength range goes from {wavelength_range.min().to_compact()} to {wavelength_range.max().to_compact()} "
+                    f"Wavelength range goes from {wavelength.min().to_compact()} to {wavelength.max().to_compact()} "
                     f"which is outside the allowable range of {min_value.to_compact()} to {max_value.to_compact()} µm. "
                     f"[Material: {self.filename}]"
                 )
 
-    def ensure_units(func):
+    def ensure_units(func) -> Callable:
         """
         Decorator to ensure that the wavelength parameter has the correct units.
 
         Parameters
         ----------
-        func : callable
+        func : Callable
             The function to wrap.
 
         Returns
         -------
-        callable
+        Callable
             The wrapped function that ensures wavelength is a Quantity in meters.
         """
         def wrapper(self, wavelength: Quantity = None, *args, **kwargs):

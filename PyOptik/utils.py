@@ -1,12 +1,12 @@
 
 import yaml
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Union
 import requests
 import re
 from pathlib import Path
 from PyOptik.directories import sellmeier_data_path, tabulated_data_path
-from PyOptik.data.sellmeier.default import default_material as sellmeier_default
-from PyOptik.data.tabulated.default import default_material as tabulated_default
+from PyOptik.directories import data_path
+import numpy
 
 def download_yml_file(url: str, filename: str, location: str) -> None:
     """
@@ -42,17 +42,45 @@ def download_yml_file(url: str, filename: str, location: str) -> None:
     except Exception as err:
         print(f"An error occurred: {err}")
 
-def build_default_library() -> None:
-    """
-    Downloads and saves the default materials from the specified URLs.
-    """
-    from PyOptik.utils import download_yml_file
 
-    for name, url in sellmeier_default.items():
-        download_yml_file(url=url, filename=name, location=sellmeier_data_path)
+def build_library(library: Union[str, List[str]] = 'classics', remove_previous: bool = False) -> None:
+    """
+    Downloads and saves materials data from the specified URLs.
 
-    for name, url in tabulated_default.items():
-        download_yml_file(url=url, filename=name, location=tabulated_data_path)
+    Parameters
+    ----------
+    library : str | list[str]
+        The name or list of names of the libraries to download.
+    remove_previous : bool
+        If True, removes existing files before downloading new ones.
+    """
+    AVAILABLE_LIBRARIES = {'classics', 'glasses', 'metals', 'organics', 'others', 'minimal'}
+
+    libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
+
+    # Ensure the requested library exists
+    assert libraries_to_download.issubset(AVAILABLE_LIBRARIES), f"Library value should be in {AVAILABLE_LIBRARIES}"
+
+    # Remove previous files if the flag is set
+    if remove_previous:
+        print(f"Removing previous files from the library.")
+        clean_data_files(regex=".*", location="sellmeier")  # Remove all sellmeier files
+        clean_data_files(regex=".*", location="tabulated")  # Remove all tabulated files
+
+    for lib in libraries_to_download:
+        file_path = data_path / lib
+        with open(file_path.with_suffix('.yml'), 'r') as file:
+            data_dict = yaml.safe_load(file)
+
+        # Download new files for sellmeier
+        if data_dict.get('sellmeier', False):
+            for element_name, url in data_dict['sellmeier'].items():
+                download_yml_file(url=url, filename=element_name, location=sellmeier_data_path)
+
+        # Download new files for tabulated
+        if data_dict.get('tabulated', False):
+            for element_name, url in data_dict['tabulated'].items():
+                download_yml_file(url=url, filename=element_name, location=tabulated_data_path)
 
 
 def remove_element(filename: str, location: str = 'any') -> None:
@@ -119,23 +147,18 @@ def create_sellmeier_file(
     reference = 'None' if reference is None else reference
 
     # Create the data dictionary for YAML
-    data = {
-        'REFERENCES': reference,
-        'DATA': [
-            {
-                'type': f'formula {formula_type}',
-                'coefficients': " ".join(map(str, coefficients)),
-            }
-        ]
-    }
+    data = {}
+    data['REFERENCES'] = reference
+    data['DATA'] = dict(
+        type=f'formula {formula_type}',
+        coefficients=" ".join(map(str, coefficients))
+    )
 
     if wavelength_range is not None:
-
         min_bound, max_bound = wavelength_range
+        data['DATA'].update({'wavelength_range': f"{min_bound} {max_bound}"})
 
-        data['DATA'].append({'wavelength_range': f"{min_bound} {max_bound}"})
-
-
+    data['DATA'] = [data['DATA']]
     # Add comments if provided
     if comments:
         data['COMMENTS'] = comments

@@ -6,10 +6,9 @@ import os
 from typing import List
 from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
-from PyOptik import data
 from PyOptik.utils import download_yml_file, remove_element
 from PyOptik.directories import tabulated_data_path, sellmeier_data_path
-
+from tabulate import tabulate
 
 
 class MaterialBankMeta(type):
@@ -97,6 +96,28 @@ class MaterialBank(metaclass=MaterialBankMeta):
     @classmethod
     def all(self) -> List[str]:
         return self.sellmeier() + self.tabulated()
+
+    @classmethod
+    def print_materials(cls) -> None:
+        """
+        Prints out all the available Sellmeier and Tabulated materials in a tabulated format.
+        """
+        sellmeier_materials = cls.sellmeier()
+        tabulated_materials = cls.tabulated()
+
+        # Create data for the table
+        table_data = []
+        max_len = max(len(sellmeier_materials), len(tabulated_materials))
+        for i in range(max_len):
+            sellmeier = sellmeier_materials[i] if i < len(sellmeier_materials) else ""
+            tabulated = tabulated_materials[i] if i < len(tabulated_materials) else ""
+            table_data.append([sellmeier, tabulated])
+
+        # Define headers
+        headers = ["Sellmeier Materials", "Tabulated Materials"]
+
+        # Print the table using tabulate
+        print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
     @classmethod
     def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:

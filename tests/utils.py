@@ -5,7 +5,7 @@ import pytest
 from PyOptik import MaterialBank
 from PyOptik.directories import tabulated_data_path, sellmeier_data_path
 from PyOptik.utils import (
-    build_default_library,
+    build_library,
     remove_element,
     download_yml_file,
     create_sellmeier_file,
@@ -31,12 +31,12 @@ def test_download_yml_files():
         location=sellmeier_data_path
     )
 
-def test_build_default_library():
+def test_build_library():
     """
     Test the creation of the default library. Ensures that the default library
     is built without errors.
     """
-    build_default_library()
+    build_library()
 
 def test_remove_element():
     """
@@ -57,7 +57,7 @@ def test_remove_element():
     download_yml_file(
         filename='test_tabulated',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=sellmeier_data_path
+        location=tabulated_data_path
     )
 
     remove_element(filename='test_tabulated', location='tabulated')
@@ -71,13 +71,13 @@ def test_remove_element():
     clean_data_files(regex='test*', location='sellmeier')
 
 
-#     download_yml_file(
-#         filename='test_tabulated',
-#         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-#         location=sellmeier_data_path
-#     )
+    download_yml_file(
+        filename='test_tabulated',
+        url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+        location=tabulated_data_path
+    )
 
-#     clean_data_files(regex='test*', location='tabulated')
+    clean_data_files(regex='test*', location='tabulated')
 
 def test_create_custom_sellmeier_file():
     """
@@ -89,12 +89,12 @@ def test_create_custom_sellmeier_file():
             filename='test_sellmeier_file',
             coefficients=[0, 1, 2, 3, 4],
             formula_type=9,
-            wavelength_range=[0, 1],
+            wavelength_range=[1, 1.2],
             comments='Dummy comment',
             specs='Random specs'
         )
 
-        MaterialBank.test_sellmeier_file.compute_refractive_index(1e-9)
+        MaterialBank.test_sellmeier_file.compute_refractive_index(1.1e-6)
 
 def test_fail_with_wrong_formula_type():
     """
@@ -103,14 +103,14 @@ def test_fail_with_wrong_formula_type():
     """
     create_sellmeier_file(
         filename='test_sellmeier_file',
-        coefficients=[0, 1, 2, 3, 4],
+        coefficients=[0, 10.6684293, 0.301516485, 0.0030434748, 1.13475115, 1.54133408, 1104],
         formula_type=2,
-        wavelength_range=[0, 1],
+        wavelength_range=[1, 1.2],
         comments='Dummy comment',
         specs='Random specs'
     )
 
-    MaterialBank.test_sellmeier_file.compute_refractive_index(1e-9)
+    MaterialBank.test_sellmeier_file.compute_refractive_index(1.1e-6)
 
 def test_create_custom_tabulated_file():
     """

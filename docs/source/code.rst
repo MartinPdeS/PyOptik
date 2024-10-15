@@ -2,8 +2,8 @@
 
 .. _source_code:
 
-Source Code Documentation
-=========================
+Source Code
+===========
 
 Welcome to the PyOptik Source Code Documentation. This section provides a comprehensive overview of the key classes, functions, and utilities available within the `PyOptik` library. Each component is documented in detail, with information on its members, inherited properties, and direct links to the source code.
 

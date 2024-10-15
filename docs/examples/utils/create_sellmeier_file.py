@@ -6,6 +6,7 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 `create_sellmeier_file` function from the `PyOptik.utils` module.
 """
 
+# %%
 from PyOptik.utils import create_sellmeier_file
 from PyOptik.directories import sellmeier_data_path
 from PyOptik import SellmeierMaterial

@@ -19,6 +19,7 @@ The available libraries are:
 
 """
 
+# %%
 # Import necessary modules
 from PyOptik import MaterialBank
 

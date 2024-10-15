@@ -1,0 +1,8 @@
+sellmeier:
+  polyetylene: https://refractiveindex.info/database/data-nk/organic/(C2H4)n%20-%20polyethylene/Smith.yml
+  pva: https://refractiveindex.info/database/data-nk/organic/(C2H3Cl)n%20-%20polyvinyl%20chloride/Zhang.yml
+  pvc: https://refractiveindex.info/database/data-nk/organic/(C2H4O)n%20-%20polyvinyl%20alcohol/Schnepf.yml
+  pdms: https://refractiveindex.info/database/data-nk/organic/(C2H6OSi)n%20-%20polydimethylsiloxane/Schneider-RTV615.yml
+  polystyrene: https://refractiveindex.info/database/data-nk/organic/(C8H8)n%20-%20polystyrene/Sultanova.yml
+  polycarbonate: https://refractiveindex.info/database/data-nk/organic/(C16H14O3)n%20-%20polycarbonate/Sultanova.yml
+  cellulose: https://refractiveindex.info/database/data-nk/organic/(C6H10O5)n%20-%20cellulose/Sultanova.yml

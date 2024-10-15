@@ -6,6 +6,7 @@ This example demonstrates how to download a YAML file from a URL using the
 `download_yml_file` function from the `PyOptik.utils` module.
 """
 
+# %%
 from PyOptik.utils import download_yml_file
 from PyOptik.directories import sellmeier_data_path
 from PyOptik import SellmeierMaterial

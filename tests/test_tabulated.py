@@ -8,11 +8,10 @@ from PyOptik.material import TabulatedMaterial
 from PyOptik.units import Quantity, micrometer, meter
 import matplotlib.pyplot as plt
 from PyOptik import MaterialBank
-from PyOptik.utils import build_library
 
-build_library('minimal', remove_previous=True)
+MaterialBank.build_library('minimal', remove_previous=True)
 
-material_list = MaterialBank.tabulated()
+material_list = MaterialBank.tabulated
 
 def test_init_material():
     """Test initialization of TabulatedMaterial."""

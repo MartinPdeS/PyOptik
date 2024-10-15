@@ -5,7 +5,6 @@ except ImportError:
     __version__ = "0.0.0"
 
 
-from .utils import build_library
 from .material_bank import MaterialBank
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial

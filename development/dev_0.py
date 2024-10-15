@@ -1,14 +1,6 @@
 import yaml
-from PyOptik.directories import data_path
+from PyOptik import MaterialBank
 
-file_path = data_path / 'classic'
+MaterialBank.build_library('classics')
 
-file_path = file_path.with_suffix('.yml')
-
-
-with open(file_path.with_suffix('.yml'), 'r') as file:
-    data_dict = yaml.safe_load(file)
-
-for element, url in data_dict['sellmeier'].items():
-    print(element)
 

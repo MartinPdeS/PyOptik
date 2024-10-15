@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import yaml
+import numpy
+import itertools
+from MPSPlots.styles import mps
+import matplotlib.pyplot as plt
 from pydantic import Field, ConfigDict
 from pydantic.dataclasses import dataclass
-import matplotlib.pyplot as plt
-import numpy
 from typing import Tuple, Optional, Union
-import yaml
+from PyOptik.units import micrometer, Quantity
 from PyOptik.directories import sellmeier_data_path
-import itertools
 from PyOptik.material.base_class import BaseMaterial
-from MPSPlots.styles import mps
-from PyOptik.units import meter, micrometer, Quantity
+
 
 config_dict = ConfigDict(
     arbitrary_types_allowed=True

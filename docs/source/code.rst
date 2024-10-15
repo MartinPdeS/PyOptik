@@ -13,7 +13,21 @@ Class Documentation
 Below, you will find detailed, automatically generated documentation for significant classes and functions in the `PyOptik` library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.
 
 
-.. _sellmeier_material:
+.. _material_bank:
+
+MaterialBank
+------------
+
+The `MaterialBank` is the main interface for the user.
+
+.. autoclass:: PyOptik.material_bank._MaterialBank
+    :members:
+    :member-order: bysource
+    :show-inheritance:
+    :undoc-members:
+
+
+.. .. _sellmeier_material:
 
 
 SellmeierMaterial
@@ -47,13 +61,6 @@ The `PyOptik.utils` module contains various utility functions that facilitate ta
 
 .. autofunction:: PyOptik.utils.download_yml_file
 
-.. autofunction:: PyOptik.utils.build_default_library
-
-.. autofunction:: PyOptik.utils.remove_element
-
-.. autofunction:: PyOptik.utils.create_sellmeier_file
-
-.. autofunction:: PyOptik.utils.create_tabulated_file
 
 Directives for Sphinx Gallery
 =============================

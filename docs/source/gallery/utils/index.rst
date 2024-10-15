@@ -16,6 +16,23 @@ The examples provided here aim to help you leverage these utilities effectively 
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to build a material library using the build_library function from...">
+
+.. only:: html
+
+  .. image:: /gallery/utils/images/thumb/sphx_glr_build_library_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_utils_build_library.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Building database and Printing Materials</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to create a custom Sellmeier YAML file using the create_sellmeier...">
 
 .. only:: html
@@ -73,6 +90,7 @@ The examples provided here aim to help you leverage these utilities effectively 
 .. toctree::
    :hidden:
 
+   /gallery/utils/build_library
    /gallery/utils/create_sellmeier_file
    /gallery/utils/create_tabulated_file
    /gallery/utils/download_yml_file

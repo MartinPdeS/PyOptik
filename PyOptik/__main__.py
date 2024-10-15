@@ -1,6 +1,7 @@
-from PyOptik.utils import build_library
+from PyOptik import MaterialBank
+import logging
 
 
 if __name__ == '__main__':
-    print('Building material library')
-    build_library()
+    logging.info('Building material library')
+    MaterialBank.build_library('classics')

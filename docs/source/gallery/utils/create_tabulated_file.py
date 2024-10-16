@@ -6,9 +6,9 @@ This example demonstrates how to create a custom YAML file containing tabulated
 `nk` data using the `create_tabulated_file` function from the `PyOptik.utils` module.
 """
 
-from PyOptik.utils import create_tabulated_file
+# %%
 from PyOptik.directories import tabulated_data_path
-from PyOptik import TabulatedMaterial
+from PyOptik import MaterialBank
 
 # Define the tabulated data (wavelength in micrometers, n, k)
 tabulated_data = [
@@ -25,7 +25,7 @@ reference = "Example Reference for Tabulated Data"
 comments = "This file contains sample tabulated data for demonstration purposes. "
 
 # Call the function to create the file
-create_tabulated_file(
+MaterialBank.create_tabulated_file(
     filename=filename,
     data=tabulated_data,
     reference=reference,
@@ -34,6 +34,6 @@ create_tabulated_file(
 
 print(f"Tabulated YAML file {filename}.yml has been created in {tabulated_data_path}")
 
-m = TabulatedMaterial(filename)
+m = MaterialBank.get(filename)
 
 m.plot()

@@ -23,7 +23,7 @@ Plot the Refractive Index of Optical Material: Silver
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material silver over a specified range of wavelengths.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-23
+.. GENERATED FROM PYTHON SOURCE LINES 10-24
 
 
 
@@ -33,14 +33,42 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/silver.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/aluminium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/gold.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/calcium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/copper.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/iron.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/sodium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/nickel.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/zinc.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/chromium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/titanium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/tungsten.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/lead.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/bismuth.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/magnesium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/paladium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/rhodium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/vanadium.yml
+    File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/tantalum.yml
 
 
+
+
+
+
+|
 
 .. code-block:: python3
 
-
     import numpy
     from PyOptik import MaterialBank
+    MaterialBank.build_library('metals')
 
     # Initialize the material with the Sellmeier model
     material = MaterialBank.silver
@@ -54,10 +82,9 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
     )
 
 
-
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.148 seconds)
+   **Total running time of the script:** (0 minutes 11.563 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_silver.py:

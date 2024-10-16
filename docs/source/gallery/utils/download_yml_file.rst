@@ -24,7 +24,7 @@ Example: Download a YAML file
 This example demonstrates how to download a YAML file from a URL using the
 `download_yml_file` function from the `PyOptik.utils` module.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-23
+.. GENERATED FROM PYTHON SOURCE LINES 10-24
 
 
 
@@ -49,10 +49,9 @@ This example demonstrates how to download a YAML file from a URL using the
 
 .. code-block:: python3
 
-
     from PyOptik.utils import download_yml_file
     from PyOptik.directories import sellmeier_data_path
-    from PyOptik import SellmeierMaterial
+    from PyOptik import MaterialBank
 
     # Define the URL of the YAML file and the destination
     url = 'https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml'
@@ -61,14 +60,14 @@ This example demonstrates how to download a YAML file from a URL using the
     # Call the function to download the file
     download_yml_file(filename=filename, url=url, location=sellmeier_data_path)
 
-    m = SellmeierMaterial('example_download')
+    m = MaterialBank.get('example_download')
 
     m.plot()
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.773 seconds)
+   **Total running time of the script:** (0 minutes 0.757 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_download_yml_file.py:

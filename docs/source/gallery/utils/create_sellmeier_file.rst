@@ -24,7 +24,7 @@ Example: Create a Custom Sellmeier YAML File
 This example demonstrates how to create a custom Sellmeier YAML file using the
 `create_sellmeier_file` function from the `PyOptik.utils` module.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-33
+.. GENERATED FROM PYTHON SOURCE LINES 10-34
 
 
 
@@ -38,7 +38,6 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
  .. code-block:: none
 
-    Sellmeier data saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/example_sellmeier.yml
     Sellmeier YAML file example_sellmeier.yml has been created in /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier
 
 
@@ -50,18 +49,17 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
 .. code-block:: python3
 
-
-    from PyOptik.utils import create_sellmeier_file
     from PyOptik.directories import sellmeier_data_path
     from PyOptik import SellmeierMaterial
+    from PyOptik import MaterialBank
 
     # Define the file properties
     filename = 'example_sellmeier'
-    coefficients = [1.86e-06, 1.31e-08, -1.37e-11, 4.34e-07, 6.27e-10, 0.17]
+    coefficients = [1.86e-06, 1.31e-08, -1.37e-11, 4.34e-07, 6.27e-1, 0.17]
     formula_type = 1
 
     # Call the function to create the file
-    create_sellmeier_file(
+    MaterialBank.create_sellmeier_file(
         filename=filename,
         coefficients=coefficients,
         formula_type=formula_type,
@@ -72,14 +70,14 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 
     print(f"Sellmeier YAML file {filename}.yml has been created in {sellmeier_data_path}")
 
-    m = SellmeierMaterial(filename)
+    m = MaterialBank.get(filename)
 
     m.plot()
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.168 seconds)
+   **Total running time of the script:** (0 minutes 0.201 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_create_sellmeier_file.py:

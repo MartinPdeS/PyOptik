@@ -223,8 +223,6 @@ class _MaterialBank():
 
         # Function to remove matching files in a given directory
         def remove_matching_files(directory: Path):
-            if not directory.exists():
-                return
             for file in directory.glob("*.yml"):
                 if pattern.match(file.stem):
                     logging.info(f"Removing file: {file}")

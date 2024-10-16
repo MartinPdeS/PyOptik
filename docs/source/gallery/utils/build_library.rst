@@ -36,7 +36,22 @@ The available libraries are:
 - 'others'
 - 'all' (to download all libraries)
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-31
+.. GENERATED FROM PYTHON SOURCE LINES 23-24
+
+Import necessary modules
+
+.. GENERATED FROM PYTHON SOURCE LINES 24-32
+
+.. code-block:: python3
+
+    from PyOptik import MaterialBank
+
+    # Build the 'others' material library and remove previously downloaded files
+    MaterialBank.build_library('glasses', remove_previous=True)
+
+    # Print all the available materials (Sellmeier and Tabulated)
+    MaterialBank.print_materials()
+
 
 
 
@@ -45,25 +60,6 @@ The available libraries are:
 
  .. code-block:: none
 
-    Removing previous files from the library.
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/germanium.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/BAF10.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/lithium_niobate.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/ZBLAN.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/crown.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/flint.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/FK51A.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/soda_lime_glass.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/BAK1.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/silicon.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/BK7.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/water.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/polystyren.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/LASF9.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/SF5.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/SF11.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/SF10.yml
-    Removing file: /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/fused_silica.yml
     File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/ZBLAN.yml
     File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/BK7.yml
     File downloaded and saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/sellmeier/fused_silica.yml
@@ -126,26 +122,9 @@ The available libraries are:
 
 
 
-
-|
-
-.. code-block:: python3
-
-
-    # Import necessary modules
-    from PyOptik import MaterialBank
-
-    # Build the 'others' material library and remove previously downloaded files
-    MaterialBank.build_library('glasses', remove_previous=True)
-
-    # Print all the available materials (Sellmeier and Tabulated)
-    MaterialBank.print_materials()
-
-
-
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 11.523 seconds)
+   **Total running time of the script:** (0 minutes 10.767 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_build_library.py:

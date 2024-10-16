@@ -30,6 +30,17 @@ def test_download_yml_files():
         location=sellmeier_data_path
     )
 
+def test_add_custom():
+    MaterialBank.add_tabulated_to_bank(
+        filename='test_tabulated',
+        url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+    )
+
+    MaterialBank.add_tabulated_to_bank(
+        filename='test_sellmeier',
+        url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+    )
+
 def test_build_library():
     """
     Test the creation of the default library. Ensures that the default library

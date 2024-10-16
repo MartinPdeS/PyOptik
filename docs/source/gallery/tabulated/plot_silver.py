@@ -6,8 +6,10 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 """
 
+# %%
 import numpy
 from PyOptik import MaterialBank
+MaterialBank.build_library('metals')
 
 # Initialize the material with the Sellmeier model
 material = MaterialBank.silver
@@ -19,4 +21,3 @@ RI = material.compute_refractive_index(wavelength=[1310e-9, 1550e-9])
 material.plot(
     wavelength=numpy.linspace(300e-9, 1500e-9, 300)
 )
-

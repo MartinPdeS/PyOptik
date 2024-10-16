@@ -23,7 +23,7 @@ Plot the Refractive Index of Optical Material: Water
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material water over a specified range of wavelengths.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-23
+.. GENERATED FROM PYTHON SOURCE LINES 10-24
 
 
 
@@ -37,7 +37,6 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
 .. code-block:: python3
-
 
     import numpy
     from PyOptik import MaterialBank
@@ -57,7 +56,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.134 seconds)
+   **Total running time of the script:** (0 minutes 0.138 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_water.py:

@@ -24,7 +24,7 @@ Example: Create a Custom Tabulated Data YAML File
 This example demonstrates how to create a custom YAML file containing tabulated
 `nk` data using the `create_tabulated_file` function from the `PyOptik.utils` module.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-40
+.. GENERATED FROM PYTHON SOURCE LINES 10-40
 
 
 
@@ -38,7 +38,6 @@ This example demonstrates how to create a custom YAML file containing tabulated
 
  .. code-block:: none
 
-    Tabulated nk data saved to /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated/example_tabulated.yml
     Tabulated YAML file example_tabulated.yml has been created in /Users/martinpdes/Desktop/GitProject/PyOptik/PyOptik/data/tabulated
 
 
@@ -50,10 +49,8 @@ This example demonstrates how to create a custom YAML file containing tabulated
 
 .. code-block:: python3
 
-
-    from PyOptik.utils import create_tabulated_file
     from PyOptik.directories import tabulated_data_path
-    from PyOptik import TabulatedMaterial
+    from PyOptik import MaterialBank
 
     # Define the tabulated data (wavelength in micrometers, n, k)
     tabulated_data = [
@@ -70,7 +67,7 @@ This example demonstrates how to create a custom YAML file containing tabulated
     comments = "This file contains sample tabulated data for demonstration purposes. "
 
     # Call the function to create the file
-    create_tabulated_file(
+    MaterialBank.create_tabulated_file(
         filename=filename,
         data=tabulated_data,
         reference=reference,
@@ -79,14 +76,14 @@ This example demonstrates how to create a custom YAML file containing tabulated
 
     print(f"Tabulated YAML file {filename}.yml has been created in {tabulated_data_path}")
 
-    m = TabulatedMaterial(filename)
+    m = MaterialBank.get(filename)
 
     m.plot()
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.228 seconds)
+   **Total running time of the script:** (0 minutes 0.169 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_create_tabulated_file.py:

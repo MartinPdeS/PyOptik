@@ -25,12 +25,12 @@ requirements:
     - martinpdes::mpsplots
   run:
     - martinpdes::mpsplots
-    - pyyaml >=6.0
-    - requests >=2.31
-    - matplotlib >=3.8
-    - numpy >=1.26
-    - pydantic >=2.9
-    - tabulate >=0.9
+    - pyyaml ==6.0.*
+    - requests ==2.31.*
+    - matplotlib ==3.8.*
+    - numpy ==1.26.*
+    - pydantic ==2.9.*
+    - tabulate ==0.9.*
 
 about:
   home: https://github.com/MartinPdeS/PyOptik

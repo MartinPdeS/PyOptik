@@ -215,14 +215,14 @@ As of 2024, PyOptik is still under development. If you would like to collaborate
    :alt: PyPi version
    :target: https://pypistats.org/packages/pyoptik
 
-.. |anaconda_download| image:: https://anaconda.org/martinpdes/pyoptik/badges/downloads.svg
-   :alt: Anaconda downloads
-   :target: https://anaconda.org/martinpdes/pyoptik
-
 .. |coverage| image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/python-coverage-comment-action-data/badge.svg
    :alt: Unittest coverage
    :target: https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html
 
 .. |anaconda| image:: https://anaconda.org/martinpdes/pyoptik/badges/version.svg
    :alt: Anaconda version
+   :target: https://anaconda.org/martinpdes/pyoptik
+
+.. |anaconda_download| image:: https://anaconda.org/martinpdes/pyoptik/badges/downloads.svg
+   :alt: Anaconda downloads
    :target: https://anaconda.org/martinpdes/pyoptik

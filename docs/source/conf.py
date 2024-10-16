@@ -99,8 +99,6 @@ exclude_trees = []
 pygments_style = "sphinx"
 
 # -- Sphinx-gallery configuration --------------------------------------------
-binder_branch = "main"
-
 major, minor = version[:2]
 binder_branch = f"v{major}.{minor}.x"
 

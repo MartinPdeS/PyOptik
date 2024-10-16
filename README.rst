@@ -7,7 +7,7 @@ PyOptik is a Python tool designed to import refractive indexes and extinction co
 
 .. list-table::
    :widths: 10 25 25
-   :header-rows: 1
+   :header-rows: 0
 
    * - Meta
      - |python|

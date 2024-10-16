@@ -2,14 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-import PyOptik
 from PyOptik import MaterialBank
 from PyOptik.directories import tabulated_data_path, sellmeier_data_path
 from PyOptik.utils import download_yml_file
 
 def test_main():
     import subprocess
-
     subprocess.run(["python", "-m", "PyOptik"])
 
 

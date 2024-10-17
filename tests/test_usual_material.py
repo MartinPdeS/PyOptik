@@ -11,7 +11,7 @@ def test_usual_material(material_name):
     """
     material_instance = getattr(MaterialBank, material_name)
 
-    MaterialBank.print_materials()
+    MaterialBank.print_available()
 
     assert isinstance(material_instance, (SellmeierMaterial, TabulatedMaterial)), f"{material_name} instantiation failed."
 

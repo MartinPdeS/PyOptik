@@ -40,7 +40,10 @@ about:
   dev_url: https://github.com/MartinPdeS/PyOptik
   doc_url: https://pyoptik.readthedocs.io
   license_file: LICENSE
-
+  keywords:
+    - optics
+    - refractive index
+    - material
 
 test:
   imports:

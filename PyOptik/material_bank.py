@@ -8,6 +8,7 @@ import yaml
 import logging
 from pathlib import Path
 from typing import List, Union, Optional, Tuple
+from enum import Enum
 from PyOptik.directories import data_path
 from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
@@ -15,6 +16,9 @@ from PyOptik.utils import download_yml_file
 from tabulate import tabulate
 from dataclasses import dataclass
 
+class MaterialType(Enum):
+    SELLMEIER = "sellmeier"
+    TABULATED = "tabulated"
 
 @dataclass(frozen=True, slots=True)
 class _MaterialBank():
@@ -53,9 +57,12 @@ class _MaterialBank():
         If a material is not found in either the Sellmeier or Tabulated material lists.
     """
 
+    only_tabulated: bool = False
+    only_sellmeier: bool = False
+
     def __getattr__(self, material_name: str) -> Union[SellmeierMaterial, TabulatedMaterial]:
         """
-        Retrieve a material by name dynamically at the class level.
+        Retrieve a material by name dynamically at the class level, respecting filter options.
 
         Parameters
         ----------
@@ -69,37 +76,123 @@ class _MaterialBank():
 
         Raises
         ------
-        FileNotFoundError
-            If the material is not found in either the Sellmeier or Tabulated lists.
+        AttributeError
+            If the material is not found in the filtered or unfiltered lists.
         """
-        if material_name in self.sellmeier:
+        # Apply the filtering logic based on class-level attributes
+        if self.only_sellmeier and material_name in self.sellmeier:
             return SellmeierMaterial(filename=material_name)
-
-        if material_name in self.tabulated:
+        elif self.only_tabulated and material_name in self.tabulated:
             return TabulatedMaterial(filename=material_name)
+        elif not self.only_sellmeier and not self.only_tabulated:
+            # If no filter is set, check in both lists
+            if material_name in self.sellmeier:
+                return SellmeierMaterial(filename=material_name)
+            elif material_name in self.tabulated:
+                return TabulatedMaterial(filename=material_name)
 
         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{material_name}'")
 
-    def get(self, filename: str) ->  Union[SellmeierMaterial, TabulatedMaterial]:
-        return self.__getattr__(filename)
+    def get(self, material_name: str) -> Union[SellmeierMaterial, TabulatedMaterial]:
+        """
+        Retrieve a material by name, respecting filter options.
+
+        Parameters
+        ----------
+        material_name : str
+            The name of the material to retrieve.
+
+        Returns
+        -------
+        Union[SellmeierMaterial, TabulatedMaterial]
+            An instance of the material if found.
+
+        Raises
+        ------
+        AttributeError
+            If the material is not found in the filtered or unfiltered lists.
+        """
+        return self.__getattr__(material_name)
+
+    @classmethod
+    def set_filter(cls, only_tabulated: bool = False, only_sellmeier: bool = False) -> None:
+        """
+        Set the filter for the MaterialBank.
+
+        Parameters
+        ----------
+        only_tabulated : bool
+            If True, restricts retrieval to tabulated materials only.
+        only_sellmeier : bool
+            If True, restricts retrieval to sellmeier materials only.
+
+        Raises
+        ------
+        ValueError
+            If both only_tabulated and only_sellmeier are set to True.
+        """
+        if only_tabulated and only_sellmeier:
+            raise ValueError("Cannot set both 'only_tabulated' and 'only_sellmeier' to True.")
+
+        cls.only_tabulated = only_tabulated
+        cls.only_sellmeier = only_sellmeier
+
+    def _list_materials(self, material_type: MaterialType) -> List[str]:
+        """
+        Helper method to list materials of a specific type.
+
+        Parameters
+        ----------
+        material_type : MaterialType
+            The type of materials to list (MaterialType.SELLMEIER or MaterialType.TABULATED).
+
+        Returns
+        -------
+        List[str]
+            A list of material names of the specified type.
+        """
+        directory = data_path / material_type.value
+        return [
+            os.path.splitext(f)[0] for f in os.listdir(directory) if os.path.isfile(directory / f) and f.endswith('.yml')
+        ]
 
     @property
     def sellmeier(self) -> List[str]:
-        return [
-            os.path.splitext(f)[0] for f in os.listdir(data_path / 'sellmeier') if os.path.isfile(os.path.join(data_path / 'sellmeier', f)) and f.endswith('.yml')
-        ]
+        """
+        List all available Sellmeier materials.
+
+        Returns
+        -------
+        List[str]
+            A list of all Sellmeier material names.
+        """
+        return self._list_materials(MaterialType.SELLMEIER)
 
     @property
     def tabulated(self) -> List[str]:
-        return [
-            os.path.splitext(f)[0] for f in os.listdir(data_path / 'tabulated') if os.path.isfile(os.path.join(data_path / 'tabulated', f)) and f.endswith('.yml')
-        ]
+        """
+        List all available Tabulated materials.
+
+        Returns
+        -------
+        List[str]
+            A list of all Tabulated material names.
+        """
+        return self._list_materials(MaterialType.TABULATED)
 
     @property
     def all(self) -> List[str]:
+        """
+        List all available materials, including both Sellmeier and Tabulated materials.
+
+        Returns
+        -------
+        List[str]
+            A combined list of all Sellmeier and Tabulated material names.
+        """
         return self.sellmeier + self.tabulated
 
-    def print_materials(cls) -> None:
+    def print_available(cls) -> None:
         """
         Prints out all the available Sellmeier and Tabulated materials in a tabulated format.
         """
@@ -121,49 +214,41 @@ class _MaterialBank():
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
     @classmethod
-    def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:
+    def add_material_to_bank(cls, filename: str, url: str, material_type: MaterialType) -> None:
         """
-        Add a Sellmeier material to the material bank.
+        Add a material to the material bank.
 
-        Downloads a YAML file containing the Sellmeier material data from a specified URL and stores it
-        in the Sellmeier materials directory.
+        Downloads a YAML file containing the material data from a specified URL and stores it
+        in the specified materials directory.
 
         Parameters
         ----------
         filename : str
-            The name of the file to be saved in the Sellmeier material bank.
+            The name of the file to be saved in the material bank.
         url : str
             The URL from where the material file is downloaded.
+        material_type : MaterialType
+            The type of material (MaterialType.SELLMEIER or MaterialType.TABULATED).
 
         Returns
         -------
         None
         """
-        return download_yml_file(filename=filename, url=url, location=data_path / 'sellmeier')
+        if material_type not in [MaterialType.SELLMEIER, MaterialType.TABULATED]:
+            raise ValueError("Invalid material type. Please choose MaterialType.SELLMEIER or MaterialType.TABULATED.")
+
+        return download_yml_file(filename=filename, url=url, location=data_path / material_type.value)
+
+    @classmethod
+    def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:
+        return cls.add_material_to_bank(filename, url, MaterialType.SELLMEIER)
 
     @classmethod
     def add_tabulated_to_bank(cls, filename: str, url: str) -> None:
-        """
-        Add a Tabulated material to the material bank.
-
-        Downloads a YAML file containing the Tabulated material data from a specified URL and stores it
-        in the Tabulated materials directory.
-
-        Parameters
-        ----------
-        filename : str
-            The name of the file to be saved in the Tabulated material bank.
-        url : str
-            The URL from where the material file is downloaded.
-
-        Returns
-        -------
-        None
-        """
-        return download_yml_file(filename=filename, url=url, location=data_path / 'tabulated')
+        return cls.add_material_to_bank(filename, url, MaterialType.TABULATED)
 
     @classmethod
-    def remove_item(cls, filename: str, location: str = 'any') -> None:
+    def remove_item(cls, filename: str, location: Union[str, MaterialType] = 'any') -> None:
         """
         Remove a file associated with a given element name from the specified location.
 
@@ -171,8 +256,8 @@ class _MaterialBank():
         ----------
         filename : str
             The name of the file to remove, without the '.yml' suffix.
-        location : str
-            The location to search for the file, either 'sellmeier', 'tabulated', or 'any' (default is 'any').
+        location : Union[str, MaterialType]
+            The location to search for the file, either 'sellmeier', 'tabulated', 'any', or a MaterialType enum (default is 'any').
 
         Raises
         ------
@@ -181,6 +266,9 @@ class _MaterialBank():
         ValueError
             If an invalid location is provided.
         """
+        if isinstance(location, MaterialType):
+            location = location.value
+
         location = location.lower()
 
         if location not in ['any', 'sellmeier', 'tabulated']:
@@ -196,7 +284,7 @@ class _MaterialBank():
             if tabulated_file.exists():
                 tabulated_file.unlink()
 
-    def clean_data_files(self, regex: str, location: str = 'any') -> None:
+    def clean_data_files(self, regex: str, location: Union[str, MaterialType] = 'any') -> None:
         """
         Remove all files matching the given regex from the specified location.
 
@@ -204,7 +292,7 @@ class _MaterialBank():
         ----------
         regex : str
             The regex pattern to match the filenames (without the '.yml' suffix).
-        location : str
+        location : Union[str, MaterialType]
             The location to search for files, either 'sellmeier', 'tabulated', or 'any' (default is 'any').
 
         Raises
@@ -212,14 +300,16 @@ class _MaterialBank():
         ValueError
             If an invalid location is provided.
         """
-        # Compile the regex pattern
-        pattern = re.compile(regex)
+        if isinstance(location, MaterialType):
+            location = location.value
 
-        # Normalize the location parameter
         location = location.lower()
 
         if location not in ['any', 'sellmeier', 'tabulated']:
             raise ValueError("Invalid location. Please choose 'sellmeier', 'tabulated', or 'any'.")
+
+        # Compile the regex pattern
+        pattern = re.compile(regex)
 
         # Function to remove matching files in a given directory
         def remove_matching_files(directory: Path):
@@ -235,7 +325,6 @@ class _MaterialBank():
         # Remove files from the tabulated location if specified
         if location in ['any', 'tabulated']:
             remove_matching_files(data_path / 'tabulated')
-
 
     def build_library(self, library: Union[str, List[str]] = 'classics', remove_previous: bool = False) -> None:
         """
@@ -363,15 +452,11 @@ class _MaterialBank():
         data_str = "\n".join(" ".join(map(str, row)) for row in data)
 
         # Create the data dictionary for YAML
-        yaml_data = {
-            'REFERENCES': reference,
-            'DATA': [
-                {
-                    'type': 'tabulated nk',
-                    'data': data_str,
-                }
-            ]
-        }
+        yaml_data = {}
+        yaml_data['REFERENCES'] = reference
+        yaml_data['DATA'] = [
+            dict(type='tabulated nk', data=data_str)
+        ]
 
         # Add comments if provided
         if comments:

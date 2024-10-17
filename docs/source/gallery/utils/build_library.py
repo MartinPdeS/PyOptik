@@ -27,5 +27,5 @@ from PyOptik import MaterialBank
 MaterialBank.build_library('glasses', remove_previous=True)
 
 # Print all the available materials (Sellmeier and Tabulated)
-MaterialBank.print_materials()
+MaterialBank.print_available()
 

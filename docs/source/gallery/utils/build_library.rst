@@ -50,7 +50,7 @@ Import necessary modules
     MaterialBank.build_library('glasses', remove_previous=True)
 
     # Print all the available materials (Sellmeier and Tabulated)
-    MaterialBank.print_materials()
+    MaterialBank.print_available()
 
 
 
@@ -124,7 +124,7 @@ Import necessary modules
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 10.767 seconds)
+   **Total running time of the script:** (0 minutes 11.472 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_build_library.py:

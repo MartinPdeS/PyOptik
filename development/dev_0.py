@@ -1,13 +1,9 @@
-import yaml
+import numpy
 from PyOptik import MaterialBank
+MaterialBank.build_library('classics')
+MaterialBank.print_available()  # <- this will provide a table of Tabulated and Sellmeier materials name (usually metals are tabulated)
+material = MaterialBank.gold # <- this should be a TabulatedMaterial instance
 
-# MaterialBank.build_library('classics')
-# MaterialBank.only_sellmeier = True
+wavelength = numpy.linspace(300e-9, 500e-9, 100)
 
-MaterialBank.set_filter(only_sellmeier=False)
-
-# mater = MaterialBank.gold
-
-# MaterialBank.print_available()
-
-print(MaterialBank.all)
+ri = material.compute_refractive_index(wavelength)

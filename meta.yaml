@@ -24,6 +24,7 @@ requirements:
     - pip
     - martinpdes::mpsplots
   run:
+    - pint ~= 0.24
     - martinpdes::mpsplots
     - pyyaml ~=6.0
     - requests ~=2.31
@@ -49,8 +50,7 @@ test:
   imports:
     - PyOptik
   requires:
-    - pip
-    - pint
+    - pint ~= 0.24
     - pytest>=0.6
     - pytest-cov>=2.0
     - pytest-json-report==1.5.0

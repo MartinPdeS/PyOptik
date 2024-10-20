@@ -72,7 +72,6 @@ class TabulatedMaterial(BaseMaterial):
         except (KeyError, IndexError, ValueError):
             raise ValueError(f"Invalid or missing data in YAML file {file_path}")
 
-
         self.wavelength_bound = [self.wavelength.min().magnitude, self.wavelength.max().magnitude] * micrometer
 
         # Extract reference

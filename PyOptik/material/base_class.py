@@ -6,6 +6,7 @@ from PyOptik.units import Quantity, meter
 import numpy
 import warnings
 
+
 class BaseMaterial:
     def __str__(self) -> str:
         """

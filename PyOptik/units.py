@@ -53,9 +53,4 @@ def initialize_registry(ureg: Optional[pint.UnitRegistry] = None) -> None:
     globals()['ureg'] = ureg
 
 
-
 initialize_registry(ureg)
-
-
-
-

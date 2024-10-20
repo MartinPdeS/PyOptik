@@ -9,6 +9,7 @@ from PyOptik import MaterialBank
 import matplotlib.pyplot as plt
 from PyOptik.units import meter, micrometer, Quantity
 
+
 MaterialBank.build_library('minimal', remove_previous=True)
 
 material_list = MaterialBank.sellmeier
@@ -115,7 +116,8 @@ def test_compute_refractive_index():
 def test_invalid_formula_type():
     """Test handling of unsupported material types."""
     with pytest.raises(FileNotFoundError):
-        material = Material('invalid_material')
+        Material('invalid_material')
+
 
 @pytest.mark.parametrize('material', material_list, ids=material_list)
 @patch("matplotlib.pyplot.show")

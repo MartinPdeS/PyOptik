@@ -20,4 +20,3 @@ RI = material.compute_refractive_index(wavelength=[800e-9, 900e-9])
 material.plot(
     wavelength=numpy.linspace(300e-9, 1000e-9, 300)
 )
-

@@ -28,4 +28,3 @@ MaterialBank.build_library('glasses', remove_previous=True)
 
 # Print all the available materials (Sellmeier and Tabulated)
 MaterialBank.print_available()
-

@@ -16,9 +16,11 @@ from PyOptik.utils import download_yml_file
 from tabulate import tabulate
 from dataclasses import dataclass
 
+
 class MaterialType(Enum):
     SELLMEIER = "sellmeier"
     TABULATED = "tabulated"
+
 
 @dataclass(frozen=True, slots=True)
 class _MaterialBank():
@@ -346,7 +348,7 @@ class _MaterialBank():
 
         # Remove previous files if the flag is set
         if remove_previous:
-            logging.info(f"Removing previous files from the library.")
+            logging.info("Removing previous files from the library.")
             self.clean_data_files(regex=".*", location="sellmeier")  # Remove all sellmeier files
             self.clean_data_files(regex=".*", location="tabulated")  # Remove all tabulated files
 
@@ -366,14 +368,14 @@ class _MaterialBank():
                     download_yml_file(url=url, filename=element_name, location=data_path / 'tabulated')
 
     def create_sellmeier_file(
-        self,
-        filename: str,
-        formula_type: int,
-        coefficients: List[float],
-        wavelength_range: Optional[Tuple[float, float]] = None,
-        reference: Optional[str] = None,
-        comments: Optional[str] = None,
-        specs: Optional[dict] = None) -> None:
+            self,
+            filename: str,
+            formula_type: int,
+            coefficients: List[float],
+            wavelength_range: Optional[Tuple[float, float]] = None,
+            reference: Optional[str] = None,
+            comments: Optional[str] = None,
+            specs: Optional[dict] = None) -> None:
         """
         Creates a YAML file with custom Sellmeier coefficients in the correct format.
 
@@ -427,11 +429,11 @@ class _MaterialBank():
         logging.info(f"Sellmeier data saved to {file_path}")
 
     def create_tabulated_file(
-        self,
-        filename: str,
-        data: List[Tuple[float, float, float]],
-        reference: Optional[str] = None,
-        comments: Optional[str] = None) -> None:
+            self,
+            filename: str,
+            data: List[Tuple[float, float, float]],
+            reference: Optional[str] = None,
+            comments: Optional[str] = None) -> None:
         """
         Creates a YAML file with tabulated nk data in the correct format.
 
@@ -470,5 +472,6 @@ class _MaterialBank():
             yaml.dump(yaml_data, file, default_flow_style=False)
 
         logging.info(f"Tabulated nk data saved to {file_path}")
+
 
 MaterialBank = _MaterialBank()

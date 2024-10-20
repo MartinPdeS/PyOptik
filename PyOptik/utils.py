@@ -34,5 +34,3 @@ def download_yml_file(url: str, filename: str, location: str) -> None:
         print(f"HTTP error occurred: {http_err}")
     except Exception as err:
         print(f"An error occurred: {err}")
-
-

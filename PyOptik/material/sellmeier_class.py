@@ -18,6 +18,7 @@ config_dict = ConfigDict(
     arbitrary_types_allowed=True
 )
 
+
 @dataclass(config=config_dict, slots=True)
 class SellmeierMaterial(BaseMaterial):
     """
@@ -60,7 +61,6 @@ class SellmeierMaterial(BaseMaterial):
 
         with file_path.with_suffix('.yml').open('r') as file:
             parsed_yaml = yaml.safe_load(file)
-
 
         # Extract the formula type
         self.formula_type = int(parsed_yaml['DATA'][0]['type'].split()[-1])

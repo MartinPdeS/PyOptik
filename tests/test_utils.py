@@ -6,6 +6,7 @@ from PyOptik import MaterialBank
 from PyOptik.directories import tabulated_data_path, sellmeier_data_path
 from PyOptik.utils import download_yml_file
 
+
 def test_main():
     import subprocess
     subprocess.run(["python", "-m", "PyOptik"])
@@ -28,6 +29,7 @@ def test_download_yml_files():
         location=sellmeier_data_path
     )
 
+
 def test_add_custom():
     MaterialBank.add_tabulated_to_bank(
         filename='test_tabulated',
@@ -39,12 +41,14 @@ def test_add_custom():
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
     )
 
+
 def test_build_library():
     """
     Test the creation of the default library. Ensures that the default library
     is built without errors.
     """
     MaterialBank.build_library('minimal')
+
 
 def test_remove_item():
     """
@@ -78,7 +82,6 @@ def test_remove_item():
 
     MaterialBank.clean_data_files(regex='test*', location='sellmeier')
 
-
     download_yml_file(
         filename='test_tabulated',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
@@ -86,6 +89,7 @@ def test_remove_item():
     )
 
     MaterialBank.clean_data_files(regex='test*', location='tabulated')
+
 
 def test_create_custom_sellmeier_file():
     """
@@ -104,6 +108,7 @@ def test_create_custom_sellmeier_file():
 
         MaterialBank.test_sellmeier_file.compute_refractive_index(1.1e-6)
 
+
 def test_fail_with_wrong_formula_type():
     """
     Test the creation of a custom Sellmeier YAML file. Ensures that the file
@@ -120,6 +125,7 @@ def test_fail_with_wrong_formula_type():
 
     MaterialBank.test_sellmeier_file.compute_refractive_index(1.1e-6)
 
+
 def test_create_custom_tabulated_file():
     """
     Test the creation of a custom tabulated YAML file. Ensures that the file
@@ -135,6 +141,7 @@ def test_create_custom_tabulated_file():
         reference="Example of tabulated test file",
         comments="Room temperature"
     )
+
 
 if __name__ == "__main__":
     pytest.main(["-W error", __file__])

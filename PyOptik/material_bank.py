@@ -339,7 +339,10 @@ class _MaterialBank():
         remove_previous : bool
             If True, removes existing files before downloading new ones.
         """
-        AVAILABLE_LIBRARIES = {'classics', 'glasses', 'metals', 'organics', 'others', 'minimal'}
+        import os
+        from PyOptik.directories import data_path
+
+        AVAILABLE_LIBRARIES = [os.path.splitext(f)[0] for f in os.listdir(data_path) if f.endswith('.yml')]
 
         libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
 

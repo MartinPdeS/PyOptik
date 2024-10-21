@@ -47,7 +47,7 @@ class _MaterialBank():
 
     To add a new material to the Sellmeier bank:
 
-    >>> material.add_sellmeier_to_bank("new_material.yml", "http://example.com/material.yml")
+    >>> material.add_sellmeier_to_bank("new_material.yml", "https://refractiveindex.info/database/data-nk/main/SiO2/Malitson.yml")
 
     To remove a material from the bank:
 

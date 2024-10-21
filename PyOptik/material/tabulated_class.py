@@ -97,12 +97,16 @@ class TabulatedMaterial(BaseMaterial):
         ValueError
             If the wavelength is outside the tabulated range.
         """
+        is_scalar = numpy.isscalar(wavelength)
+
         self._check_wavelength(wavelength)
 
         n_interp = numpy.interp(wavelength.to(meter).magnitude, self.wavelength.to(meter).magnitude, self.n_values)
         k_interp = numpy.interp(wavelength.to(meter).magnitude, self.wavelength.to(meter).magnitude, self.k_values)
 
-        return n_interp + 1j * k_interp
+        index = n_interp + 1j * k_interp
+
+        return index[0] if is_scalar else index
 
     @BaseMaterial.ensure_units
     def plot(self, wavelength: Optional[Quantity] = None) -> None:

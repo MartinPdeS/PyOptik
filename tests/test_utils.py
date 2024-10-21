@@ -6,7 +6,8 @@ from PyOptik import MaterialBank
 from PyOptik.directories import tabulated_data_path, sellmeier_data_path
 from PyOptik.utils import download_yml_file
 
-MaterialBank.build_library('minimal', remove_previous=True)
+#  MaterialBank.build_library('minimal', remove_previous=True)
+
 
 def test_main():
     import subprocess

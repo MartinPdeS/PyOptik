@@ -3,7 +3,7 @@ from PyOptik import MaterialBank
 from PyOptik.material import SellmeierMaterial, TabulatedMaterial
 
 
-MaterialBank.build_library('minimal', remove_previous=True)
+#  MaterialBank.build_library('minimal', remove_previous=True)
 
 
 @pytest.mark.parametrize('material_name', MaterialBank.all, ids=lambda name: f'{name}')

@@ -9,8 +9,7 @@ from PyOptik import MaterialBank
 import matplotlib.pyplot as plt
 from PyOptik.units import meter, micrometer, Quantity
 
-
-MaterialBank.build_library('minimal', remove_previous=True)
+#  MaterialBank.build_library('minimal', remove_previous=True)
 
 material_list = MaterialBank.sellmeier
 

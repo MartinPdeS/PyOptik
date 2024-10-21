@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from PyOptik import MaterialBank
 
 
-MaterialBank.build_library('minimal', remove_previous=True)
+#  MaterialBank.build_library('minimal', remove_previous=True)
 
 material_list = MaterialBank.tabulated
 

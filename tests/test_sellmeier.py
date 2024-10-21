@@ -99,7 +99,7 @@ def test_compute_refractive_index():
     material = Material('water')
 
     # Test single wavelength input
-    wavelength = 500e-9 * meter
+    wavelength = [800e-9, 500e-9] * meter
     refractive_index = material.compute_refractive_index(wavelength)
     assert isinstance(refractive_index, np.ndarray)
 
@@ -110,6 +110,22 @@ def test_compute_refractive_index():
     refractive_indices = material.compute_refractive_index(wavelength)
     assert isinstance(refractive_indices, np.ndarray)
     assert refractive_indices.shape == wavelength.shape
+
+
+def test_compute_refractive_index_inputs():
+    """Test computation of refractive index for given wavelengths."""
+    material = Material('water')
+
+    # Test single wavelength input
+    wavelength = 500e-9
+    refractive_index = material.compute_refractive_index(wavelength)
+
+    assert np.isscalar(refractive_index), f"Refractive index [{refractive_index}] should return scalar value when wavelength [{wavelength}] input is scalar"
+
+    wavelength = [500e-9, 800e-9] * meter
+    refractive_index = material.compute_refractive_index(wavelength)
+
+    assert isinstance(refractive_index, np.ndarray), f"Refractive index [{refractive_index}] should return an array when wavelength [{wavelength}] input is an array"
 
 
 def test_invalid_formula_type():

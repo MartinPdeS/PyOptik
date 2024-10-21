@@ -104,7 +104,8 @@ class SellmeierMaterial(BaseMaterial):
         ValueError
             If the wavelength is outside the specified range or if an unsupported formula type is encountered.
         """
-        is_scalar = numpy.isscalar(wavelength)
+        return_as_scalar = numpy.isscalar(wavelength.magnitude)
+
         wavelength = numpy.atleast_1d(wavelength)
         self._check_wavelength(wavelength)
 
@@ -137,7 +138,7 @@ class SellmeierMaterial(BaseMaterial):
             case _:
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
 
-        return n[0] if is_scalar else n
+        return n[0] if return_as_scalar else n
 
     @BaseMaterial.ensure_units
     def plot(self, wavelength: Optional[Quantity] = None) -> None:

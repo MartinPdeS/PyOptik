@@ -97,7 +97,9 @@ class TabulatedMaterial(BaseMaterial):
         ValueError
             If the wavelength is outside the tabulated range.
         """
-        is_scalar = numpy.isscalar(wavelength)
+        return_as_scalar = numpy.isscalar(wavelength.magnitude)
+
+        wavelength = numpy.atleast_1d(wavelength)
 
         self._check_wavelength(wavelength)
 
@@ -106,7 +108,7 @@ class TabulatedMaterial(BaseMaterial):
 
         index = n_interp + 1j * k_interp
 
-        return index[0] if is_scalar else index
+        return index[0] if return_as_scalar else index
 
     @BaseMaterial.ensure_units
     def plot(self, wavelength: Optional[Quantity] = None) -> None:

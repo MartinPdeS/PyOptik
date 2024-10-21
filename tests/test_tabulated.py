@@ -77,6 +77,22 @@ def test_compute_refractive_index():
     assert refractive_indices.shape == wavelengths.shape
 
 
+def test_compute_refractive_index_inputs():
+    """Test computation of refractive index for given wavelengths."""
+    material = TabulatedMaterial('zinc')
+
+    # Test single wavelength input
+    wavelength = 500e-9
+    refractive_index = material.compute_refractive_index(wavelength)
+
+    assert np.isscalar(refractive_index), f"Refractive index [{refractive_index}] should return scalar value when wavelength [{wavelength}] input is scalar"
+
+    wavelength = [500e-9, 800e-9] * meter
+    refractive_index = material.compute_refractive_index(wavelength)
+
+    assert isinstance(refractive_index, np.ndarray), f"Refractive index [{refractive_index}] should return an array when wavelength [{wavelength}] input is an array"
+
+
 @patch("matplotlib.pyplot.show")
 def test_plot(mock_show):
     """Test plotting method of TabulatedMaterial."""

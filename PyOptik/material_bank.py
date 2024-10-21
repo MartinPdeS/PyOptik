@@ -9,7 +9,7 @@ import logging
 from pathlib import Path
 from typing import List, Union, Optional, Tuple
 from enum import Enum
-from PyOptik.directories import data_path
+from PyOptik.directories import data_path, libraries_path
 from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik.utils import download_yml_file
@@ -339,10 +339,7 @@ class _MaterialBank():
         remove_previous : bool
             If True, removes existing files before downloading new ones.
         """
-        import os
-        from PyOptik.directories import data_path
-
-        AVAILABLE_LIBRARIES = [os.path.splitext(f)[0] for f in os.listdir(data_path) if f.endswith('.yml')]
+        AVAILABLE_LIBRARIES = [os.path.splitext(f)[0] for f in os.listdir(libraries_path) if f.endswith('.yml')]
 
         libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
 
@@ -356,7 +353,7 @@ class _MaterialBank():
             self.clean_data_files(regex=".*", location="tabulated")  # Remove all tabulated files
 
         for lib in libraries_to_download:
-            file_path = data_path / lib
+            file_path = libraries_path / lib
             with open(file_path.with_suffix('.yml'), 'r') as file:
                 data_dict = yaml.safe_load(file)
 

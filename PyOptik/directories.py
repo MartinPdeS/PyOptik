@@ -32,6 +32,8 @@ tabulated_data_path = root_path.joinpath('data/tabulated')
 
 data_path = root_path.joinpath('data')
 
+libraries_path = root_path.joinpath('libraries')
+
 
 if __name__ == '__main__':
     for path_name in __all__:

@@ -1,0 +1,11 @@
+sellmeier:
+  ethanol: https://refractiveindex.info/database/data-nk/organic/C2H6O%20-%20ethanol/Rheims.yml
+  methanol: https://refractiveindex.info/database/data-nk/organic/CH4O%20-%20methanol/El-Kashef.yml
+  propanol: https://refractiveindex.info/database/data-nk/organic/C3H8O%20-%20propanol/Kozma.yml
+  ethylene: https://refractiveindex.info/database/data-nk/organic/C2H4%20-%20ethylene/Loria.yml
+  acetylene: https://refractiveindex.info/database/data-nk/organic/C2H2%20-%20acetylene/Loria.yml
+  methane: https://refractiveindex.info/database/data-nk/organic/CH4%20-%20methane/Loria.yml
+  ethane: https://refractiveindex.info/database/data-nk/organic/C2H6%20-%20ethane/Loria.yml
+  acetone: https://refractiveindex.info/database/data-nk/organic/C3H6O%20-%20acetone/Rheims.yml
+  glycerol: https://refractiveindex.info/database/data-nk/organic/C3H8O3%20-%20glycerol/Rheims.yml
+

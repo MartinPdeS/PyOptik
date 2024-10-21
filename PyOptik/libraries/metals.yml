@@ -1,0 +1,20 @@
+tabulated:
+  silver: https://refractiveindex.info/database/data-nk/main/Ag/Johnson.yml
+  aluminium: https://refractiveindex.info/database/data-nk/main/Al/Rakic.yml
+  gold: https://refractiveindex.info/database/data-nk/main/Au/Johnson.yml
+  calcium: https://refractiveindex.info/database/data-nk/main/Ca/Mathewson.yml
+  copper: https://refractiveindex.info/database/data-nk/main/Cu/Johnson.yml
+  iron: https://refractiveindex.info/database/data-nk/main/Fe/Johnson.yml
+  sodium: https://refractiveindex.info/database/data-nk/main/Na/Smith.yml
+  nickel: https://refractiveindex.info/database/data-nk/main/Ni/Johnson.yml
+  zinc: https://refractiveindex.info/database/data-nk/main/Zn/Werner.yml
+  chromium: https://refractiveindex.info/database/data-nk/main/Cr/Johnson.yml
+  titanium: https://refractiveindex.info/database/data-nk/main/Ti/Johnson.yml
+  tungsten: https://refractiveindex.info/database/data-nk/main/W/Werner.yml
+  lead: https://refractiveindex.info/database/data-nk/main/Pb/Werner.yml
+  bismuth: https://refractiveindex.info/database/data-nk/main/Bi/Werner.yml
+  magnesium: https://refractiveindex.info/database/data-nk/main/Mg/Hagemann.yml
+  paladium: https://refractiveindex.info/database/data-nk/main/Pd/Johnson.yml
+  rhodium: https://refractiveindex.info/database/data-nk/main/Rh/Arndt.yml
+  vanadium: https://refractiveindex.info/database/data-nk/main/V/Johnson.yml
+  tantalum: https://refractiveindex.info/database/data-nk/main/Ta/Werner.yml

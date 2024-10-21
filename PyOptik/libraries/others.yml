@@ -1,0 +1,4 @@
+sellmeier:
+  air: https://refractiveindex.info/database/data-nk/other/mixed%20gases/air/Ciddor.yml
+  water: https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml
+  argon: https://refractiveindex.info/database/data-nk/main/Ar/Bideau-Mehu.yml

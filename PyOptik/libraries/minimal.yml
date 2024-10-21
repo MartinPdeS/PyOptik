@@ -1,0 +1,9 @@
+sellmeier:
+  argon: https://refractiveindex.info/database/data-nk/main/Ar/Bideau-Mehu.yml
+  air: https://refractiveindex.info/database/data-nk/other/mixed%20gases/air/Ciddor.yml
+  water: https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml
+  soda_lime_glass: https://refractiveindex.info/database/data-nk/glass/misc/soda-lime/Rubin-clear.yml
+  silicon: https://refractiveindex.info/database/data-nk/main/Si/Salzberg.yml
+
+tabulated:
+  zinc: https://refractiveindex.info/database/data-nk/main/Zn/Werner.yml

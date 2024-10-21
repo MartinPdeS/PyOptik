@@ -23,8 +23,8 @@ The available libraries are:
 # Import necessary modules
 from PyOptik import MaterialBank
 
-# Build the 'others' material library and remove previously downloaded files
-MaterialBank.build_library('dielectrics', remove_previous=True)
+# Build the 'classics' material library and remove previously downloaded files
+MaterialBank.build_library('classics', remove_previous=True)
 
 # Print all the available materials (Sellmeier and Tabulated)
 MaterialBank.print_available()

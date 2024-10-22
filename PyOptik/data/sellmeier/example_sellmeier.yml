@@ -1,0 +1,6 @@
+COMMENTS: 'This is a sample Sellmeier file created for demonstration purposes. '
+DATA:
+- coefficients: 1.86e-06 1.31e-08 -1.37e-11 4.34e-07 0.627 0.17
+  type: formula 1
+  wavelength_range: 0.2 2.0
+REFERENCES: Sample Reference

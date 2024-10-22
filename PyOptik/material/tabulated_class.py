@@ -13,11 +13,11 @@ from PyOptik.units import Quantity, micrometer, meter
 
 
 config_dict = ConfigDict(
-    arbitrary_types_allowed=True, unsafe_hash=True
+    arbitrary_types_allowed=True
 )
 
 
-@dataclass(config=config_dict, slots=True)
+@dataclass(config=config_dict, slots=True, eq=False)
 class TabulatedMaterial(BaseMaterial):
     """
     Class representing a material with tabulated refractive index (n) and absorption (k) values.
@@ -40,15 +40,6 @@ class TabulatedMaterial(BaseMaterial):
     n_values: numpy.ndarray = Field(init=False)
     k_values: numpy.ndarray = Field(init=False)
     reference: Optional[str] = Field(init=False)
-
-    def __eq__(self, other) -> bool:
-        if not isinstance(other, TabulatedMaterial):
-            return False
-
-        if self.filename != other.filename:
-            return False
-
-        return True
 
     def __post_init__(self) -> None:
         """

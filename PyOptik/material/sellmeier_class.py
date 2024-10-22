@@ -18,7 +18,7 @@ config_dict = ConfigDict(
 )
 
 
-@dataclass(config=config_dict, slots=True)
+@dataclass(config=config_dict, slots=True, eq=False)
 class SellmeierMaterial(BaseMaterial):
     """
     Class representing a material with Sellmeier coefficients for refractive index computation.
@@ -42,15 +42,6 @@ class SellmeierMaterial(BaseMaterial):
     wavelength_bound: Optional[Tuple[float, float]] = Field(default=None)
     reference: Optional[str] = Field(default=None)
     formula_type: Optional[int] = Field(default=None)
-
-    def __eq__(self, other) -> bool:
-        if not isinstance(other, SellmeierMaterial):
-            return False
-
-        if self.filename != other.filename:
-            return False
-
-        return True
 
     def __post_init__(self) -> None:
         """

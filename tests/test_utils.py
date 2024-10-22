@@ -37,10 +37,19 @@ def test_add_custom():
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
     )
 
-    MaterialBank.add_tabulated_to_bank(
+    MaterialBank.add_sellmeier_to_bank(
         filename='test_sellmeier',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
     )
+
+
+def test_fail_add_custom():
+    with pytest.raises(ValueError):
+        MaterialBank.add_material_to_bank(
+            filename='test_tabulated',
+            url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
+            material_type='invalid_location'
+        )
 
 
 def test_build_library():
@@ -48,7 +57,7 @@ def test_build_library():
     Test the creation of the default library. Ensures that the default library
     is built without errors.
     """
-    MaterialBank.build_library('minimal')
+    MaterialBank.build_library('minimal', remove_previous=True)
 
 
 def test_remove_item():

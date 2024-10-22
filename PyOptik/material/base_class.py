@@ -8,6 +8,15 @@ import warnings
 
 
 class BaseMaterial:
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+
+        if self.filename != other.filename:
+            return False
+
+        return True
+
     def __str__(self) -> str:
         """
         Provides an informal string representation of the Material object.

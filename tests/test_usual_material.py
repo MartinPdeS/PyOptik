@@ -19,6 +19,16 @@ def test_usual_material(material_name):
     assert getattr(MaterialBank, material_name) == MaterialBank.get(material_name), 'Both __getattr__ and get() method should return the same Material instance.'
 
 
+def tests_material_api():
+    MaterialBank.build_library('classics')
+    material_0 = MaterialBank.zinc
+    material_1 = MaterialBank.water
+    material_2 = MaterialBank.BK7
+
+    assert material_0 != material_1, "Two different material [Tabulated vs Sellmeier] are evaluated as equal"
+    assert material_2 != material_1, "Two different material [Sellmeier vs Sellmeier] are evaluated as equal"
+
+
 def test_material_bank_filter():
     MaterialBank.set_filter(use_sellmeier=True, use_tabulated=False)
 

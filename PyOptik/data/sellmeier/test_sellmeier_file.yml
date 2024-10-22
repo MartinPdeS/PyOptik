@@ -1,0 +1,7 @@
+COMMENTS: Dummy comment
+DATA:
+- coefficients: 0 10.6684293 0.301516485 0.0030434748 1.13475115 1.54133408 1104
+  type: formula 2
+  wavelength_range: 1 1.2
+REFERENCES: None
+SPECS: Random specs

@@ -2,17 +2,16 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                              |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
-|---------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
-| PyOptik/\_\_main\_\_.py           |        4 |        4 |        2 |        0 |      0% |       1-6 |
-| PyOptik/base\_class.py            |        5 |        1 |        0 |        0 |     80% |        21 |
-| PyOptik/data/sellmeier/default.py |        1 |        0 |        0 |        0 |    100% |           |
-| PyOptik/data/tabulated/default.py |        1 |        0 |        0 |        0 |    100% |           |
-| PyOptik/material.py               |       55 |        2 |       32 |       16 |     79% |43->42, 57, 62, 67->66, 72->71, 77->76, 82->81, 87->86, 92->91, 97->96, 102->101, 107->106, 112->111, 117->116, 122->121, 127->126 |
-| PyOptik/sellmeier\_class.py       |       85 |        6 |       38 |        6 |     90% |52, 67->exit, 92, 126-127, 141, 146 |
-| PyOptik/tabulated\_class.py       |       60 |        4 |       10 |        2 |     91% | 67, 84-86 |
-| PyOptik/utils.py                  |       59 |        6 |       30 |        8 |     82% |34-37, 67, 69->74, 72, 74->exit, 76->exit, 114->118, 118->122, 161->165 |
-|                         **TOTAL** |  **270** |   **23** |  **112** |   **32** | **85%** |           |
+| Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
+|------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
+| PyOptik/\_\_main\_\_.py              |        5 |        0 |        2 |        1 |     86% |   5->exit |
+| PyOptik/material/base\_class.py      |       25 |        2 |       10 |        2 |     89% |31, 47->exit, 74 |
+| PyOptik/material/sellmeier\_class.py |       79 |        2 |       24 |        2 |     96% |   82, 159 |
+| PyOptik/material/tabulated\_class.py |       56 |        3 |        2 |        1 |     93% | 59, 72-73 |
+| PyOptik/material\_bank.py            |      153 |       14 |       60 |       15 |     85% |86, 88, 89->96, 117, 136-140, 240, 246, 272, 281->284, 286->exit, 306, 351-353, 361->366, 366->355, 409->413, 415->419, 419->423, 464->468 |
+| PyOptik/units.py                     |       18 |        0 |        4 |        0 |    100% |           |
+| PyOptik/utils.py                     |       14 |        4 |        0 |        0 |     71% |     33-36 |
+|                            **TOTAL** |  **350** |   **25** |  **102** |   **21** | **89%** |           |
 
 
 ## Setup coverage badge

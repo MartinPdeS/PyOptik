@@ -20,7 +20,7 @@ def test_usual_material(material_name):
 
 
 def tests_material_api():
-    MaterialBank.build_library('classics')
+    MaterialBank.build_library('classics', remove_previous=True)
     material_0 = MaterialBank.zinc
     material_1 = MaterialBank.water
     material_2 = MaterialBank.BK7

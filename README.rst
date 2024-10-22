@@ -143,14 +143,17 @@ You can add a custom material to your library by providing a URL from `refractiv
 
 .. code:: python
 
-   from PyOptik.utils import download_yml_file
-   from PyOptik.directories import sellmeier_data_path  # or tabulated_data_path for tabulated elements
+   from PyOptik import MaterialBank, MaterialType
 
-   download_yml_file(
-      filename='test',
-      url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-      location=tabulated_data_path
+   # Define the URL of the YAML file and the destination
+   # Call the function to download the file
+   MaterialBank.add_material_to_bank(
+      filename='example_download',
+      material_type=MaterialType.SELLMEIER,
+      url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml'
    )
+
+   MaterialBank.print_available()
 
 **Removing a Material:**
 
@@ -160,7 +163,7 @@ You can also remove a material from the library as follows:
 
    from PyOptik.utils import remove_element
 
-   remove_element(filename='test', location='any')  # location can be "any", "sellmeier" or "tabulated"
+   MaterialBank.remove_item(filename='example_download')
 
 Testing
 *******

@@ -1,6 +1,6 @@
 import numpy
 from PyOptik import MaterialBank
-MaterialBank.build_library('classics')
+MaterialBank.build_library('classics', remove_previous=True)
 # MaterialBank.print_available()  # <- this will provide a table of Tabulated and Sellmeier materials name (usually metals are tabulated)
 # material = MaterialBank.gold  # <- this should be a TabulatedMaterial instance
 

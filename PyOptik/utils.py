@@ -1,7 +1,10 @@
 import requests
+import logging
+from PyOptik.directories import sellmeier_data_path, tabulated_data_path
+from PyOptik.material_type import MaterialType
 
 
-def download_yml_file(url: str, filename: str, location: str) -> None:
+def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
     """
     Downloads a .yml file from a specified URL and saves it locally.
 
@@ -16,7 +19,14 @@ def download_yml_file(url: str, filename: str, location: str) -> None:
     ------
         HTTPError: If the download fails due to an HTTP error.
     """
-    file_path = location / f"{filename}.yml"
+    match location:
+        case MaterialType.SELLMEIER:
+            file_path = sellmeier_data_path / f"{filename}.yml"
+        case MaterialType.TABULATED:
+            file_path = tabulated_data_path / f"{filename}.yml"
+        case _:
+            raise ValueError(f"Location [{location}] is invalid, it can be either MaterialType.SELLMEIER or MaterialType.TABULATED")
+
     try:
         # Send a GET request to the URL
         response = requests.get(url)
@@ -28,9 +38,9 @@ def download_yml_file(url: str, filename: str, location: str) -> None:
         with open(file_path, 'wb') as file:
             file.write(response.content)
 
-        print(f"File downloaded and saved to {file_path}")
+        logging.info(f"File downloaded and saved to {file_path}")
 
     except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred: {http_err}")
+        logging.warning(f"HTTP error occurred: {http_err}")
     except Exception as err:
-        print(f"An error occurred: {err}")
+        logging.error(f"An error occurred: {err}")

@@ -6,8 +6,7 @@ import numpy
 import itertools
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
-from pydantic import Field, ConfigDict
-from pydantic.dataclasses import dataclass
+from pydantic.dataclasses import Field, ConfigDict, dataclass
 from typing import Tuple, Optional, Union
 from PyOptik.units import micrometer, Quantity
 from PyOptik.directories import sellmeier_data_path
@@ -43,6 +42,15 @@ class SellmeierMaterial(BaseMaterial):
     wavelength_bound: Optional[Tuple[float, float]] = Field(default=None)
     reference: Optional[str] = Field(default=None)
     formula_type: Optional[int] = Field(default=None)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, SellmeierMaterial):
+            return False
+
+        if self.filename != other.filename:
+            return False
+
+        return True
 
     def __post_init__(self) -> None:
         """

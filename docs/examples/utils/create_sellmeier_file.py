@@ -7,7 +7,6 @@ This example demonstrates how to create a custom Sellmeier YAML file using the
 """
 
 # %%
-from PyOptik.directories import sellmeier_data_path
 from PyOptik import MaterialBank
 
 # Define the file properties
@@ -24,8 +23,6 @@ MaterialBank.create_sellmeier_file(
     reference="Sample Reference",
     comments="This is a sample Sellmeier file created for demonstration purposes. "
 )
-
-print(f"Sellmeier YAML file {filename}.yml has been created in {sellmeier_data_path}")
 
 m = MaterialBank.get(filename)
 

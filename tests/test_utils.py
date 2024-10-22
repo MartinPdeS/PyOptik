@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from PyOptik import MaterialBank
-from PyOptik.directories import tabulated_data_path, sellmeier_data_path
+from PyOptik import MaterialBank, MaterialType
 from PyOptik.utils import download_yml_file
 
-#  MaterialBank.build_library('minimal', remove_previous=True)
+MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 
 def test_main():
@@ -22,13 +21,13 @@ def test_download_yml_files():
     download_yml_file(
         filename='test_tabulated',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=tabulated_data_path
+        location=MaterialType.TABULATED
     )
 
     download_yml_file(
         filename='test_sellmeier',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=sellmeier_data_path
+        location=MaterialType.SELLMEIER
     )
 
 
@@ -63,34 +62,34 @@ def test_remove_item():
     download_yml_file(
         filename='test_sellmeier',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=sellmeier_data_path
+        location=MaterialType.SELLMEIER
     )
 
-    MaterialBank.remove_item(filename='test_sellmeier', location='sellmeier')
+    MaterialBank.remove_item(filename='test_sellmeier', location=MaterialType.SELLMEIER)
 
     download_yml_file(
         filename='test_tabulated',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=tabulated_data_path
+        location=MaterialType.TABULATED
     )
 
-    MaterialBank.remove_item(filename='test_tabulated', location='tabulated')
+    MaterialBank.remove_item(filename='test_tabulated', location=MaterialType.TABULATED)
 
     download_yml_file(
         filename='test_sellmeier',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=sellmeier_data_path
+        location=MaterialType.SELLMEIER
     )
 
-    MaterialBank.clean_data_files(regex='test*', location='sellmeier')
+    MaterialBank.clean_data_files(regex='test*', location=MaterialType.SELLMEIER)
 
     download_yml_file(
         filename='test_tabulated',
         url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml',
-        location=tabulated_data_path
+        location=MaterialType.TABULATED
     )
 
-    MaterialBank.clean_data_files(regex='test*', location='tabulated')
+    MaterialBank.clean_data_files(regex='test*', location=MaterialType.TABULATED)
 
 
 def test_create_custom_sellmeier_file():
@@ -143,6 +142,16 @@ def test_create_custom_tabulated_file():
         reference="Example of tabulated test file",
         comments="Room temperature"
     )
+
+
+def test_download_yml_file_http_error_log(caplog):
+    download_yml_file(
+        filename='example_download',
+        url='__invalid_url__.com',
+        location=MaterialType.SELLMEIER
+    )
+
+    assert 'An error occurred' in caplog.text, "Warning was not raised: {caplog.text}"
 
 
 if __name__ == "__main__":

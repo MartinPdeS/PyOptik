@@ -11,7 +11,7 @@ from PyOptik import MaterialBank
 
 
 #  MaterialBank.build_library('minimal', remove_previous=True)
-
+MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 material_list = MaterialBank.tabulated
 
 

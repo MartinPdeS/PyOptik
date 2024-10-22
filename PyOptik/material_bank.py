@@ -8,18 +8,13 @@ import yaml
 import logging
 from pathlib import Path
 from typing import List, Union, Optional, Tuple
-from enum import Enum
 from PyOptik.directories import data_path, libraries_path
 from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik.utils import download_yml_file
 from tabulate import tabulate
 from dataclasses import dataclass
-
-
-class MaterialType(Enum):
-    SELLMEIER = "sellmeier"
-    TABULATED = "tabulated"
+from PyOptik.material_type import MaterialType
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,8 +54,8 @@ class _MaterialBank():
         If a material is not found in either the Sellmeier or Tabulated material lists.
     """
 
-    only_tabulated: bool = False
-    only_sellmeier: bool = False
+    use_tabulated: bool = True
+    use_sellmeier: bool = True
 
     def __getattr__(self, material_name: str) -> Union[SellmeierMaterial, TabulatedMaterial]:
         """
@@ -82,16 +77,10 @@ class _MaterialBank():
             If the material is not found in the filtered or unfiltered lists.
         """
         # Apply the filtering logic based on class-level attributes
-        if self.only_sellmeier and material_name in self.sellmeier:
+        if material_name in self.sellmeier:
             return SellmeierMaterial(filename=material_name)
-        elif self.only_tabulated and material_name in self.tabulated:
+        elif material_name in self.tabulated:
             return TabulatedMaterial(filename=material_name)
-        elif not self.only_sellmeier and not self.only_tabulated:
-            # If no filter is set, check in both lists
-            if material_name in self.sellmeier:
-                return SellmeierMaterial(filename=material_name)
-            elif material_name in self.tabulated:
-                return TabulatedMaterial(filename=material_name)
 
         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{material_name}'")
 
@@ -117,30 +106,30 @@ class _MaterialBank():
         return self.__getattr__(material_name)
 
     @classmethod
-    def set_filter(cls, only_tabulated: bool = False, only_sellmeier: bool = False) -> None:
+    def set_filter(cls, use_tabulated: bool = False, use_sellmeier: bool = False) -> None:
         """
         Set the filter for the MaterialBank.
 
         Parameters
         ----------
-        only_tabulated : bool
+        use_tabulated : bool
             If True, restricts retrieval to tabulated materials only.
-        only_sellmeier : bool
+        use_sellmeier : bool
             If True, restricts retrieval to sellmeier materials only.
 
         Raises
         ------
         ValueError
-            If both only_tabulated and only_sellmeier are set to True.
+            If both use_tabulated and use_sellmeier are set to True.
         """
-        if only_tabulated and only_sellmeier:
-            raise ValueError("Cannot set both 'only_tabulated' and 'only_sellmeier' to True.")
+        if not use_tabulated and not use_sellmeier:
+            raise ValueError("Cannot set both 'use_tabulated' and 'use_sellmeier' to False.")
 
-        cls.only_tabulated = only_tabulated
-        cls.only_sellmeier = only_sellmeier
+        cls.use_tabulated = use_tabulated
+        cls.use_sellmeier = use_sellmeier
 
     def _list_materials(self, material_type: MaterialType) -> List[str]:
-        """
+        """create_sellmeier_file
         Helper method to list materials of a specific type.
 
         Parameters
@@ -168,7 +157,7 @@ class _MaterialBank():
         List[str]
             A list of all Sellmeier material names.
         """
-        return self._list_materials(MaterialType.SELLMEIER)
+        return self._list_materials(MaterialType.SELLMEIER) if self.use_sellmeier else []
 
     @property
     def tabulated(self) -> List[str]:
@@ -180,7 +169,7 @@ class _MaterialBank():
         List[str]
             A list of all Tabulated material names.
         """
-        return self._list_materials(MaterialType.TABULATED)
+        return self._list_materials(MaterialType.TABULATED) if self.use_tabulated else []
 
     @property
     def all(self) -> List[str]:
@@ -239,15 +228,15 @@ class _MaterialBank():
         if material_type not in [MaterialType.SELLMEIER, MaterialType.TABULATED]:
             raise ValueError("Invalid material type. Please choose MaterialType.SELLMEIER or MaterialType.TABULATED.")
 
-        return download_yml_file(filename=filename, url=url, location=data_path / material_type.value)
+        return download_yml_file(filename=filename, url=url, location=material_type)
 
     @classmethod
     def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:
-        return cls.add_material_to_bank(filename, url, MaterialType.SELLMEIER)
+        return cls.add_material_to_bank(filename=filename, url=url, material_type=MaterialType.SELLMEIER)
 
     @classmethod
     def add_tabulated_to_bank(cls, filename: str, url: str) -> None:
-        return cls.add_material_to_bank(filename, url, MaterialType.TABULATED)
+        return cls.add_material_to_bank(filename=filename, url=url, material_type=MaterialType.TABULATED)
 
     @classmethod
     def remove_item(cls, filename: str, location: Union[str, MaterialType] = 'any') -> None:
@@ -360,12 +349,12 @@ class _MaterialBank():
             # Download new files for sellmeier
             if data_dict.get('sellmeier', False):
                 for element_name, url in data_dict['sellmeier'].items():
-                    download_yml_file(url=url, filename=element_name, location=data_path / 'sellmeier')
+                    download_yml_file(url=url, filename=element_name, location=MaterialType.SELLMEIER)
 
             # Download new files for tabulated
             if data_dict.get('tabulated', False):
                 for element_name, url in data_dict['tabulated'].items():
-                    download_yml_file(url=url, filename=element_name, location=data_path / 'tabulated')
+                    download_yml_file(url=url, filename=element_name, location=MaterialType.TABULATED)
 
     def create_sellmeier_file(
             self,

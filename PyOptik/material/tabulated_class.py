@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy
-from pydantic.dataclasses import dataclass, Field
+from pydantic.dataclasses import dataclass, Field, ConfigDict
 from typing import Optional, Union
 import yaml
 from PyOptik.directories import tabulated_data_path
@@ -12,7 +12,12 @@ import matplotlib.pyplot as plt
 from PyOptik.units import Quantity, micrometer, meter
 
 
-@dataclass(config=dict(arbitrary_types_allowed=True))
+config_dict = ConfigDict(
+    arbitrary_types_allowed=True, unsafe_hash=True
+)
+
+
+@dataclass(config=config_dict, slots=True)
 class TabulatedMaterial(BaseMaterial):
     """
     Class representing a material with tabulated refractive index (n) and absorption (k) values.
@@ -35,6 +40,15 @@ class TabulatedMaterial(BaseMaterial):
     n_values: numpy.ndarray = Field(init=False)
     k_values: numpy.ndarray = Field(init=False)
     reference: Optional[str] = Field(init=False)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, TabulatedMaterial):
+            return False
+
+        if self.filename != other.filename:
+            return False
+
+        return True
 
     def __post_init__(self) -> None:
         """

@@ -6,6 +6,8 @@ except ImportError:
 
 
 from .material_bank import MaterialBank
+from .material_type import MaterialType
+
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial
 from .material import base_class

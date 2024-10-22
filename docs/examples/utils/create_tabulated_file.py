@@ -7,8 +7,8 @@ This example demonstrates how to create a custom YAML file containing tabulated
 """
 
 # %%
-from PyOptik.directories import tabulated_data_path
 from PyOptik import MaterialBank
+
 
 # Define the tabulated data (wavelength in micrometers, n, k)
 tabulated_data = [
@@ -31,8 +31,6 @@ MaterialBank.create_tabulated_file(
     reference=reference,
     comments=comments
 )
-
-print(f"Tabulated YAML file {filename}.yml has been created in {tabulated_data_path}")
 
 m = MaterialBank.get(filename)
 

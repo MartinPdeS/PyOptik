@@ -113,9 +113,10 @@ class SellmeierMaterial(BaseMaterial):
 
         match self.formula_type:
             case 1:  # Formula 1 computation (standard Sellmeier)
-                n_squared = self.coefficients[0]
+                n_squared = 1.0
                 for (B, C) in zipped_coefficients:
                     n_squared += (B * wavelength.to(micrometer).magnitude**2) / (wavelength.to(micrometer).magnitude**2 - C**2)
+
                 n = numpy.sqrt(n_squared)
 
             case 2:  # Formula 2 computation (extended Sellmeier)

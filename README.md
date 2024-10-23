@@ -6,7 +6,7 @@
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | PyOptik/\_\_main\_\_.py              |        5 |        0 |        2 |        1 |     86% |   5->exit |
 | PyOptik/material/base\_class.py      |       31 |        2 |       14 |        2 |     91% |40, 56->exit, 83 |
-| PyOptik/material/sellmeier\_class.py |       78 |        2 |       24 |        2 |     96% |   81, 158 |
+| PyOptik/material/sellmeier\_class.py |       78 |        2 |       24 |        2 |     96% |   81, 159 |
 | PyOptik/material/tabulated\_class.py |       57 |        3 |        2 |        1 |     93% | 64, 77-78 |
 | PyOptik/material\_bank.py            |      145 |        1 |       54 |        9 |     95% |126, 270->273, 275->exit, 350->355, 355->344, 398->402, 404->408, 408->412, 453->457 |
 | PyOptik/material\_type.py            |        4 |        0 |        0 |        0 |    100% |           |

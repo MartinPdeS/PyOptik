@@ -21,3 +21,5 @@ wheelhouse
 
 docs/source/gallery/*
 !docs/source/gallery/index.rst
+PyOptik/data/**/test*
+PyOptik/data/**/example*

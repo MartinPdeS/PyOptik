@@ -41,6 +41,12 @@ class TabulatedMaterial(BaseMaterial):
     k_values: numpy.ndarray = Field(init=False)
     reference: Optional[str] = Field(init=False)
 
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    def __str__(self) -> str:
+        return self.filename
+
     def __post_init__(self) -> None:
         """
         Post-initialization method to load the tabulated data from the YAML file.

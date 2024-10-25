@@ -43,6 +43,12 @@ class SellmeierMaterial(BaseMaterial):
     reference: Optional[str] = Field(default=None)
     formula_type: Optional[int] = Field(default=None)
 
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    def __str__(self) -> str:
+        return self.filename
+
     def __post_init__(self) -> None:
         """
         Post-initialization method to load coefficients, wavelength range, formula type, and reference from a YAML file.

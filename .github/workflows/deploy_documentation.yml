@@ -86,31 +86,31 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq
 
-      - name: Get current tag from GITHUB_REF
-        run: |
-          # Extract the tag name from GITHUB_REF, which should be refs/tags/<tag>
-          tag="${GITHUB_REF#refs/tags/}"
-          echo "tag=$tag" >> $GITHUB_ENV
-          echo "Current tag: $tag"
+    - name: Scan for versions in docs folder and update version_switcher.json
+      run: |
+        # Define the path to version_switcher.json
+        json_file="version_switcher.json"
+        docs_path="docs"
+        base_url="https://martinpdes.github.io/PyOptik"
 
-      - name: Update version_switcher.json with new tag
-        env:
-          TAG: ${{ env.tag }}
-        run: |
-          # Define the path to version_switcher.json and new version details
-          json_file="version_switcher.json"
-          current_tag="${TAG}"
-          json_url="https://martinpdes.github.io/PyOptik/docs/${current_tag}"
+        # Initialize an empty array for versions
+        versions_list=()
 
-          # Create a new JSON entry for the current tag
-          new_entry=$(jq -n \
-            --arg name "$current_tag" \
-            --arg version "$current_tag" \
-            --arg url "$json_url" \
-            '{name: $name, version: $version, url: $url}')
+        # Scan each directory in docs and add it to the versions list
+        for version_dir in ${docs_path}/*/; do
+          version=$(basename "$version_dir")
+          version_url="${base_url}/${docs_path}/${version}"
 
-          # Append new entry to version_switcher.json
-          jq ". + [$new_entry]" $json_file > temp.json && mv temp.json $json_file
+          # Append each version as a JSON entry
+          versions_list+=("$(jq -n \
+            --arg name "$version" \
+            --arg version "$version" \
+            --arg url "$version_url" \
+            '{name: $name, version: $version, url: $url}')")
+        done
+
+        # Combine all entries into a JSON array and save to version_switcher.json
+        jq -n '$ARGS.positional' --args -- "${versions_list[@]}" > $json_file
 
       - name: Commit and push the updated version_switcher.json
         run: |

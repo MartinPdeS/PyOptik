@@ -1,6 +1,31 @@
 [
-  "{\n  \"name\": \"v1.9.6\",\n  \"version\": \"v1.9.6\",\n  \"url\": \"https://martinpdes.github.io/PyOptik/docs/v1.9.6\"\n}",
-  "{\n  \"name\": \"v1.9.7\",\n  \"version\": \"v1.9.7\",\n  \"url\": \"https://martinpdes.github.io/PyOptik/docs/v1.9.7\"\n}",
-  "{\n  \"name\": \"v1.9.8.1\",\n  \"version\": \"v1.9.8.1\",\n  \"url\": \"https://martinpdes.github.io/PyOptik/docs/v1.9.8.1\"\n}",
-  "{\n  \"name\": \"v1.9.8\",\n  \"version\": \"v1.9.8\",\n  \"url\": \"https://martinpdes.github.io/PyOptik/docs/v1.9.8\"\n}"
+{
+  "name": "v1.9.6",
+  "version": "v1.9.6",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.6"
+}
+,
+{
+  "name": "v1.9.7",
+  "version": "v1.9.7",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.7"
+}
+,
+{
+  "name": "v1.9.8.1",
+  "version": "v1.9.8.1",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8.1"
+}
+,
+{
+  "name": "v1.9.8.2",
+  "version": "v1.9.8.2",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8.2"
+}
+,
+{
+  "name": "v1.9.8",
+  "version": "v1.9.8",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8"
+}
 ]

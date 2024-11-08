@@ -86,31 +86,31 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq
 
-    - name: Scan for versions in docs folder and update version_switcher.json
-      run: |
-        # Define the path to version_switcher.json
-        json_file="version_switcher.json"
-        docs_path="docs"
-        base_url="https://martinpdes.github.io/PyOptik"
+      - name: Scan for versions in docs folder and update version_switcher.json
+        run: |
+          # Define the path to version_switcher.json
+          json_file="version_switcher.json"
+          docs_path="docs"
+          base_url="https://martinpdes.github.io/PyOptik"
 
-        # Initialize an empty array for versions
-        versions_list=()
+          # Initialize an empty array for versions
+          versions_list=()
 
-        # Scan each directory in docs and add it to the versions list
-        for version_dir in ${docs_path}/*/; do
-          version=$(basename "$version_dir")
-          version_url="${base_url}/${docs_path}/${version}"
+          # Scan each directory in docs and add it to the versions list
+          for version_dir in ${docs_path}/*/; do
+            version=$(basename "$version_dir")
+            version_url="${base_url}/${docs_path}/${version}"
 
-          # Append each version as a JSON entry
-          versions_list+=("$(jq -n \
-            --arg name "$version" \
-            --arg version "$version" \
-            --arg url "$version_url" \
-            '{name: $name, version: $version, url: $url}')")
-        done
+            # Append each version as a JSON entry
+            versions_list+=("$(jq -n \
+              --arg name "$version" \
+              --arg version "$version" \
+              --arg url "$version_url" \
+              '{name: $name, version: $version, url: $url}')")
+          done
 
-        # Combine all entries into a JSON array and save to version_switcher.json
-        jq -n '$ARGS.positional' --args -- "${versions_list[@]}" > $json_file
+          # Combine all entries into a JSON array and save to version_switcher.json
+          jq -n '$ARGS.positional' --args -- "${versions_list[@]}" > $json_file
 
       - name: Commit and push the updated version_switcher.json
         run: |

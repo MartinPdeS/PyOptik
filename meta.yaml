@@ -17,12 +17,11 @@ channels:
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ PY_VER }}*
     - setuptools >=40.8.0
     - wheel
     - setuptools-scm >=8.0
     - pip
-    - martinpdes::mpsplots
   run:
     - flexparser <0.4  # This is due to a dataclass inheritance problem coming from the pint package
     - pint ~= 0.24
@@ -51,6 +50,7 @@ test:
   imports:
     - PyOptik
   requires:
+    - python {{ PY_VER }}*
     - pytest>=0.6
     - pytest-cov>=2.0
     - pytest-json-report==1.5.0

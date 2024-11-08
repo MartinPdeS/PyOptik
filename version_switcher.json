@@ -1,7 +1,12 @@
 [
   {
+    "name": "v1.9.7",
+    "version": "v1.9.7",
+    "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.7"
+  },  
+  {
     "name": "v1.9.6",
     "version": "v1.9.6",
-    "url": "https://martinpdes.github.io/PyMieSim/docs/v1.9.6"
+    "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.6"
   }
 ]

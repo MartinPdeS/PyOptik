@@ -24,7 +24,7 @@ class _MaterialBank():
 
     The `_MaterialBank` class provides access to a predefined list of materials used in optical simulations,
     categorized into Sellmeier and Tabulated materials. It allows users to dynamically retrieve materials
-    based on their names without the need to instantiate the class. The material bank can be expanded
+    based on their names without the need to instantiate the class.  The material bank can be expanded
     or modified by adding or removing materials from the bank, and it provides utilities to fetch material data
     dynamically when accessed as class attributes.
 

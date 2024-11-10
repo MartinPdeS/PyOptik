@@ -36,6 +36,12 @@ jobs:
           fetch-depth: 0
           submodules: true
 
+      - name: Fetch version_switcher.json from documentation_page branch
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: |
+          git fetch origin documentation_page:documentation_page
+          git checkout documentation_page -- version_switcher.json
+
       - name: Install everything, run the tests, produce the .coverage file
         run: |
           python -m pip install wheel build

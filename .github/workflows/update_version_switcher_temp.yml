@@ -1,9 +1,12 @@
 name: Update Version Switcher and Trigger GitHub Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Documentation"]  # Name of the workflow to wait for
     branches:
-      - documentation_page
+      - master
+    types:
+      - completed
 
 jobs:
   update_version_switcher:

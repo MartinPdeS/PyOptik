@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: documentation_page  # Directly check out the documentation_page branch
+          ref: documentation_page_temp  # Directly check out the documentation_page branch
 
       - name: Install jq for JSON manipulation
         run: |

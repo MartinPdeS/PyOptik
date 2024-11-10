@@ -1,12 +1,10 @@
 name: Update Version Switcher and Trigger GitHub Pages
 
 on:
-  workflow_run:
-    workflows: ["Documentation"]  # Name of the workflow to wait for
+  push:
     branches:
-      - master
-    types:
-      - completed
+      - documentation_page_temp
+
 
 jobs:
   update_version_switcher:
@@ -63,10 +61,18 @@ jobs:
           # End the JSON array
           echo "]" >> $json_file
 
-      - name: Commit and push the updated version_switcher.json
+      - name: Commit and Push to Documentation Page
         run: |
+          # Commit and push the updates to documentation_page
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add version_switcher.json
           git commit -m "Update version_switcher.json with all versions in descending order"
+          git push origin documentation_page_temp
+
+      - name: Merge to Trigger Pages Build
+        run: |
+          # Merge the changes from temp-docs to documentation_page
+          git checkout documentation_page
+          git merge temp-docs --no-ff
           git push origin documentation_page

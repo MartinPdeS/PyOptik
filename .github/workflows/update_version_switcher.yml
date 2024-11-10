@@ -3,7 +3,7 @@ name: Update Version Switcher and Trigger GitHub Pages
 on:
   push:
     branches:
-      - documentation_page  # Triggered by the push from master
+      - documentation_page
 
 jobs:
   update_version_switcher:

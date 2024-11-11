@@ -47,7 +47,6 @@ jobs:
           # Fetch all tags to ensure we have all relevant history
           git fetch --tags
 
-          # Try to get the nearest tag, fall back to '0.0.0.0' if not available
           TAG=$(git describe --tags --abbrev=0 || echo "0.0.0.0")
           echo "tag=$TAG" >> $GITHUB_ENV
           echo "Tag found or default: $TAG"

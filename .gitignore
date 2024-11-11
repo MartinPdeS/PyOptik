@@ -11,6 +11,7 @@
 !docs/v*
 !docs/v*/**
 !docs/v*/**/*
+!_build
 
 !.nojekyll
 !index.html

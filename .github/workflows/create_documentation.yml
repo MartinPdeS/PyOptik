@@ -64,8 +64,6 @@ jobs:
           git checkout stash -- _build
           mv _build "docs/${{ env.tag }}"
           git add "docs/${{ env.tag }}"
-
-          git commit -m "Add _build output for version ${{ env.tag }}"
           git stash drop
 
       - name: Scan, sort versions, and update version_switcher.json
@@ -111,6 +109,7 @@ jobs:
       - name: Merge to Trigger Pages Build
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         run: |
+          git commit -m "Add _build output for version ${{ env.tag }}"
           git pull origin documentation_page --rebase
           git commit -am "documentation update"
           git push origin documentation_page

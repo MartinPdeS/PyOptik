@@ -52,7 +52,7 @@ jobs:
           tree -L 2
           rm -rf docs/${{ env.tag }}
           tree -L 2
-          mv documentation_build "docs/${{ env.tag }}"
+          mv documentation_build docs/${{ env.tag }}
           tree -L 2
 
       - name: Scan, sort versions, and update version_switcher.json

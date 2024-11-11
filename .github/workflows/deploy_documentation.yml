@@ -55,10 +55,11 @@ jobs:
 
       - name: Sphinx build
         run: |
+          git pull origin documentation_page
           sphinx-build docs/source _build
           git add -f _build
           git stash -u
-          git pull origin documentation_page
+
           git checkout documentation_page
 
           git checkout stash -- _build

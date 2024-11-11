@@ -39,18 +39,9 @@ jobs:
         id: download-artifact
         uses: dawidd6/action-download-artifact@v6
         with:
-          # Optional, workflow file name or ID
-          # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
           workflow: deploy_documentation.yml
           name: documentation_build
           path: ./documentation_build
-
-      # - name: Download Documentation Artifact
-        # uses: actions/download-artifact@v4
-        # with:
-          # path: ./artifacts
-          # name: documentation_build
-          # path: ./documentation_build
 
       - name: Get current tag
         id: get_tag
@@ -58,6 +49,9 @@ jobs:
           git fetch --tags
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
+      - name: Update new documentation version
+          rm -rf docs/${{ env.tag }}
+          mv documentation_build "docs/${{ env.tag }}"
 
       - name: Scan, sort versions, and update version_switcher.json
         run: |
@@ -105,7 +99,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: '.'
 

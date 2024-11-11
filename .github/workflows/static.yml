@@ -36,8 +36,9 @@ jobs:
       - name: Download Documentation Artifact
         uses: actions/download-artifact@v4
         with:
-          name: documentation_build
-          path: ./documentation_build
+          path: ./artifacts
+          # name: documentation_build
+          # path: ./documentation_build
 
       - name: Get current tag
         id: get_tag

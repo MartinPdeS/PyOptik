@@ -108,6 +108,8 @@ jobs:
 
           # Add and commit the updated version_switcher.json
           git add $json_file
+          echo $json_file
+          echo ===================
           git commit -m "Update version_switcher.json"
 
       - name: Merge to Trigger Pages Build

@@ -64,6 +64,8 @@ jobs:
           git checkout stash -- _build
           mv _build "docs/${{ env.tag }}"
           git add "docs/${{ env.tag }}"
+
+          git commit -m "Add _build output for version ${{ env.tag }}"
           git stash drop
 
       - name: Scan, sort versions, and update version_switcher.json

@@ -58,8 +58,7 @@ jobs:
       - name: Sphinx build
         run: |
           sphinx-build docs/source _build
-          git add -f _build
-          tree _build
+
           git stash -u
 
           git checkout documentation_page

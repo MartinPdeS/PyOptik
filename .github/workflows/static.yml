@@ -49,10 +49,10 @@ jobs:
 
       - name: Update new documentation version
         run: |
-          tree
+          tree -L 2
           rm -rf docs/${{ env.tag }}
           mv documentation_build "docs/${{ env.tag }}"
-          tree
+          tree -L 2
 
       - name: Scan, sort versions, and update version_switcher.json
         run: |

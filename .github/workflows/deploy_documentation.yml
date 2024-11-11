@@ -75,6 +75,7 @@ jobs:
           git checkout master -- documentation_build
 
           # Move documentation_build to the versioned docs folder
+          rm -rf docs/${{ env.tag }}
           mv documentation_build "docs/${{ env.tag }}"
           git add -f "docs/${{ env.tag }}"
           git commit -m "Add documentation_build output for version ${{ env.tag }}"

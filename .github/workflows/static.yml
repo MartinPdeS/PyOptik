@@ -94,6 +94,7 @@ jobs:
           git add $json_file
           echo $json_file
           git commit -m "Update version_switcher.json"
+          git push origin HEAD
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

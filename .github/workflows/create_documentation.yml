@@ -111,6 +111,5 @@ jobs:
         # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         run: |
           git checkout documentation_page
-          git pull origin documentation_page --rebase
-
+          git pull origin documentation_page --rebase --autostash
           git push origin documentation_page

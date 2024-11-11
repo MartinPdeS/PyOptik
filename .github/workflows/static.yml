@@ -45,6 +45,7 @@ jobs:
         id: get_tag
         run: |
           git fetch --tags
+          echo HELOOOOO "tag=$(git describe --tags --abbrev=0)"
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
       - name: Update new documentation version

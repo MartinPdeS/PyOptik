@@ -1,5 +1,11 @@
 [
 {
+  "name": "_build",
+  "version": "_build",
+  "url": "https://martinpdes.github.io/PyOptik/docs/_build"
+}
+,
+{
   "name": "v1.9.8",
   "version": "v1.9.8",
   "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8"
@@ -15,5 +21,11 @@
   "name": "v1.9.6",
   "version": "v1.9.6",
   "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.6"
+}
+,
+{
+  "name": "source",
+  "version": "source",
+  "url": "https://martinpdes.github.io/PyOptik/docs/source"
 }
 ]

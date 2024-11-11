@@ -18,7 +18,7 @@ Below, you will find detailed, automatically generated documentation for signifi
 MaterialBank
 ------------
 
-The `MaterialBank` is the main interface for the user.
+The `MaterialBank` is the main interface for the  user.
 
 .. autoclass:: PyOptik.material_bank._MaterialBank
     :members:

@@ -22,10 +22,4 @@
   "version": "v1.9.7",
   "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.7"
 }
-,
-{
-  "name": "source",
-  "version": "source",
-  "url": "https://martinpdes.github.io/PyOptik/docs/source"
-}
 ]

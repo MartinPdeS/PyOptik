@@ -2,17 +2,11 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["documentation_page"]
+  workflow_run:
+    workflows: ["Documentation"]  # This references the name of the first workflow
+    types:
+      - completed  # Run when the Documentation workflow is completed successfully
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to deploy'
-        required: true
-        default: 'documentation_page'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

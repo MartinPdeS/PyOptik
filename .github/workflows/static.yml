@@ -97,8 +97,8 @@ jobs:
           # Add and commit the updated version_switcher.json
           git add $json_file
           echo $json_file
-          git commit -m "Update version_switcher.json"
-          git push --allow-empty origin HEAD
+          git commit --allow-empty -m "Update version_switcher.json"
+          git push origin HEAD
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

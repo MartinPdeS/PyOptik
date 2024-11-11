@@ -49,6 +49,7 @@ jobs:
 
       - name: Update new documentation version
         run: |
+          tree
           rm -rf docs/${{ env.tag }}
           mv documentation_build "docs/${{ env.tag }}"
           tree

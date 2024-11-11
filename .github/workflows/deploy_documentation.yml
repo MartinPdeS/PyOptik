@@ -58,7 +58,6 @@ jobs:
       - name: Sphinx build
         run: |
           sphinx-build docs/source documentation_build
-          git add -f documentation_build
           git stash -u
 
           git checkout documentation_page

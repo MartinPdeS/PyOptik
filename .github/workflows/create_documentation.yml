@@ -57,8 +57,8 @@ jobs:
           git checkout documentation_page
           git branch documentation_page_temp
           git checkout stash -- _build
-          mv _build docs/${{ env.tag }}"
-          git stash  drop
+          mv _build "docs/${{ env.tag }}"
+          git stash drop
 
       - name: Scan, sort versions, and update version_switcher.json
         run: |

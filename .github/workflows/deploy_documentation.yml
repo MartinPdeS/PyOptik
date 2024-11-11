@@ -58,14 +58,13 @@ jobs:
       - name: Sphinx build
         run: |
           sphinx-build docs/source _build
-
           git stash -u
 
           git checkout documentation_page
-
           git checkout stash -- _build
           mv _build "docs/${{ env.tag }}"
           git add -f "docs/${{ env.tag }}"
+          echo ==================================================================================
           git commit -m "Add _build output for version ${{ env.tag }}"
           git stash drop
 

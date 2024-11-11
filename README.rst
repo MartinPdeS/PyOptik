@@ -41,8 +41,9 @@ To install PyOptik, simply use `pip` or `conda`:
 
 .. code:: bash
 
-   pip install PyOptik
-   conda install --channels martinpdes pyoptik
+   pip install PyOptik                               (using PyPi package manager)
+
+   conda install --channels martinpdes pyoptik       (using anaconda environment manager)
 
 Building the Material Library
 *****************************

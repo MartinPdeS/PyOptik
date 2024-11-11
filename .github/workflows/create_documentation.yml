@@ -48,6 +48,9 @@ jobs:
           git fetch --tags
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
+
+
+
       - name: Sphinx build
         run: |
           sphinx-build docs/source _build
@@ -55,10 +58,11 @@ jobs:
           git add -f _build
           git stash -u
           git checkout documentation_page
-          git branch documentation_page_temp
-          git checkout documentation_page_temp
+
           git checkout stash -- _build
           mv _build "docs/${{ env.tag }}"
+          git add "docs/${{ env.tag }}"
+          git commit -m "Add _build output for version ${env.tag}"
           git stash drop
 
       - name: Scan, sort versions, and update version_switcher.json
@@ -99,7 +103,5 @@ jobs:
 
       - name: Merge to Trigger Pages Build
         run: |
-          # Merge the changes from documentation_page_temp to documentation_page
-          git checkout documentation_page
-          git merge documentation_page_temp --no-ff
+          git commit -am "documentation update"
           git push origin documentation_page

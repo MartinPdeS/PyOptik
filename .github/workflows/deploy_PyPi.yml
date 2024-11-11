@@ -1,4 +1,4 @@
-name: Deploy Wheel
+name: Deploy Wheel to PyPi
 
 on:
   push:

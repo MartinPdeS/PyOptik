@@ -58,6 +58,7 @@ jobs:
           sphinx-build docs/source _build
           git add -f _build
           git stash -u
+          git pull origin documentation_page
           git checkout documentation_page
 
           git checkout stash -- _build

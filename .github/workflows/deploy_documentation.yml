@@ -55,25 +55,47 @@ jobs:
           git fetch --tags
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
+
+
+
+
+
+
+
+
       - name: Sphinx build
         run: |
+          # Build the documentation
           sphinx-build docs/source documentation_build
+
+          # Stage and commit documentation_build, ignoring .gitignore rules
           git add -f documentation_build
           git commit -m "Temporary commit for documentation_build"
 
-          # Stash changes in PyOptik/_version.py only
-          git stash push PyOptik/_version.py
+          # Discard any changes in PyOptik/_version.py to avoid conflicts
+          git restore --staged PyOptik/_version.py
+          git restore PyOptik/_version.py
 
-          # Switch to documentation_page and restore documentation_build
+          # Switch to the documentation_page branch
           git checkout documentation_page
+
+          # Retrieve documentation_build from the previous commit
           git checkout master -- documentation_build
+
+          # Move documentation_build to the versioned docs folder
           mv documentation_build "docs/${{ env.tag }}"
           git add -f "docs/${{ env.tag }}"
           git commit -m "Add documentation_build output for version ${{ env.tag }}"
 
-          # Apply the stash to restore changes to PyOptik/_version.py
-          git stash pop
+          # Clean up the temporary commit
           git reset --soft HEAD~1
+
+
+
+
+
+
+
 
       - name: Scan, sort versions, and update version_switcher.json
         run: |

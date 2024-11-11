@@ -36,7 +36,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        ref: documentation_page
+        with:
+          fetch-depth: 0
+          ref: documentation_page
 
 
       - name: Setup Pages

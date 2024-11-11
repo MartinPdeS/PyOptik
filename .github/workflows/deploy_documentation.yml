@@ -42,7 +42,6 @@ jobs:
           submodules: true
           ref: master
 
-
       - name: Install everything, run the tests, produce the .coverage file
         run: |
           python -m pip install wheel build
@@ -55,81 +54,13 @@ jobs:
           git fetch --tags
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
-      - name: Sphinx build
+      - name: "Sphinx build"
         run: |
           # Build the documentation
           sphinx-build docs/source documentation_build
-          tree
 
-          # Stage and commit documentation_build, ignoring .gitignore rules
-          git add -f documentation_build
-          git commit -m "Temporary commit for documentation_build"
-
-          # Discard any changes in PyOptik/_version.py to avoid conflicts
-          git restore --staged PyOptik/_version.py
-          git restore PyOptik/_version.py
-
-          # Switch to the documentation_page branch
-          git checkout documentation_page
-
-          # Retrieve documentation_build from the previous commit
-          git checkout master -- documentation_build
-
-          # Move documentation_build to the versioned docs folder
-          rm -rf docs/${{ env.tag }}
-          mv documentation_build "docs/${{ env.tag }}"
-          git add -f "docs/${{ env.tag }}"
-          git commit -m "Add documentation_build output for version ${{ env.tag }}"
-
-          # Clean up the temporary commit
-          git reset --soft HEAD~1
-
-      - name: Scan, sort versions, and update version_switcher.json
-        run: |
-          # Define the path to version_switcher.json
-          json_file="version_switcher.json"
-          docs_path="docs"
-          base_url="https://martinpdes.github.io/PyOptik"
-
-          # Start the JSON array
-          echo "[" > $json_file
-
-          # Get sorted version directories in descending order
-          version_dirs=$(ls -v $docs_path | sort -V -r)
-
-          # Loop over sorted versions and add to JSON file
-          first_entry=true
-          for version in $version_dirs; do
-            version_url="${base_url}/${docs_path}/${version}"
-
-            # Add a comma if it's not the first entry
-            if [ "$first_entry" = true ]; then
-              first_entry=false
-            else
-              echo "," >> $json_file
-            fi
-
-            # Append each version as a JSON entry
-            jq -n \
-              --arg name "$version" \
-              --arg version "$version" \
-              --arg url "$version_url" \
-              '{name: $name, version: $version, url: $url}' >> $json_file
-          done
-
-          # End the JSON array
-          echo "]" >> $json_file
-
-          # Add and commit the updated version_switcher.json
-          git add $json_file
-          echo $json_file
-          echo ===================
-          tree
-          git commit -m "Update version_switcher.json"
-
-      - name: Merge to Trigger Pages Build
-        # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        run: |
-          git checkout documentation_page
-          git pull origin documentation_page --rebase --autostash
-          git push origin documentation_page
+      - name: "Upload Documentation Artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation_build
+          path: documentation_build

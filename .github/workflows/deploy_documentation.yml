@@ -110,6 +110,7 @@ jobs:
           git add $json_file
           echo $json_file
           echo ===================
+          tree
           git commit -m "Update version_switcher.json"
 
       - name: Merge to Trigger Pages Build

@@ -106,6 +106,7 @@ jobs:
           # Add and commit the updated version_switcher.json
           git add $json_file
           echo $json_file
+          git add docs/
           git commit --allow-empty -m "Update version_switcher.json"
           git push origin HEAD
 

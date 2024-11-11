@@ -22,7 +22,7 @@
 PyOptik
 =======
 
-PyOptik is a Python tool designed to import refractive indexes and extinction coefficients for various materials across different wavelengths.  The data provided by PyOptik can be used in numerous applications, including simulating light interactions with particles. All data is sourced from the reputable RefractiveIndex.INFO database.
+PyOptik is a Python tool designed to import refractive indexes and extinction coefficients for various materials across different wavelengths. The data provided by PyOptik can be used in numerous applications, including simulating light interactions with particles. All data is sourced from the reputable RefractiveIndex.INFO database.
 
 
 

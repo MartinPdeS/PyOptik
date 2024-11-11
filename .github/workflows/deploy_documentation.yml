@@ -61,12 +61,18 @@ jobs:
           git add -f documentation_build
           git commit -m "Temporary commit for documentation_build"
 
+          # Stash changes in PyOptik/_version.py only
+          git stash push PyOptik/_version.py
+
+          # Switch to documentation_page and restore documentation_build
           git checkout documentation_page
-          git checkout master -- documentation_build  # Restore from master directly
+          git checkout master -- documentation_build
           mv documentation_build "docs/${{ env.tag }}"
           git add -f "docs/${{ env.tag }}"
-          echo ==================================================================================
           git commit -m "Add documentation_build output for version ${{ env.tag }}"
+
+          # Apply the stash to restore changes to PyOptik/_version.py
+          git stash pop
           git reset --soft HEAD~1
 
       - name: Scan, sort versions, and update version_switcher.json

@@ -50,6 +50,7 @@ jobs:
       - name: Update new documentation version
         run: |
           tree -L 2
+          echo ================ ${{ env.tag }}
           rm -rf docs/${{ env.tag }}
           tree -L 2
           mv documentation_build docs/${{ env.tag }}

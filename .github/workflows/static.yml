@@ -51,6 +51,7 @@ jobs:
         run: |
           tree -L 2
           rm -rf docs/${{ env.tag }}
+          tree -L 2
           mv documentation_build "docs/${{ env.tag }}"
           tree -L 2
 

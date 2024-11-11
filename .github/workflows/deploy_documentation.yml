@@ -56,11 +56,10 @@ jobs:
 
       - name: "Sphinx build"
         run: |
-          # Build the documentation
           sphinx-build docs/source documentation_build
 
       - name: "Upload Documentation Artifact"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: documentation_build
           path: documentation_build

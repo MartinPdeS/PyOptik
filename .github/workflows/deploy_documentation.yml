@@ -1,6 +1,7 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
+
 on:
   workflow_run:
     workflows: ["Documentation"]  # This references the name of the first workflow
@@ -16,7 +17,6 @@ permissions:
 
 jobs:
   deploy:
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     environment:
       name: github-pages

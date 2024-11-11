@@ -1,85 +1,31 @@
 [
 {
-  "name": "_static",
-  "version": "_static",
-  "url": "https://martinpdes.github.io/PyOptik/docs/_static"
+  "name": "v1.9.8.25",
+  "version": "v1.9.8.25",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8.25"
 }
 ,
 {
-  "name": "_sources",
-  "version": "_sources",
-  "url": "https://martinpdes.github.io/PyOptik/docs/_sources"
+  "name": "v1.9.8.24",
+  "version": "v1.9.8.24",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8.24"
 }
 ,
 {
-  "name": "_modules",
-  "version": "_modules",
-  "url": "https://martinpdes.github.io/PyOptik/docs/_modules"
+  "name": "v1.9.8",
+  "version": "v1.9.8",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.8"
 }
 ,
 {
-  "name": "_images",
-  "version": "_images",
-  "url": "https://martinpdes.github.io/PyOptik/docs/_images"
+  "name": "v1.9.7",
+  "version": "v1.9.7",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.9.7"
 }
 ,
 {
-  "name": "_downloads",
-  "version": "_downloads",
-  "url": "https://martinpdes.github.io/PyOptik/docs/_downloads"
-}
-,
-{
-  "name": "sg_execution_times.html",
-  "version": "sg_execution_times.html",
-  "url": "https://martinpdes.github.io/PyOptik/docs/sg_execution_times.html"
-}
-,
-{
-  "name": "searchindex.js",
-  "version": "searchindex.js",
-  "url": "https://martinpdes.github.io/PyOptik/docs/searchindex.js"
-}
-,
-{
-  "name": "search.html",
-  "version": "search.html",
-  "url": "https://martinpdes.github.io/PyOptik/docs/search.html"
-}
-,
-{
-  "name": "references.html",
-  "version": "references.html",
-  "url": "https://martinpdes.github.io/PyOptik/docs/references.html"
-}
-,
-{
-  "name": "objects.inv",
-  "version": "objects.inv",
-  "url": "https://martinpdes.github.io/PyOptik/docs/objects.inv"
-}
-,
-{
-  "name": "index.html",
-  "version": "index.html",
-  "url": "https://martinpdes.github.io/PyOptik/docs/index.html"
-}
-,
-{
-  "name": "genindex.html",
-  "version": "genindex.html",
-  "url": "https://martinpdes.github.io/PyOptik/docs/genindex.html"
-}
-,
-{
-  "name": "gallery",
-  "version": "gallery",
-  "url": "https://martinpdes.github.io/PyOptik/docs/gallery"
-}
-,
-{
-  "name": "code.html",
-  "version": "code.html",
-  "url": "https://martinpdes.github.io/PyOptik/docs/code.html"
+  "name": "0.0.0.0",
+  "version": "0.0.0.0",
+  "url": "https://martinpdes.github.io/PyOptik/docs/0.0.0.0"
 }
 ]

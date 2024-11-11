@@ -56,6 +56,7 @@ jobs:
           git stash -u
           git checkout documentation_page
           git branch documentation_page_temp
+          git checkout documentation_page_temp
           git checkout stash -- _build
           mv _build "docs/${{ env.tag }}"
           git stash drop

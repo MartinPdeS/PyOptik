@@ -109,5 +109,6 @@ jobs:
 
       - name: Merge to Trigger Pages Build
         run: |
+          git pull origin documentation_page
           git commit -am "documentation update"
           git push origin documentation_page

@@ -55,14 +55,6 @@ jobs:
           git fetch --tags
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
-
-
-
-
-
-
-
-
       - name: Sphinx build
         run: |
           # Build the documentation
@@ -89,13 +81,6 @@ jobs:
 
           # Clean up the temporary commit
           git reset --soft HEAD~1
-
-
-
-
-
-
-
 
       - name: Scan, sort versions, and update version_switcher.json
         run: |

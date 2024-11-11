@@ -58,15 +58,16 @@ jobs:
       - name: Sphinx build
         run: |
           sphinx-build docs/source documentation_build
-          git stash -u
+          git add -f documentation_build
+          git commit -m "Temporary commit for documentation_build"
 
           git checkout documentation_page
-          git checkout stash -- documentation_build
+          git checkout master -- documentation_build  # Restore from master directly
           mv documentation_build "docs/${{ env.tag }}"
           git add -f "docs/${{ env.tag }}"
           echo ==================================================================================
           git commit -m "Add documentation_build output for version ${{ env.tag }}"
-          git stash drop
+          git reset --soft HEAD~1
 
       - name: Scan, sort versions, and update version_switcher.json
         run: |

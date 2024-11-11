@@ -76,8 +76,8 @@ jobs:
           # Start the JSON array
           echo "[" > $json_file
 
-          # Get sorted version directories in descending order
-          version_dirs=$(ls -v $docs_path | sort -V -r)
+          # Get sorted version directories in descending order, excluding non-version folders
+          version_dirs=$(find $docs_path -maxdepth 1 -type d -regex '.*/[0-9]+.*' | sed 's|.*/||' | sort -V -r)
 
           # Loop over sorted versions and add to JSON file
           first_entry=true

@@ -59,6 +59,7 @@ jobs:
         run: |
           # Build the documentation
           sphinx-build docs/source documentation_build
+          tree
 
           # Stage and commit documentation_build, ignoring .gitignore rules
           git add -f documentation_build

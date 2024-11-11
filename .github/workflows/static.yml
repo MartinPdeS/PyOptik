@@ -50,6 +50,7 @@ jobs:
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
       - name: Update new documentation version
+        run: |
           rm -rf docs/${{ env.tag }}
           mv documentation_build "docs/${{ env.tag }}"
 

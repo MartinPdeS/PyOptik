@@ -18,7 +18,7 @@ jobs:
       contents: write
 
     steps:
-      - name: "Set-up:  Python 3.11"
+      - name: "Set-up: Python 3.11"
         uses: actions/setup-python@v5
         id: cp311
         with:

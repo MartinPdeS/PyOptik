@@ -1,0 +1,114 @@
+# .github/workflows/deploy_documentation.yml
+name: Documentation
+
+on:
+  push:
+    branches: [ "master" ]
+    tags:
+      - '*'
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  documentation:
+    name: Run the documentation building tools
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - name: "Set-up: Python 3.11"
+        uses: actions/setup-python@v5
+        id: cp311
+        with:
+            python-version: 3.11
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: "Install: Dependencies for headless server"
+        shell: bash
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y xvfb jq
+
+      - name: "Checkout requirements and files for testing"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Install everything, run the tests, produce the .coverage file
+        run: |
+          python -m pip install wheel build
+          python -m build --wheel
+          python -m pip install .[documentation]
+
+      - name: Get current tag
+        id: get_tag
+        run: |
+          git fetch --tags
+          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+
+      - name: Sphinx build
+        run: |
+          sphinx-build docs/source _build
+          git add -f _build
+          git stash -u
+          git checkout documentation_page
+
+          git checkout stash -- _build
+          mv _build "docs/${{ env.tag }}"
+          git add -f "docs/${{ env.tag }}"
+          git commit -m "Add _build output for version ${{ env.tag }}"
+          git stash drop
+
+      - name: Scan, sort versions, and update version_switcher.json
+        run: |
+          # Define the path to version_switcher.json
+          json_file="version_switcher.json"
+          docs_path="docs"
+          base_url="https://martinpdes.github.io/PyOptik"
+
+          # Start the JSON array
+          echo "[" > $json_file
+
+          # Get sorted version directories in descending order
+          version_dirs=$(ls -v $docs_path | sort -V -r)
+
+          # Loop over sorted versions and add to JSON file
+          first_entry=true
+          for version in $version_dirs; do
+            version_url="${base_url}/${docs_path}/${version}"
+
+            # Add a comma if it's not the first entry
+            if [ "$first_entry" = true ]; then
+              first_entry=false
+            else
+              echo "," >> $json_file
+            fi
+
+            # Append each version as a JSON entry
+            jq -n \
+              --arg name "$version" \
+              --arg version "$version" \
+              --arg url "$version_url" \
+              '{name: $name, version: $version, url: $url}' >> $json_file
+          done
+
+          # End the JSON array
+          echo "]" >> $json_file
+
+          # Add and commit the updated version_switcher.json
+          git add $json_file
+          git commit -m "Update version_switcher.json"
+
+      - name: Merge to Trigger Pages Build
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: |
+          git checkout documentation_page
+          git pull origin documentation_page --rebase --autostash
+          git push origin documentation_page

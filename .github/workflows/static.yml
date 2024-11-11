@@ -44,9 +44,13 @@ jobs:
       - name: Get current tag
         id: get_tag
         run: |
+          # Fetch all tags to ensure we have all relevant history
           git fetch --tags
-          echo HELOOOOO "tag=$(git describe --tags --abbrev=0)"
-          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+
+          # Try to get the nearest tag, fall back to '0.0.0.0' if not available
+          TAG=$(git describe --tags --abbrev=0 || echo "0.0.0.0")
+          echo "tag=$TAG" >> $GITHUB_ENV
+          echo "Tag found or default: $TAG"
 
       - name: Update new documentation version
         run: |

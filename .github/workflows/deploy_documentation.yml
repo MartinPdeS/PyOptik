@@ -39,11 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: true
-
-      - name: Pull documentation_page
-        run: |
-          git pull origin documentation_page --rebase
+          submodules: tru
 
       - name: Install everything, run the tests, produce the .coverage file
         run: |

@@ -3,13 +3,19 @@
 
 import sys
 import os
+from sphinx_gallery.sorting import FileNameSortKey
 from MPSPlots.styles import use_mpsplots_style
 from pathlib import Path
 import PyOptik
 from PyOptik.directories import doc_css_path
 
 
-sys.path.append(str(Path(".").resolve()))
+package_name = "PyOptik"
+version = PyOptik.__version__
+
+current_dir = Path(".")
+
+sys.path.append(str(current_dir.resolve()))
 
 
 def setup(app):
@@ -23,13 +29,9 @@ autodoc_mock_imports = [
 ]
 
 
-project = 'PyOptik'
+project = package_name
 copyright = '2024, Martin Poinsinet de Sivry-Houle'
 author = 'Martin Poinsinet de Sivry-Houle'
-
-
-version = PyOptik.__version__
-
 
 extensions = [
     'sphinx.ext.mathjax',
@@ -59,8 +61,8 @@ examples_files = [
 ]
 
 sphinx_gallery_conf = {
-    "examples_dirs": ['../examples/' + f for f in examples_files],
-    "gallery_dirs": ['gallery/' + f for f in examples_files],
+    'examples_dirs': ['../examples'],
+    'gallery_dirs': ['gallery'],
     'image_scrapers': ('matplotlib'),
     'ignore_pattern': '/__',
     'filename_pattern': r'.*\.py',
@@ -72,6 +74,7 @@ sphinx_gallery_conf = {
     'remove_config_comments': True,
     'capture_repr': ('_repr_html_', '__repr__'),
     'nested_sections': True,
+    'within_subsection_order': FileNameSortKey,
 }
 
 
@@ -105,24 +108,24 @@ binder_branch = f"v{major}.{minor}.x"
 
 html_theme_options = dict()
 
-html_theme_options['logo'] = dict(text='PyOptik', image="_static/thumbnail.png")
+html_theme_options['logo'] = dict(text=package_name, image="_static/thumbnail.png")
 html_theme_options["show_nav_level"] = 0
 
 html_theme_options.update({
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/MartinPdeS/PyOptik",
+            "url": f"https://github.com/MartinPdeS/{package_name}",
             "icon": "fa-brands fa-github",
         },
         {
             "name": "PyPI",
-            "url": "https://pypi.org/project/pyoptik/",
+            "url": f"https://pypi.org/project/{package_name}/",
             "icon": "fa-solid fa-box",
         },
         {
             "name": "Anaconda",
-            "url": "https://anaconda.org/MartinPdeS/pyoptik",
+            "url": f"https://anaconda.org/MartinPdeS/{package_name}",
             "icon": "fa-brands fa-python",
         },
     ],
@@ -142,28 +145,28 @@ html_theme_options.update({
 current_version = os.getenv("tag", "latest")
 
 html_theme_options["switcher"] = dict(
-    json_url="https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json",
+    json_url=f"https://raw.githubusercontent.com/MartinPdeS/{package_name}/documentation_page/version_switcher.json",
     version_match=current_version,
 )
 
-htmlhelp_basename = 'PyOptikdoc'
+htmlhelp_basename = f'{package_name}doc'
 
 latex_elements = {}
 
 
 latex_documents = [
-    (master_doc, 'PyOptik.tex', 'PyOptik Documentation',
+    (master_doc, f'{package_name}.tex', f'{package_name} Documentation',
      'Martin Poinsinet de Sivry-Houle', 'manual'),
 ]
 
 man_pages = [
-    (master_doc, 'supymode', 'PyOptik Documentation',
+    (master_doc, 'supymode', f'{package_name} Documentation',
      [author], 1)
 ]
 
 texinfo_documents = [
-    (master_doc, 'PyOptik', 'PyOptik Documentation',
-     author, 'PyOptik', 'One line description of project.',
+    (master_doc, package_name, f'{package_name} Documentation',
+     author, package_name, 'One line description of project.',
      'Miscellaneous'),
 ]
 

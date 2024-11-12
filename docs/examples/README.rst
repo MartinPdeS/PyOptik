@@ -21,3 +21,13 @@ The gallery includes:
 These examples are designed to help users at all levels, whether you are a beginner learning how to use the basic API or an experienced user looking for guidance on more advanced use cases.
 
 Explore the gallery and unlock the potential of PyOptik for your optical simulations and research!
+
+
+.. toctree::
+    :maxdepth: 2
+    :hidden:
+
+    sellmeier/index.rst
+    tabulated/index.rst
+    utils/index.rst
+

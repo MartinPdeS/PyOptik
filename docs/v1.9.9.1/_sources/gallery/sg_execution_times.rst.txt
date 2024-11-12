@@ -1,12 +1,12 @@
 
 :orphan:
 
-.. _sphx_glr_gallery_tabulated_sg_execution_times:
+.. _sphx_glr_gallery_sg_execution_times:
 
 
 Computation times
 =================
-**00:02.888** total execution time for 2 files **from gallery/tabulated**:
+**00:00.000** total execution time for 0 files **from gallery**:
 
 .. container::
 
@@ -32,9 +32,6 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``plot_silver.py``)
-     - 00:02.580
-     - 0.0
-   * - :ref:`sphx_glr_gallery_tabulated_plot_sf5.py` (``plot_sf5.py``)
-     - 00:00.308
-     - 0.0
+   * - N/A
+     - N/A
+     - N/A

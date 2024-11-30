@@ -9,7 +9,7 @@ on:
       - completed  # Run when the Documentation workflow is completed successfully
 
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Sets permissions of the GITHUB_TOKEN  to allow deployment to GitHub Pages
 permissions:
   contents: write
   pages: write
@@ -71,7 +71,7 @@ jobs:
           json_file="version_switcher.json"
           rm $json_file
           docs_path="docs"
-          base_url="https://martinpdes.github.io/PyOptik"
+          base_url="https://martinpdes.github.io/PyMieSim"
 
           # Start the JSON array
           echo "[" > $json_file

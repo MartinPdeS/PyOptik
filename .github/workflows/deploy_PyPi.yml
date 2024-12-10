@@ -12,7 +12,7 @@ permissions:
     contents: write
 
 jobs:
-  pure_package:
+  pure_package :
     uses: MartinPdeS/MPSActions/.github/workflows/publish_pure_package_to_PyPi.yml@master
     with:
       python-version: "3.11"

@@ -62,35 +62,35 @@ Import necessary modules
     +-----------------------+-----------------------+
     | Sellmeier Materials   | Tabulated Materials   |
     +=======================+=======================+
-    | silicon               | silver                |
+    | water                 | iron                  |
     +-----------------------+-----------------------+
-    | fused_silica          | sodium                |
+    | polystyren            | aluminium             |
     +-----------------------+-----------------------+
-    | BK7                   | aluminium             |
+    | fused_silica          | nickel                |
     +-----------------------+-----------------------+
-    | argon                 | copper                |
+    | ZBLAN                 | copper                |
     +-----------------------+-----------------------+
-    | flint                 | calcium               |
+    | lithium_niobate       | calcium               |
     +-----------------------+-----------------------+
-    | air                   | gold                  |
+    | crown                 | silver                |
     +-----------------------+-----------------------+
-    | crown                 | iron                  |
+    | germanium             | zinc                  |
     +-----------------------+-----------------------+
-    | soda_lime_glass       | nickel                |
+    | argon                 | gold                  |
     +-----------------------+-----------------------+
-    | polystyren            | zinc                  |
+    | air                   | sodium                |
     +-----------------------+-----------------------+
-    | ZBLAN                 |                       |
-    +-----------------------+-----------------------+
-    | BAK1                  |                       |
-    +-----------------------+-----------------------+
-    | germanium             |                       |
+    | soda_lime_glass       |                       |
     +-----------------------+-----------------------+
     | SF5                   |                       |
     +-----------------------+-----------------------+
-    | lithium_niobate       |                       |
+    | flint                 |                       |
     +-----------------------+-----------------------+
-    | water                 |                       |
+    | silicon               |                       |
+    +-----------------------+-----------------------+
+    | BK7                   |                       |
+    +-----------------------+-----------------------+
+    | BAK1                  |                       |
     +-----------------------+-----------------------+
 
 
@@ -99,7 +99,7 @@ Import necessary modules
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.222 seconds)
+   **Total running time of the script:** (0 minutes 2.901 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_build_library.py:

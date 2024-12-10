@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:07.432** total execution time for 4 files **from gallery/utils**:
+**00:03.761** total execution time for 4 files **from gallery/utils**:
 
 .. container::
 
@@ -33,14 +33,14 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_utils_build_library.py` (``build_library.py``)
-     - 00:06.143
-     - 0.0
-   * - :ref:`sphx_glr_gallery_utils_download_yml_file.py` (``download_yml_file.py``)
-     - 00:00.514
+     - 00:02.633
      - 0.0
    * - :ref:`sphx_glr_gallery_utils_create_tabulated_file.py` (``create_tabulated_file.py``)
-     - 00:00.392
+     - 00:00.389
      - 0.0
    * - :ref:`sphx_glr_gallery_utils_create_sellmeier_file.py` (``create_sellmeier_file.py``)
-     - 00:00.382
+     - 00:00.379
+     - 0.0
+   * - :ref:`sphx_glr_gallery_utils_download_yml_file.py` (``download_yml_file.py``)
+     - 00:00.360
      - 0.0

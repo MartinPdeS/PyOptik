@@ -29,7 +29,7 @@ requirements:
     - pyyaml ~=6.0
     - requests ~=2.31
     - matplotlib ~=3.8
-    - numpy ~=1.26
+    - numpy
     - pydantic ~=2.9
     - tabulate ~=0.9
 

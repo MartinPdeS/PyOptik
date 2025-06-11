@@ -8,8 +8,8 @@ from PyOptik.utils import download_yml_file
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 
-def test_main():
-    MaterialBank.build_library('minimal', remove_previous=True)
+# def test_main():
+#     MaterialBank.build_library('minimal', remove_previous=True)
 
 url_water = 'https://refractiveindex.info/database/data/main/H2O/nk/Daimon-19.0C.yml'
 

@@ -16,23 +16,6 @@ The examples provided here aim to help you leverage these utilities effectively 
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to download a YAML file from a URL using the download_yml_file fu...">
-
-.. only:: html
-
-  .. image:: /gallery/utils/images/thumb/sphx_glr__download_yml_file_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_gallery_utils__download_yml_file.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Example: Download a YAML file</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to build a material library using the build_library function from...">
 
 .. only:: html
@@ -90,7 +73,6 @@ The examples provided here aim to help you leverage these utilities effectively 
 .. toctree::
    :hidden:
 
-   /gallery/utils/_download_yml_file
    /gallery/utils/build_library
    /gallery/utils/create_sellmeier_file
    /gallery/utils/create_tabulated_file

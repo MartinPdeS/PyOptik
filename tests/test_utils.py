@@ -160,7 +160,7 @@ import pytest
 #             filename='example_download',
 #             url='__invalid_url__.com',
 #             location=MaterialType.SELLMEIER
-        )
+        # )
 
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

@@ -13,11 +13,9 @@ from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik.utils import download_yml_file
 from tabulate import tabulate
-from dataclasses import dataclass
 from PyOptik.material_type import MaterialType
 
 
-@dataclass(frozen=True, slots=True)
 class _MaterialBank():
     """
     A class representing a centralized material bank for common optical materials available in the PyOptik library.

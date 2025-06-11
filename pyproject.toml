@@ -23,9 +23,7 @@ classifiers = [
 keywords = ["refracive index", "optics"]
 
 dependencies = [
-    "flexparser <0.4",  # This is due to a dataclass inheritance problem coming from the pint package
     "pint ~=0.24",
-    "pydantic ~=2.9",
     "numpy",
     "matplotlib ~=3.8",
     "requests ~=2.31",

@@ -6,19 +6,12 @@ import numpy
 import itertools
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
-from pydantic.dataclasses import Field, ConfigDict, dataclass
-from typing import Tuple, Optional, Union
+from typing import Optional, Union
 from PyOptik.units import micrometer, Quantity
 from PyOptik.directories import sellmeier_data_path
 from PyOptik.material.base_class import BaseMaterial
 
 
-config_dict = ConfigDict(
-    arbitrary_types_allowed=True
-)
-
-
-@dataclass(config=config_dict, slots=True, eq=False)
 class SellmeierMaterial(BaseMaterial):
     """
     Class representing a material with Sellmeier coefficients for refractive index computation.
@@ -36,24 +29,30 @@ class SellmeierMaterial(BaseMaterial):
     formula_type : int
         The formula type to use for refractive index calculation.
     """
-    filename: str
+    def __init__(self, filename: str):
+        """
+        Initializes the SellmeierMaterial with a filename.
 
-    coefficients: Optional[numpy.ndarray] = Field(default=None)
-    wavelength_bound: Optional[Tuple[float, float]] = Field(default=None)
-    reference: Optional[str] = Field(default=None)
-    formula_type: Optional[int] = Field(default=None)
+        Parameters
+        ----------
+
+        filename : str
+            The name of the YAML file containing material properties.
+        """
+        self.filename = filename
+
+        self.coefficients = None
+        self.wavelength_bound = None
+        self.reference = None
+        self.formula_type = None
+
+        self._load_coefficients()
 
     def __repr__(self) -> str:
         return self.__str__()
 
     def __str__(self) -> str:
         return self.filename
-
-    def __post_init__(self) -> None:
-        """
-        Post-initialization method to load coefficients, wavelength range, formula type, and reference from a YAML file.
-        """
-        self._load_coefficients()
 
     def _load_coefficients(self) -> None:
         """

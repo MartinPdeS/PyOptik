@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import numpy
-from pydantic.dataclasses import dataclass, Field, ConfigDict
 from typing import Optional, Union
 import yaml
 from PyOptik.directories import tabulated_data_path
@@ -12,12 +11,7 @@ import matplotlib.pyplot as plt
 from PyOptik.units import Quantity, micrometer, meter
 
 
-config_dict = ConfigDict(
-    arbitrary_types_allowed=True
-)
 
-
-@dataclass(config=config_dict, slots=True, eq=False)
 class TabulatedMaterial(BaseMaterial):
     """
     Class representing a material with tabulated refractive index (n) and absorption (k) values.
@@ -35,23 +29,33 @@ class TabulatedMaterial(BaseMaterial):
     reference : Optional[str]
         Reference information for the material data.
     """
-    filename: str
-    wavelength: numpy.ndarray = Field(init=False)
-    n_values: numpy.ndarray = Field(init=False)
-    k_values: numpy.ndarray = Field(init=False)
-    reference: Optional[str] = Field(init=False)
+
+    def __init__(self, filename: str):
+        """
+        Initializes the TabulatedMaterial with a filename.
+
+        Parameters
+        ----------
+        filename : str
+            The name of the YAML file containing material properties.
+        """
+        self.filename = filename
+
+        # Initialize attributes
+        self.wavelength_bound = None
+        self.wavelength = None
+        self.n_values = None
+        self.k_values = None
+        self.reference = None
+
+        # Load tabulated data from the YAML file
+        self._load_tabulated_data()
 
     def __repr__(self) -> str:
         return self.__str__()
 
     def __str__(self) -> str:
         return self.filename
-
-    def __post_init__(self) -> None:
-        """
-        Post-initialization method to load the tabulated data from the YAML file.
-        """
-        self._load_tabulated_data()
 
     def _load_tabulated_data(self) -> None:
         """

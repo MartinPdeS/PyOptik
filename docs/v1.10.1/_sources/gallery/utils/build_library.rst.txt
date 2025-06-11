@@ -59,6 +59,146 @@ Import necessary modules
 
  .. code-block:: none
 
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.SELLMEIER <enum 'MaterialType'> True False
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
+    MaterialType.TABULATED <enum 'MaterialType'> False True
     +-----------------------+-----------------------+
     | Sellmeier Materials   | Tabulated Materials   |
     +=======================+=======================+
@@ -131,7 +271,7 @@ Import necessary modules
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 19.971 seconds)
+   **Total running time of the script:** (0 minutes 37.003 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_build_library.py:

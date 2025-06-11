@@ -2,7 +2,7 @@ import pytest
 from PyOptik import MaterialBank
 from PyOptik.material import SellmeierMaterial, TabulatedMaterial
 
-MaterialBank.build_library('minimal', remove_previous=True)
+# MaterialBank.build_library('minimal', remove_previous=True)
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 

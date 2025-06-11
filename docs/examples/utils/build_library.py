@@ -24,7 +24,7 @@ The available libraries are:
 from PyOptik import MaterialBank
 
 # Build the 'classics' material library and remove previously downloaded files
-MaterialBank.build_library('classics', remove_previous=True)
+MaterialBank.build_library('all', remove_previous=False)
 
 # Print all the available materials (Sellmeier and Tabulated)
 MaterialBank.print_available()

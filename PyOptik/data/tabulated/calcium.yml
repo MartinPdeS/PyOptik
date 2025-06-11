@@ -70,5 +70,5 @@ DATA:
         1.45864 0.72263 6.84998
         1.54980 0.80774 7.24241
         1.65312 0.88689 7.66724
-SPECS:
-    temperature: 298 K
+CONDITIONS:
+    temperature: 298

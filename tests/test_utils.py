@@ -9,8 +9,7 @@ MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 
 def test_main():
-    import subprocess
-    subprocess.run(["python", "-m", "PyOptik"])
+    MaterialBank.build_library('all', remove_previous=True)
 
 
 def test_download_yml_files():

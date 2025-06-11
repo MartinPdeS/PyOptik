@@ -2,6 +2,7 @@ import pytest
 from PyOptik import MaterialBank
 from PyOptik.material import SellmeierMaterial, TabulatedMaterial
 
+MaterialBank.build_library('classics', remove_previous=True)
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 
@@ -20,7 +21,6 @@ def test_usual_material(material_name):
 
 
 def tests_material_api():
-    MaterialBank.build_library('classics', remove_previous=True)
     material_0 = MaterialBank.zinc
     material_1 = MaterialBank.water
     material_2 = MaterialBank.BK7

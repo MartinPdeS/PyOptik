@@ -3,7 +3,6 @@ import logging
 from PyOptik.directories import sellmeier_data_path, tabulated_data_path
 from PyOptik.material_type import MaterialType
 
-
 def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
     """
     Downloads a .yml file from a specified URL and saves it locally.

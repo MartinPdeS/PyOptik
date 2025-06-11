@@ -15,9 +15,7 @@ from PyOptik.units import nanometer
 material = MaterialBank.BK7
 
 # Calculate refractive index at specific wavelengths
-RI = material.compute_refractive_index(wavelength=[1310, 1550] * nanometer)
+RI = material.compute_refractive_index(wavelength=[5_000] * nanometer)
 
 # Display calculated refractive indices at sample wavelengths
-material.plot(
-    wavelength=numpy.linspace(300, 1500, 300) * nanometer
-)
+material.plot()

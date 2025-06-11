@@ -328,12 +328,17 @@ class _MaterialBank():
         remove_previous : bool
             If True, removes existing files before downloading new ones.
         """
-        AVAILABLE_LIBRARIES = [os.path.splitext(f)[0] for f in os.listdir(libraries_path) if f.endswith('.yml')]
+        AVAILABLE_LIBRARIES = set([os.path.splitext(f)[0] for f in os.listdir(libraries_path) if f.endswith('.yml')])
 
         libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
 
         # Ensure the requested library exists
         assert libraries_to_download.issubset(AVAILABLE_LIBRARIES), f"Library value should be in {AVAILABLE_LIBRARIES}"
+
+
+        repertoire_file = libraries_path / 'repertoire.yml'
+        with open(repertoire_file, 'r') as file:
+            repertoire_dict = yaml.safe_load(file)
 
         # Remove previous files if the flag is set
         if remove_previous:
@@ -348,12 +353,14 @@ class _MaterialBank():
 
             # Download new files for sellmeier
             if data_dict.get('sellmeier', False):
-                for element_name, url in data_dict['sellmeier'].items():
+                for element_name in data_dict['sellmeier']:
+                    url = repertoire_dict['sellmeier'][element_name]
                     download_yml_file(url=url, filename=element_name, location=MaterialType.SELLMEIER)
 
             # Download new files for tabulated
             if data_dict.get('tabulated', False):
-                for element_name, url in data_dict['tabulated'].items():
+                for element_name in data_dict['tabulated']:
+                    url = repertoire_dict['tabulated'][element_name]
                     download_yml_file(url=url, filename=element_name, location=MaterialType.TABULATED)
 
     def create_sellmeier_file(

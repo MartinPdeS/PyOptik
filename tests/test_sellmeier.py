@@ -9,12 +9,13 @@ from PyOptik import MaterialBank
 import matplotlib.pyplot as plt
 from PyOptik.units import meter, micrometer, Quantity
 
-#  MaterialBank.build_library('minimal', remove_previous=True)
+MaterialBank.build_library('minimal', remove_previous=True)
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 material_list = MaterialBank.sellmeier
 
 
 def test_init_material():
+
     """Test initialization of SellmeierMaterial."""
     material = Material('water')
 

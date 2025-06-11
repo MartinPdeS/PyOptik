@@ -6,6 +6,12 @@
 }
 ,
 {
+  "name": "v1.10.5",
+  "version": "v1.10.5",
+  "url": "https://martinpdes.github.io/PyOptik/docs/v1.10.5"
+}
+,
+{
   "name": "v1.10.4",
   "version": "v1.10.4",
   "url": "https://martinpdes.github.io/PyOptik/docs/v1.10.4"

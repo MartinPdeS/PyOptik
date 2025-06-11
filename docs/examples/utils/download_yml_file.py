@@ -14,7 +14,7 @@ from PyOptik import MaterialBank, MaterialType
 MaterialBank.add_material_to_bank(
     filename='example_download',
     material_type=MaterialType.SELLMEIER,
-    url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml'
+    url='https://refractiveindex.info/database/data/main/H2O/nk/Daimon-19.0C.yml'
 )
 
 MaterialBank.print_available()

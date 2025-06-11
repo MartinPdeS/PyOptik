@@ -9,7 +9,6 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 # %%
 import numpy
 from PyOptik import MaterialBank
-MaterialBank.build_library('metals')
 
 # Initialize the material with the Sellmeier model
 material = MaterialBank.silver

@@ -81,8 +81,7 @@ addopts = [
     '-Werror',
     '--cov=PyOptik',
     '--cov-report=html',
-    "--cov-report=term",
-    "--ignore=tests/test_utils.py",  # This file is not a test file
+    "--cov-report=term"
 ]
 
 [tool.coverage.run]

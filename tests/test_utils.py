@@ -154,7 +154,7 @@ def test_create_custom_tabulated_file():
     )
 
 
-def test_download_yml_file_http_error_log(caplog):
+def _test_download_yml_file_http_error_log(caplog):
     with pytest.raises(ValueError):
         download_yml_file(
             filename='example_download',

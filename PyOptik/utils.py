@@ -13,7 +13,6 @@ def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
     """
     Downloads a .yml file from a specified URL and saves it locally.
     """
-    print(location, location.__class__, location is MaterialType.SELLMEIER, location is MaterialType.TABULATED)
     match location:
         case MaterialType.SELLMEIER:
             file_path = sellmeier_data_path / f"{filename}.yml"

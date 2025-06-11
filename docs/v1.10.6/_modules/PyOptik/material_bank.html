@@ -448,13 +448,11 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.tabulated_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_yml_file</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tabulate</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabulate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialType</span>
 
 
 <div class="viewcode-block" id="_MaterialBank">
 <a class="viewcode-back" href="../../code.html#PyOptik.material_bank._MaterialBank">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">_MaterialBank</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class representing a centralized material bank for common optical materials available in the PyOptik library.</span>

@@ -2,7 +2,7 @@ import pytest
 from PyOptik import MaterialBank
 from PyOptik.material import SellmeierMaterial, TabulatedMaterial
 
-MaterialBank.build_library('classics', remove_previous=True)
+MaterialBank.build_library('minimal', remove_previous=True)
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 
@@ -23,7 +23,7 @@ def test_usual_material(material_name):
 def tests_material_api():
     material_0 = MaterialBank.zinc
     material_1 = MaterialBank.water
-    material_2 = MaterialBank.BK7
+    material_2 = MaterialBank.silicon
 
     assert material_0 != material_1, "Two different material [Tabulated vs Sellmeier] are evaluated as equal"
     assert material_2 != material_1, "Two different material [Sellmeier vs Sellmeier] are evaluated as equal"

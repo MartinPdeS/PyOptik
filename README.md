@@ -6,13 +6,13 @@
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | PyOptik/\_\_main\_\_.py              |        5 |        5 |        2 |        0 |      0% |       1-7 |
 | PyOptik/material/base\_class.py      |       31 |        4 |       14 |        3 |     84% |16, 29, 40, 56->exit, 83 |
-| PyOptik/material/sellmeier\_class.py |       82 |        2 |       24 |        2 |     96% |   87, 165 |
+| PyOptik/material/sellmeier\_class.py |       82 |        4 |       24 |        3 |     93% |87, 144-145, 165 |
 | PyOptik/material/tabulated\_class.py |       61 |        3 |        2 |        1 |     94% | 70, 83-84 |
-| PyOptik/material\_bank.py            |      150 |       23 |       54 |        7 |     79% |126, 270->273, 275->exit, 331-364, 405->409, 411->415, 415->419, 460->464 |
+| PyOptik/material\_bank.py            |      150 |       79 |       54 |        3 |     39% |126, 228-231, 235, 239, 260-276, 295, 303-318, 331-364, 395-425, 447-470 |
 | PyOptik/material\_type.py            |        4 |        0 |        0 |        0 |    100% |           |
 | PyOptik/units.py                     |       18 |        0 |        4 |        0 |    100% |           |
-| PyOptik/utils.py                     |       31 |       11 |        4 |        1 |     66% |21-22, 37-45 |
-|                            **TOTAL** |  **382** |   **48** |  **104** |   **14** | **84%** |           |
+| PyOptik/utils.py                     |       31 |       25 |        4 |        0 |     17% |     16-45 |
+|                            **TOTAL** |  **382** |  **120** |  **104** |   **10** | **63%** |           |
 
 
 ## Setup coverage badge

@@ -155,14 +155,12 @@ def test_create_custom_tabulated_file():
 
 
 def test_download_yml_file_http_error_log(caplog):
-    download_yml_file(
-        filename='example_download',
-        url='__invalid_url__.com',
-        location=MaterialType.SELLMEIER
-    )
-
-    assert 'An error occurred' in caplog.text, "Warning was not raised: {caplog.text}"
-
+    with pytest.raises(ValueError):
+        download_yml_file(
+            filename='example_download',
+            url='__invalid_url__.com',
+            location=MaterialType.SELLMEIER
+        )
 
 if __name__ == "__main__":
-    pytest.main(["-W error", __file__])
+    pytest.main(["-W error", "-s", __file__])

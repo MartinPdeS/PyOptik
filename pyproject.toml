@@ -72,7 +72,9 @@ minversion = "6.0"
 xfail_strict = true
 log_cli_level = "INFO"
 testpaths = [
-    "tests/*",
+    "tests/test_sellmeier.py",
+    "tests/test_tabulated.py",
+    "tests/test_usual_materials.py",
 ]
 addopts = [
     '-v',

@@ -58,7 +58,7 @@ test:
   source_files:
     - tests/test_sellmeier.py
     - tests/test_tabulated.py
-    - tests/usual_materials.py
+    - tests/test_usual_materials.py
 
 extra:
   recipe-maintainers:

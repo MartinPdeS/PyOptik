@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+from unittest.mock import patch
+
 from PyOptik import MaterialBank, MaterialType
 from PyOptik.utils import download_yml_file
+from PyOptik.directories import sellmeier_data_path, tabulated_data_path
 
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
@@ -52,13 +55,30 @@ def test_fail_add_custom():
         )
 
 
-def test_build_library():
-    """
-    Test the creation of the default library. Ensures that the default library
-    is built without errors.
-    """
-    pass
-    # MaterialBank.build_library('minimal', remove_previous=True)
+
+
+def _dummy_download(url: str, filename: str, location: MaterialType) -> None:
+    """Create an empty file to mimic a download."""
+    match location:
+        case MaterialType.SELLMEIER:
+            path = sellmeier_data_path / f"{filename}.yml"
+        case MaterialType.TABULATED:
+            path = tabulated_data_path / f"{filename}.yml"
+        case _:
+            raise ValueError
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("test")
+
+
+@patch("PyOptik.material_bank.download_yml_file", side_effect=_dummy_download)
+def test_build_library(mock_download):
+    """Ensure the minimal library is built and files are created."""
+    MaterialBank.build_library("minimal", remove_previous=True)
+
+    assert (sellmeier_data_path / "water.yml").exists()
+
+    # Clean up
+    MaterialBank.clean_data_files(regex=".*", location="any")
 
 
 def test_remove_item():

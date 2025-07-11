@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage for PyOptik/material/sellmeier_class.py: 93%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
-    <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
+    <link rel="stylesheet" href="style_cb_81f8c14c.css" type="text/css">
     <script src="coverage_html_cb_6fb7b396.js" defer></script>
 </head>
 <body class="pyfile">
@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_3fb3ee37837f756a_tabulated_class_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.8.2">coverage.py v7.8.2</a>,
-            created at 2025-06-12 10:11 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>,
+            created at 2025-07-11 18:07 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -217,7 +217,7 @@
     <p class="run"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">            <span class="key">case</span> <span class="num">5</span><span class="op">:</span>  <span class="com"># Formula 5 computation (extended Sellmeier)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">                <span class="nam">n</span> <span class="op">=</span> <span class="num">1</span> <span class="op">+</span> <span class="nam">self</span><span class="op">.</span><span class="nam">coefficients</span><span class="op">[</span><span class="num">0</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">                <span class="key">for</span> <span class="op">(</span><span class="nam">B</span><span class="op">,</span> <span class="nam">C</span><span class="op">)</span> <span class="key">in</span> <span class="nam">zipped_coefficients</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">                    <span class="nam">n</span> <span class="op">=</span> <span class="nam">B</span> <span class="op">*</span> <span class="nam">wavelength</span><span class="op">.</span><span class="nam">to</span><span class="op">(</span><span class="nam">micrometer</span><span class="op">)</span><span class="op">.</span><span class="nam">magnitude</span><span class="op">**</span><span class="nam">C</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">                    <span class="nam">n</span> <span class="op">+=</span> <span class="nam">B</span> <span class="op">*</span> <span class="nam">wavelength</span><span class="op">.</span><span class="nam">to</span><span class="op">(</span><span class="nam">micrometer</span><span class="op">)</span><span class="op">.</span><span class="nam">magnitude</span><span class="op">**</span><span class="nam">C</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="par run show_par"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">            <span class="key">case</span> <span class="num">6</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">138&#x202F;&#x219B;&#x202F;143</span><span class="annotate long">line 138 didn't jump to line 143 because the pattern on line 138 always matched</span></span></p>
     <p class="run"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">                <span class="nam">n</span> <span class="op">=</span> <span class="num">1</span> <span class="op">+</span> <span class="nam">self</span><span class="op">.</span><span class="nam">coefficients</span><span class="op">[</span><span class="num">0</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
@@ -287,8 +287,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_3fb3ee37837f756a_tabulated_class_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.8.2">coverage.py v7.8.2</a>,
-            created at 2025-06-12 10:11 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>,
+            created at 2025-07-11 18:07 +0000
         </p>
     </div>
 </footer>

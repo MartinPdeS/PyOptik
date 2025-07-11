@@ -133,7 +133,7 @@ class SellmeierMaterial(BaseMaterial):
             case 5:  # Formula 5 computation (extended Sellmeier)
                 n = 1 + self.coefficients[0]
                 for (B, C) in zipped_coefficients:
-                    n = B * wavelength.to(micrometer).magnitude**C
+                    n += B * wavelength.to(micrometer).magnitude**C
 
             case 6:
                 n = 1 + self.coefficients[0]

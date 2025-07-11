@@ -127,8 +127,10 @@ class _MaterialBank():
         cls.use_sellmeier = use_sellmeier
 
     def _list_materials(self, material_type: MaterialType) -> List[str]:
-        """create_sellmeier_file
-        Helper method to list materials of a specific type.
+        """Return the list of materials of a given type.
+
+        This is a small helper used internally by the various ``*.materials``
+        properties to gather the available YAML files in the data directory.
 
         Parameters
         ----------
@@ -181,12 +183,10 @@ class _MaterialBank():
         """
         return self.sellmeier + self.tabulated
 
-    def print_available(cls) -> None:
-        """
-        Prints out all the available Sellmeier and Tabulated materials in a tabulated format.
-        """
-        sellmeier_materials = cls.sellmeier
-        tabulated_materials = cls.tabulated
+    def print_available(self) -> None:
+        """Display all available materials in a nicely formatted table."""
+        sellmeier_materials = self.sellmeier
+        tabulated_materials = self.tabulated
 
         # Create data for the table
         table_data = []
@@ -428,19 +428,18 @@ class _MaterialBank():
             data: List[Tuple[float, float, float]],
             reference: Optional[str] = None,
             comments: Optional[str] = None) -> None:
-        """
-        Creates a YAML file with tabulated nk data in the correct format.
+        """Create a YAML file describing tabulated :math:`n` and :math:`k` values.
 
         Parameters
         ----------
-        filename : str)
-            The name of the file to create (without the extension).
-        data : List[Tuple[float, float, float]])
-            The tabulated nk data.
-        reference : Optional[str])
-            A reference for the material data.
-        comments : Optional[str])
-            Additional comments about the material.
+        filename : str
+            Name of the file to create (without extension).
+        data : list[tuple[float, float, float]]
+            Sequence of ``(wavelength, n, k)`` triplets in micrometers.
+        reference : Optional[str], optional
+            Bibliographic reference associated with the dataset.
+        comments : Optional[str], optional
+            Additional free-form comments to store in the YAML file.
         """
         reference = 'None' if reference is None else reference
 

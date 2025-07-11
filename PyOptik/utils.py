@@ -10,8 +10,29 @@ logging.basicConfig(
 )
 
 def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
-    """
-    Downloads a .yml file from a specified URL and saves it locally.
+    """Download a YAML file and store it in the local data directory.
+
+    Parameters
+    ----------
+    url : str
+        The fully qualified URL to download.
+    filename : str
+        Name of the file (without extension) under which the data will be saved.
+    location : MaterialType
+        Destination folder identifier. Use ``MaterialType.SELLMEIER`` for
+        Sellmeier materials or ``MaterialType.TABULATED`` for tabulated ones.
+
+    Raises
+    ------
+    ValueError
+        If ``location`` is not a supported :class:`~PyOptik.material_type.MaterialType`.
+    requests.exceptions.Timeout
+        If the request times out after 10 seconds.
+    requests.exceptions.HTTPError
+        If the server returns an HTTP error status.
+    Exception
+        Propagates any unexpected error that occurred during download or file
+        writing.
     """
     match location:
         case MaterialType.SELLMEIER:

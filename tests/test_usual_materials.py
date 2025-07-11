@@ -58,6 +58,14 @@ def test_get_unknown_material():
         MaterialBank.get("unknown_material")
 
 
+def test_print_available_output(capsys):
+    """Ensure ``print_available`` prints a table listing materials."""
+    MaterialBank.print_available()
+    captured = capsys.readouterr()
+    assert "Sellmeier Materials" in captured.out
+    assert "Tabulated Materials" in captured.out
+
+
 def test_fail_wrong_clean():
     with pytest.raises(ValueError):
         MaterialBank.clean_data_files(regex='test*', location='invalid')

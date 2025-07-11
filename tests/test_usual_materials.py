@@ -41,6 +41,23 @@ def test_material_bank_filter():
     MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 
 
+def test_set_filter_invalid():
+    with pytest.raises(ValueError):
+        MaterialBank.set_filter(use_sellmeier=False, use_tabulated=False)
+
+
+def test_getattr_and_get():
+    mat = MaterialBank.water
+    same = MaterialBank.get("water")
+    assert mat.filename == "water"
+    assert same.filename == mat.filename
+
+
+def test_get_unknown_material():
+    with pytest.raises(AttributeError):
+        MaterialBank.get("unknown_material")
+
+
 def test_fail_wrong_clean():
     with pytest.raises(ValueError):
         MaterialBank.clean_data_files(regex='test*', location='invalid')

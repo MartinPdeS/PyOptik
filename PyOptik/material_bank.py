@@ -327,12 +327,10 @@ class _MaterialBank():
             If True, removes existing files before downloading new ones.
         """
         AVAILABLE_LIBRARIES = set([os.path.splitext(f)[0] for f in os.listdir(libraries_path) if f.endswith('.yml')])
-
         libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
 
         # Ensure the requested library exists
         assert libraries_to_download.issubset(AVAILABLE_LIBRARIES), f"Library value should be in {AVAILABLE_LIBRARIES}"
-
 
         repertoire_file = libraries_path / 'repertoire.yml'
         with open(repertoire_file, 'r') as file:

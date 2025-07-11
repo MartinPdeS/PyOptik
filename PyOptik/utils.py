@@ -9,6 +9,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
 )
 
+
 def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
     """Download a YAML file and store it in the local data directory.
 
@@ -41,7 +42,6 @@ def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
             file_path = tabulated_data_path / f"{filename}.yml"
         case _:
             raise ValueError(f"Location [{location}] is invalid, it can be either MaterialType.SELLMEIER or MaterialType.TABULATED")
-
 
     logging.info(f"Starting download of {url!r} → {file_path!s}")
     try:

@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 from PyOptik.units import Quantity, micrometer, meter
 
 
-
 class TabulatedMaterial(BaseMaterial):
     """
     Class representing a material with tabulated refractive index (n) and absorption (k) values.

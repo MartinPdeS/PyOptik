@@ -129,6 +129,20 @@ def test_compute_refractive_index_inputs():
     assert isinstance(refractive_index, np.ndarray), f"Refractive index [{refractive_index}] should return an array when wavelength [{wavelength}] input is an array"
 
 
+def test_formula_type_5_accumulation():
+    """Ensure formula type 5 accumulates all terms when computing the index."""
+    material = Material('acetone')
+
+    wl = 0.5 * micrometer
+    calculated = material.compute_refractive_index(wl)
+
+    expected = 1 + material.coefficients[0]
+    for B, C in zip(material.coefficients[1::2], material.coefficients[2::2]):
+        expected += B * wl.to(micrometer).magnitude ** C
+
+    assert np.isclose(calculated, expected)
+
+
 def test_invalid_formula_type():
     """Test handling of unsupported material types."""
     with pytest.raises(FileNotFoundError):

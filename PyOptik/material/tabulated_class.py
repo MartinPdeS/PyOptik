@@ -134,10 +134,6 @@ class TabulatedMaterial(BaseMaterial):
         ----------
         wavelength : Optional[Quantity]
             The range of wavelengths to plot, in micrometers. If not provided, the entire tabulated wavelength range is used.
-        title : str, optional
-            Title of the plot.
-        grid : bool, optional
-            Whether to show grid lines on the plot.
 
         Raises
         ------

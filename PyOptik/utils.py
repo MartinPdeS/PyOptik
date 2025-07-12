@@ -3,7 +3,7 @@ from PyOptik.material_type import MaterialType
 import requests
 import logging
 from pathlib import Path
-
+import PyOptik
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,7 +53,7 @@ def download_yml_file(url: str, filename: str, save_location: MaterialType) -> N
 
     logging.info(f"Downloading file from {url} to {file_path}")
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=PyOptik.TIMEOUT)
         response.raise_for_status()
 
         file_path.parent.mkdir(parents=True, exist_ok=True)

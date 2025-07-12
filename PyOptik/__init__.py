@@ -13,3 +13,5 @@ from .material import SellmeierMaterial
 from .material import base_class
 
 Material = MaterialBank  # For retro-compatiibility
+
+TIMEOUT = 10 # Default timeout for requests in seconds

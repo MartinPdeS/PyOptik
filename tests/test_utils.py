@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from unittest.mock import patch
 
 from PyOptik import MaterialBank, MaterialType
 from PyOptik.utils import download_yml_file
-from PyOptik.directories import sellmeier_data_path, tabulated_data_path
+import PyOptik
+PyOptik.TIMEOUT = 50  # Ensure the timeout is set for testing
 
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 

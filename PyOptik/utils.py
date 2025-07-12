@@ -4,6 +4,7 @@ import requests
 import logging
 from pathlib import Path
 import PyOptik
+import time
 
 logging.basicConfig(
     level=logging.INFO,

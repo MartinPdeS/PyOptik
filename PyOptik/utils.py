@@ -10,8 +10,28 @@ logging.basicConfig(
 )
 
 def download_yml_file(url: str, filename: str, location: MaterialType) -> None:
-    """
-    Downloads a .yml file from a specified URL and saves it locally.
+    """Download and store a material YAML file.
+
+    Parameters
+    ----------
+    url : str
+        Direct link to the YAML file to download.
+    filename : str
+        Name (without extension) used when saving the file locally.
+    location : MaterialType
+        Target directory; either ``MaterialType.SELLMEIER`` or
+        ``MaterialType.TABULATED``.
+
+    Raises
+    ------
+    ValueError
+        If ``location`` does not correspond to a known directory.
+    requests.exceptions.Timeout
+        If the download does not finish within 10 seconds.
+    requests.exceptions.HTTPError
+        If the server returns an HTTP error code.
+    Exception
+        For any other unexpected error during download or write.
     """
     match location:
         case MaterialType.SELLMEIER:

@@ -127,8 +127,7 @@ class _MaterialBank():
         cls.use_sellmeier = use_sellmeier
 
     def _list_materials(self, material_type: MaterialType) -> List[str]:
-        """create_sellmeier_file
-        Helper method to list materials of a specific type.
+        """Return available material names for a given type.
 
         Parameters
         ----------
@@ -182,8 +181,11 @@ class _MaterialBank():
         return self.sellmeier + self.tabulated
 
     def print_available(cls) -> None:
-        """
-        Prints out all the available Sellmeier and Tabulated materials in a tabulated format.
+        """Display all available materials in a table.
+
+        The method lists both Sellmeier and tabulated materials currently
+        stored in the local database and prints them in two columns using
+        :func:`tabulate.tabulate`.
         """
         sellmeier_materials = cls.sellmeier
         tabulated_materials = cls.tabulated
@@ -370,25 +372,29 @@ class _MaterialBank():
             reference: Optional[str] = None,
             comments: Optional[str] = None,
             specs: Optional[dict] = None) -> None:
-        """
-        Creates a YAML file with custom Sellmeier coefficients in the correct format.
+        """Create a custom Sellmeier material definition.
 
         Parameters
         ----------
         filename : str
-            The name of the file to create (without the extension).
+            Name of the output file without extension.
         formula_type : int
-            The type of Sellmeier formula.
-        coefficients :  list[float]
-            A list of coefficients for the Sellmeier equation.
-        wavelength_range : Tuple[float, float]
-            The range of wavelengths, in micrometers.
-        reference : str
-            A reference for the material data.
-        comments : Optional[str]
-            Additional comments about the material.
-        specs : Optional[dict]
-            Additional specifications, such as temperature and whether the wavelength is in a vacuum.
+            Identifier of the Sellmeier formula to use.
+        coefficients : list[float]
+            Coefficients of the selected Sellmeier equation.
+        wavelength_range : tuple[float, float], optional
+            Minimum and maximum wavelength in micrometers.
+        reference : str, optional
+            Reference or citation for the data.
+        comments : str, optional
+            Additional comments stored in the file.
+        specs : dict, optional
+            Extra specifications such as temperature or vacuum information.
+
+        Notes
+        -----
+        The YAML file is written to ``data/sellmeier`` within the package
+        directory.
         """
         reference = 'None' if reference is None else reference
 
@@ -428,19 +434,23 @@ class _MaterialBank():
             data: List[Tuple[float, float, float]],
             reference: Optional[str] = None,
             comments: Optional[str] = None) -> None:
-        """
-        Creates a YAML file with tabulated nk data in the correct format.
+        """Create a tabulated ``n``/``k`` material definition.
 
         Parameters
         ----------
-        filename : str)
-            The name of the file to create (without the extension).
-        data : List[Tuple[float, float, float]])
-            The tabulated nk data.
-        reference : Optional[str])
-            A reference for the material data.
-        comments : Optional[str])
-            Additional comments about the material.
+        filename : str
+            Name of the output file without extension.
+        data : list[tuple[float, float, float]]
+            Sequence of ``(wavelength, n, k)`` tuples.
+        reference : str, optional
+            Reference or citation for the data.
+        comments : str, optional
+            Additional comments stored in the file.
+
+        Notes
+        -----
+        The YAML file is written to ``data/tabulated`` within the package
+        directory.
         """
         reference = 'None' if reference is None else reference
 

@@ -564,8 +564,7 @@ document.write(`
         <span class="bp">cls</span><span class="o">.</span><span class="n">use_sellmeier</span> <span class="o">=</span> <span class="n">use_sellmeier</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_list_materials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_type</span><span class="p">:</span> <span class="n">MaterialType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;create_sellmeier_file</span>
-<span class="sd">        Helper method to list materials of a specific type.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return available material names for a given type.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -619,8 +618,11 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sellmeier</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabulated</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">print_available</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Prints out all the available Sellmeier and Tabulated materials in a tabulated format.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display all available materials in a table.</span>
+
+<span class="sd">        The method lists both Sellmeier and tabulated materials currently</span>
+<span class="sd">        stored in the local database and prints them in two columns using</span>
+<span class="sd">        :func:`tabulate.tabulate`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sellmeier_materials</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sellmeier</span>
         <span class="n">tabulated_materials</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">tabulated</span>
@@ -807,25 +809,29 @@ document.write(`
             <span class="n">reference</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">comments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">specs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a YAML file with custom Sellmeier coefficients in the correct format.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a custom Sellmeier material definition.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        filename : str</span>
-<span class="sd">            The name of the file to create (without the extension).</span>
+<span class="sd">            Name of the output file without extension.</span>
 <span class="sd">        formula_type : int</span>
-<span class="sd">            The type of Sellmeier formula.</span>
-<span class="sd">        coefficients :  list[float]</span>
-<span class="sd">            A list of coefficients for the Sellmeier equation.</span>
-<span class="sd">        wavelength_range : Tuple[float, float]</span>
-<span class="sd">            The range of wavelengths, in micrometers.</span>
-<span class="sd">        reference : str</span>
-<span class="sd">            A reference for the material data.</span>
-<span class="sd">        comments : Optional[str]</span>
-<span class="sd">            Additional comments about the material.</span>
-<span class="sd">        specs : Optional[dict]</span>
-<span class="sd">            Additional specifications, such as temperature and whether the wavelength is in a vacuum.</span>
+<span class="sd">            Identifier of the Sellmeier formula to use.</span>
+<span class="sd">        coefficients : list[float]</span>
+<span class="sd">            Coefficients of the selected Sellmeier equation.</span>
+<span class="sd">        wavelength_range : tuple[float, float], optional</span>
+<span class="sd">            Minimum and maximum wavelength in micrometers.</span>
+<span class="sd">        reference : str, optional</span>
+<span class="sd">            Reference or citation for the data.</span>
+<span class="sd">        comments : str, optional</span>
+<span class="sd">            Additional comments stored in the file.</span>
+<span class="sd">        specs : dict, optional</span>
+<span class="sd">            Extra specifications such as temperature or vacuum information.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The YAML file is written to ``data/sellmeier`` within the package</span>
+<span class="sd">        directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">reference</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span> <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">reference</span>
 
@@ -865,19 +871,23 @@ document.write(`
             <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
             <span class="n">reference</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">comments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a YAML file with tabulated nk data in the correct format.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a tabulated ``n``/``k`` material definition.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        filename : str)</span>
-<span class="sd">            The name of the file to create (without the extension).</span>
-<span class="sd">        data : List[Tuple[float, float, float]])</span>
-<span class="sd">            The tabulated nk data.</span>
-<span class="sd">        reference : Optional[str])</span>
-<span class="sd">            A reference for the material data.</span>
-<span class="sd">        comments : Optional[str])</span>
-<span class="sd">            Additional comments about the material.</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Name of the output file without extension.</span>
+<span class="sd">        data : list[tuple[float, float, float]]</span>
+<span class="sd">            Sequence of ``(wavelength, n, k)`` tuples.</span>
+<span class="sd">        reference : str, optional</span>
+<span class="sd">            Reference or citation for the data.</span>
+<span class="sd">        comments : str, optional</span>
+<span class="sd">            Additional comments stored in the file.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The YAML file is written to ``data/tabulated`` within the package</span>
+<span class="sd">        directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">reference</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span> <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">reference</span>
 

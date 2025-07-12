@@ -447,8 +447,28 @@ document.write(`
 <div class="viewcode-block" id="download_yml_file">
 <a class="viewcode-back" href="../../code.html#PyOptik.utils.download_yml_file">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">download_yml_file</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">MaterialType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads a .yml file from a specified URL and saves it locally.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download and store a material YAML file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    url : str</span>
+<span class="sd">        Direct link to the YAML file to download.</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Name (without extension) used when saving the file locally.</span>
+<span class="sd">    location : MaterialType</span>
+<span class="sd">        Target directory; either ``MaterialType.SELLMEIER`` or</span>
+<span class="sd">        ``MaterialType.TABULATED``.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If ``location`` does not correspond to a known directory.</span>
+<span class="sd">    requests.exceptions.Timeout</span>
+<span class="sd">        If the download does not finish within 10 seconds.</span>
+<span class="sd">    requests.exceptions.HTTPError</span>
+<span class="sd">        If the server returns an HTTP error code.</span>
+<span class="sd">    Exception</span>
+<span class="sd">        For any other unexpected error during download or write.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">match</span> <span class="n">location</span><span class="p">:</span>
         <span class="k">case</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">:</span>

@@ -676,7 +676,7 @@ document.write(`
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">add_material_to_bank</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">material_type</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_location</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove a file associated with a given element name from the specified location.</span>
 
@@ -684,35 +684,35 @@ document.write(`
 <span class="sd">        ----------</span>
 <span class="sd">        filename : str</span>
 <span class="sd">            The name of the file to remove, without the &#39;.yml&#39; suffix.</span>
-<span class="sd">        location : Union[str, MaterialType]</span>
-<span class="sd">            The location to search for the file, either &#39;sellmeier&#39;, &#39;tabulated&#39;, &#39;any&#39;, or a MaterialType enum (default is &#39;any&#39;).</span>
+<span class="sd">        save_location : Union[str, MaterialType]</span>
+<span class="sd">            The save_location to search for the file, either &#39;sellmeier&#39;, &#39;tabulated&#39;, &#39;any&#39;, or a MaterialType enum (default is &#39;any&#39;).</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        FileNotFoundError</span>
 <span class="sd">            If the specified file does not exist.</span>
 <span class="sd">        ValueError</span>
-<span class="sd">            If an invalid location is provided.</span>
+<span class="sd">            If an invalid save_location is provided.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">):</span>
-            <span class="n">location</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">save_location</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">):</span>
+            <span class="n">save_location</span> <span class="o">=</span> <span class="n">save_location</span><span class="o">.</span><span class="n">value</span>
 
-        <span class="n">location</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">save_location</span> <span class="o">=</span> <span class="n">save_location</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid location. Please choose &#39;sellmeier&#39;, &#39;tabulated&#39;, or &#39;any&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">save_location</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid save_location. Please choose &#39;sellmeier&#39;, &#39;tabulated&#39;, or &#39;any&#39;.&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">]:</span>
             <span class="n">sellmeier_file</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
             <span class="k">if</span> <span class="n">sellmeier_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
                 <span class="n">sellmeier_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
             <span class="n">tabulated_file</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
             <span class="k">if</span> <span class="n">tabulated_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
                 <span class="n">tabulated_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">clean_data_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clean_data_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_location</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove all files matching the given regex from the specified location.</span>
 
@@ -728,13 +728,13 @@ document.write(`
 <span class="sd">        ValueError</span>
 <span class="sd">            If an invalid location is provided.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">):</span>
-            <span class="n">location</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">save_location</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">):</span>
+            <span class="n">save_location</span> <span class="o">=</span> <span class="n">save_location</span><span class="o">.</span><span class="n">value</span>
 
-        <span class="n">location</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">save_location</span> <span class="o">=</span> <span class="n">save_location</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid location. Please choose &#39;sellmeier&#39;, &#39;tabulated&#39;, or &#39;any&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">save_location</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid save_location. Please choose &#39;sellmeier&#39;, &#39;tabulated&#39;, or &#39;any&#39;.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Compile the regex pattern</span>
         <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span>
@@ -747,11 +747,11 @@ document.write(`
                     <span class="n">file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
         <span class="c1"># Remove files from the sellmeier location if specified</span>
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">]:</span>
             <span class="n">remove_matching_files</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">)</span>
 
         <span class="c1"># Remove files from the tabulated location if specified</span>
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
             <span class="n">remove_matching_files</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">build_library</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">library</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;classics&#39;</span><span class="p">,</span> <span class="n">remove_previous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

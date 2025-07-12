@@ -16,11 +16,10 @@ classifiers = [
     'Programming Language :: Python :: Implementation :: CPython',
     'Development Status :: 4 - Beta',
     'Topic :: Scientific/Engineering :: Physics',
-    'License :: OSI Approved :: MIT License',
     'Intended Audience :: Science/Research',
 ]
 
-keywords = ["refracive index", "optics"]
+keywords = ["refractive index", "optics"]
 
 dependencies = [
     "pint ~=0.24",

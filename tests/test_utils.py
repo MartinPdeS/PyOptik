@@ -5,8 +5,6 @@ import pytest
 
 from PyOptik import MaterialBank, MaterialType
 from PyOptik.utils import download_yml_file
-import PyOptik
-PyOptik.TIMEOUT = 50  # Ensure the timeout is set for testing
 
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
 

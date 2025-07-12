@@ -13,7 +13,7 @@ logging.basicConfig(
 def download_yml_file(
     url: str,
     filename: str,
-    location: MaterialType,
+    save_location: MaterialType,
     max_retries: int = 3,
     retry_delay: float = 2.0,
     backoff_factor: float = 2.0,
@@ -30,7 +30,7 @@ def download_yml_file(
         Direct link to the YAML file to download.
     filename : str
         File name to save (without .yml extension).
-    location : MaterialType
+    save_location : MaterialType
         The target material type (SELLMEIER or TABULATED).
     max_retries : int, optional
         Maximum number of retry attempts (default is 3).
@@ -46,13 +46,13 @@ def download_yml_file(
     requests.exceptions.RequestException
         For non-retriable HTTP or connection errors.
     """
-    # Determine save location
-    if location == MaterialType.SELLMEIER:
+    # Determine save save_location
+    if save_location == MaterialType.SELLMEIER:
         file_path: Path = sellmeier_data_path / f"{filename}.yml"
-    elif location == MaterialType.TABULATED:
+    elif save_location == MaterialType.TABULATED:
         file_path: Path = tabulated_data_path / f"{filename}.yml"
     else:
-        raise ValueError(f"Invalid location: {location}. Must be SELLMEIER or TABULATED.")
+        raise ValueError(f"Invalid save_location: {save_location}. Must be SELLMEIER or TABULATED.")
 
     # Skip if already downloaded
     if file_path.exists():

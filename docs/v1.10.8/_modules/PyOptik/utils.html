@@ -450,7 +450,7 @@ document.write(`
 <span class="k">def</span><span class="w"> </span><span class="nf">download_yml_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">location</span><span class="p">:</span> <span class="n">MaterialType</span><span class="p">,</span>
+    <span class="n">save_location</span><span class="p">:</span> <span class="n">MaterialType</span><span class="p">,</span>
     <span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">retry_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
     <span class="n">backoff_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
@@ -467,7 +467,7 @@ document.write(`
 <span class="sd">        Direct link to the YAML file to download.</span>
 <span class="sd">    filename : str</span>
 <span class="sd">        File name to save (without .yml extension).</span>
-<span class="sd">    location : MaterialType</span>
+<span class="sd">    save_location : MaterialType</span>
 <span class="sd">        The target material type (SELLMEIER or TABULATED).</span>
 <span class="sd">    max_retries : int, optional</span>
 <span class="sd">        Maximum number of retry attempts (default is 3).</span>
@@ -483,13 +483,13 @@ document.write(`
 <span class="sd">    requests.exceptions.RequestException</span>
 <span class="sd">        For non-retriable HTTP or connection errors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Determine save location</span>
-    <span class="k">if</span> <span class="n">location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">:</span>
+    <span class="c1"># Determine save save_location</span>
+    <span class="k">if</span> <span class="n">save_location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">:</span>
         <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">sellmeier_data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
-    <span class="k">elif</span> <span class="n">location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">save_location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">:</span>
         <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">tabulated_data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid location: </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">. Must be SELLMEIER or TABULATED.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid save_location: </span><span class="si">{</span><span class="n">save_location</span><span class="si">}</span><span class="s2">. Must be SELLMEIER or TABULATED.&quot;</span><span class="p">)</span>
 
     <span class="c1"># Skip if already downloaded</span>
     <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>

@@ -8,10 +8,10 @@
 | PyOptik/material/base\_class.py      |       31 |        4 |       14 |        3 |     84% |16, 29, 40, 56->exit, 83 |
 | PyOptik/material/sellmeier\_class.py |       79 |        4 |       24 |        3 |     93% |86, 143-144, 164 |
 | PyOptik/material/tabulated\_class.py |       59 |        3 |        2 |        1 |     93% | 74, 87-88 |
-| PyOptik/material\_bank.py            |      148 |       79 |       54 |        3 |     39% |124, 226-229, 233, 237, 258-274, 293, 301-316, 329-362, 393-423, 445-468 |
+| PyOptik/material\_bank.py            |      148 |       79 |       54 |        3 |     39% |124, 228-231, 235, 239, 260-276, 295, 303-318, 331-364, 399-429, 455-478 |
 | PyOptik/material\_type.py            |        4 |        0 |        0 |        0 |    100% |           |
 | PyOptik/units.py                     |       18 |        0 |        4 |        0 |    100% |           |
-| PyOptik/utils.py                     |       31 |       25 |        4 |        0 |     17% |     16-45 |
+| PyOptik/utils.py                     |       31 |       25 |        4 |        0 |     17% |     36-65 |
 |                            **TOTAL** |  **375** |  **120** |  **104** |   **10** | **63%** |           |
 
 

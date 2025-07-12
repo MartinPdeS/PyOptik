@@ -27,13 +27,13 @@ def test_download_yml_files():
     download_yml_file(
         filename='test_tabulated',
         url=url_water,
-        location=MaterialType.TABULATED
+        save_location=MaterialType.TABULATED
     )
 
     download_yml_file(
         filename='test_sellmeier',
         url=url_water,
-        location=MaterialType.SELLMEIER
+        save_location=MaterialType.SELLMEIER
     )
 
 
@@ -81,7 +81,7 @@ def test_fail_add_custom():
 #     assert (sellmeier_data_path / "water.yml").exists()
 
 #     # Clean up
-#     MaterialBank.clean_data_files(regex=".*", location="any")
+#     MaterialBank.clean_data_files(regex=".*", save_location="any")
 
 
 # def test_remove_item():
@@ -90,39 +90,39 @@ def test_fail_add_custom():
 #     be removed without errors.
 #     """
 #     with pytest.raises(ValueError):
-#         MaterialBank.remove_item(filename='test', location='invalid_location')
+#         MaterialBank.remove_item(filename='test', save_location='invalid_location')
 
 #     download_yml_file(
 #         filename='test_sellmeier',
 #         url=url_water,
-#         location=MaterialType.SELLMEIER
+#         save_location=MaterialType.SELLMEIER
 #     )
 
-#     MaterialBank.remove_item(filename='test_sellmeier', location=MaterialType.SELLMEIER)
+#     MaterialBank.remove_item(filename='test_sellmeier', save_location=MaterialType.SELLMEIER)
 
 #     download_yml_file(
 #         filename='test_tabulated',
 #         url=url_water,
-#         location=MaterialType.TABULATED
+#         save_location=MaterialType.TABULATED
 #     )
 
-#     MaterialBank.remove_item(filename='test_tabulated', location=MaterialType.TABULATED)
+#     MaterialBank.remove_item(filename='test_tabulated', save_location=MaterialType.TABULATED)
 
 #     download_yml_file(
 #         filename='test_sellmeier',
 #         url=url_water,
-#         location=MaterialType.SELLMEIER
+#         save_location=MaterialType.SELLMEIER
 #     )
 
-#     MaterialBank.clean_data_files(regex='test*', location=MaterialType.SELLMEIER)
+#     MaterialBank.clean_data_files(regex='test*', save_location=MaterialType.SELLMEIER)
 
 #     download_yml_file(
 #         filename='test_tabulated',
 #         url=url_water,
-#         location=MaterialType.TABULATED
+#         save_location=MaterialType.TABULATED
 #     )
 
-#     MaterialBank.clean_data_files(regex='test*', location=MaterialType.TABULATED)
+#     MaterialBank.clean_data_files(regex='test*', save_location=MaterialType.TABULATED)
 
 
 # def test_create_custom_sellmeier_file():
@@ -182,7 +182,7 @@ def test_fail_add_custom():
 #         download_yml_file(
 #             filename='example_download',
 #             url='__invalid_url__.com',
-#             location=MaterialType.SELLMEIER
+#             save_location=MaterialType.SELLMEIER
 #         )
 
 def test_main():

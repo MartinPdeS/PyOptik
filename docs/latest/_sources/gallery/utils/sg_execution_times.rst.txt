@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.640** total execution time for 2 files **from gallery/utils**:
+**00:00.648** total execution time for 2 files **from gallery/utils**:
 
 .. container::
 
@@ -36,5 +36,5 @@ Computation times
      - 00:00.335
      - 0.0
    * - :ref:`sphx_glr_gallery_utils_create_sellmeier_file.py` (``create_sellmeier_file.py``)
-     - 00:00.306
+     - 00:00.313
      - 0.0

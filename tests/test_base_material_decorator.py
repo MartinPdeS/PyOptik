@@ -33,3 +33,6 @@ def test_ensure_units_default():
     assert len(out) == 100
     assert out.units == meter
 
+
+if __name__ == "__main__":
+    pytest.main(["-W error", "-s", __file__])

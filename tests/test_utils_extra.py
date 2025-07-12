@@ -37,3 +37,5 @@ def test_download_timeout(monkeypatch):
     with pytest.raises(requests.exceptions.Timeout):
         download_yml_file('http://foo', 'file', MaterialType.SELLMEIER)
 
+if __name__ == "__main__":
+    pytest.main(["-W error", "-s", __file__])

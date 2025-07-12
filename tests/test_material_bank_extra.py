@@ -30,3 +30,5 @@ def test_list_materials(monkeypatch, tmp_path):
     assert sell_list == ["mat1"]
     assert tab_list == ["mat2"]
 
+if __name__ == "__main__":
+    pytest.main(["-W error", "-s", __file__])

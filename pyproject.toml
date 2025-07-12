@@ -72,8 +72,8 @@ log_cli_level = "INFO"
 testpaths = [
     "tests/test_sellmeier.py",
     "tests/test_tabulated.py",
-    "tests/test_utils.py",
     "tests/test_usual_materials.py",
+    "tests/test_utils.py",
 ]
 addopts = [
     '-v',

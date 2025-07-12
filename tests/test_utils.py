@@ -182,5 +182,8 @@ def test_download_yml_file_http_error_log(caplog):
             location=MaterialType.SELLMEIER
         )
 
+def test_main():
+    MaterialBank.build_library('classics', remove_previous=True)
+
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

@@ -228,7 +228,7 @@ class _MaterialBank():
         if material_type not in [MaterialType.SELLMEIER, MaterialType.TABULATED]:
             raise ValueError("Invalid material type. Please choose MaterialType.SELLMEIER or MaterialType.TABULATED.")
 
-        return download_yml_file(filename=filename, url=url, location=material_type)
+        return download_yml_file(filename=filename, url=url, save_location=material_type)
 
     @classmethod
     def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:
@@ -343,8 +343,8 @@ class _MaterialBank():
         # Remove previous files if the flag is set
         if remove_previous:
             logging.info("Removing previous files from the library.")
-            self.clean_data_files(regex=".*", location="sellmeier")  # Remove all sellmeier files
-            self.clean_data_files(regex=".*", location="tabulated")  # Remove all tabulated files
+            self.clean_data_files(regex=".*", save_location="sellmeier")  # Remove all sellmeier files
+            self.clean_data_files(regex=".*", save_location="tabulated")  # Remove all tabulated files
 
         for lib in libraries_to_download:
             file_path = libraries_path / lib
@@ -355,13 +355,13 @@ class _MaterialBank():
             if data_dict.get('sellmeier', False):
                 for element_name in data_dict['sellmeier']:
                     url = repertoire_dict['sellmeier'][element_name]
-                    download_yml_file(url=url, filename=element_name, location=MaterialType.SELLMEIER)
+                    download_yml_file(url=url, filename=element_name, save_location=MaterialType.SELLMEIER)
 
             # Download new files for tabulated
             if data_dict.get('tabulated', False):
                 for element_name in data_dict['tabulated']:
                     url = repertoire_dict['tabulated'][element_name]
-                    download_yml_file(url=url, filename=element_name, location=MaterialType.TABULATED)
+                    download_yml_file(url=url, filename=element_name, save_location=MaterialType.TABULATED)
 
     def create_sellmeier_file(
             self,

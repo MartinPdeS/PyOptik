@@ -37,6 +37,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
  .. code-block:: none
 
+    <_io.TextIOWrapper name='/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/data/tabulated/polyetylene.yml' mode='r' encoding='UTF-8'>
     /opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 1.31 µm to 1.55 µm which is outside the allowable range of 40.0 µm to 200.0 µm µm. [Material: polyetylene]
       warnings.warn(
     /opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 399.99999999999994 nm to 1.5 µm which is outside the allowable range of 40.0 µm to 200.0 µm µm. [Material: polyetylene]
@@ -68,7 +69,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.383 seconds)
+   **Total running time of the script:** (0 minutes 0.384 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_sf5.py:

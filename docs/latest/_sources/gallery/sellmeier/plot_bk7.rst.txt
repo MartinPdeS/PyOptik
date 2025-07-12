@@ -28,13 +28,24 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
 .. image-sg:: /gallery/sellmeier/images/sphx_glr_plot_bk7_001.png
-   :alt: Refractive Index and Absorption vs. Wavelength [BK7]
+   :alt: Refractive Index vs. Wavelength: [BK7]
    :srcset: /gallery/sellmeier/images/sphx_glr_plot_bk7_001.png
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 5.0 µm to 5.0 µm which is outside the allowable range of 309.99999999999994 nm to 2.5 µm µm. [Material: BK7]
+      warnings.warn(
 
 
+
+
+
+
+|
 
 .. code-block:: Python
 
@@ -54,7 +65,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.374 seconds)
+   **Total running time of the script:** (0 minutes 0.228 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_bk7.py:

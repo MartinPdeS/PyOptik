@@ -186,7 +186,7 @@ def test_dummy():
 #         )
 
 # def test_main():
-#     MaterialBank.build_library('classics', remove_previous=True)
+#     MaterialBank.build_library('classics', remove_previous=False)
 
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

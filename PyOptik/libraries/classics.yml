@@ -13,6 +13,7 @@ sellmeier:
   - argon
   - air
   - water
+  - acetone
 
 tabulated:
   - silicon

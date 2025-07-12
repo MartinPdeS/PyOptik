@@ -239,7 +239,7 @@ class _MaterialBank():
         return cls.add_material_to_bank(filename=filename, url=url, material_type=MaterialType.TABULATED)
 
     @classmethod
-    def remove_item(cls, filename: str, location: Union[str, MaterialType] = 'any') -> None:
+    def remove_item(cls, filename: str, save_location: Union[str, MaterialType] = 'any') -> None:
         """
         Remove a file associated with a given element name from the specified location.
 
@@ -247,35 +247,35 @@ class _MaterialBank():
         ----------
         filename : str
             The name of the file to remove, without the '.yml' suffix.
-        location : Union[str, MaterialType]
-            The location to search for the file, either 'sellmeier', 'tabulated', 'any', or a MaterialType enum (default is 'any').
+        save_location : Union[str, MaterialType]
+            The save_location to search for the file, either 'sellmeier', 'tabulated', 'any', or a MaterialType enum (default is 'any').
 
         Raises
         ------
         FileNotFoundError
             If the specified file does not exist.
         ValueError
-            If an invalid location is provided.
+            If an invalid save_location is provided.
         """
-        if isinstance(location, MaterialType):
-            location = location.value
+        if isinstance(save_location, MaterialType):
+            save_location = save_location.value
 
-        location = location.lower()
+        save_location = save_location.lower()
 
-        if location not in ['any', 'sellmeier', 'tabulated']:
-            raise ValueError("Invalid location. Please choose 'sellmeier', 'tabulated', or 'any'.")
+        if save_location not in ['any', 'sellmeier', 'tabulated']:
+            raise ValueError("Invalid save_location. Please choose 'sellmeier', 'tabulated', or 'any'.")
 
-        if location in ['any', 'sellmeier']:
+        if save_location in ['any', 'sellmeier']:
             sellmeier_file = data_path / 'sellmeier' / f"{filename}.yml"
             if sellmeier_file.exists():
                 sellmeier_file.unlink()
 
-        if location in ['any', 'tabulated']:
+        if save_location in ['any', 'tabulated']:
             tabulated_file = data_path / 'tabulated' / f"{filename}.yml"
             if tabulated_file.exists():
                 tabulated_file.unlink()
 
-    def clean_data_files(self, regex: str, location: Union[str, MaterialType] = 'any') -> None:
+    def clean_data_files(self, regex: str, save_location: Union[str, MaterialType] = 'any') -> None:
         """
         Remove all files matching the given regex from the specified location.
 
@@ -291,13 +291,13 @@ class _MaterialBank():
         ValueError
             If an invalid location is provided.
         """
-        if isinstance(location, MaterialType):
-            location = location.value
+        if isinstance(save_location, MaterialType):
+            save_location = save_location.value
 
-        location = location.lower()
+        save_location = save_location.lower()
 
-        if location not in ['any', 'sellmeier', 'tabulated']:
-            raise ValueError("Invalid location. Please choose 'sellmeier', 'tabulated', or 'any'.")
+        if save_location not in ['any', 'sellmeier', 'tabulated']:
+            raise ValueError("Invalid save_location. Please choose 'sellmeier', 'tabulated', or 'any'.")
 
         # Compile the regex pattern
         pattern = re.compile(regex)
@@ -310,11 +310,11 @@ class _MaterialBank():
                     file.unlink()
 
         # Remove files from the sellmeier location if specified
-        if location in ['any', 'sellmeier']:
+        if save_location in ['any', 'sellmeier']:
             remove_matching_files(data_path / 'sellmeier')
 
         # Remove files from the tabulated location if specified
-        if location in ['any', 'tabulated']:
+        if save_location in ['any', 'tabulated']:
             remove_matching_files(data_path / 'tabulated')
 
     def build_library(self, library: Union[str, List[str]] = 'classics', remove_previous: bool = False) -> None:

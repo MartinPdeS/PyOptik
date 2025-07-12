@@ -13,6 +13,7 @@ sellmeier:
   lithium_niobate: https://refractiveindex.info/database/data/main/LiNbO3/nk/Zelmon-o.yml
   germanium: https://refractiveindex.info/database/data/main/Ge/nk/Icenogle.yml
 
+  BK7: https://refractiveindex.info/database/data/specs/schott/optical/P-BK7.yml
   soda_lime_glass: https://refractiveindex.info/database/data/glass/misc/soda-lime/nk/Rubin-clear.yml
   crown: https://refractiveindex.info/database/data/specs/schott/optical/K7.yml
   flint: https://refractiveindex.info/database/data/specs/schott/optical/F2.yml
@@ -37,7 +38,6 @@ tabulated:
   pva: https://refractiveindex.info/database/data/organic/(C2H3Cl)n%20-%20polyvinyl%20chloride/nk/Zhang.yml
   polyetylene: https://refractiveindex.info/database/data/organic/(C2H4)n%20-%20polyethylene/nk/Smith.yml
   silicon: https://refractiveindex.info/database/data/main/Si/nk/Aspnes.yml
-  BK7: https://refractiveindex.info/database/data/specs/schott/optical/P-BK7.yml
   silver: https://refractiveindex.info/database/data/main/Ag/nk/Johnson.yml
   aluminium: https://refractiveindex.info/database/data/main/Al/nk/Rakic.yml
   gold: https://refractiveindex.info/database/data/main/Au/nk/Johnson.yml

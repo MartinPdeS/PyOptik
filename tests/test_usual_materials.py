@@ -47,4 +47,5 @@ def test_fail_wrong_clean():
 
 
 if __name__ == "__main__":
-    pytest.main(["-W error", __file__])
+    pytest.main(["-W error", "-s", __file__])
+

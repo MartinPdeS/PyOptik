@@ -14,10 +14,10 @@ sellmeier:
   - air
   - water
   - acetone
+  - BK7
 
 tabulated:
   - silicon
-  - BK7
   - silver
   - aluminium
   - gold

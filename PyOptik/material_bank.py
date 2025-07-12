@@ -329,22 +329,19 @@ class _MaterialBank():
             If True, removes existing files before downloading new ones.
         """
         AVAILABLE_LIBRARIES = set([os.path.splitext(f)[0] for f in os.listdir(libraries_path) if f.endswith('.yml')])
-
         libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
 
         # Ensure the requested library exists
         assert libraries_to_download.issubset(AVAILABLE_LIBRARIES), f"Library value should be in {AVAILABLE_LIBRARIES}"
 
-
         repertoire_file = libraries_path / 'repertoire.yml'
         with open(repertoire_file, 'r') as file:
             repertoire_dict = yaml.safe_load(file)
 
-        # Remove previous files if the flag is set
         if remove_previous:
             logging.info("Removing previous files from the library.")
-            self.clean_data_files(regex=".*", location="sellmeier")  # Remove all sellmeier files
-            self.clean_data_files(regex=".*", location="tabulated")  # Remove all tabulated files
+            self.clean_data_files(regex=".*", location="sellmeier")
+            self.clean_data_files(regex=".*", location="tabulated")
 
         for lib in libraries_to_download:
             file_path = libraries_path / lib
@@ -354,14 +351,24 @@ class _MaterialBank():
             # Download new files for sellmeier
             if data_dict.get('sellmeier', False):
                 for element_name in data_dict['sellmeier']:
-                    url = repertoire_dict['sellmeier'][element_name]
-                    download_yml_file(url=url, filename=element_name, location=MaterialType.SELLMEIER)
+                    output_file = MaterialType.SELLMEIER / f"{element_name}.yml"
+                    if output_file.exists():
+                        logging.info(f"File already exists: {output_file}, skipping download.")
+                    else:
+                        logging.info(f"Downloading {element_name} to {output_file}")
+                        url = repertoire_dict['sellmeier'][element_name]
+                        download_yml_file(url=url, filename=element_name, location=MaterialType.SELLMEIER)
 
             # Download new files for tabulated
             if data_dict.get('tabulated', False):
                 for element_name in data_dict['tabulated']:
-                    url = repertoire_dict['tabulated'][element_name]
-                    download_yml_file(url=url, filename=element_name, location=MaterialType.TABULATED)
+                    output_file = MaterialType.TABULATED / f"{element_name}.yml"
+                    if output_file.exists():
+                        logging.info(f"File already exists: {output_file}, skipping download.")
+                    else:
+                        logging.info(f"Downloading {element_name} to {output_file}")
+                        url = repertoire_dict['tabulated'][element_name]
+                        download_yml_file(url=url, filename=element_name, location=MaterialType.TABULATED)
 
     def create_sellmeier_file(
             self,

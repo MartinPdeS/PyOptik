@@ -15,7 +15,7 @@ def download_yml_file(
     url: str,
     filename: str,
     save_location: MaterialType,
-    max_retries: int = 3,
+    max_retries: int = 5,
     retry_delay: float = 2.0,
     backoff_factor: float = 2.0,
 ) -> None:

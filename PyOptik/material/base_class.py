@@ -64,18 +64,18 @@ class BaseMaterial:
                 )
 
     def ensure_units(func) -> Callable:
-        """
-        Decorator to ensure that the wavelength parameter has the correct units.
+        """Decorator ensuring the wavelength argument carries units.
 
         Parameters
         ----------
         func : Callable
-            The function to wrap.
+            Function that expects a wavelength :class:`~PyOptik.units.Quantity`.
 
         Returns
         -------
         Callable
-            The wrapped function that ensures wavelength is a Quantity in meters.
+            Wrapped version of ``func`` that accepts numerical wavelengths and
+            converts them to metre-based :class:`~PyOptik.units.Quantity` objects.
         """
         def wrapper(self, wavelength: Quantity = None, *args, **kwargs):
             if wavelength is None:

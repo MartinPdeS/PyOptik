@@ -14,15 +14,19 @@ SCALES = ['nano', 'micro', 'milli', '', 'kilo', 'mega']
 
 
 def initialize_registry(ureg: Optional[pint.UnitRegistry] = None) -> None:
-    """
-    Initialize and set up a unit registry. This function also leaks
-    the units into the global namespace for easy access throughout
-    the module.
+    """Initialise the unit registry used by :mod:`PyOptik`.
 
     Parameters
     ----------
-    ureg: Optional[pint.UnitRegistry]
-        A UnitRegistry object to use. If None, the default PintType.ureg will be used.
+    ureg : Optional[pint.UnitRegistry], optional
+        A preconfigured :class:`~pint.UnitRegistry` instance. When ``None`` (the
+        default) a new registry is created and configured.
+
+    Notes
+    -----
+    The registry is configured for matplotlib integration and a number of unit
+    shortcuts (``nano``/``micro``/``milli``/... ``meter``) as well as commonly
+    used units are leaked into the module's global namespace for convenience.
     """
 
     # If no unit registry is provided, use the default

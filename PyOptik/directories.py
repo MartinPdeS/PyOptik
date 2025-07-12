@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Convenience paths used throughout the :mod:`PyOptik` package.
+
+This module exposes commonly referenced directories such as the project
+root, documentation and data folders.  It is imported by other modules to
+construct absolute paths in a centralised manner and therefore simplifies
+file handling across the code base.
+"""
+
 from pathlib import Path
 import PyOptik
 

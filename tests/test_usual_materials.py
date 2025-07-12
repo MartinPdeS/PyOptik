@@ -43,7 +43,7 @@ def test_material_bank_filter():
 
 def test_fail_wrong_clean():
     with pytest.raises(ValueError):
-        MaterialBank.clean_data_files(regex='test*', location='invalid')
+        MaterialBank.clean_data_files(regex='test*', save_location='invalid')
 
 
 if __name__ == "__main__":

@@ -335,7 +335,6 @@ class _MaterialBank():
         # Ensure the requested library exists
         assert libraries_to_download.issubset(AVAILABLE_LIBRARIES), f"Library value should be in {AVAILABLE_LIBRARIES}"
 
-
         repertoire_file = libraries_path / 'repertoire.yml'
         with open(repertoire_file, 'r') as file:
             repertoire_dict = yaml.safe_load(file)

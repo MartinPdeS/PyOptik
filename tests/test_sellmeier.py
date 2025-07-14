@@ -178,4 +178,3 @@ def test_material_string_representation():
 
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])
-

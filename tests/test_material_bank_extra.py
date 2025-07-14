@@ -1,11 +1,7 @@
 import pytest
-from pathlib import Path
 
 from PyOptik import MaterialBank
 from PyOptik.material_type import MaterialType
-
-
-
 
 def test_set_filter_invalid():
     with pytest.raises(ValueError):

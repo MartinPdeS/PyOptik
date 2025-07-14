@@ -7,7 +7,6 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 """
 
 # %%
-import numpy
 from PyOptik import MaterialBank
 from PyOptik.units import nanometer
 

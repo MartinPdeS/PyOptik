@@ -11,6 +11,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
 )
 
+
 def download_yml_file(
     url: str,
     filename: str,

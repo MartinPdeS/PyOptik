@@ -446,6 +446,7 @@ document.write(`
 <li><p><strong>Simulation Ready</strong>: Ideal for light-matter interaction simulations, particularly in optics and photonics.</p></li>
 <li><p><strong>Simple API</strong>: Easy-to-use API that integrates well with other Python libraries.</p></li>
 <li><p><strong>Open Source</strong>: Fully open-source.</p></li>
+<li><p><strong>Group Index and Velocity</strong>: Compute group index and group velocity directly from material objects.</p></li>
 </ul>
 </section>
 <section id="installation">
@@ -510,6 +511,10 @@ conda<span class="w"> </span>install<span class="w"> </span>--channels<span clas
 <span class="n">bk7</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">0.55e-6</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Refractive index at 0.55 µm: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Group index and group velocity</span>
+<span class="n">n_g</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="mf">0.55e-6</span><span class="p">)</span>
+<span class="n">v_g</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="mf">0.55e-6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group index: </span><span class="si">{</span><span class="n">n_g</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, group velocity: </span><span class="si">{</span><span class="n">v_g</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

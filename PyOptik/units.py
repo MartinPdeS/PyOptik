@@ -6,7 +6,8 @@ pint.set_application_registry(ureg)
 
 # Define a list of base units to scale
 BASE_UNITS = [
-    'meter'
+    'meter',
+    'second'
 ]
 
 # Define prefixes for scaling units

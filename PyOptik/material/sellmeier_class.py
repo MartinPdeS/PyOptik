@@ -7,7 +7,7 @@ import itertools
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
 from typing import Optional, Union
-from PyOptik.units import micrometer, Quantity
+from PyOptik import units
 from PyOptik.directories import sellmeier_data_path
 from PyOptik.material.base_class import BaseMaterial
 
@@ -80,7 +80,7 @@ class SellmeierMaterial(BaseMaterial):
         if 'wavelength_range' in parsed_yaml['DATA'][0]:
             data_str = parsed_yaml['DATA'][0]['wavelength_range'].split()
 
-            self.wavelength_bound = numpy.array([float(val) for val in data_str]) * micrometer
+            self.wavelength_bound = numpy.array([float(val) for val in data_str]) * units.micrometer
 
         else:
             self.wavelength_bound = None
@@ -89,18 +89,18 @@ class SellmeierMaterial(BaseMaterial):
         self.reference = parsed_yaml.get('REFERENCES', None)
 
     @BaseMaterial.ensure_units
-    def compute_refractive_index(self, wavelength: Union[Quantity]) -> Union[float, numpy.ndarray]:
+    def compute_refractive_index(self, wavelength: Union[units.Quantity]) -> Union[float, numpy.ndarray]:
         r"""
         Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).
 
         Parameters
         ----------
-        wavelength : Union[Quantity]
+        wavelength : Union[units.Quantity]
             The wavelength \u03bb in meters, can be a single float or a numpy array.
 
         Returns
         -------
-        Union[Quantity]
+        Union[units.Quantity]
             The refractive index n(\u03bb) for the given wavelength or array of wavelengths.
 
         Raises
@@ -120,25 +120,25 @@ class SellmeierMaterial(BaseMaterial):
             case 1:  # Formula 1 computation (standard Sellmeier)
                 n_squared = 1.0
                 for (B, C) in zipped_coefficients:
-                    n_squared += (B * wavelength.to(micrometer).magnitude**2) / (wavelength.to(micrometer).magnitude**2 - C**2)
+                    n_squared += (B * wavelength.to(units.micrometer).magnitude**2) / (wavelength.to(units.micrometer).magnitude**2 - C**2)
 
                 n = numpy.sqrt(n_squared)
 
             case 2:  # Formula 2 computation (extended Sellmeier)
                 n_squared = 1 + self.coefficients[0]
                 for (B, C) in zipped_coefficients:
-                    n_squared += (B * wavelength.to(micrometer).magnitude**2) / (wavelength.to(micrometer).magnitude**2 - C)
+                    n_squared += (B * wavelength.to(units.micrometer).magnitude**2) / (wavelength.to(units.micrometer).magnitude**2 - C)
                 n = numpy.sqrt(n_squared)
 
             case 5:  # Formula 5 computation (extended Sellmeier)
                 n = 1 + self.coefficients[0]
                 for (B, C) in zipped_coefficients:
-                    n += B * wavelength.to(micrometer).magnitude**C
+                    n += B * wavelength.to(units.micrometer).magnitude**C
 
             case 6:
                 n = 1 + self.coefficients[0]
                 for (B, C) in zipped_coefficients:
-                    n = B / (C - wavelength.to(micrometer).magnitude**-2)
+                    n = B / (C - wavelength.to(units.micrometer).magnitude**-2)
 
             case _:
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
@@ -146,13 +146,13 @@ class SellmeierMaterial(BaseMaterial):
         return n[0] if return_as_scalar else n
 
     @BaseMaterial.ensure_units
-    def plot(self, wavelength: Optional[Quantity] = None) -> None:
+    def plot(self, wavelength: Optional[units.Quantity] = None) -> None:
         """
         Plots the refractive index as a function of wavelength over a specified range.
 
         Parameters
         ----------
-        wavelength : Optional[Quantity]
+        wavelength : Optional[units.Quantity]
             The range of wavelengths to plot, in meters. If not provided, the entire allowable wavelength range is used.
 
         Raises
@@ -174,7 +174,7 @@ class SellmeierMaterial(BaseMaterial):
             xlabel=r'Wavelength [$\mu$m]',
             title=f"Refractive Index vs. Wavelength: [{self.filename}]"
         )
-        ax.plot(wavelength.to(micrometer).magnitude, refractive_index.real, linewidth=2, label='Real Part')
+        ax.plot(wavelength.to(units.micrometer).magnitude, refractive_index.real, linewidth=2, label='Real Part')
         ax.legend()
 
         plt.show()

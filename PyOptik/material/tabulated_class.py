@@ -8,7 +8,7 @@ from PyOptik.directories import tabulated_data_path
 from PyOptik.material.base_class import BaseMaterial
 from MPSPlots.styles import mps
 import matplotlib.pyplot as plt
-from PyOptik.units import Quantity, micrometer, meter
+from PyOptik import units
 
 
 
@@ -82,19 +82,19 @@ class TabulatedMaterial(BaseMaterial):
             data_points = parsed_yaml['DATA'][0]['data'].strip().split('\n')
             data = numpy.array([[float(value) for value in point.split()] for point in data_points])
 
-            self.wavelength = data[:, 0] * micrometer
+            self.wavelength = data[:, 0] * units.micrometer
             self.n_values = data[:, 1]
             self.k_values = data[:, 2]
         except (KeyError, IndexError, ValueError):
             raise ValueError(f"Invalid or missing data in YAML file {file_path}")
 
-        self.wavelength_bound = [self.wavelength.min().magnitude, self.wavelength.max().magnitude] * micrometer
+        self.wavelength_bound = [self.wavelength.min().magnitude, self.wavelength.max().magnitude] * units.micrometer
 
         # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
 
     @BaseMaterial.ensure_units
-    def compute_refractive_index(self, wavelength: Union[float, Quantity]) -> numpy.ndarray:
+    def compute_refractive_index(self, wavelength: Union[float, units.Quantity]) -> numpy.ndarray:
         """
         Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).
 
@@ -119,15 +119,15 @@ class TabulatedMaterial(BaseMaterial):
 
         self._check_wavelength(wavelength)
 
-        n_interp = numpy.interp(wavelength.to(meter).magnitude, self.wavelength.to(meter).magnitude, self.n_values)
-        k_interp = numpy.interp(wavelength.to(meter).magnitude, self.wavelength.to(meter).magnitude, self.k_values)
+        n_interp = numpy.interp(wavelength.to(units.meter).magnitude, self.wavelength.to(units.meter).magnitude, self.n_values)
+        k_interp = numpy.interp(wavelength.to(units.meter).magnitude, self.wavelength.to(units.meter).magnitude, self.k_values)
 
         index = n_interp + 1j * k_interp
 
         return index[0] if return_as_scalar else index
 
     @BaseMaterial.ensure_units
-    def plot(self, wavelength: Optional[Quantity] = None) -> None:
+    def plot(self, wavelength: Optional[units.Quantity] = None) -> None:
         """
         Plots the tabulated refractive index (n) and absorption (k) as a function of wavelength.
 
@@ -152,7 +152,7 @@ class TabulatedMaterial(BaseMaterial):
             ylabel='Refractive Index (n)',
         )
 
-        ax1.plot(wavelength.to(micrometer).magnitude, n_values, 'o-', color='tab:blue', label='n')
+        ax1.plot(wavelength.to(units.micrometer).magnitude, n_values, 'o-', color='tab:blue', label='n')
 
         ax2 = ax1.twinx()
 
@@ -161,7 +161,7 @@ class TabulatedMaterial(BaseMaterial):
             ylabel='Absorption (k)',
         )
 
-        ax2.plot(wavelength.to(micrometer).magnitude, k_values, 'o-', color='tab:red', label='k')
+        ax2.plot(wavelength.to(units.micrometer).magnitude, k_values, 'o-', color='tab:red', label='k')
 
         plt.show()
 

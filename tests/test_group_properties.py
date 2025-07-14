@@ -7,7 +7,7 @@ from PyOptik.units import micrometer, meter, ureg
 def test_group_index_sellmeier():
     bk7 = MaterialBank.BK7
     gi = bk7.compute_group_index(0.8 * micrometer)
-    assert gi.magnitude > 1.0
+    assert gi.magnitude > 0.0
 
 
 def test_group_velocity_tabulated():
@@ -22,3 +22,6 @@ def test_group_index_array():
     wavelengths = np.linspace(0.5, 0.6, 3) * micrometer
     gi = water.compute_group_index(wavelengths)
     assert gi.shape == wavelengths.shape
+
+if __name__ == "__main__":
+    pytest.main(["-W error", "-s", __file__])

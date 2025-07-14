@@ -23,7 +23,7 @@ Plot the Refractive Index of Optical Material: BK7
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material BK7 glass over a specified range of wavelengths.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-22
+.. GENERATED FROM PYTHON SOURCE LINES 10-21
 
 
 
@@ -49,7 +49,6 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. code-block:: Python
 
-    import numpy
     from PyOptik import MaterialBank
     from PyOptik.units import nanometer
 

@@ -772,7 +772,6 @@ document.write(`
         <span class="c1"># Ensure the requested library exists</span>
         <span class="k">assert</span> <span class="n">libraries_to_download</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">AVAILABLE_LIBRARIES</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Library value should be in </span><span class="si">{</span><span class="n">AVAILABLE_LIBRARIES</span><span class="si">}</span><span class="s2">&quot;</span>
 
-
         <span class="n">repertoire_file</span> <span class="o">=</span> <span class="n">libraries_path</span> <span class="o">/</span> <span class="s1">&#39;repertoire.yml&#39;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">repertoire_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">repertoire_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>

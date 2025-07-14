@@ -3,6 +3,7 @@
 
 from typing import Callable
 from PyOptik.units import Quantity, meter
+from PyOptik.units import ureg
 import numpy
 import warnings
 
@@ -88,3 +89,19 @@ class BaseMaterial:
                 wavelength = wavelength * meter
             return func(self, wavelength, *args, **kwargs)
         return wrapper
+
+    @ensure_units
+    def compute_group_index(self, wavelength: Quantity) -> Quantity:
+        """Calculate the group refractive index n_g(\u03bb)."""
+        delta = 1e-9 * meter
+        n = self.compute_refractive_index(wavelength)
+        n_plus = self.compute_refractive_index(wavelength + delta)
+        dn_dlambda = (n_plus - n) / delta
+        return n - wavelength * dn_dlambda
+
+    @ensure_units
+    def compute_group_velocity(self, wavelength: Quantity) -> Quantity:
+        """Return the group velocity v_g(\u03bb)."""
+        ng = self.compute_group_index(wavelength)
+        c = 299792458 * meter / ureg.second
+        return c / ng

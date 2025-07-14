@@ -33,6 +33,7 @@ Features
 - **Simulation Ready**: Ideal for light-matter interaction simulations, particularly in optics and photonics.
 - **Simple API**: Easy-to-use API that integrates well with other Python libraries.
 - **Open Source**: Fully open-source.
+- **Group Index and Velocity**: Compute group index and group velocity directly from material objects.
 
 Installation
 ************
@@ -115,6 +116,10 @@ After installing PyOptik and building the material library, you can easily acces
    bk7 = MaterialBank.BK7
    n = bk7.compute_refractive_index(0.55e-6)
    print(f"Refractive index at 0.55 µm: {n}")
+   # Group index and group velocity
+   n_g = bk7.compute_group_index(0.55e-6)
+   v_g = bk7.compute_group_velocity(0.55e-6)
+   print(f"Group index: {n_g:.3f}, group velocity: {v_g:.1f}")
 
 Example
 *******

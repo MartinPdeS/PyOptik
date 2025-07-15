@@ -4,15 +4,15 @@
 
 | Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
-| PyOptik/\_\_main\_\_.py              |        5 |        5 |        2 |        0 |      0% |       1-7 |
+| PyOptik/\_\_main\_\_.py              |       12 |       12 |        2 |        0 |      0% |      1-27 |
 | PyOptik/material/base\_class.py      |       41 |        4 |       14 |        3 |     87% |16, 29, 40, 56->exit, 83 |
 | PyOptik/material/sellmeier\_class.py |       79 |        2 |       24 |        2 |     96% |   86, 164 |
-| PyOptik/material/tabulated\_class.py |       60 |        3 |        2 |        1 |     94% | 73, 87-88 |
-| PyOptik/material\_bank.py            |      148 |        4 |       54 |       10 |     93% |124, 270->273, 275->exit, 344-346, 354->360, 360->348, 408->412, 414->418, 418->422, 467->471 |
+| PyOptik/material/tabulated\_class.py |       59 |        3 |        2 |        1 |     93% | 73, 86-87 |
+| PyOptik/material\_bank.py            |      148 |        4 |       54 |       10 |     93% |129, 275->278, 280->exit, 349-351, 359->365, 365->353, 413->417, 419->423, 423->427, 472->476 |
 | PyOptik/material\_type.py            |        4 |        0 |        0 |        0 |    100% |           |
 | PyOptik/units.py                     |       18 |        0 |        4 |        0 |    100% |           |
 | PyOptik/utils.py                     |       44 |       10 |       10 |        2 |     74% |57, 71->exit, 85-92, 94-95 |
-|                            **TOTAL** |  **399** |   **28** |  **110** |   **18** | **90%** |           |
+|                            **TOTAL** |  **405** |   **35** |  **110** |   **18** | **89%** |           |
 
 
 ## Setup coverage badge

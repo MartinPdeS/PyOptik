@@ -73,7 +73,6 @@ class TabulatedMaterial(BaseMaterial):
             raise FileNotFoundError(f"YAML file {file_path} not found.")
 
         with file_path.with_suffix('.yml').open('r') as file:
-            print(file)
             parsed_yaml = yaml.safe_load(file)
 
         try:

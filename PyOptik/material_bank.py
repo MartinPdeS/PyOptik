@@ -118,7 +118,12 @@ class _MaterialBank():
         Raises
         ------
         ValueError
-            If both use_tabulated and use_sellmeier are set to True.
+            If both ``use_tabulated`` and ``use_sellmeier`` are ``False``.
+
+        Notes
+        -----
+        At least one of ``use_tabulated`` or ``use_sellmeier`` must be ``True``
+        for the bank to return materials.
         """
         if not use_tabulated and not use_sellmeier:
             raise ValueError("Cannot set both 'use_tabulated' and 'use_sellmeier' to False.")
@@ -180,15 +185,15 @@ class _MaterialBank():
         """
         return self.sellmeier + self.tabulated
 
-    def print_available(cls) -> None:
+    def print_available(self) -> None:
         """Display all available materials in a table.
 
         The method lists both Sellmeier and tabulated materials currently
         stored in the local database and prints them in two columns using
         :func:`tabulate.tabulate`.
         """
-        sellmeier_materials = cls.sellmeier
-        tabulated_materials = cls.tabulated
+        sellmeier_materials = self.sellmeier
+        tabulated_materials = self.tabulated
 
         # Create data for the table
         table_data = []

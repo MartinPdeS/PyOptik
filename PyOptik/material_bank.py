@@ -209,6 +209,15 @@ class _MaterialBank():
         # Print the table using tabulate
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
+    @staticmethod
+    def list_available_libraries() -> List[str]:
+        """Return the names of libraries that can be downloaded."""
+        return [
+            os.path.splitext(f)[0]
+            for f in os.listdir(libraries_path)
+            if f.endswith(".yml")
+        ]
+
     @classmethod
     def add_material_to_bank(cls, filename: str, url: str, material_type: MaterialType) -> None:
         """
@@ -333,12 +342,12 @@ class _MaterialBank():
         remove_previous : bool
             If True, removes existing files before downloading new ones.
         """
-        AVAILABLE_LIBRARIES = set([os.path.splitext(f)[0] for f in os.listdir(libraries_path) if f.endswith('.yml')])
+        available = set(self.list_available_libraries())
 
-        libraries_to_download = AVAILABLE_LIBRARIES if library == 'all' else set(numpy.atleast_1d(library))
+        libraries_to_download = available if library == 'all' else set(numpy.atleast_1d(library))
 
         # Ensure the requested library exists
-        assert libraries_to_download.issubset(AVAILABLE_LIBRARIES), f"Library value should be in {AVAILABLE_LIBRARIES}"
+        assert libraries_to_download.issubset(available), f"Library value should be in {available}"
 
         repertoire_file = libraries_path / 'repertoire.yml'
         with open(repertoire_file, 'r') as file:

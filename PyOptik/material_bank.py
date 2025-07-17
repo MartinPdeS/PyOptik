@@ -209,6 +209,34 @@ class _MaterialBank():
         # Print the table using tabulate
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
+    def search(self, pattern: str, material_type: Optional[MaterialType] = None) -> List[str]:
+        """Search available materials using a case-insensitive pattern.
+
+        Parameters
+        ----------
+        pattern : str
+            Substring or regular expression to match against material names.
+        material_type : Optional[MaterialType], optional
+            If provided, limit the search to the specified material type.
+
+        Returns
+        -------
+        List[str]
+            List of material names matching the pattern.
+        """
+
+        if material_type is None:
+            names = self.all
+        elif material_type == MaterialType.SELLMEIER:
+            names = self.sellmeier
+        elif material_type == MaterialType.TABULATED:
+            names = self.tabulated
+        else:
+            raise ValueError("Invalid material_type. Use MaterialType.SELLMEIER or MaterialType.TABULATED.")
+
+        regex = re.compile(pattern, re.IGNORECASE)
+        return [name for name in names if regex.search(name)]
+
     @staticmethod
     def list_available_libraries() -> List[str]:
         """Return the names of libraries that can be downloaded."""

@@ -136,3 +136,54 @@ class BaseMaterial(object):
         ng = self.compute_group_index(wavelength)
         c = 299792458 * units.meter / units.second
         return c / ng
+
+    @ensure_units
+    def compute_group_delay(
+        self,
+        wavelength: units.Quantity,
+        length: units.Quantity = 1 * units.meter,
+    ) -> units.Quantity:
+        """Calculate the group delay for a given propagation length.
+
+        Parameters
+        ----------
+        wavelength : units.Quantity
+            Wavelength at which to compute the group delay, in metres.
+        length : units.Quantity, optional
+            Propagation length (default is 1 metre).
+
+        Returns
+        -------
+        units.Quantity
+            Group delay for the specified wavelength and length.
+        """
+        vg = self.compute_group_velocity(wavelength)
+        return length / vg
+
+    @ensure_units
+    def compute_group_delay_dispersion(
+        self,
+        wavelength: units.Quantity,
+        length: units.Quantity = 1 * units.meter,
+        delta: units.Quantity = 1 * units.nanometer,
+    ) -> units.Quantity:
+        """Calculate ``d\u03c4_g/d\u03bb`` for a given propagation length.
+
+        Parameters
+        ----------
+        wavelength : units.Quantity
+            Central wavelength for the computation, in metres.
+        length : units.Quantity, optional
+            Propagation length (default is 1 metre).
+        delta : units.Quantity, optional
+            Wavelength step used for the numerical differentiation (default is
+            1 nanometre).
+
+        Returns
+        -------
+        units.Quantity
+            Group delay dispersion evaluated at ``wavelength``.
+        """
+        gd_plus = self.compute_group_delay(wavelength + delta / 2, length)
+        gd_minus = self.compute_group_delay(wavelength - delta / 2, length)
+        return (gd_plus - gd_minus) / delta

@@ -17,6 +17,7 @@ The gallery includes:
   - **Fiber Optic Analysis**: See how PyOptik can be utilized for fiber optics simulations, providing insights into light propagation and mode analysis.
 
   - **Biomedical Imaging Applications**: Discover how PyOptik can be leveraged for imaging purposes, including applications in biomedical optics.
+  - **Group Velocity Analysis**: Learn how to compute and visualise group index and velocity for dispersive materials.
 
 These examples are designed to help users at all levels, whether you are a beginner learning how to use the basic API or an experienced user looking for guidance on more advanced use cases.
 
@@ -30,4 +31,5 @@ Explore the gallery and unlock the potential of PyOptik for your optical simulat
     sellmeier/index.rst
     tabulated/index.rst
     utils/index.rst
+    group_properties/index.rst
 

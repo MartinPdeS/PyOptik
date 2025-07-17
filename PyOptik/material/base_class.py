@@ -112,8 +112,9 @@ class BaseMaterial(object):
             Group refractive index at the specified wavelength, in dimensionless units.
         """
         n = self.compute_refractive_index(wavelength)
-        n_plus = self.compute_refractive_index(wavelength + delta)
-        dn_dlambda = (n_plus - n) / delta
+        n_plus = self.compute_refractive_index(wavelength + delta / 2)
+        n_minus = self.compute_refractive_index(wavelength - delta / 2)
+        dn_dlambda = (n_plus - n_minus) / delta
         return n - wavelength * dn_dlambda
 
     @ensure_units

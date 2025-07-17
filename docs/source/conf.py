@@ -56,7 +56,7 @@ def reset_mpl(gallery_conf, fname):
 
 
 examples_files = [
-    'utils', 'sellmeier', 'tabulated'
+    'utils', 'sellmeier', 'tabulated', 'group_properties'
 ]
 
 sphinx_gallery_conf = {

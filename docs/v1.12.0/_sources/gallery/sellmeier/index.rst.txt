@@ -43,6 +43,23 @@ To run these examples, make sure you have installed all required dependencies as
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example compares two common optical glasses available in MaterialBank. It computes and plo...">
+
+.. only:: html
+
+  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_compare_glasses_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_sellmeier_plot_compare_glasses.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Compare the Refractive Index of BK7 and Fused Silica</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
 
 .. only:: html
@@ -84,6 +101,7 @@ To run these examples, make sure you have installed all required dependencies as
    :hidden:
 
    /gallery/sellmeier/plot_bk7
+   /gallery/sellmeier/plot_compare_glasses
    /gallery/sellmeier/plot_silica
    /gallery/sellmeier/plot_water
 

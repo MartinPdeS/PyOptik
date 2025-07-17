@@ -40,6 +40,23 @@ Contents
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example uses PyOptik to visualise both the real and imaginary parts of the refractive inde...">
+
+.. only:: html
+
+  .. image:: /gallery/tabulated/images/thumb/sphx_glr_plot_silicon_nk_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_tabulated_plot_silicon_nk.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index and Absorption of Silicon</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
 
 .. only:: html
@@ -64,6 +81,7 @@ Contents
    :hidden:
 
    /gallery/tabulated/plot_polyethylene
+   /gallery/tabulated/plot_silicon_nk
    /gallery/tabulated/plot_silver
 
 

@@ -68,7 +68,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.380 seconds)
+   **Total running time of the script:** (0 minutes 0.389 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_polyethylene.py:

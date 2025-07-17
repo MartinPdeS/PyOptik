@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Examples: Utility Functions" href="../utils/index.html" />
-    <link rel="prev" title="Plot the Refractive Index of Optical Material: Polyethylene" href="plot_polyethylene.html" />
+    <link rel="prev" title="Plot the Refractive Index and Absorption of Silicon" href="plot_silicon_nk.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -394,36 +394,42 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../sellmeier/index.html">Examples: Sellmeier Material</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_bk7.html">Plot the Refractive Index of Optical Material: BK7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_compare_glasses.html">Compare the Refractive Index of BK7 and Fused Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_silica.html">Plot the Refractive Index of Optical Material: Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_water.html">Plot the Refractive Index of Optical Material: Water</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Tabulated Material</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_silicon_nk.html">Plot the Refractive Index and Absorption of Silicon</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Plot the Refractive Index of Optical Material: Silver</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../utils/index.html">Examples: Utility Functions</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_sellmeier_file.html">Example: Create a Custom Sellmeier YAML File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_tabulated_file.html">Example: Create a Custom Tabulated Data YAML File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/search_materials.html">Searching the MaterialBank</a></li>
 </ul>
 </li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../sellmeier/index.html">Examples: Sellmeier Material</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_bk7.html">Plot the Refractive Index of Optical Material: BK7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_compare_glasses.html">Compare the Refractive Index of BK7 and Fused Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_silica.html">Plot the Refractive Index of Optical Material: Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_water.html">Plot the Refractive Index of Optical Material: Water</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Tabulated Material</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_silicon_nk.html">Plot the Refractive Index and Absorption of Silicon</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Plot the Refractive Index of Optical Material: Silver</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../utils/index.html">Examples: Utility Functions</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_sellmeier_file.html">Example: Create a Custom Sellmeier YAML File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_tabulated_file.html">Example: Create a Custom Tabulated Data YAML File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/search_materials.html">Searching the MaterialBank</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../group_properties/index.html">Examples: Group Properties</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -513,7 +519,7 @@ to download the full example code</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.302 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.300 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-tabulated-plot-silver-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/3c951d7a89211ade148b8893d744438d/plot_silver.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silver.ipynb</span></code></a></p>

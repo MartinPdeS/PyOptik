@@ -26,5 +26,22 @@ def test_list_materials(monkeypatch, tmp_path):
     assert sell_list == ["mat1"]
     assert tab_list == ["mat2"]
 
+
+def test_search_materials(monkeypatch, tmp_path):
+    tmp_sell = tmp_path / "sellmeier"
+    tmp_tab = tmp_path / "tabulated"
+    tmp_sell.mkdir()
+    tmp_tab.mkdir()
+    (tmp_sell / "BK7.yml").write_text("test")
+    (tmp_tab / "gold.yml").write_text("test")
+
+    with monkeypatch.context() as m:
+        m.setattr("PyOptik.material_bank.data_path", tmp_path)
+        found_sell = MaterialBank.search("bk")
+        found_tab = MaterialBank.search("gold", material_type=MaterialType.TABULATED)
+
+    assert "BK7" in found_sell
+    assert found_tab == ["gold"]
+
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

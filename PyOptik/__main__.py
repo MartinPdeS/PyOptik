@@ -17,7 +17,17 @@ def main() -> None:
         action="store_true",
         help="Remove previously downloaded files before downloading",
     )
+    parser.add_argument(
+        "--list-libraries",
+        action="store_true",
+        help="List available library names and exit",
+    )
     args = parser.parse_args()
+
+    if args.list_libraries:
+        for lib in MaterialBank.list_available_libraries():
+            print(lib)
+        return
 
     logging.info("Building material library")
     MaterialBank.build_library(args.library, remove_previous=args.remove_previous)

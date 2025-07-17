@@ -151,14 +151,14 @@ Contents
 
 .. only:: html
 
-  .. image:: /gallery/tabulated/images/thumb/sphx_glr_plot_sf5_thumb.png
+  .. image:: /gallery/tabulated/images/thumb/sphx_glr_plot_polyethylene_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_tabulated_plot_sf5.py`
+  :ref:`sphx_glr_gallery_tabulated_plot_polyethylene.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: SF5</div>
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Polyethylene</div>
     </div>
 
 
@@ -278,6 +278,7 @@ The examples provided here aim to help you leverage these utilities effectively 
    /gallery/sellmeier/index.rst
    /gallery/tabulated/index.rst
    /gallery/utils/index.rst
+   /gallery/group_properties/index.rst
 
 
 

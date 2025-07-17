@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Plot the Refractive Index of Optical Material: SF5 &#8212; PyOptik  documentation</title>
+    <title>Group Index and Velocity of Fused Silica &#8212; PyOptik  documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <script src="../../_static/documentation_options.js?v=8a448e45"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/tabulated/plot_sf5';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/group_properties/plot_group_properties';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
@@ -54,8 +54,8 @@
     <link rel="icon" href="../../_static/thumbnail.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Plot the Refractive Index of Optical Material: Silver" href="plot_silver.html" />
-    <link rel="prev" title="Examples: Tabulated Material" href="index.html" />
+    <link rel="next" title="References" href="../../references.html" />
+    <link rel="prev" title="Examples: Group Properties" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -391,16 +391,16 @@ document.write(`
         <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../sellmeier/index.html">Examples: Sellmeier Material</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_bk7.html">Plot the Refractive Index of Optical Material: BK7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_silica.html">Plot the Refractive Index of Optical Material: Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_water.html">Plot the Refractive Index of Optical Material: Water</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Tabulated Material</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Plot the Refractive Index of Optical Material: SF5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_silver.html">Plot the Refractive Index of Optical Material: Silver</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tabulated/index.html">Examples: Tabulated Material</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silver.html">Plot the Refractive Index of Optical Material: Silver</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../utils/index.html">Examples: Utility Functions</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -416,14 +416,18 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="../sellmeier/plot_water.html">Plot the Refractive Index of Optical Material: Water</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Tabulated Material</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Plot the Refractive Index of Optical Material: SF5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_silver.html">Plot the Refractive Index of Optical Material: Silver</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tabulated/index.html">Examples: Tabulated Material</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silver.html">Plot the Refractive Index of Optical Material: Silver</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../utils/index.html">Examples: Utility Functions</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_sellmeier_file.html">Example: Create a Custom Sellmeier YAML File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_tabulated_file.html">Example: Create a Custom Tabulated Data YAML File</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Group Properties</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Group Index and Velocity of Fused Silica</a></li>
 </ul>
 </li>
 </ul>
@@ -467,9 +471,9 @@ document.write(`
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples Gallery</a></li>
     
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples: Tabulated Material</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples: Group Properties</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">Plot the...</li>
+    <li class="breadcrumb-item active" aria-current="page">Group Index...</li>
   </ul>
 </nav>
 </div>
@@ -488,43 +492,59 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-gallery-tabulated-plot-sf5-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-gallery-group-properties-plot-group-properties-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="plot-the-refractive-index-of-optical-material-sf5">
-<span id="sphx-glr-gallery-tabulated-plot-sf5-py"></span><h1>Plot the Refractive Index of Optical Material: SF5<a class="headerlink" href="#plot-the-refractive-index-of-optical-material-sf5" title="Link to this heading">#</a></h1>
-<p>This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material SF5 glass over a specified range of wavelengths.</p>
-<img src="../../_images/sphx_glr_plot_sf5_001.png" srcset="../../_images/sphx_glr_plot_sf5_001.png" alt="Refractive Index and Absorption vs. Wavelength [polyetylene]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 1.31 µm to 1.55 µm which is outside the allowable range of 40.0 µm to 200.0 µm µm. [Material: polyetylene]
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 399.99999999999994 nm to 1.5 µm which is outside the allowable range of 40.0 µm to 200.0 µm µm. [Material: polyetylene]
-  warnings.warn(
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
+<section class="sphx-glr-example-title" id="group-index-and-velocity-of-fused-silica">
+<span id="sphx-glr-gallery-group-properties-plot-group-properties-py"></span><h1>Group Index and Velocity of Fused Silica<a class="headerlink" href="#group-index-and-velocity-of-fused-silica" title="Link to this heading">#</a></h1>
+<p>This example demonstrates how to compute and plot the group index and
+group velocity of fused silica using <code class="xref py py-mod docutils literal notranslate"><span class="pre">PyOptik</span></code>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">MPSPlots.styles</span><span class="w"> </span><span class="kn">import</span> <span class="n">mps</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">micrometer</span>
 
-<span class="c1"># Initialize the material with the Sellmeier model</span>
-<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">polyetylene</span>
+<span class="c1"># Retrieve the material</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">fused_silica</span>
 
-<span class="c1"># Calculate refractive index at specific wavelengths</span>
-<span class="n">RI</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mf">1310e-9</span><span class="p">,</span> <span class="mf">1550e-9</span><span class="p">])</span>
-
-<span class="c1"># Display calculated refractive indices at sample wavelengths</span>
-<span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">wavelength</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">400e-9</span><span class="p">,</span> <span class="mf">1500e-9</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="c1"># Compute values over a wavelength range</span>
+<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">*</span> <span class="n">micrometer</span>
+<span class="n">n_g</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+<span class="n">v_g</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.373 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-tabulated-plot-sf5-py">
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="n">mps</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Wavelength [µm]&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Group index&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Fused Silica Group Properties&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelengths</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">n_g</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;n_g&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Group velocity [m/s]&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">wavelengths</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="n">v_g</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;v_g&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_group_properties_001.png" srcset="../../_images/sphx_glr_plot_group_properties_001.png" alt="Fused Silica Group Properties" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.378 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-group-properties-plot-group-properties-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/0ca783fe9248f09fd00169532fec461a/plot_sf5.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_sf5.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/8f309819517af8f135a632b152b62d07/plot_group_properties.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_group_properties.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/92f3dd53f5b671ebca5a04fd7b6fa852/plot_sf5.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sf5.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/fc91117604812cf16384a1d6ee7dea76/plot_group_properties.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_group_properties.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -545,7 +565,7 @@ to download the full example code</p>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/gallery/tabulated/plot_sf5.rst.txt">
+    <a href="../../_sources/gallery/group_properties/plot_group_properties.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

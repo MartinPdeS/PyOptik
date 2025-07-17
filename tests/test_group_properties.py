@@ -23,5 +23,18 @@ def test_group_index_array():
     gi = water.compute_group_index(wavelengths)
     assert gi.shape == wavelengths.shape
 
+
+def test_group_delay():
+    bk7 = MaterialBank.BK7
+    gd = bk7.compute_group_delay(0.8 * micrometer, length=1 * meter)
+    assert gd.magnitude > 0.0
+
+
+def test_group_delay_dispersion():
+    si = MaterialBank.silicon
+    gdd = si.compute_group_delay_dispersion(0.6 * micrometer)
+    assert np.isfinite(gdd.magnitude)
+
+
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

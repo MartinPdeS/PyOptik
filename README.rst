@@ -19,186 +19,310 @@
      - |anaconda_download|
 
 
-PyOptik
-=======
+PyOptik: Optical Material Properties Made Simple
+=================================================
 
-PyOptik is a Python tool designed to import refractive indexes and extinction coefficients for various materials across different wavelengths. The data provided by PyOptik can be used in numerous applications, including simulating light interactions with particles. All data is sourced from the reputable RefractiveIndex.INFO database.
+**PyOptik** is a powerful Python library that provides seamless access to optical material properties from the comprehensive `RefractiveIndex.INFO <https://refractiveindex.info>`_ database. Whether you're simulating light-matter interactions, designing optical systems, or conducting photonics research, PyOptik delivers the refractive index and extinction coefficient data you need with a clean, intuitive API.
 
+**Quick Start**: Get material properties in just 3 lines of code!
 
+.. code:: python
 
-Features
-********
+   from PyOptik import MaterialBank
+   bk7 = MaterialBank.BK7
+   n = bk7.compute_refractive_index(550e-9)  # n ≈ 1.519
 
-- **Comprehensive Database Access**: Seamlessly import refractive index and extinction coefficient data for a wide range of materials.
-- **Simulation Ready**: Ideal for light-matter interaction simulations, particularly in optics and photonics.
-- **Simple API**: Easy-to-use API that integrates well with other Python libraries.
-- **Open Source**: Fully open-source.
-- **Group Index and Velocity**: Compute group index and group velocity directly from material objects.
+Key Features
+************
+
+**Comprehensive Material Database**
+   Access thousands of materials from RefractiveIndex.INFO with automatic data management
+
+**Multiple Data Formats**
+   Support for both Sellmeier equation materials and tabulated wavelength data
+
+**High-Performance Computing**
+   Optimized calculations for group index, group velocity, and dispersion properties
+
+**Simulation Ready**
+   Perfect for optical design, photonics simulations, and electromagnetic modeling
+
+**Developer Friendly**
+   Clean API that integrates seamlessly with NumPy, Matplotlib, and scientific Python stack
+
+**Advanced Analysis**
+   Built-in plotting and visualization tools powered by MPSPlots
 
 Installation
 ************
 
-To install PyOptik, simply use `pip` or `conda`:
+**Quick Install**
 
 .. code:: bash
 
-   pip install PyOptik                               (using PyPi package manager)
+   pip install PyOptik
 
-   conda install --channels martinpdes pyoptik       (using anaconda environment manager)
+**Conda Install**
 
-Building the Material Library
-*****************************
+.. code:: bash
 
-PyOptik allows you to build and customize a local material library, importing material data from various categories. You can download the following categories of materials from the RefractiveIndex.INFO database:
+   conda install -c martinpdes pyoptik
 
-- `classics`: Commonly used optical materials.
-- `glasses`: Various types of glass materials.
-- `metals`: Different metal materials for optical simulations.
-- `organics`: Organic materials with optical properties.
-- `others`: Other optical materials.
-- `all`: Download all available categories at once.
-
-To build a material library, use the `build_library` function. This will download and save the material data to your local machine.
-
-**Example: Building the Material Library:**
-
-In this example, we will download the `others` category of materials and remove any previously existing data in that category:
-
-.. code:: python
-
-   from PyOptik import MaterialBank
-
-   # Download the 'classics' category and remove previous files
-   MaterialBank.build_library('classics', remove_previous=True)
-
-**Available Categories:**
-
-To download materials from another category, simply pass the category name as an argument to `build_library`. For example:
-
-.. code:: python
-
-   # Download materials from the 'glasses' category
-   MaterialBank.build_library('glasses')
-
-To download all material categories at once:
-
-.. code:: python
-
-   # Download all available material categories
-   MaterialBank.build_library('all')
-
-You can also set the `remove_previous` parameter to `True` to remove old data before downloading new material data.
-
-Viewing Available Materials
-***************************
-
-Once you have built the material library, you can view all the available materials using the `MaterialBank` class. This will print a list of materials stored in your local library.
-
-**Example:**
-
-.. code:: python
-
-   from PyOptik import MaterialBank
-
-   # Print the available materials in a tabulated format
-   MaterialBank.print_materials()
-
-Simple Usage
-************
-
-After installing PyOptik and building the material library, you can easily access material properties:
-
-.. code:: python
-
-   from PyOptik import MaterialBank
-
-   # Access the refractive index of BK7 glass
-   bk7 = MaterialBank.BK7
-   n = bk7.compute_refractive_index(0.55e-6)
-   print(f"Refractive index at 0.55 µm: {n}")
-   # Group index and group velocity
-   n_g = bk7.compute_group_index(0.55e-6)
-   v_g = bk7.compute_group_velocity(0.55e-6)
-   print(f"Group index: {n_g:.3f}, group velocity: {v_g:.1f}")
-
-Example
-*******
-
-Here is a quick example demonstrating how to use PyOptik to retrieve and plot the refractive index of a material:
-
-.. code:: python
-
-   import numpy as np
-   from PyOptik import MaterialBank
-
-   # Define wavelength range
-   wavelengths = np.linspace(0.3e-6, 2.5e-6, 100)
-
-   # Retrieve refractive index for BK7 glass
-   bk7 = MaterialBank.BK7
-   n_values = bk7.compute_refractive_index(wavelengths)
-
-   # Plot the results
-   bk7.plot()
-
-This code produces the following figure: |example_bk7|
-
-Adding and Removing Custom Materials
-************************************
-
-You can add a custom material to your library by providing a URL from `refractiveindex.info <https://refractiveindex.info>`_.
-
-**Adding a Custom Material:**
-
-.. code:: python
-
-   from PyOptik import MaterialBank, MaterialType
-
-   # Define the URL of the YAML file and the destination
-   # Call the function to download the file
-   MaterialBank.add_material_to_bank(
-      filename='example_download',
-      material_type=MaterialType.SELLMEIER,
-      url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml'
-   )
-
-   MaterialBank.print_available()
-
-**Removing a Material:**
-
-You can also remove a material from the library as follows:
-
-.. code:: python
-
-   from PyOptik.utils import remove_element
-
-   MaterialBank.remove_item(filename='example_download')
-
-Testing
-*******
-
-To test locally after cloning the GitHub repository, install the dependencies and run the tests:
+**Development Install**
 
 .. code:: bash
 
    git clone https://github.com/MartinPdeS/PyOptik.git
    cd PyOptik
-   pip install .
+   pip install -e .
+
+Building Your Material Library
+*******************************
+
+PyOptik downloads material data from RefractiveIndex.INFO organized into categories. Choose what you need or download everything at once.
+
+**Available Categories:**
+
+``classics`` - Essential optical materials (BK7, fused silica, etc.)
+``glasses`` - Various optical glasses
+``metals`` - Metallic materials (gold, silver, aluminum, etc.)
+``organics`` - Organic and polymer materials
+``others`` - Specialized and exotic materials
+``all`` - Everything (recommended for comprehensive access)
+
+**Quick Setup - Download Essentials:**
+
+.. code:: python
+
+   from PyOptik import MaterialBank
+
+   # Get the most commonly used materials
+   MaterialBank.build_library('classics')
+
+   # See what's available
+   MaterialBank.print_materials()
+
+**Complete Setup - Download Everything:**
+
+.. code:: python
+
+   # Download all materials (recommended)
+   MaterialBank.build_library('all', remove_previous=True)
+
+**Custom Selection:**
+
+.. code:: python
+
+   # Download specific categories
+   MaterialBank.build_library('glasses')
+   MaterialBank.build_library('metals')
+
+   # Or chain them
+   for category in ['classics', 'glasses', 'metals']:
+       MaterialBank.build_library(category)
+
+Quick Start Guide
+*****************
+
+**Basic Usage - Refractive Index**
+
+.. code:: python
+
+   from PyOptik import MaterialBank
+   import numpy as np
+
+   # Access BK7 glass properties
+   bk7 = MaterialBank.BK7
+
+   # Single wavelength (550 nm)
+   n = bk7.compute_refractive_index(550e-9)
+   print(f"BK7 refractive index at 550nm: {n:.4f}")
+
+   # Multiple wavelengths
+   wavelengths = np.linspace(400e-9, 800e-9, 100)
+   n_values = bk7.compute_refractive_index(wavelengths)
+
+**Advanced Properties - Group Index & Velocity**
+
+.. code:: python
+
+   # Group index (important for pulse propagation)
+   n_g = bk7.compute_group_index(550e-9)
+
+   # Group velocity (speed of pulse envelope)
+   v_g = bk7.compute_group_velocity(550e-9)
+
+   print(f"Group index: {n_g:.4f}")
+   print(f"Group velocity: {v_g:.2e} m/s")
+
+**Visualization**
+
+.. code:: python
+
+   # Quick plot of material dispersion
+   bk7.plot()
+
+   # Custom wavelength range
+   wavelengths = np.linspace(300e-9, 2000e-9, 500)
+   bk7.plot(wavelengths)
+
+Detailed Example - Material Analysis
+************************************
+
+Here's a comprehensive example showing PyOptik's capabilities:
+
+.. code:: python
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   from PyOptik import MaterialBank
+
+   # Define wavelength range (UV to Near-IR)
+   wavelengths = np.linspace(200e-9, 2500e-9, 1000)
+
+   # Compare different materials
+   materials = {
+       'BK7 Glass': MaterialBank.BK7,
+       'Fused Silica': MaterialBank.fused_silica,
+       'Sapphire': MaterialBank.Al2O3
+   }
+
+   plt.figure(figsize=(12, 8))
+
+   for name, material in materials.items():
+       # Calculate refractive index across spectrum
+       n_values = material.compute_refractive_index(wavelengths)
+
+       # Plot dispersion curve
+       plt.subplot(2, 2, 1)
+       plt.plot(wavelengths*1e9, n_values, label=name, linewidth=2)
+
+       # Group velocity dispersion
+       group_indices = material.compute_group_index(wavelengths)
+       plt.subplot(2, 2, 2)
+       plt.plot(wavelengths*1e9, group_indices, label=name, linewidth=2)
+
+   plt.subplot(2, 2, 1)
+   plt.xlabel('Wavelength (nm)')
+   plt.ylabel('Refractive Index')
+   plt.title('Material Dispersion Comparison')
+   plt.legend()
+   plt.grid(True, alpha=0.3)
+
+   plt.subplot(2, 2, 2)
+   plt.xlabel('Wavelength (nm)')
+   plt.ylabel('Group Index')
+   plt.title('Group Index Comparison')
+   plt.legend()
+   plt.grid(True, alpha=0.3)
+
+   plt.tight_layout()
+   plt.show()
+
+**Output:** |example_bk7|
+
+This example demonstrates PyOptik's power for comparative material analysis and optical design.
+
+Advanced Usage - Custom Materials
+**********************************
+
+**Adding Materials from RefractiveIndex.INFO**
+
+Easily extend your library with materials from the web:
+
+.. code:: python
+
+   from PyOptik import MaterialBank, MaterialType
+
+   # Add water at 19°C from RefractiveIndex.INFO
+   MaterialBank.add_material_to_bank(
+       filename='water_19C',
+       material_type=MaterialType.SELLMEIER,
+       url='https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml'
+   )
+
+   # Now you can use it
+   water = MaterialBank.water_19C
+   n_water = water.compute_refractive_index(589e-9)  # Sodium D-line
+
+**Managing Your Library**
+
+.. code:: python
+
+   # View all available materials
+   MaterialBank.print_materials()
+
+   # Remove unwanted materials
+   MaterialBank.remove_item(filename='water_19C')
+
+   # Check what's available after removal
+   MaterialBank.print_available()
+
+**Material Types**
+
+PyOptik supports two material data formats:
+
+**Sellmeier Materials**: Mathematical dispersion formulas (compact, smooth)
+**Tabulated Materials**: Discrete wavelength-index pairs (experimental data)
+
+Development & Testing
+*********************
+
+**Running Tests**
+
+.. code:: bash
+
+   # Clone and setup
+   git clone https://github.com/MartinPdeS/PyOptik.git
+   cd PyOptik
+   pip install -e ".[testing]"
+
+   # Run test suite
    pytest
+
+   # Run with coverage
+   pytest --cov=PyOptik --cov-report=html
+
+**Code Quality**
+
+.. code:: bash
+
+   # Linting
+   flake8 PyOptik/
+
+   # Type checking (if using mypy)
+   mypy PyOptik/
 
 Contributing
 ************
 
-PyOptik is open to contributions. Whether you're fixing bugs, adding new features, or improving documentation, your help is welcome! Please feel free to fork the repository and submit pull requests.
+We welcome contributions! PyOptik thrives on community input:
 
-Contact Information
-*******************
+**Bug Reports**: Found an issue? Open an issue on GitHub
+**Feature Requests**: Have ideas? We'd love to hear them
+**Documentation**: Help improve our docs and examples
+**Code**: Submit pull requests for fixes and enhancements
 
-As of 2024, PyOptik is still under development. If you would like to collaborate, it would be a pleasure to hear from you. Contact me at:
+**Development Workflow:**
+
+1. Fork the repository
+2. Create a feature branch: ``git checkout -b feature-name``
+3. Make your changes and add tests
+4. Run the test suite: ``pytest``
+5. Submit a pull request
+
+Contact & Support
+*****************
 
 **Author**: `Martin Poinsinet de Sivry-Houle <https://github.com/MartinPdS>`_
 
 **Email**: `martin.poinsinet.de.sivry@gmail.com <mailto:martin.poinsinet.de.sivry@gmail.com?subject=PyOptik>`_
+
+**GitHub**: `PyOptik Repository <https://github.com/MartinPdeS/PyOptik>`_
+
+**Documentation**: `Full Documentation <https://martinpdes.github.io/PyOptik/>`_
+
+PyOptik is actively developed and maintained. We're always looking for collaborators interested in optical simulation and materials science!
 
 .. |python| image:: https://img.shields.io/pypi/pyversions/pyoptik.svg
    :alt: Python

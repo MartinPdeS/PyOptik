@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PyOptik &#8212; PyOptik  documentation</title>
+    <title>PyOptik: Optical Material Properties Made Simple &#8212; PyOptik  documentation</title>
   
   
   
@@ -409,7 +409,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><strong>Date</strong>: Jul 17, 2025, <strong>Version</strong>: 1.12.0</p>
+  <p><strong>Date</strong>: Jul 20, 2025, <strong>Version</strong>: 1.12.0</p>
 <p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png" /></p>
 <table class="table">
 <colgroup>
@@ -436,151 +436,258 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<section id="pyoptik">
-<h1>PyOptik<a class="headerlink" href="#pyoptik" title="Link to this heading">#</a></h1>
-<p>PyOptik is a Python tool designed to import refractive indexes and extinction coefficients for various materials across different wavelengths. The data provided by PyOptik can be used in numerous applications, including simulating light interactions with particles. All data is sourced from the reputable RefractiveIndex.INFO database.</p>
-<section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>Comprehensive Database Access</strong>: Seamlessly import refractive index and extinction coefficient data for a wide range of materials.</p></li>
-<li><p><strong>Simulation Ready</strong>: Ideal for light-matter interaction simulations, particularly in optics and photonics.</p></li>
-<li><p><strong>Simple API</strong>: Easy-to-use API that integrates well with other Python libraries.</p></li>
-<li><p><strong>Open Source</strong>: Fully open-source.</p></li>
-<li><p><strong>Group Index and Velocity</strong>: Compute group index and group velocity directly from material objects.</p></li>
-</ul>
+<section id="pyoptik-optical-material-properties-made-simple">
+<h1>PyOptik: Optical Material Properties Made Simple<a class="headerlink" href="#pyoptik-optical-material-properties-made-simple" title="Link to this heading">#</a></h1>
+<p><strong>PyOptik</strong> is a powerful Python library that provides seamless access to optical material properties from the comprehensive <a class="reference external" href="https://refractiveindex.info">RefractiveIndex.INFO</a> database. Whether you’re simulating light-matter interactions, designing optical systems, or conducting photonics research, PyOptik delivers the refractive index and extinction coefficient data you need with a clean, intuitive API.</p>
+<p><strong>Quick Start</strong>: Get material properties in just 3 lines of code!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<span class="n">bk7</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">550e-9</span><span class="p">)</span>  <span class="c1"># n ≈ 1.519</span>
+</pre></div>
+</div>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h2>
+<dl class="simple">
+<dt><strong>Comprehensive Material Database</strong></dt><dd><p>Access thousands of materials from RefractiveIndex.INFO with automatic data management</p>
+</dd>
+<dt><strong>Multiple Data Formats</strong></dt><dd><p>Support for both Sellmeier equation materials and tabulated wavelength data</p>
+</dd>
+<dt><strong>High-Performance Computing</strong></dt><dd><p>Optimized calculations for group index, group velocity, and dispersion properties</p>
+</dd>
+<dt><strong>Simulation Ready</strong></dt><dd><p>Perfect for optical design, photonics simulations, and electromagnetic modeling</p>
+</dd>
+<dt><strong>Developer Friendly</strong></dt><dd><p>Clean API that integrates seamlessly with NumPy, Matplotlib, and scientific Python stack</p>
+</dd>
+<dt><strong>Advanced Analysis</strong></dt><dd><p>Built-in plotting and visualization tools powered by MPSPlots</p>
+</dd>
+</dl>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
-<p>To install PyOptik, simply use <cite>pip</cite> or <cite>conda</cite>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>PyOptik<span class="w">                               </span><span class="o">(</span>using<span class="w"> </span>PyPi<span class="w"> </span>package<span class="w"> </span>manager<span class="o">)</span>
-
-conda<span class="w"> </span>install<span class="w"> </span>--channels<span class="w"> </span>martinpdes<span class="w"> </span>pyoptik<span class="w">       </span><span class="o">(</span>using<span class="w"> </span>anaconda<span class="w"> </span>environment<span class="w"> </span>manager<span class="o">)</span>
+<p><strong>Quick Install</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>PyOptik
+</pre></div>
+</div>
+<p><strong>Conda Install</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>martinpdes<span class="w"> </span>pyoptik
+</pre></div>
+</div>
+<p><strong>Development Install</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/MartinPdeS/PyOptik.git
+<span class="nb">cd</span><span class="w"> </span>PyOptik
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
 </section>
-<section id="building-the-material-library">
-<h2>Building the Material Library<a class="headerlink" href="#building-the-material-library" title="Link to this heading">#</a></h2>
-<p>PyOptik allows you to build and customize a local material library, importing material data from various categories. You can download the following categories of materials from the RefractiveIndex.INFO database:</p>
-<ul class="simple">
-<li><p><cite>classics</cite>: Commonly used optical materials.</p></li>
-<li><p><cite>glasses</cite>: Various types of glass materials.</p></li>
-<li><p><cite>metals</cite>: Different metal materials for optical simulations.</p></li>
-<li><p><cite>organics</cite>: Organic materials with optical properties.</p></li>
-<li><p><cite>others</cite>: Other optical materials.</p></li>
-<li><p><cite>all</cite>: Download all available categories at once.</p></li>
-</ul>
-<p>To build a material library, use the <cite>build_library</cite> function. This will download and save the material data to your local machine.</p>
-<p><strong>Example: Building the Material Library:</strong></p>
-<p>In this example, we will download the <cite>others</cite> category of materials and remove any previously existing data in that category:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
-
-<span class="c1"># Download the &#39;classics&#39; category and remove previous files</span>
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;classics&#39;</span><span class="p">,</span> <span class="n">remove_previous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<section id="building-your-material-library">
+<h2>Building Your Material Library<a class="headerlink" href="#building-your-material-library" title="Link to this heading">#</a></h2>
+<p>PyOptik downloads material data from RefractiveIndex.INFO organized into categories. Choose what you need or download everything at once.</p>
 <p><strong>Available Categories:</strong></p>
-<p>To download materials from another category, simply pass the category name as an argument to <cite>build_library</cite>. For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download materials from the &#39;glasses&#39; category</span>
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;glasses&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>To download all material categories at once:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download all available material categories</span>
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You can also set the <cite>remove_previous</cite> parameter to <cite>True</cite> to remove old data before downloading new material data.</p>
-</section>
-<section id="viewing-available-materials">
-<h2>Viewing Available Materials<a class="headerlink" href="#viewing-available-materials" title="Link to this heading">#</a></h2>
-<p>Once you have built the material library, you can view all the available materials using the <cite>MaterialBank</cite> class. This will print a list of materials stored in your local library.</p>
-<p><strong>Example:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">classics</span></code> - Essential optical materials (BK7, fused silica, etc.)
+<code class="docutils literal notranslate"><span class="pre">glasses</span></code> - Various optical glasses
+<code class="docutils literal notranslate"><span class="pre">metals</span></code> - Metallic materials (gold, silver, aluminum, etc.)
+<code class="docutils literal notranslate"><span class="pre">organics</span></code> - Organic and polymer materials
+<code class="docutils literal notranslate"><span class="pre">others</span></code> - Specialized and exotic materials
+<code class="docutils literal notranslate"><span class="pre">all</span></code> - Everything (recommended for comprehensive access)</p>
+<p><strong>Quick Setup - Download Essentials:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
 
-<span class="c1"># Print the available materials in a tabulated format</span>
+<span class="c1"># Get the most commonly used materials</span>
+<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;classics&#39;</span><span class="p">)</span>
+
+<span class="c1"># See what&#39;s available</span>
 <span class="n">MaterialBank</span><span class="o">.</span><span class="n">print_materials</span><span class="p">()</span>
 </pre></div>
 </div>
-</section>
-<section id="simple-usage">
-<h2>Simple Usage<a class="headerlink" href="#simple-usage" title="Link to this heading">#</a></h2>
-<p>After installing PyOptik and building the material library, you can easily access material properties:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<p><strong>Complete Setup - Download Everything:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download all materials (recommended)</span>
+<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">remove_previous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Custom Selection:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download specific categories</span>
+<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;glasses&#39;</span><span class="p">)</span>
+<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s1">&#39;metals&#39;</span><span class="p">)</span>
 
-<span class="c1"># Access the refractive index of BK7 glass</span>
-<span class="n">bk7</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span>
-<span class="n">n</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">0.55e-6</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Refractive index at 0.55 µm: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="c1"># Group index and group velocity</span>
-<span class="n">n_g</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="mf">0.55e-6</span><span class="p">)</span>
-<span class="n">v_g</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="mf">0.55e-6</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group index: </span><span class="si">{</span><span class="n">n_g</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, group velocity: </span><span class="si">{</span><span class="n">v_g</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Or chain them</span>
+<span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;classics&#39;</span><span class="p">,</span> <span class="s1">&#39;glasses&#39;</span><span class="p">,</span> <span class="s1">&#39;metals&#39;</span><span class="p">]:</span>
+    <span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
-<p>Here is a quick example demonstrating how to use PyOptik to retrieve and plot the refractive index of a material:</p>
+<section id="quick-start-guide">
+<h2>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading">#</a></h2>
+<p><strong>Basic Usage - Refractive Index</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Access BK7 glass properties</span>
+<span class="n">bk7</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span>
+
+<span class="c1"># Single wavelength (550 nm)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">550e-9</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BK7 refractive index at 550nm: </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Multiple wavelengths</span>
+<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">400e-9</span><span class="p">,</span> <span class="mf">800e-9</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">n_values</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Advanced Properties - Group Index &amp; Velocity</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Group index (important for pulse propagation)</span>
+<span class="n">n_g</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="mf">550e-9</span><span class="p">)</span>
+
+<span class="c1"># Group velocity (speed of pulse envelope)</span>
+<span class="n">v_g</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="mf">550e-9</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group index: </span><span class="si">{</span><span class="n">n_g</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group velocity: </span><span class="si">{</span><span class="n">v_g</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Visualization</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Quick plot of material dispersion</span>
+<span class="n">bk7</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Custom wavelength range</span>
+<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">300e-9</span><span class="p">,</span> <span class="mf">2000e-9</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">bk7</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="detailed-example-material-analysis">
+<h2>Detailed Example - Material Analysis<a class="headerlink" href="#detailed-example-material-analysis" title="Link to this heading">#</a></h2>
+<p>Here’s a comprehensive example showing PyOptik’s capabilities:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
 
-<span class="c1"># Define wavelength range</span>
-<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.3e-6</span><span class="p">,</span> <span class="mf">2.5e-6</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="c1"># Define wavelength range (UV to Near-IR)</span>
+<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">200e-9</span><span class="p">,</span> <span class="mf">2500e-9</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
-<span class="c1"># Retrieve refractive index for BK7 glass</span>
-<span class="n">bk7</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span>
-<span class="n">n_values</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+<span class="c1"># Compare different materials</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;BK7 Glass&#39;</span><span class="p">:</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span><span class="p">,</span>
+    <span class="s1">&#39;Fused Silica&#39;</span><span class="p">:</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">fused_silica</span><span class="p">,</span>
+    <span class="s1">&#39;Sapphire&#39;</span><span class="p">:</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">Al2O3</span>
+<span class="p">}</span>
 
-<span class="c1"># Plot the results</span>
-<span class="n">bk7</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">material</span> <span class="ow">in</span> <span class="n">materials</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># Calculate refractive index across spectrum</span>
+    <span class="n">n_values</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+
+    <span class="c1"># Plot dispersion curve</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelengths</span><span class="o">*</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">n_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Group velocity dispersion</span>
+    <span class="n">group_indices</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelengths</span><span class="o">*</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">group_indices</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Refractive Index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Material Dispersion Comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Group Index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Group Index Comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>This code produces the following figure: <a class="reference external" href="https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png"><img alt="PyOptik example: BK7" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/example_bk7.png" /></a></p>
+<p><strong>Output:</strong> <a class="reference external" href="https://github.com/MartinPdeS/PyOptik/blob/master/docs/images/example_bk7.png"><img alt="PyOptik example: BK7" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/example_bk7.png" /></a></p>
+<p>This example demonstrates PyOptik’s power for comparative material analysis and optical design.</p>
 </section>
-<section id="adding-and-removing-custom-materials">
-<h2>Adding and Removing Custom Materials<a class="headerlink" href="#adding-and-removing-custom-materials" title="Link to this heading">#</a></h2>
-<p>You can add a custom material to your library by providing a URL from <a class="reference external" href="https://refractiveindex.info">refractiveindex.info</a>.</p>
-<p><strong>Adding a Custom Material:</strong></p>
+<section id="advanced-usage-custom-materials">
+<h2>Advanced Usage - Custom Materials<a class="headerlink" href="#advanced-usage-custom-materials" title="Link to this heading">#</a></h2>
+<p><strong>Adding Materials from RefractiveIndex.INFO</strong></p>
+<p>Easily extend your library with materials from the web:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span><span class="p">,</span> <span class="n">MaterialType</span>
 
-<span class="c1"># Define the URL of the YAML file and the destination</span>
-<span class="c1"># Call the function to download the file</span>
+<span class="c1"># Add water at 19°C from RefractiveIndex.INFO</span>
 <span class="n">MaterialBank</span><span class="o">.</span><span class="n">add_material_to_bank</span><span class="p">(</span>
-   <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example_download&#39;</span><span class="p">,</span>
-   <span class="n">material_type</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span>
-   <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml&#39;</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;water_19C&#39;</span><span class="p">,</span>
+    <span class="n">material_type</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://refractiveindex.info/database/data-nk/main/H2O/Daimon-19.0C.yml&#39;</span>
 <span class="p">)</span>
 
+<span class="c1"># Now you can use it</span>
+<span class="n">water</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">water_19C</span>
+<span class="n">n_water</span> <span class="o">=</span> <span class="n">water</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">589e-9</span><span class="p">)</span>  <span class="c1"># Sodium D-line</span>
+</pre></div>
+</div>
+<p><strong>Managing Your Library</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># View all available materials</span>
+<span class="n">MaterialBank</span><span class="o">.</span><span class="n">print_materials</span><span class="p">()</span>
+
+<span class="c1"># Remove unwanted materials</span>
+<span class="n">MaterialBank</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;water_19C&#39;</span><span class="p">)</span>
+
+<span class="c1"># Check what&#39;s available after removal</span>
 <span class="n">MaterialBank</span><span class="o">.</span><span class="n">print_available</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Removing a Material:</strong></p>
-<p>You can also remove a material from the library as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">remove_element</span>
+<p><strong>Material Types</strong></p>
+<p>PyOptik supports two material data formats:</p>
+<p><strong>Sellmeier Materials</strong>: Mathematical dispersion formulas (compact, smooth)
+<strong>Tabulated Materials</strong>: Discrete wavelength-index pairs (experimental data)</p>
+</section>
+<section id="development-testing">
+<h2>Development &amp; Testing<a class="headerlink" href="#development-testing" title="Link to this heading">#</a></h2>
+<p><strong>Running Tests</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone and setup</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/MartinPdeS/PyOptik.git
+<span class="nb">cd</span><span class="w"> </span>PyOptik
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[testing]&quot;</span>
 
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example_download&#39;</span><span class="p">)</span>
+<span class="c1"># Run test suite</span>
+pytest
+
+<span class="c1"># Run with coverage</span>
+pytest<span class="w"> </span>--cov<span class="o">=</span>PyOptik<span class="w"> </span>--cov-report<span class="o">=</span>html
 </pre></div>
 </div>
-</section>
-<section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">#</a></h2>
-<p>To test locally after cloning the GitHub repository, install the dependencies and run the tests:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/MartinPdeS/PyOptik.git
-<span class="nb">cd</span><span class="w"> </span>PyOptik
-pip<span class="w"> </span>install<span class="w"> </span>.
-pytest
+<p><strong>Code Quality</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Linting</span>
+flake8<span class="w"> </span>PyOptik/
+
+<span class="c1"># Type checking (if using mypy)</span>
+mypy<span class="w"> </span>PyOptik/
 </pre></div>
 </div>
 </section>
 <section id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h2>
-<p>PyOptik is open to contributions. Whether you’re fixing bugs, adding new features, or improving documentation, your help is welcome! Please feel free to fork the repository and submit pull requests.</p>
+<p>We welcome contributions! PyOptik thrives on community input:</p>
+<p><strong>Bug Reports</strong>: Found an issue? Open an issue on GitHub
+<strong>Feature Requests</strong>: Have ideas? We’d love to hear them
+<strong>Documentation</strong>: Help improve our docs and examples
+<strong>Code</strong>: Submit pull requests for fixes and enhancements</p>
+<p><strong>Development Workflow:</strong></p>
+<ol class="arabic simple">
+<li><p>Fork the repository</p></li>
+<li><p>Create a feature branch: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">feature-name</span></code></p></li>
+<li><p>Make your changes and add tests</p></li>
+<li><p>Run the test suite: <code class="docutils literal notranslate"><span class="pre">pytest</span></code></p></li>
+<li><p>Submit a pull request</p></li>
+</ol>
 </section>
-<section id="contact-information">
-<h2>Contact Information<a class="headerlink" href="#contact-information" title="Link to this heading">#</a></h2>
-<p>As of 2024, PyOptik is still under development. If you would like to collaborate, it would be a pleasure to hear from you. Contact me at:</p>
+<section id="contact-support">
+<h2>Contact &amp; Support<a class="headerlink" href="#contact-support" title="Link to this heading">#</a></h2>
 <p><strong>Author</strong>: <a class="reference external" href="https://github.com/MartinPdS">Martin Poinsinet de Sivry-Houle</a></p>
 <p><strong>Email</strong>: <a class="reference external" href="mailto:martin&#46;poinsinet&#46;de&#46;sivry&#37;&#52;&#48;gmail&#46;com?subject=PyOptik">martin<span>&#46;</span>poinsinet<span>&#46;</span>de<span>&#46;</span>sivry<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<p><strong>GitHub</strong>: <a class="reference external" href="https://github.com/MartinPdeS/PyOptik">PyOptik Repository</a></p>
+<p><strong>Documentation</strong>: <a class="reference external" href="https://martinpdes.github.io/PyOptik/">Full Documentation</a></p>
+<p>PyOptik is actively developed and maintained. We’re always looking for collaborators interested in optical simulation and materials science!</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -605,16 +712,15 @@ pytest
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-material-library">Building the Material Library</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viewing-available-materials">Viewing Available Materials</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-usage">Simple Usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-and-removing-custom-materials">Adding and Removing Custom Materials</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-your-material-library">Building Your Material Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start-guide">Quick Start Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-example-material-analysis">Detailed Example - Material Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-usage-custom-materials">Advanced Usage - Custom Materials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-testing">Development &amp; Testing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-information">Contact Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-support">Contact &amp; Support</a></li>
 </ul>
   </nav></div>
 

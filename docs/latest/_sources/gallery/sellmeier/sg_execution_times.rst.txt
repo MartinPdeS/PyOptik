@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.913** total execution time for 4 files **from gallery/sellmeier**:
+**00:00.921** total execution time for 4 files **from gallery/sellmeier**:
 
 .. container::
 
@@ -33,14 +33,14 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_sellmeier_plot_water.py` (``plot_water.py``)
-     - 00:00.258
+     - 00:00.259
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_silica.py` (``plot_silica.py``)
-     - 00:00.234
+     - 00:00.233
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_bk7.py` (``plot_bk7.py``)
-     - 00:00.223
+     - 00:00.227
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_compare_glasses.py` (``plot_compare_glasses.py``)
-     - 00:00.199
+     - 00:00.201
      - 0.0

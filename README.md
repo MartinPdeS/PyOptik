@@ -5,14 +5,13 @@
 | Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | PyOptik/\_\_main\_\_.py              |       17 |       17 |        6 |        0 |      0% |      1-37 |
-| PyOptik/material/base\_class.py      |       51 |        4 |       14 |        3 |     89% |16, 29, 40, 56->exit, 83 |
-| PyOptik/material/sellmeier\_class.py |       79 |        2 |       24 |        2 |     96% |   86, 164 |
-| PyOptik/material/tabulated\_class.py |       59 |        3 |        2 |        1 |     93% | 73, 86-87 |
-| PyOptik/material\_bank.py            |      161 |       13 |       60 |       10 |     87% |129, 228-238, 312->315, 317->exit, 386-388, 396->402, 402->390, 450->454, 456->460, 460->464, 509->513 |
+| PyOptik/material/base\_class.py      |       51 |       12 |       14 |        2 |     69% |16, 29, 40, 56->exit, 80-89 |
+| PyOptik/material/sellmeier\_class.py |       76 |        3 |       22 |        2 |     95% |86, 143-144 |
+| PyOptik/material/tabulated\_class.py |       59 |        3 |        2 |        1 |     93% | 74, 87-88 |
+| PyOptik/material\_bank.py            |      161 |       13 |       60 |       10 |     87% |130, 229-239, 313->316, 318->exit, 387-389, 397->403, 403->391, 451->455, 457->461, 461->465, 510->514 |
 | PyOptik/material\_type.py            |        4 |        0 |        0 |        0 |    100% |           |
-| PyOptik/units.py                     |       18 |        0 |        4 |        0 |    100% |           |
-| PyOptik/utils.py                     |       44 |       10 |       10 |        2 |     74% |57, 71->exit, 85-92, 94-95 |
-|                            **TOTAL** |  **433** |   **49** |  **120** |   **18** | **85%** |           |
+| PyOptik/utils.py                     |       44 |       10 |       10 |        2 |     74% |58, 72->exit, 86-93, 95-96 |
+|                            **TOTAL** |  **412** |   **58** |  **114** |   **17** | **82%** |           |
 
 
 ## Setup coverage badge

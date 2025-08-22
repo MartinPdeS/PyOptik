@@ -504,31 +504,28 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="plot-the-refractive-index-of-optical-material-polyethylene">
 <span id="sphx-glr-gallery-tabulated-plot-polyethylene-py"></span><h1>Plot the Refractive Index of Optical Material: Polyethylene<a class="headerlink" href="#plot-the-refractive-index-of-optical-material-polyethylene" title="Link to this heading">#</a></h1>
 <p>This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of polyethylene over a specified range of wavelengths.</p>
-<img src="../../_images/sphx_glr_plot_polyethylene_001.png" srcset="../../_images/sphx_glr_plot_polyethylene_001.png" alt="Refractive Index and Absorption vs. Wavelength [polyetylene]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 1.31 µm to 1.55 µm which is outside the allowable range of 40.0 µm to 200.0 µm µm. [Material: polyetylene]
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 399.99999999999994 nm to 1.5 µm which is outside the allowable range of 40.0 µm to 200.0 µm µm. [Material: polyetylene]
+<img src="../../_images/sphx_glr_plot_polyethylene_001.png" srcset="../../_images/sphx_glr_plot_polyethylene_001.png" alt="Refractive Index and Absorption vs. Wavelength [polyetylene]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 1.31 micrometer to 1.55 micrometer which is outside the allowable range of 40.0 micrometer to 200.0 micrometer µm. [Material: polyetylene]
   warnings.warn(
 </pre></div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
 
 <span class="c1"># Initialize the material with the Sellmeier model</span>
 <span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">polyetylene</span>
 
 <span class="c1"># Calculate refractive index at specific wavelengths</span>
-<span class="n">RI</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mf">1310e-9</span><span class="p">,</span> <span class="mf">1550e-9</span><span class="p">])</span>
+<span class="n">RI</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mi">1310</span><span class="p">,</span> <span class="mi">1550</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span>
 
 <span class="c1"># Display calculated refractive indices at sample wavelengths</span>
-<span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">wavelength</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">400e-9</span><span class="p">,</span> <span class="mf">1500e-9</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.386 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.358 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-tabulated-plot-polyethylene-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/49eeadb3c1440ca4a0332fb1ca49cb3b/plot_polyethylene.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_polyethylene.ipynb</span></code></a></p>

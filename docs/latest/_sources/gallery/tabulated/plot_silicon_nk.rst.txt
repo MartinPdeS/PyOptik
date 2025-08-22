@@ -25,19 +25,21 @@ This example uses :mod:`PyOptik` to visualise both the real and
 imaginary parts of the refractive index of silicon over a typical
 infrared wavelength range.
 
-.. GENERATED FROM PYTHON SOURCE LINES 11-22
+.. GENERATED FROM PYTHON SOURCE LINES 11-24
 
 .. code-block:: Python
 
     import numpy
     import matplotlib.pyplot as plt
+    from TypedUnit import ureg
     from MPSPlots.styles import mps
+
     from PyOptik import MaterialBank
-    from PyOptik.units import micrometer
+
 
     material = MaterialBank.silicon
 
-    wavelengths = numpy.linspace(0.3, 1.1, 300) * micrometer
+    wavelengths = numpy.linspace(0.3, 1.1, 300) * ureg.micrometer
     index = material.compute_refractive_index(wavelengths)
 
 
@@ -48,13 +50,13 @@ infrared wavelength range.
 
  .. code-block:: none
 
-    /opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 299.99999999999994 nm to 1.1 µm which is outside the allowable range of 206.6 nm to 826.5999999999999 nm µm. [Material: silicon]
+    /opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: silicon]
       warnings.warn(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-40
+.. GENERATED FROM PYTHON SOURCE LINES 25-42
 
 .. code-block:: Python
 
@@ -66,12 +68,12 @@ infrared wavelength range.
         xlabel="Wavelength [µm]",
         ylabel="n",
     )
-    ax1.plot(wavelengths.to(micrometer).magnitude, index.real, label="n", color="tab:blue")
+    ax1.plot(wavelengths.to(ureg.micrometer).magnitude, index.real, label="n", color="tab:blue")
     ax1.legend(loc="upper left")
 
     ax2 = ax1.twinx()
     ax2.set(ylabel="k")
-    ax2.plot(wavelengths.to(micrometer).magnitude, index.imag, color="tab:red", label="k")
+    ax2.plot(wavelengths.to(ureg.micrometer).magnitude, index.imag, color="tab:red", label="k")
     ax2.legend(loc="upper right")
 
     plt.show()
@@ -90,7 +92,7 @@ infrared wavelength range.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.351 seconds)
+   **Total running time of the script:** (0 minutes 0.350 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_silicon_nk.py:

@@ -8,15 +8,15 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 # %%
 import numpy
+from TypedUnit import ureg
+
 from PyOptik import MaterialBank
 
 # Initialize the material with the Sellmeier model
 material = MaterialBank.water
 
 # Calculate refractive index at specific wavelengths
-RI = material.compute_refractive_index(wavelength=[800e-9, 900e-9])
+RI = material.compute_refractive_index(wavelength=[800, 900] * ureg.nanometer)
 
 # Display calculated refractive indices at sample wavelengths
-material.plot(
-    wavelength=numpy.linspace(300e-9, 1000e-9, 300)
-)
+material.plot()

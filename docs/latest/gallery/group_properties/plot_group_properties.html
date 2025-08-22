@@ -508,14 +508,16 @@ group velocity of fused silica using <code class="xref py py-mod docutils litera
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">MPSPlots.styles</span><span class="w"> </span><span class="kn">import</span> <span class="n">mps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">micrometer</span>
+
 
 <span class="c1"># Retrieve the material</span>
 <span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">fused_silica</span>
 
 <span class="c1"># Compute values over a wavelength range</span>
-<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">*</span> <span class="n">micrometer</span>
+<span class="n">wavelengths</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span>
 <span class="n">n_g</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
 <span class="n">v_g</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
 </pre></div>
@@ -528,13 +530,13 @@ group velocity of fused silica using <code class="xref py py-mod docutils litera
     <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Group index&quot;</span><span class="p">,</span>
     <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Fused Silica Group Properties&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelengths</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">n_g</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;n_g&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelengths</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">n_g</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;n_g&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Group velocity [m/s]&quot;</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">wavelengths</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="n">wavelengths</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
     <span class="n">v_g</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;v_g&quot;</span><span class="p">,</span>

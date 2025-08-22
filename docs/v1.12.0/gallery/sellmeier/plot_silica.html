@@ -504,22 +504,20 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="plot-the-refractive-index-of-optical-material-silica">
 <span id="sphx-glr-gallery-sellmeier-plot-silica-py"></span><h1>Plot the Refractive Index of Optical Material: Silica<a class="headerlink" href="#plot-the-refractive-index-of-optical-material-silica" title="Link to this heading">#</a></h1>
 <p>This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica glass over a specified range of wavelengths.</p>
-<img src="../../_images/sphx_glr_plot_silica_001.png" srcset="../../_images/sphx_glr_plot_silica_001.png" alt="Refractive Index vs. Wavelength: [fused_silica]" class = "sphx-glr-single-img"/><div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<img src="../../_images/sphx_glr_plot_silica_001.png" srcset="../../_images/sphx_glr_plot_silica_001.png" alt="Refractive Index vs. Wavelength: [fused_silica]" class = "sphx-glr-single-img"/><div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
 
 <span class="c1"># Initialize the material with the Sellmeier model</span>
 <span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">fused_silica</span>
 
 <span class="c1"># Calculate refractive index at specific wavelengths</span>
-<span class="n">RI</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mf">1310e-9</span><span class="p">,</span> <span class="mf">1550e-9</span><span class="p">])</span>
+<span class="n">RI</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mi">1310</span><span class="p">,</span> <span class="mi">1550</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span>
 
 <span class="c1"># Display calculated refractive indices at sample wavelengths</span>
-<span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">wavelength</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">500e-9</span><span class="p">,</span> <span class="mf">1500e-9</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.233 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.264 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-sellmeier-plot-silica-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/3a47f9c4fef80ecee53f963ff63b5fba/plot_silica.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silica.ipynb</span></code></a></p>

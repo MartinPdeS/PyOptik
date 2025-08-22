@@ -4,9 +4,10 @@
 import pytest
 import numpy as np
 from unittest.mock import patch
-from PyOptik.material import TabulatedMaterial
-from PyOptik.units import Quantity, micrometer, meter
 import matplotlib.pyplot as plt
+from TypedUnit import ureg
+
+from PyOptik.material import TabulatedMaterial
 from PyOptik import MaterialBank
 
 
@@ -21,7 +22,7 @@ def test_init_material():
 
     assert material.filename == 'zinc'
     assert material.wavelength is not None
-    assert isinstance(material.wavelength, Quantity)
+    assert isinstance(material.wavelength, ureg.Quantity)
     assert material.n_values is not None
     assert material.k_values is not None
     assert isinstance(material.n_values, np.ndarray)
@@ -37,7 +38,7 @@ def test_load_tabulated_data():
     material._load_tabulated_data()
 
     assert material.wavelength is not None
-    assert isinstance(material.wavelength, Quantity)
+    assert isinstance(material.wavelength, ureg.Quantity)
     assert material.n_values is not None
     assert isinstance(material.n_values, np.ndarray)
     assert material.k_values is not None
@@ -56,7 +57,7 @@ def test_check_wavelength():
 
     # Test outside range, expecting a warning
     with pytest.warns(UserWarning, match="Wavelength range goes from.*"):
-        wavelength = material.wavelength.max() + 10 * micrometer
+        wavelength = material.wavelength.max() + 10 * ureg.micrometer
         material._check_wavelength(wavelength)
 
 
@@ -66,12 +67,12 @@ def test_compute_refractive_index():
     material._load_tabulated_data()
 
     # Test single wavelength input
-    wavelength = 500e-9 * meter
+    wavelength = 500e-9 * ureg.meter
     refractive_index = material.compute_refractive_index(wavelength)
     assert isinstance(refractive_index, complex)
 
     # Test array of wavelengths input
-    wavelengths = np.array([400e-9, 500e-9, 600e-9]) * meter
+    wavelengths = np.array([400e-9, 500e-9, 600e-9]) * ureg.meter
     refractive_indices = material.compute_refractive_index(wavelengths)
     assert isinstance(refractive_indices, np.ndarray)
     assert refractive_indices.shape == wavelengths.shape
@@ -82,12 +83,12 @@ def test_compute_refractive_index_inputs():
     material = TabulatedMaterial('zinc')
 
     # Test single wavelength input
-    wavelength = 500e-9
+    wavelength = 500e-9 * ureg.meter
     refractive_index = material.compute_refractive_index(wavelength)
 
     assert np.isscalar(refractive_index), f"Refractive index [{refractive_index}] should return scalar value when wavelength [{wavelength}] input is scalar"
 
-    wavelength = [500e-9, 800e-9] * meter
+    wavelength = [500e-9, 800e-9] * ureg.meter
     refractive_index = material.compute_refractive_index(wavelength)
 
     assert isinstance(refractive_index, np.ndarray), f"Refractive index [{refractive_index}] should return an array when wavelength [{wavelength}] input is an array"
@@ -104,9 +105,8 @@ def test_plot(mock_show):
     mock_show.assert_called_once()
     plt.close()
 
-    # Test plotting a specific range of wavelengths
-    wavelength_range = np.linspace(material.wavelength.min().magnitude, material.wavelength.max().magnitude, 50) * micrometer
-    material.plot(wavelength=wavelength_range)
+    # Test plotting
+    material.plot()
     mock_show.assert_called()
     plt.close()
 

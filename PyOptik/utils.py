@@ -1,10 +1,11 @@
-from PyOptik.directories import sellmeier_data_path, tabulated_data_path
-from PyOptik.material_type import MaterialType
 import requests
 import logging
 from pathlib import Path
-import PyOptik
 import time
+
+from PyOptik.directories import sellmeier_data_path, tabulated_data_path
+from PyOptik.material_type import MaterialType
+import PyOptik
 
 logging.basicConfig(
     level=logging.INFO,

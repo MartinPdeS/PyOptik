@@ -9,7 +9,7 @@ material for analysis.
 
 # %%
 from PyOptik import MaterialBank
-from PyOptik.units import micrometer
+from TypedUnit import ureg
 
 # Find materials containing the substring 'si'
 materials = MaterialBank.search("si")
@@ -20,4 +20,4 @@ for name in materials:
 # Use the first match
 material = MaterialBank.get(materials[0])
 print("\nRefractive index at 1 µm:")
-print(material.compute_refractive_index(1 * micrometer))
+print(material.compute_refractive_index(1 * ureg.micrometer))

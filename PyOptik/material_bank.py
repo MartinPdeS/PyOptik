@@ -8,11 +8,12 @@ import yaml
 import logging
 from pathlib import Path
 from typing import List, Union, Optional, Tuple
+from tabulate import tabulate
+
 from PyOptik.directories import data_path, libraries_path
 from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik.utils import download_yml_file
-from tabulate import tabulate
 from PyOptik.material_type import MaterialType
 
 

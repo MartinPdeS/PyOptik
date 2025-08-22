@@ -1,4 +1,5 @@
 import pytest
+
 from PyOptik import MaterialBank
 from PyOptik.material import SellmeierMaterial, TabulatedMaterial
 

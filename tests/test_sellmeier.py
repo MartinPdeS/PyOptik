@@ -4,10 +4,11 @@
 from unittest.mock import patch
 import pytest
 import numpy as np
+import matplotlib.pyplot as plt
+from TypedUnit import ureg
+
 from PyOptik.material import SellmeierMaterial as Material
 from PyOptik import MaterialBank
-import matplotlib.pyplot as plt
-from PyOptik.units import meter, micrometer, Quantity
 
 # MaterialBank.build_library('minimal', remove_previous=True)
 MaterialBank.set_filter(use_sellmeier=True, use_tabulated=True)
@@ -23,7 +24,7 @@ def test_init_material():
     assert material.coefficients is not None
     assert isinstance(material.coefficients, np.ndarray)
     assert material.formula_type in [1, 2, 5, 6]
-    assert material.wavelength_bound is None or isinstance(material.wavelength_bound, Quantity)
+    assert material.wavelength_bound is None or isinstance(material.wavelength_bound, ureg.Quantity)
     assert material.reference is None or isinstance(material.reference, str)
 
     material.__str__()
@@ -37,25 +38,11 @@ def test_material_plot(mock_show, material: str):
     """Test plotting method of SellmeierMaterial with both float and pint.Quantity inputs."""
     material = Material(material)
 
-    # Test with float values
-    wavelength = np.linspace(
-        material.wavelength_bound.to(meter)[0].magnitude,
-        material.wavelength_bound.to(meter)[1].magnitude,
-        num=10
-    )
-
-    material.plot(wavelength=wavelength)
+    material.plot()
     mock_show.assert_called_once()
     plt.close()
 
-    # Test with pint.Quantity values
-    wavelength = np.linspace(
-        material.wavelength_bound.to(micrometer)[0].magnitude,
-        material.wavelength_bound.to(micrometer)[1].magnitude,
-        num=10
-    ) * micrometer
-
-    material.plot(wavelength=wavelength)
+    material.plot()
     mock_show.assert_called()
     plt.close()
 
@@ -71,7 +58,7 @@ def test_load_coefficients():
     assert material.formula_type in [1, 2, 5, 6]
 
     if material.wavelength_bound is not None:
-        assert isinstance(material.wavelength_bound, Quantity)
+        assert isinstance(material.wavelength_bound, ureg.Quantity)
         assert len(material.wavelength_bound) == 2
         assert material.wavelength_bound[0] < material.wavelength_bound[1]
 
@@ -100,13 +87,17 @@ def test_compute_refractive_index():
     material = Material('water')
 
     # Test single wavelength input
-    wavelength = [800e-9, 500e-9] * meter
+    wavelength = [800e-9, 500e-9] * ureg.meter
     refractive_index = material.compute_refractive_index(wavelength)
     assert isinstance(refractive_index, np.ndarray)
 
     # Test array of wavelengths input
     min_wl, max_wl = material.wavelength_bound
-    wavelength = np.linspace(min_wl.to(meter).magnitude, max_wl.to(meter).magnitude, 50)
+    wavelength = np.linspace(
+        min_wl.to(ureg.meter).magnitude,
+        max_wl.to(ureg.meter).magnitude,
+        50
+    ) * ureg.meter
 
     refractive_indices = material.compute_refractive_index(wavelength)
     assert isinstance(refractive_indices, np.ndarray)
@@ -118,12 +109,12 @@ def test_compute_refractive_index_inputs():
     material = Material('water')
 
     # Test single wavelength input
-    wavelength = 500e-9
+    wavelength = 500 * ureg.nanometer
     refractive_index = material.compute_refractive_index(wavelength)
 
     assert np.isscalar(refractive_index), f"Refractive index [{refractive_index}] should return scalar value when wavelength [{wavelength}] input is scalar"
 
-    wavelength = [500e-9, 800e-9] * meter
+    wavelength = [500e-9, 800e-9] * ureg.meter
     refractive_index = material.compute_refractive_index(wavelength)
 
     assert isinstance(refractive_index, np.ndarray), f"Refractive index [{refractive_index}] should return an array when wavelength [{wavelength}] input is an array"
@@ -133,12 +124,12 @@ def test_formula_type_5_accumulation():
     """Ensure formula type 5 accumulates all terms when computing the index."""
     material = Material('acetone')
 
-    wl = 0.5 * micrometer
+    wl = 0.5 * ureg.micrometer
     calculated = material.compute_refractive_index(wl)
 
     expected = 1 + material.coefficients[0]
     for B, C in zip(material.coefficients[1::2], material.coefficients[2::2]):
-        expected += B * wl.to(micrometer).magnitude ** C
+        expected += B * wl.to(ureg.micrometer).magnitude ** C
 
     assert np.isclose(calculated, expected)
 
@@ -157,8 +148,7 @@ def test_plot_within_range(mock_show, material: str):
 
     if material_instance.wavelength_bound is not None:
         min_wl, max_wl = material_instance.wavelength_bound
-        wavelength = np.linspace(min_wl.to(meter).magnitude, max_wl.to(meter).magnitude, 50)
-        material_instance.plot(wavelength=wavelength)
+        material_instance.plot()
 
         mock_show.assert_called_once()
         plt.close()

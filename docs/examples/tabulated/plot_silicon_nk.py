@@ -10,13 +10,15 @@ infrared wavelength range.
 # %%
 import numpy
 import matplotlib.pyplot as plt
+from TypedUnit import ureg
 from MPSPlots.styles import mps
+
 from PyOptik import MaterialBank
-from PyOptik.units import micrometer
+
 
 material = MaterialBank.silicon
 
-wavelengths = numpy.linspace(0.3, 1.1, 300) * micrometer
+wavelengths = numpy.linspace(0.3, 1.1, 300) * ureg.micrometer
 index = material.compute_refractive_index(wavelengths)
 
 # %% Plot n and k
@@ -28,12 +30,12 @@ ax1.set(
     xlabel="Wavelength [µm]",
     ylabel="n",
 )
-ax1.plot(wavelengths.to(micrometer).magnitude, index.real, label="n", color="tab:blue")
+ax1.plot(wavelengths.to(ureg.micrometer).magnitude, index.real, label="n", color="tab:blue")
 ax1.legend(loc="upper left")
 
 ax2 = ax1.twinx()
 ax2.set(ylabel="k")
-ax2.plot(wavelengths.to(micrometer).magnitude, index.imag, color="tab:red", label="k")
+ax2.plot(wavelengths.to(ureg.micrometer).magnitude, index.imag, color="tab:red", label="k")
 ax2.legend(loc="upper right")
 
 plt.show()

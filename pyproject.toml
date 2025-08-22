@@ -29,6 +29,7 @@ dependencies = [
     "pyyaml ~=6.0",
     "MPSPlots >=1.6",
     "tabulate ~=0.9",
+    "TypedUnit"
 ]
 
 [tool.setuptools]

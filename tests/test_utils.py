@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+from TypedUnit import ureg
 
 from PyOptik import MaterialBank, MaterialType
 from PyOptik.utils import download_yml_file
@@ -129,7 +130,7 @@ def test_fail_with_wrong_formula_type():
         specs='Random specs'
     )
 
-    MaterialBank.test_sellmeier_file.compute_refractive_index(1.1e-6)
+    MaterialBank.test_sellmeier_file.compute_refractive_index(1.1 * ureg.micrometer)
 
 
 def test_create_custom_tabulated_file():

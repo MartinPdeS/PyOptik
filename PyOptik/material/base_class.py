@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from typing import Callable
-from PyOptik import units
 import numpy
 import warnings
 
+from TypedUnit import Length, AnyUnit, Time, ureg, validate_units
 
 class BaseMaterial(object):
     def __eq__(self, other) -> bool:
@@ -39,13 +39,13 @@ class BaseMaterial(object):
         """
         return self.__str__()
 
-    def _check_wavelength(self, wavelength: units.Quantity) -> None:
+    def _check_wavelength(self, wavelength: Length) -> None:
         """
         Checks if a wavelength is within the material's allowable range and raises a warning if it is not.
 
         Parameters
         ----------
-        wavelength : Quantity
+        wavelength : Length
             The wavelength to check, in micrometers.
 
         Raises
@@ -64,32 +64,32 @@ class BaseMaterial(object):
                 )
 
     def ensure_units(func) -> Callable:
-        """Decorator ensuring the wavelength argument carries units.
+        """Decorator ensuring the wavelength argument carries ureg.
 
         Parameters
         ----------
         func : Callable
-            Function that expects a wavelength :class:`~PyOptik.units.Quantity`.
+            Function that expects a wavelength :class:`~PyOptik.ureg.Quantity`.
 
         Returns
         -------
         Callable
             Wrapped version of ``func`` that accepts numerical wavelengths and
-            converts them to metre-based :class:`~PyOptik.units.Quantity` objects.
+            converts them to metre-based :class:`~PyOptik.ureg.Quantity` objects.
         """
-        def wrapper(self, wavelength: units.Quantity = None, *args, **kwargs):
+        def wrapper(self, wavelength: Length = None, *args, **kwargs):
             if wavelength is None:
                 if self.wavelength_bound is None:
                     raise ValueError('Wavelength must be provided for computation.')
                 wavelength = numpy.linspace(self.wavelength_bound[0].magnitude, self.wavelength_bound[1].magnitude, 100) * self.wavelength_bound.units
 
-            if not isinstance(wavelength, units.Quantity):
-                wavelength = wavelength * units.meter
+            if not isinstance(wavelength, ureg.Quantity):
+                wavelength = wavelength * ureg.meter
             return func(self, wavelength, *args, **kwargs)
         return wrapper
 
-    @ensure_units
-    def compute_group_index(self, wavelength: units.Quantity, delta: units.Quantity = 1 * units.nanometer) -> units.Quantity:
+    @validate_units
+    def compute_group_index(self, wavelength: Length, delta: Length = 1 * ureg.nanometer) -> Length:
         """
         Calculate the group refractive index n_g(\u03bb).
         The group index is defined as n_g(\u03bb) = n(\u03bb) - \u03bb * dn/d\u03bb,
@@ -98,18 +98,18 @@ class BaseMaterial(object):
 
         Parameters
         ----------
-        wavelength : units.Quantity
+        wavelength : ureg.Quantity
             Wavelength at which to compute the group index, in metres.
-        delta : units.Quantity, optional
+        delta : ureg.Quantity, optional
             Small change in wavelength for numerical differentiation, default is 1 nanometer.
 
         Returns
         -------
-        units.Quantity
-            Group refractive index at the specified wavelength, in dimensionless units.
+        ureg.Quantity
+            Group refractive index at the specified wavelength, in dimensionless ureg.
         -------
-        units.Quantity
-            Group refractive index at the specified wavelength, in dimensionless units.
+        ureg.Quantity
+            Group refractive index at the specified wavelength, in dimensionless ureg.
         """
         n = self.compute_refractive_index(wavelength)
         n_plus = self.compute_refractive_index(wavelength + delta / 2)
@@ -117,71 +117,71 @@ class BaseMaterial(object):
         dn_dlambda = (n_plus - n_minus) / delta
         return n - wavelength * dn_dlambda
 
-    @ensure_units
-    def compute_group_velocity(self, wavelength: units.Quantity) -> units.Quantity:
+    @validate_units
+    def compute_group_velocity(self, wavelength: Length) -> AnyUnit:
         """
         Calculate the group velocity v_g(\u03bb) = c / n_g(\u03bb),
         where c is the speed of light in vacuum and n_g(\u03bb) is the group index.
 
         Parameters
         ----------
-        wavelength : units.Quantity
+        wavelength : Length
             Wavelength at which to compute the group velocity, in metres.
 
         Returns
         -------
-        units.Quantity
+        AnyUnit
             Group velocity at the specified wavelength, in metres per second.
         """
         ng = self.compute_group_index(wavelength)
-        c = 299792458 * units.meter / units.second
+        c = 299792458 * ureg.meter / ureg.second
         return c / ng
 
-    @ensure_units
+    @validate_units
     def compute_group_delay(
         self,
-        wavelength: units.Quantity,
-        length: units.Quantity = 1 * units.meter,
-    ) -> units.Quantity:
+        wavelength: Length,
+        length: Length = 1 * ureg.meter,
+    ) -> Time:
         """Calculate the group delay for a given propagation length.
 
         Parameters
         ----------
-        wavelength : units.Quantity
+        wavelength : Length
             Wavelength at which to compute the group delay, in metres.
-        length : units.Quantity, optional
+        length : Length, optional
             Propagation length (default is 1 metre).
 
         Returns
         -------
-        units.Quantity
+        Time
             Group delay for the specified wavelength and length.
         """
         vg = self.compute_group_velocity(wavelength)
         return length / vg
 
-    @ensure_units
+    @validate_units
     def compute_group_delay_dispersion(
         self,
-        wavelength: units.Quantity,
-        length: units.Quantity = 1 * units.meter,
-        delta: units.Quantity = 1 * units.nanometer,
-    ) -> units.Quantity:
+        wavelength: Length,
+        length: Length = 1 * ureg.meter,
+        delta: Length = 1 * ureg.nanometer,
+    ) -> AnyUnit:
         """Calculate ``d\u03c4_g/d\u03bb`` for a given propagation length.
 
         Parameters
         ----------
-        wavelength : units.Quantity
+        wavelength : Length
             Central wavelength for the computation, in metres.
-        length : units.Quantity, optional
+        length : Length, optional
             Propagation length (default is 1 metre).
-        delta : units.Quantity, optional
+        delta : Length, optional
             Wavelength step used for the numerical differentiation (default is
             1 nanometre).
 
         Returns
         -------
-        units.Quantity
+        AnyUnit
             Group delay dispersion evaluated at ``wavelength``.
         """
         gd_plus = self.compute_group_delay(wavelength + delta / 2, length)

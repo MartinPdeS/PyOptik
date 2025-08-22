@@ -25,6 +25,7 @@ requirements:
   run:
     - pint ~= 0.24
     - martinpdes::mpsplots
+    - martinpdes::typedunit
     - pyyaml ~=6.0
     - requests ~=2.31
     - matplotlib ~=3.8
@@ -37,7 +38,7 @@ about:
   summary: "A package for refractive index values."
   description: PyOptik is a library that helps the end-user to build it's own refractive index library.
   dev_url: https://github.com/MartinPdeS/PyOptik
-  doc_url: https://pyoptik.readthedocs.io
+  doc_url: https://martinpdes.github.io/PyOptik/
   license_file: LICENSE
   keywords:
     - optics

@@ -28,9 +28,11 @@ PyOptik: Optical Material Properties Made Simple
 
 .. code:: python
 
+   from TypedUnit import ureg
    from PyOptik import MaterialBank
+
    bk7 = MaterialBank.BK7
-   n = bk7.compute_refractive_index(550e-9)  # n ≈ 1.519
+   n = bk7.compute_refractive_index(550 * ureg.nanometer)  # n ≈ 1.519
 
 Key Features
 ************
@@ -128,6 +130,7 @@ Quick Start Guide
 
 .. code:: python
 
+   from TypedUnit import ureg
    from PyOptik import MaterialBank
    import numpy as np
 
@@ -135,11 +138,11 @@ Quick Start Guide
    bk7 = MaterialBank.BK7
 
    # Single wavelength (550 nm)
-   n = bk7.compute_refractive_index(550e-9)
+   n = bk7.compute_refractive_index(550 * ureg.nanometer)
    print(f"BK7 refractive index at 550nm: {n:.4f}")
 
    # Multiple wavelengths
-   wavelengths = np.linspace(400e-9, 800e-9, 100)
+   wavelengths = np.linspace(400, 800, 100) * ureg.nanometer
    n_values = bk7.compute_refractive_index(wavelengths)
 
 **Advanced Properties - Group Index & Velocity**
@@ -147,10 +150,10 @@ Quick Start Guide
 .. code:: python
 
    # Group index (important for pulse propagation)
-   n_g = bk7.compute_group_index(550e-9)
+   n_g = bk7.compute_group_index(550 * ureg.nanometer)
 
    # Group velocity (speed of pulse envelope)
-   v_g = bk7.compute_group_velocity(550e-9)
+   v_g = bk7.compute_group_velocity(550 * ureg.nanometer)
 
    print(f"Group index: {n_g:.4f}")
    print(f"Group velocity: {v_g:.2e} m/s")
@@ -163,7 +166,7 @@ Quick Start Guide
    bk7.plot()
 
    # Custom wavelength range
-   wavelengths = np.linspace(300e-9, 2000e-9, 500)
+   wavelengths = np.linspace(300, 2000, 500) * ureg.nanometer
    bk7.plot(wavelengths)
 
 Detailed Example - Material Analysis
@@ -178,7 +181,7 @@ Here's a comprehensive example showing PyOptik's capabilities:
    from PyOptik import MaterialBank
 
    # Define wavelength range (UV to Near-IR)
-   wavelengths = np.linspace(200e-9, 2500e-9, 1000)
+   wavelengths = np.linspace(200, 2500, 1000) * ureg.nanometer
 
    # Compare different materials
    materials = {

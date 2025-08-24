@@ -89,13 +89,13 @@ class SellmeierMaterial(BaseMaterial):
         self.reference = parsed_yaml.get('REFERENCES', None)
 
     @validate_units
-    def compute_refractive_index(self, wavelength: Length) -> RefractiveIndex:
+    def compute_refractive_index(self, wavelength: Length | float) -> RefractiveIndex:
         r"""
         Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).
 
         Parameters
         ----------
-        wavelength : Length
+        wavelength : Length | float
             The wavelength \u03bb in meters, can be a single float or a numpy array.
 
         Returns
@@ -108,6 +108,9 @@ class SellmeierMaterial(BaseMaterial):
         ValueError
             If the wavelength is outside the specified range or if an unsupported formula type is encountered.
         """
+        if not isinstance(wavelength, Length):
+            wavelength = wavelength * ureg.meter
+
         return_as_scalar = numpy.isscalar(wavelength.magnitude)
 
         wavelength = numpy.atleast_1d(wavelength)

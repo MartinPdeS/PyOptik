@@ -165,6 +165,19 @@ def test_material_string_representation():
     assert isinstance(material_repr, str)
     assert isinstance(material_print, str)
 
+def test_compute_refractive_index_single_wavelength():
+    """Test computation of refractive index for given wavelengths."""
+    material = Material('water')
+
+    # Test single wavelength input
+    wavelength = 500 * ureg.nanometer
+    refractive_index_0 = material.compute_refractive_index(wavelength)
+
+    refractive_index_1 = material.compute_refractive_index(wavelength.to('meter').magnitude)
+
+    assert np.isclose(refractive_index_0, refractive_index_1)
+
+
 
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

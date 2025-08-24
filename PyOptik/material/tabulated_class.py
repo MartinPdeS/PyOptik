@@ -6,7 +6,7 @@ from typing import Optional, Union
 import yaml
 import matplotlib.pyplot as plt
 from MPSPlots.styles import mps
-from TypedUnit import Length, RefractiveIndex, validate_units, ureg
+from TypedUnit import Length, validate_units, ureg
 
 from PyOptik.material.base_class import BaseMaterial
 from PyOptik.directories import tabulated_data_path
@@ -93,13 +93,13 @@ class TabulatedMaterial(BaseMaterial):
         self.reference = parsed_yaml.get('REFERENCES', None)
 
     @validate_units
-    def compute_refractive_index(self, wavelength: Length) -> numpy.ndarray:
+    def compute_refractive_index(self, wavelength: Length | float) -> numpy.ndarray:
         """
         Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).
 
         Parameters
         ----------
-        wavelength : Length
+        wavelength : Length | float
             Wavelength(s) in micrometers for which to interpolate n and k.
 
         Returns
@@ -112,6 +112,9 @@ class TabulatedMaterial(BaseMaterial):
         ValueError
             If the wavelength is outside the tabulated range.
         """
+        if not isinstance(wavelength, Length):
+            wavelength = wavelength * ureg.meter
+
         return_as_scalar = numpy.isscalar(wavelength.magnitude)
 
         wavelength = numpy.atleast_1d(wavelength)

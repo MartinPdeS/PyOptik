@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.367** total execution time for 1 file **from gallery/group_properties**:
+**00:00.382** total execution time for 1 file **from gallery/group_properties**:
 
 .. container::
 
@@ -33,5 +33,5 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_group_properties_plot_group_properties.py` (``plot_group_properties.py``)
-     - 00:00.367
+     - 00:00.382
      - 0.0

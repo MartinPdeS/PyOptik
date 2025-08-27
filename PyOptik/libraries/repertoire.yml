@@ -1,0 +1,59 @@
+sellmeier:
+  ZBLAN: https://refractiveindex.info/database/data/glass/misc/ZBLAN/nk/Gan.yml
+  fused_silica: https://refractiveindex.info/database/data/main/SiO2/nk/Malitson.yml
+  BAK1: https://refractiveindex.info/database/data/specs/schott/optical/N-BAK1.yml
+  BAF10: https://refractiveindex.info/database/data/specs/schott/optical/N-BAF10.yml
+  SF5: https://refractiveindex.info/database/data/specs/schott/optical/N-SF5.yml
+  SF10: https://refractiveindex.info/database/data/specs/schott/optical/SF10.yml
+  SF11: https://refractiveindex.info/database/data/specs/schott/optical/SF11.yml
+  LASF9: https://refractiveindex.info/database/data/specs/schott/optical/N-LASF9.yml
+  FK51A: https://refractiveindex.info/database/data/specs/schott/optical/N-FK51.yml
+  water: https://refractiveindex.info/database/data/main/H2O/nk/Daimon-19.0C.yml
+  polystyren: https://refractiveindex.info/database/data/organic/(C8H8)n%20-%20polystyrene/nk/Sultanova.yml
+  lithium_niobate: https://refractiveindex.info/database/data/main/LiNbO3/nk/Zelmon-o.yml
+  germanium: https://refractiveindex.info/database/data/main/Ge/nk/Icenogle.yml
+
+  BK7: https://refractiveindex.info/database/data/specs/schott/optical/P-BK7.yml
+  soda_lime_glass: https://refractiveindex.info/database/data/glass/misc/soda-lime/nk/Rubin-clear.yml
+  crown: https://refractiveindex.info/database/data/specs/schott/optical/K7.yml
+  flint: https://refractiveindex.info/database/data/specs/schott/optical/F2.yml
+  argon: https://refractiveindex.info/database/data/main/Ar/nk/Bideau-Mehu.yml
+  air: https://refractiveindex.info/database/data/other/mixed%20gases/air/nk/Ciddor.yml
+
+  ethanol: https://refractiveindex.info/database/data/organic/C2H6O%20-%20ethanol/nk/Rheims.yml
+  methanol: https://refractiveindex.info/database/data/organic/CH4O%20-%20methanol/nk/El-Kashef.yml
+  propanol: https://refractiveindex.info/database/data/organic/C3H8O%20-%20propanol/nk/Kozma.yml
+  ethylene: https://refractiveindex.info/database/data/organic/C2H4%20-%20ethylene/nk/Loria.yml
+  acetylene: https://refractiveindex.info/database/data/organic/C2H2%20-%20acetylene/nk/Loria.yml
+  methane: https://refractiveindex.info/database/data/organic/CH4%20-%20methane/nk/Loria.yml
+  ethane: https://refractiveindex.info/database/data/organic/C2H6%20-%20ethane/nk/Loria.yml
+  acetone: https://refractiveindex.info/database/data/organic/C3H6O%20-%20acetone/nk/Rheims.yml
+  glycerol: https://refractiveindex.info/database/data/organic/C3H8O3%20-%20glycerol/nk/Rheims.yml
+  pvc: https://refractiveindex.info/database/data/organic/(C2H4O)n%20-%20polyvinyl%20alcohol/nk/Schnepf.yml
+  polystyrene: https://refractiveindex.info/database/data/organic/(C8H8)n%20-%20polystyrene/nk/Sultanova.yml
+  polycarbonate: https://refractiveindex.info/database/data/organic/(C16H14O3)n%20-%20polycarbonate/nk/Sultanova.yml
+  cellulose: https://refractiveindex.info/database/data/organic/(C6H10O5)n%20-%20cellulose/nk/Sultanova.yml
+
+tabulated:
+  pva: https://refractiveindex.info/database/data/organic/(C2H3Cl)n%20-%20polyvinyl%20chloride/nk/Zhang.yml
+  polyetylene: https://refractiveindex.info/database/data/organic/(C2H4)n%20-%20polyethylene/nk/Smith.yml
+  silicon: https://refractiveindex.info/database/data/main/Si/nk/Aspnes.yml
+  silver: https://refractiveindex.info/database/data/main/Ag/nk/Johnson.yml
+  aluminium: https://refractiveindex.info/database/data/main/Al/nk/Rakic.yml
+  gold: https://refractiveindex.info/database/data/main/Au/nk/Johnson.yml
+  calcium: https://refractiveindex.info/database/data/main/Ca/nk/Mathewson.yml
+  copper: https://refractiveindex.info/database/data/main/Cu/nk/Johnson.yml
+  iron: https://refractiveindex.info/database/data/main/Ca/nk/Mathewson.yml
+  sodium: https://refractiveindex.info/database/data/main/Na/nk/Smith.yml
+  nickel: https://refractiveindex.info/database/data/main/Ni/nk/Johnson.yml
+  zinc: https://refractiveindex.info/database/data/main/Zn/nk/Werner.yml
+  chromium: https://refractiveindex.info/database/data/main/Cr/nk/Johnson.yml
+  titanium: https://refractiveindex.info/database/data/main/Ti/nk/Johnson.yml
+  tungsten: https://refractiveindex.info/database/data/main/W/nk/Werner.yml
+  lead: https://refractiveindex.info/database/data/main/Pb/nk/Werner.yml
+  bismuth: https://refractiveindex.info/database/data/main/Bi/nk/Werner.yml
+  magnesium: https://refractiveindex.info/database/data/main/Mg/nk/Hagemann.yml
+  paladium: https://refractiveindex.info/database/data/main/Pd/nk/Johnson.yml
+  rhodium: https://refractiveindex.info/database/data/main/Rh/nk/Arndt.yml
+  vanadium: https://refractiveindex.info/database/data/main/V/nk/Johnson.yml
+  tantalum: https://refractiveindex.info/database/data/main/Ta/nk/Werner.yml

@@ -1,0 +1,9 @@
+COMMENTS: Room temperature
+DATA:
+- data: '0.1879 0.94 1.337
+
+    0.1916 0.95 1.388
+
+    0.1953 0.97 1.44'
+  type: tabulated nk
+REFERENCES: Example of tabulated test file

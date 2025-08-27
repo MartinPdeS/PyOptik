@@ -1,0 +1,22 @@
+sellmeier:
+  - ZBLAN
+  - fused_silica
+  - BAK1
+  - BAF10
+  - SF5
+  - SF10
+  - SF11
+  - LASF9
+  - FK51A
+  - water
+  - polystyren
+  - lithium_niobate
+  - germanium
+  - soda_lime_glass
+  - crown
+  - flint
+  - BK7
+
+tabulated:
+
+  - silicon

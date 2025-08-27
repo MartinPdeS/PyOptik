@@ -1,0 +1,30 @@
+sellmeier:
+  - ZBLAN
+  - fused_silica
+  - BAK1
+  - SF5
+  - water
+  - polystyren
+  - lithium_niobate
+  - germanium
+  - soda_lime_glass
+  - crown
+  - flint
+  - argon
+  - air
+  - water
+  - acetone
+  - BK7
+
+tabulated:
+  - silicon
+  - silver
+  - aluminium
+  - gold
+  - calcium
+  - copper
+  - iron
+  - sodium
+  - nickel
+  - zinc
+  - polyetylene

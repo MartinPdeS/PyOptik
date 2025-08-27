@@ -1,0 +1,66 @@
+package:
+  name: pyoptik
+  version: {{ GIT_DESCRIBE_TAG }}
+
+source:
+  path: ../
+  git_url: https://github.com/MartinPdeS/PyOptik.git
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+channels:
+  - conda-forge
+  - martinpdes
+
+requirements:
+  host:
+    - python {{ PY_VER }}*
+    - setuptools >=40.8.0
+    - wheel
+    - setuptools-scm >=8.0
+    - pip
+  run:
+    - pint ~= 0.24
+    - martinpdes::mpsplots
+    - martinpdes::typedunit
+    - pyyaml ~=6.0
+    - requests ~=2.31
+    - matplotlib ~=3.8
+    - numpy
+    - tabulate ~=0.9
+
+about:
+  home: https://github.com/MartinPdeS/PyOptik
+  license: MIT
+  summary: "A package for refractive index values."
+  description: PyOptik is a library that helps the end-user to build it's own refractive index library.
+  dev_url: https://github.com/MartinPdeS/PyOptik
+  doc_url: https://martinpdes.github.io/PyOptik/
+  license_file: LICENSE
+  keywords:
+    - optics
+    - refractive index
+    - material
+
+test:
+  imports:
+    - PyOptik
+  requires:
+    - python {{ PY_VER }}*
+    - pytest>=0.6
+    - pytest-cov>=2.0
+    - pytest-json-report==1.5.0
+    - coverage==7.6.1
+  commands:
+    - python -m pytest
+  source_files:
+    - tests/test_sellmeier.py
+    - tests/test_tabulated.py
+    - tests/test_usual_materials.py
+
+extra:
+  recipe-maintainers:
+    - MartinPdeS

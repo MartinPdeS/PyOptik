@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=40.8.0", "wheel", "setuptools_scm[toml]>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyOptik"
+dynamic = ["version"]
+description = "A package for refractive index values."
+license = {file = "LICENSE"}
+readme = "README.rst"
+requires-python = ">=3.10"
+authors = [{ name="Martin Poinsinet de Sivry-Houle", email="martin.poinsinet.de.sivry@gmail.com"}]
+classifiers = [
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Development Status :: 4 - Beta',
+    'Topic :: Scientific/Engineering :: Physics',
+    'Intended Audience :: Science/Research',
+]
+
+keywords = ["refractive index", "optics"]
+
+dependencies = [
+    "pint ~=0.24",
+    "numpy",
+    "matplotlib ~=3.8",
+    "requests ~=2.31",
+    "pyyaml ~=6.0",
+    "MPSPlots >=1.6",
+    "tabulate ~=0.9",
+    "TypedUnit"
+]
+
+[tool.setuptools]
+packages = {find = {where = ["."], include = ["PyOptik*"]}}
+include-package-data = true
+
+
+[tool.setuptools_scm]
+write_to = "PyOptik/_version.py"
+version_scheme = "only-version"
+local_scheme = "no-local-version"
+
+[project.optional-dependencies]
+testing = [
+    "pytest >=7.4,<9.0",
+    "pytest-cov >=2,<6",
+    "pytest-json-report ~=1.5",
+    "coverage ~=7.6"
+]
+
+
+documentation = [
+    "numpydoc ==1.6.0",
+    "sphinx >=5.1.1",
+    "sphinx-gallery ==0.15.0",
+    "sphinx-rtd-theme ==2.0.0",
+    "pydata-sphinx-theme ==0.14.1",
+]
+
+dev = [
+    "flake8 ==7.1.1",
+]
+
+
+[tool.pytest.ini_options]
+python_functions = "test*"
+minversion = "6.0"
+xfail_strict = true
+log_cli_level = "INFO"
+testpaths = [
+    "tests/test_sellmeier.py",
+    "tests/test_tabulated.py",
+    "tests/test_usual_materials.py",
+    "tests/test_utils.py",
+    "tests/test_group_properties.py",
+]
+addopts = [
+    '-v',
+    '-rA',
+    '-rw',
+    '-Werror',
+    '--cov=PyOptik',
+    '--cov-report=html',
+    "--cov-report=term"
+]
+
+[tool.coverage.run]
+source = ['PyOptik']
+omit = [
+    '*/__init__.py',
+    '*/_version.py',
+    '*/directories.py',
+]
+branch = true
+relative_files = true

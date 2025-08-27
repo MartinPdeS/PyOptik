@@ -36,9 +36,9 @@ material for analysis.
 
     Matches:
     - fused_silica
-    - magnesium
     - silver
     - silicon
+    - magnesium
 
     Refractive index at 1 µm:
     1.450417409406875
@@ -69,7 +69,7 @@ material for analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.005 seconds)
+   **Total running time of the script:** (0 minutes 0.004 seconds)
 
 
 .. _sphx_glr_download_gallery_utils_search_materials.py:

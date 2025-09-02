@@ -24,7 +24,7 @@ requirements:
     - pip
   run:
     - pint ~= 0.24
-    - martinpdes::mpsplots
+    - martinpdes::mpsplots >=1.7.1
     - martinpdes::typedunit
     - pyyaml ~=6.0
     - requests ~=2.31

@@ -2,10 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import numpy
-from typing import Optional, Union
 import yaml
-import matplotlib.pyplot as plt
-from MPSPlots.styles import mps
+from MPSPlots import helper
 from TypedUnit import Length, validate_units, ureg
 
 from PyOptik.material.base_class import BaseMaterial
@@ -128,7 +126,8 @@ class TabulatedMaterial(BaseMaterial):
 
         return index[0] if return_as_scalar else index
 
-    def plot(self, samples: int = 100) -> None:
+    @helper.pre_plot(nrows=1, ncols=1)
+    def plot(self, axes, samples: int = 100) -> None:
         """
         Plots the tabulated refractive index (n) and absorption (k) as a function of wavelength.
 
@@ -150,18 +149,15 @@ class TabulatedMaterial(BaseMaterial):
 
         n_values, k_values = self.compute_refractive_index(wavelength).real, self.compute_refractive_index(wavelength).imag
 
-        with plt.style.context(mps):
-            _, ax1 = plt.subplots()
-
-        ax1.set(
+        axes.set(
             title=f"Refractive Index and Absorption vs. Wavelength [{self.filename}]",
             xlabel='Wavelength [µm]',
             ylabel='Refractive Index (n)',
         )
 
-        ax1.plot(wavelength.to(ureg.micrometer).magnitude, n_values, 'o-', color='tab:blue', label='n')
+        axes.plot(wavelength.to(ureg.micrometer).magnitude, n_values, 'o-', color='tab:blue', label='n')
 
-        ax2 = ax1.twinx()
+        ax2 = axes.twinx()
 
         ax2.set(
             xlabel='Wavelength [µm]',
@@ -169,8 +165,6 @@ class TabulatedMaterial(BaseMaterial):
         )
 
         ax2.plot(wavelength.to(ureg.micrometer).magnitude, k_values, 'o-', color='tab:red', label='k')
-
-        plt.show()
 
     def print(self) -> str:
         """

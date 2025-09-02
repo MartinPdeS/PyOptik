@@ -4,8 +4,7 @@
 import yaml
 import numpy
 import itertools
-from MPSPlots.styles import mps
-import matplotlib.pyplot as plt
+from MPSPlots import helper
 from TypedUnit import Length, RefractiveIndex, validate_units, ureg
 
 from PyOptik.directories import sellmeier_data_path
@@ -148,7 +147,8 @@ class SellmeierMaterial(BaseMaterial):
 
         return n[0] if return_as_scalar else n
 
-    def plot(self, samples: int = 100) -> None:
+    @helper.pre_plot(nrows=1, ncols=1)
+    def plot(self, axes, samples: int = 100) -> None:
         """
         Plots the refractive index as a function of wavelength over a specified range.
 
@@ -171,18 +171,13 @@ class SellmeierMaterial(BaseMaterial):
         # Calculate the refractive index over the wavelength range
         refractive_index = self.compute_refractive_index(wavelength)
 
-        with plt.style.context(mps):
-            fig, ax = plt.subplots()
-
-        ax.set(
+        axes.set(
             ylabel='Refractive Index',
             xlabel=r'Wavelength [$\mu$m]',
             title=f"Refractive Index vs. Wavelength: [{self.filename}]"
         )
-        ax.plot(wavelength.to(ureg.micrometer).magnitude, refractive_index.real, linewidth=2, label='Real Part')
-        ax.legend()
-
-        plt.show()
+        axes.plot(wavelength.to(ureg.micrometer).magnitude, refractive_index.real, linewidth=2, label='Real Part')
+        axes.legend()
 
     def print(self) -> str:
         """

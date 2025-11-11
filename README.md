@@ -2,16 +2,16 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
-|------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
-| PyOptik/\_\_main\_\_.py              |       17 |       17 |        6 |        0 |      0% |      1-37 |
-| PyOptik/material/base\_class.py      |       51 |       12 |       14 |        2 |     69% |16, 29, 40, 56->exit, 80-89 |
-| PyOptik/material/sellmeier\_class.py |       75 |        1 |       24 |        1 |     98% |        85 |
-| PyOptik/material/tabulated\_class.py |       57 |        4 |        4 |        2 |     90% |72, 85-86, 114 |
-| PyOptik/material\_bank.py            |      161 |       13 |       60 |       10 |     87% |130, 229-239, 313->316, 318->exit, 387-389, 397->403, 403->391, 451->455, 457->461, 461->465, 510->514 |
-| PyOptik/material\_type.py            |        4 |        0 |        0 |        0 |    100% |           |
-| PyOptik/utils.py                     |       44 |       10 |       10 |        2 |     74% |58, 72->exit, 86-93, 95-96 |
-|                            **TOTAL** |  **409** |   **57** |  **118** |   **17** | **82%** |           |
+| Name                                 |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
+|------------------------------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
+| PyOptik/material/base\_class.py      |       51 |        5 |       14 |        4 |     86.15% |13, 16, 29, 40, 56->exit, 83 |
+| PyOptik/material/sellmeier\_class.py |       75 |        1 |       24 |        1 |     97.98% |        85 |
+| PyOptik/material/tabulated\_class.py |       57 |        4 |        4 |        2 |     90.16% |72, 85-86, 114 |
+| PyOptik/material\_bank.py            |      161 |        5 |       60 |       11 |     92.76% |232, 236, 313->316, 318->exit, 387-389, 397->403, 403->391, 451->455, 457->461, 461->465, 510->514 |
+| PyOptik/utils.py                     |       44 |        1 |       10 |        2 |     94.44% |58, 72->exit |
+|                            **TOTAL** |  **392** |   **16** |  **112** |   **20** | **92.86%** |           |
+
+1 file skipped due to complete coverage.
 
 
 ## Setup coverage badge

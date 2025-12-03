@@ -53,7 +53,7 @@ class TabulatedMaterial(BaseMaterial):
         return self.__str__()
 
     def __str__(self) -> str:
-        return self.filename
+        return self.filename + '[Tabulated]'
 
     def _load_tabulated_data(self) -> None:
         """

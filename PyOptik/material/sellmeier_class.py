@@ -51,7 +51,7 @@ class SellmeierMaterial(BaseMaterial):
         return self.__str__()
 
     def __str__(self) -> str:
-        return self.filename
+        return self.filename + '[Sellmeier]'
 
     def _load_coefficients(self) -> None:
         """

@@ -186,6 +186,11 @@ class _MaterialBank():
         """
         return self.sellmeier + self.tabulated
 
+    def __iter__(self):
+        """Iterator over all available material names."""
+        for material in self.all:
+            yield material
+
     def print_available(self) -> None:
         """Display all available materials in a table.
 
@@ -521,3 +526,4 @@ class _MaterialBank():
 
 
 MaterialBank = _MaterialBank()
+

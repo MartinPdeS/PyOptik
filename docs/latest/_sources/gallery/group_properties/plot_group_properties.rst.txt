@@ -92,7 +92,7 @@ group velocity of fused silica using :mod:`PyOptik`.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.372 seconds)
+   **Total running time of the script:** (0 minutes 0.375 seconds)
 
 
 .. _sphx_glr_download_gallery_group_properties_plot_group_properties.py:

@@ -8,5 +8,5 @@
     :hidden:
 
     code.rst
-    gallery/index.rst
+    examples.rst
     references.rst

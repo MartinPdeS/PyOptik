@@ -4,11 +4,11 @@
 
 | Name                                 |    Stmts |     Miss |   Branch |   BrPart |      Cover |   Missing |
 |------------------------------------- | -------: | -------: | -------: | -------: | ---------: | --------: |
-| PyOptik/material/base\_class.py      |       51 |        5 |       14 |        4 |     86.15% |13, 16, 29, 40, 56->exit, 83 |
+| PyOptik/material/base\_class.py      |       51 |        5 |       14 |        4 |     86.15% |13, 16, 29, 40, 56-\>exit, 83 |
 | PyOptik/material/sellmeier\_class.py |       75 |        1 |       24 |        1 |     97.98% |        85 |
 | PyOptik/material/tabulated\_class.py |       57 |        4 |        4 |        2 |     90.16% |72, 85-86, 114 |
-| PyOptik/material\_bank.py            |      164 |        7 |       62 |       11 |     91.15% |191-192, 237, 241, 318->321, 323->exit, 392-394, 402->408, 408->396, 456->460, 462->466, 466->470, 515->519 |
-| PyOptik/utils.py                     |       44 |        1 |       10 |        2 |     94.44% |58, 72->exit |
+| PyOptik/material\_bank.py            |      164 |        7 |       62 |       11 |     91.15% |191-192, 237, 241, 318-\>321, 323-\>exit, 392-394, 402-\>408, 408-\>396, 456-\>460, 462-\>466, 466-\>470, 515-\>519 |
+| PyOptik/utils.py                     |       44 |        1 |       10 |        2 |     94.44% |58, 72-\>exit |
 | **TOTAL**                            |  **395** |   **18** |  **114** |   **20** | **92.14%** |           |
 
 1 file skipped due to complete coverage.

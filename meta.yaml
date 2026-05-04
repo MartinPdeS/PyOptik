@@ -1,9 +1,8 @@
 package:
   name: pyoptik
-  version: {{ GIT_DESCRIBE_TAG }}
+  version: {{ GIT_DESCRIBE_TAG | replace("v", "") }}
 
 source:
-  path: ../
   git_url: https://github.com/MartinPdeS/PyOptik.git
 
 build:

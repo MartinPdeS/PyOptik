@@ -21,6 +21,9 @@ classifiers = [
 
 keywords = ["refractive index", "optics"]
 
+[project.scripts]
+pyoptik = "PyOptik.__main__:main"
+
 dependencies = [
     "pint ~=0.24",
     "numpy",
@@ -62,4 +65,3 @@ documentation = [
 dev = [
     "flake8 ==7.1.1",
 ]
-

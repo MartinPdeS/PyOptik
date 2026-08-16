@@ -59,3 +59,29 @@ def test_catalog_from_upstream_uses_local_cache(monkeypatch, tmp_path):
     monkeypatch.setattr("PyOptik.catalog.download_yml_file", fake_download)
     catalog = MaterialCatalog.from_upstream(data_root=tmp_path / "rii")
     assert catalog.shelves() == ["main"]
+
+
+def test_download_all_writes_resumable_manifest(monkeypatch, tmp_path):
+    catalog_file = tmp_path / "catalog.yml"
+    catalog_file.write_text(
+        "- SHELF: main\n  content:\n    - BOOK: Si\n      content:\n        - PAGE: Test\n          data: main/Si/nk/Test.yml\n"
+    )
+    root = tmp_path / "rii"
+
+    def fake_download(**kwargs):
+        destination = kwargs["destination"]
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text("DATA: []\n")
+
+    monkeypatch.setattr("PyOptik.catalog.download_yml_file", fake_download)
+    progress = []
+    catalog = MaterialCatalog(catalog_file, root)
+    catalog.download_all(progress=lambda *args: progress.append(args))
+
+    manifest = yaml.safe_load((root / "manifest.json").read_text())
+    assert manifest["pages"]["main/Si/Test"]["status"] == "downloaded"
+    assert len(progress) == 1
+    assert progress[0][3] == "downloaded"
+
+    catalog.download_all(progress=lambda *args: progress.append(args))
+    assert progress[-1][3] == "cached"

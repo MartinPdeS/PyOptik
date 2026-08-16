@@ -6,6 +6,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Optional
 from urllib.parse import unquote, urlparse
+from datetime import datetime, timezone
+import hashlib
+import json
 import logging
 
 import yaml
@@ -228,6 +231,43 @@ class MaterialCatalog:
         """
         return sorted({page.id.book for page in self.pages(shelf=shelf)})
 
+    @property
+    def manifest_path(self) -> Path:
+        """Return the path of the resumable download manifest."""
+        return self.data_root / "manifest.json"
+
+    def _read_manifest(self) -> dict:
+        """Read the download manifest, tolerating a missing or invalid file."""
+        if not self.manifest_path.exists():
+            return {"catalog": {}, "pages": {}}
+        try:
+            with self.manifest_path.open("r") as stream:
+                manifest = json.load(stream)
+            manifest.setdefault("catalog", {})
+            manifest.setdefault("pages", {})
+            return manifest
+        except (OSError, json.JSONDecodeError) as error:
+            logger.warning("Ignoring invalid download manifest %s: %s", self.manifest_path, error)
+            return {"catalog": {}, "pages": {}}
+
+    def _write_manifest(self, manifest: dict) -> None:
+        """Atomically write the download manifest after a page completes."""
+        self.data_root.mkdir(parents=True, exist_ok=True)
+        temporary = self.manifest_path.with_suffix(".json.tmp")
+        with temporary.open("w") as stream:
+            json.dump(manifest, stream, indent=2, sort_keys=True)
+            stream.write("\n")
+        temporary.replace(self.manifest_path)
+
+    @staticmethod
+    def _sha256(path: Path) -> str:
+        """Return the SHA-256 digest of a local file."""
+        digest = hashlib.sha256()
+        with path.open("rb") as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(block)
+        return digest.hexdigest()
+
     def get(self, identifier: MaterialId | str, book: Optional[str] = None, page: Optional[str] = None) -> MaterialPage:
         """Get a page by ``MaterialId``, canonical path, or components."""
         if isinstance(identifier, MaterialId):
@@ -246,22 +286,105 @@ class MaterialCatalog:
         except KeyError as error:
             raise KeyError(f"Unknown material page: {key}") from error
 
-    def download(self, shelf: Optional[str] = None, book: Optional[str] = None) -> list[MaterialPage]:
-        """Download all matching pages into a hierarchy-preserving cache."""
+    def download(
+        self,
+        shelf: Optional[str] = None,
+        book: Optional[str] = None,
+        *,
+        force: bool = False,
+        continue_on_error: bool = False,
+        progress=None,
+    ) -> list[MaterialPage]:
+        """Download matching pages into a resumable hierarchical cache.
+
+        Parameters
+        ----------
+        shelf, book : str, optional
+            Optional hierarchy filters.
+        force : bool, optional
+            Re-download files even when a local copy already exists.
+        continue_on_error : bool, optional
+            Record failures and continue with remaining pages. If false, the
+            first download error is raised.
+        progress : callable, optional
+            Callback receiving ``(completed, total, page, status)`` after each
+            page. Status is one of ``"downloaded"``, ``"cached"``,
+            ``"skipped"``, or ``"error"``.
+
+        Returns
+        -------
+        list of MaterialPage
+            Pages selected by the filters.
+        """
         selected = self.pages(shelf=shelf, book=book)
-        for material_page in selected:
+        manifest = self._read_manifest()
+        total = len(selected)
+        for number, material_page in enumerate(selected, start=1):
+            status = "skipped"
             if not material_page.source_url or not material_page.data_path:
                 logger.warning("No download URL for material page %s", material_page.id)
+                if progress:
+                    progress(number, total, material_page, status)
                 continue
             destination = self.data_root / material_page.data_path
-            download_yml_file(
-                url=material_page.source_url,
-                filename=destination.stem,
-                save_location=MaterialType.SELLMEIER,
-                destination=destination,
-            )
-            logger.info("Downloaded material page %s", material_page.id)
+            try:
+                was_cached = destination.exists() and not force
+                download_yml_file(
+                    url=material_page.source_url,
+                    filename=destination.stem,
+                    save_location=MaterialType.SELLMEIER,
+                    destination=destination,
+                    overwrite=force,
+                )
+                status = "cached" if was_cached else "downloaded"
+                manifest["pages"][material_page.id.key] = {
+                    "source_url": material_page.source_url,
+                    "local_path": str(destination.relative_to(self.data_root)),
+                    "status": status,
+                    "sha256": self._sha256(destination),
+                    "updated_at": datetime.now(timezone.utc).isoformat(),
+                }
+                logger.info("[%s/%s] %s: %s", number, total, status, material_page.id)
+            except Exception as error:
+                status = "error"
+                manifest["pages"][material_page.id.key] = {
+                    "source_url": material_page.source_url,
+                    "local_path": str(destination.relative_to(self.data_root)),
+                    "status": status,
+                    "error": str(error),
+                    "updated_at": datetime.now(timezone.utc).isoformat(),
+                }
+                logger.error("[%s/%s] failed: %s (%s)", number, total, material_page.id, error)
+                self._write_manifest(manifest)
+                if not continue_on_error:
+                    raise
+            self._write_manifest(manifest)
+            if progress:
+                progress(number, total, material_page, status)
         return selected
+
+    def download_all(self, *, force: bool = False, continue_on_error: bool = True, progress=None) -> list[MaterialPage]:
+        """Download every page in the catalog.
+
+        Parameters
+        ----------
+        force : bool, optional
+            Re-download all files instead of using local copies.
+        continue_on_error : bool, optional
+            Continue after failed pages and record failures in the manifest.
+        progress : callable, optional
+            Callback receiving ``(completed, total, page, status)``.
+
+        Returns
+        -------
+        list of MaterialPage
+            All catalog pages.
+        """
+        return self.download(
+            force=force,
+            continue_on_error=continue_on_error,
+            progress=progress,
+        )
 
     def __iter__(self) -> Iterable[MaterialPage]:
         """Iterate over catalog pages in canonical identifier order."""

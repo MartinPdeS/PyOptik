@@ -111,6 +111,21 @@ class _MaterialBank():
         """
         return self.catalog.download(shelf=shelf, book=book)
 
+    def download_all(self, **kwargs):
+        """Download every page in the active upstream catalog.
+
+        Parameters
+        ----------
+        **kwargs
+            Keyword arguments forwarded to :meth:`MaterialCatalog.download_all`.
+
+        Returns
+        -------
+        list of MaterialPage
+            All pages in the active catalog.
+        """
+        return self.catalog.download_all(**kwargs)
+
     def update_catalog(self, data_root=None):
         """Download and activate the current upstream catalog index.
 

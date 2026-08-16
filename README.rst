@@ -197,6 +197,16 @@ Download a complete source collection, such as an optical-glass book:
        book="SCHOTT-optical",
    )
 
+Download the complete ``n,k`` catalog with resumable progress tracking:
+
+.. code-block:: python
+
+   catalog.download_all()
+
+Each page is stored once and recorded in ``manifest.json`` with its source URL,
+local path, status, timestamp, and SHA-256 checksum. Re-running the command
+uses cached files, so interrupted downloads can resume safely.
+
 Access a page by its canonical identifier and load its material model:
 
 .. code-block:: python
@@ -245,6 +255,17 @@ The command-line interface provides the same collection download workflow:
    python -m PyOptik --list-libraries
    python -m PyOptik classics
    python -m PyOptik metals --verbose
+   python -m PyOptik download-all --data-root ./refractiveindex-data
+
+After installation, the equivalent console command is ``pyoptik
+download-all --data-root ./refractiveindex-data``.
+
+The ``download-all`` command first refreshes the upstream catalog, then
+downloads every material page while preserving its ``shelf/book/page``
+hierarchy. Existing pages are reused by default, so the operation is
+resumable; pass ``--force`` to refresh them or ``--fail-fast`` to stop after
+the first failed page. Progress and failures are reported through the normal
+PyOptik logging system, with ``--verbose`` enabling detailed diagnostics.
 
 Custom materials
 ----------------

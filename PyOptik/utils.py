@@ -22,6 +22,7 @@ def download_yml_file(
     retry_delay: float = 2.0,
     backoff_factor: float = 2.0,
     destination: Path | None = None,
+    overwrite: bool = False,
 ) -> None:
     """
     Download a YAML material file from the given URL and save it locally.
@@ -45,6 +46,8 @@ def download_yml_file(
         Multiplier applied to delay after each failed attempt (default is 2.0).
     destination : pathlib.Path or str, optional
         Explicit output path for hierarchical catalog downloads.
+    overwrite : bool, optional
+        Replace an existing file instead of resuming from the local copy.
 
     Raises
     ------
@@ -64,7 +67,7 @@ def download_yml_file(
         raise ValueError(f"Invalid save_location: {save_location}. Must be SELLMEIER or TABULATED.")
 
     # Skip if already downloaded
-    if file_path.exists():
+    if file_path.exists() and not overwrite:
         logger.info("File already exists: %s. Skipping download.", file_path)
         return
 

@@ -21,9 +21,6 @@ classifiers = [
 
 keywords = ["refractive index", "optics"]
 
-[project.scripts]
-pyoptik = "PyOptik.__main__:main"
-
 dependencies = [
     "pint ~=0.24",
     "numpy",
@@ -34,6 +31,9 @@ dependencies = [
     "tabulate ~=0.9",
     "TypedUnit"
 ]
+
+[project.scripts]
+pyoptik = "PyOptik.__main__:main"
 
 [tool.setuptools]
 packages = {find = {where = ["."], include = ["PyOptik*"]}}

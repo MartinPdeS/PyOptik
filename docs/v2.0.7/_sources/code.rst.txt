@@ -27,7 +27,25 @@ The `MaterialBank` is the main interface for the user.
     :undoc-members:
 
 
-.. .. _sellmeier_material:
+Catalog and Upstream Hierarchy
+------------------------------
+
+PyOptik preserves the upstream ``shelf / book / page`` organization used by
+RefractiveIndex.INFO. The catalog API is useful when source provenance matters
+or when downloading a complete material collection.
+
+.. autoclass:: PyOptik.MaterialId
+    :members:
+
+.. autoclass:: PyOptik.MaterialPage
+    :members:
+
+.. autoclass:: PyOptik.MaterialCatalog
+    :members:
+
+
+Material Models
+---------------
 
 
 SellmeierMaterial
@@ -54,6 +72,22 @@ The `TabulatedMaterial` class extends the `Material` base class to handle materi
     :show-inheritance:
     :undoc-members:
 
+
+Base Utilities
+--------------
+
+.. autoclass:: PyOptik.material.base_class.BaseMaterial
+    :members:
+    :member-order: bysource
+    :show-inheritance:
+
+
+Enumerations
+------------
+
+.. autoclass:: PyOptik.MaterialType
+    :members:
+
 Utility Functions
 -----------------
 
@@ -69,4 +103,3 @@ To further enhance your understanding of `PyOptik`, we have integrated practical
 
 .. note::
     You can find example usage of the `SellmeierMaterial` and `TabulatedMaterial` classes, as well as utility functions, in the "Examples" section of the documentation. These examples are automatically generated from the source code and provide hands-on insight into the practical applications of the library.
-

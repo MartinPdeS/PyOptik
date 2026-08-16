@@ -16,6 +16,23 @@ The examples provided here aim to help you leverage these utilities effectively 
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to locate materials using patterns with search and then load a material ...">
+
+.. only:: html
+
+  .. image:: /gallery/utils/images/thumb/sphx_glr_search_materials_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_gallery_utils_search_materials.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Searching the MaterialBank</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to create a custom Sellmeier YAML file using the create_sellmeier...">
 
 .. only:: html
@@ -50,32 +67,15 @@ The examples provided here aim to help you leverage these utilities effectively 
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to locate materials using patterns with search and then load a material ...">
-
-.. only:: html
-
-  .. image:: /gallery/utils/images/thumb/sphx_glr_search_materials_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_gallery_utils_search_materials.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Searching the MaterialBank</div>
-    </div>
-
-
-.. raw:: html
-
     </div>
 
 
 .. toctree::
    :hidden:
 
+   /gallery/utils/search_materials
    /gallery/utils/create_sellmeier_file
    /gallery/utils/create_tabulated_file
-   /gallery/utils/search_materials
 
 
 

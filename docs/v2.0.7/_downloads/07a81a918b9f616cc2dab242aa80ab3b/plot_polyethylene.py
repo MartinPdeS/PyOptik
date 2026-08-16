@@ -1,6 +1,6 @@
 """
 Plot the Refractive Index of Optical Material: Polyethylene
-=========================================================
+===========================================================
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of polyethylene over a specified range of wavelengths.
 

@@ -445,11 +445,14 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tabulate</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabulate</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">libraries_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">package_data_path</span><span class="p">,</span> <span class="n">libraries_path</span><span class="p">,</span> <span class="n">material_paths</span><span class="p">,</span> <span class="n">user_data_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.sellmeier_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">SellmeierMaterial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.tabulated_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_yml_file</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.catalog</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span><span class="p">,</span> <span class="n">MaterialId</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="_MaterialBank">
@@ -493,6 +496,74 @@ document.write(`
     <span class="n">use_tabulated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">use_sellmeier</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize an empty material-instance cache and catalog.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">MaterialId</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a canonical shelf/book/page catalog entry.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        identifier : MaterialId or str</span>
+<span class="sd">            A canonical identifier, alias, or shelf name.</span>
+<span class="sd">        book, page : str, optional</span>
+<span class="sd">            Book and page components when ``identifier`` is a shelf name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        MaterialPage</span>
+<span class="sd">            Matching catalog page.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="n">book</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List canonical material pages.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        shelf, book : str, optional</span>
+<span class="sd">            Optional hierarchy filters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of MaterialPage</span>
+<span class="sd">            Matching pages sorted by canonical identifier.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="n">book</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">download_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download catalog pages while preserving their upstream hierarchy.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        shelf, book : str, optional</span>
+<span class="sd">            Optional hierarchy filters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of MaterialPage</span>
+<span class="sd">            Pages selected for download.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="n">book</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download and activate the current upstream catalog index.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_root : pathlib.Path or str, optional</span>
+<span class="sd">            Root directory for the catalog and downloaded data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        MaterialCatalog</span>
+<span class="sd">            The activated catalog instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_upstream</span><span class="p">(</span><span class="n">data_root</span><span class="o">=</span><span class="n">data_root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">SellmeierMaterial</span><span class="p">,</span> <span class="n">TabulatedMaterial</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a material by name dynamically at the class level, respecting filter options.</span>
@@ -514,13 +585,13 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Apply the filtering logic based on class-level attributes</span>
         <span class="k">if</span> <span class="n">material_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sellmeier</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">SellmeierMaterial</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">material_name</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">material_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabulated</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">TabulatedMaterial</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">material_name</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">)</span>
 
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">material_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">SellmeierMaterial</span><span class="p">,</span> <span class="n">TabulatedMaterial</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">MaterialType</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">SellmeierMaterial</span><span class="p">,</span> <span class="n">TabulatedMaterial</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a material by name, respecting filter options.</span>
 
@@ -539,7 +610,25 @@ document.write(`
 <span class="sd">        AttributeError</span>
 <span class="sd">            If the material is not found in the filtered or unfiltered lists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">material_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">kind</span> <span class="o">=</span> <span class="n">MaterialType</span><span class="p">(</span><span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;kind must be &#39;sellmeier&#39; or &#39;tabulated&#39;.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">kind</span><span class="p">]</span> <span class="k">if</span> <span class="n">kind</span> <span class="k">else</span> <span class="p">[</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">material_type</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sellmeier</span> <span class="k">if</span> <span class="n">material_type</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabulated</span>
+            <span class="k">if</span> <span class="n">material_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">material_type</span><span class="p">,</span> <span class="n">material_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="n">SellmeierMaterial</span> <span class="k">if</span> <span class="n">material_type</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span> <span class="k">else</span> <span class="n">TabulatedMaterial</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="si">%s</span><span class="s2"> material &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">material_type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">material_name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">material_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Using cached </span><span class="si">%s</span><span class="s2"> material &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">material_type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">material_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material &#39;</span><span class="si">{</span><span class="n">material_name</span><span class="si">}</span><span class="s2">&#39; was not found.&quot;</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_filter</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">use_tabulated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">use_sellmeier</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -568,6 +657,7 @@ document.write(`
 
         <span class="bp">cls</span><span class="o">.</span><span class="n">use_tabulated</span> <span class="o">=</span> <span class="n">use_tabulated</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">use_sellmeier</span> <span class="o">=</span> <span class="n">use_sellmeier</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Material filters set: tabulated=</span><span class="si">%s</span><span class="s2">, sellmeier=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">use_tabulated</span><span class="p">,</span> <span class="n">use_sellmeier</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_list_materials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_type</span><span class="p">:</span> <span class="n">MaterialType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return available material names for a given type.</span>
@@ -582,10 +672,15 @@ document.write(`
 <span class="sd">        List[str]</span>
 <span class="sd">            A list of material names of the specified type.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">directory</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="n">material_type</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">return</span> <span class="p">[</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="n">f</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">)</span>
-        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">data_path</span> <span class="o">!=</span> <span class="n">package_data_path</span><span class="p">:</span>
+            <span class="n">directories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_path</span> <span class="o">/</span> <span class="n">material_type</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">directories</span> <span class="o">=</span> <span class="p">[</span><span class="n">directory</span> <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">material_paths</span><span class="p">(</span><span class="n">material_type</span><span class="p">)]</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">directory</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.yml&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sellmeier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -621,7 +716,7 @@ document.write(`
 <span class="sd">        List[str]</span>
 <span class="sd">            A combined list of all Sellmeier and Tabulated material names.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sellmeier</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabulated</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sellmeier</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabulated</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterator over all available material names.&quot;&quot;&quot;</span>
@@ -713,14 +808,35 @@ document.write(`
         <span class="k">if</span> <span class="n">material_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid material type. Please choose MaterialType.SELLMEIER or MaterialType.TABULATED.&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">download_yml_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">save_location</span><span class="o">=</span><span class="n">material_type</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">download_yml_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">save_location</span><span class="o">=</span><span class="n">material_type</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Material &#39;</span><span class="si">%s</span><span class="s2">&#39; added to the </span><span class="si">%s</span><span class="s2"> bank&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">material_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">material_type</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_sellmeier_to_bank</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download and add a Sellmeier material.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Local material name without the ``.yml`` suffix.</span>
+<span class="sd">        url : str</span>
+<span class="sd">            URL of the source YAML document.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">add_material_to_bank</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">material_type</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_tabulated_to_bank</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download and add a tabulated material.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Local material name without the ``.yml`` suffix.</span>
+<span class="sd">        url : str</span>
+<span class="sd">            URL of the source YAML document.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">add_material_to_bank</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">material_type</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
@@ -751,14 +867,21 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid save_location. Please choose &#39;sellmeier&#39;, &#39;tabulated&#39;, or &#39;any&#39;.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">]:</span>
-            <span class="n">sellmeier_file</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
-            <span class="k">if</span> <span class="n">sellmeier_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                <span class="n">sellmeier_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">material_paths</span><span class="p">(</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">):</span>
+                <span class="n">sellmeier_file</span> <span class="o">=</span> <span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+                <span class="k">if</span> <span class="n">sellmeier_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">directory</span> <span class="o">!=</span> <span class="n">package_data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">:</span>
+                    <span class="n">sellmeier_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removed Sellmeier material &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
-            <span class="n">tabulated_file</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
-            <span class="k">if</span> <span class="n">tabulated_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                <span class="n">tabulated_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">material_paths</span><span class="p">(</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">):</span>
+                <span class="n">tabulated_file</span> <span class="o">=</span> <span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+                <span class="k">if</span> <span class="n">tabulated_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">directory</span> <span class="o">!=</span> <span class="n">package_data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">:</span>
+                    <span class="n">tabulated_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removed tabulated material &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">filename</span>
+        <span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">clean_data_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_location</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MaterialType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -789,18 +912,19 @@ document.write(`
 
         <span class="c1"># Function to remove matching files in a given directory</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">remove_matching_files</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Remove YAML files whose stem matches the compiled pattern.&quot;&quot;&quot;</span>
             <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.yml&quot;</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">stem</span><span class="p">):</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removing file: </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
                     <span class="n">file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
         <span class="c1"># Remove files from the sellmeier location if specified</span>
         <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">]:</span>
-            <span class="n">remove_matching_files</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">)</span>
+            <span class="n">remove_matching_files</span><span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span><span class="p">)</span>
 
         <span class="c1"># Remove files from the tabulated location if specified</span>
         <span class="k">if</span> <span class="n">save_location</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">]:</span>
-            <span class="n">remove_matching_files</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">)</span>
+            <span class="n">remove_matching_files</span><span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">build_library</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">library</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;classics&#39;</span><span class="p">,</span> <span class="n">remove_previous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -826,11 +950,12 @@ document.write(`
 
         <span class="c1"># Remove previous files if the flag is set</span>
         <span class="k">if</span> <span class="n">remove_previous</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing previous files from the library.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Removing previous files from the library.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clean_data_files</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;.*&quot;</span><span class="p">,</span> <span class="n">save_location</span><span class="o">=</span><span class="s2">&quot;sellmeier&quot;</span><span class="p">)</span>  <span class="c1"># Remove all sellmeier files</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clean_data_files</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;.*&quot;</span><span class="p">,</span> <span class="n">save_location</span><span class="o">=</span><span class="s2">&quot;tabulated&quot;</span><span class="p">)</span>  <span class="c1"># Remove all tabulated files</span>
 
         <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">libraries_to_download</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building material library &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="p">)</span>
             <span class="n">file_path</span> <span class="o">=</span> <span class="n">libraries_path</span> <span class="o">/</span> <span class="n">lib</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
                 <span class="n">data_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -880,6 +1005,10 @@ document.write(`
 <span class="sd">        The YAML file is written to ``data/sellmeier`` within the package</span>
 <span class="sd">        directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">formula_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;formula_type must be one of 1, 2, 5, or 6.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">coefficients</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;coefficients must be a non-empty sequence of finite numbers.&quot;</span><span class="p">)</span>
         <span class="n">reference</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span> <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">reference</span>
 
         <span class="c1"># Create the data dictionary for YAML</span>
@@ -904,13 +1033,15 @@ document.write(`
             <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SPECS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">specs</span>
 
         <span class="c1"># Define the file path</span>
-        <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">user_data_path</span> <span class="o">/</span> <span class="s1">&#39;sellmeier&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+        <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># Write the data to a YAML file</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sellmeier data saved to </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sellmeier data saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">create_tabulated_file</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -953,18 +1084,19 @@ document.write(`
             <span class="n">yaml_data</span><span class="p">[</span><span class="s1">&#39;COMMENTS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comments</span>
 
         <span class="c1"># Define the file path</span>
-        <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">user_data_path</span> <span class="o">/</span> <span class="s1">&#39;tabulated&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+        <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># Write the data to a YAML file</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">yaml_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tabulated nk data saved to </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Tabulated nk data saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
 
 <span class="n">MaterialBank</span> <span class="o">=</span> <span class="n">_MaterialBank</span><span class="p">()</span>
-
 </pre></div>
 
                 </article>

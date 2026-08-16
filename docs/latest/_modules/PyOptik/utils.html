@@ -438,14 +438,15 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">sellmeier_data_path</span><span class="p">,</span> <span class="n">tabulated_data_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">user_sellmeier_data_path</span><span class="p">,</span> <span class="n">user_tabulated_data_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialType</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">PyOptik</span>
 
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
-    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
-    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelname)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="c1"># Backwards-compatible names; callers may monkeypatch these to redirect downloads.</span>
+<span class="n">sellmeier_data_path</span> <span class="o">=</span> <span class="n">user_sellmeier_data_path</span>
+<span class="n">tabulated_data_path</span> <span class="o">=</span> <span class="n">user_tabulated_data_path</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="download_yml_file">
@@ -457,6 +458,7 @@ document.write(`
     <span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">retry_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
     <span class="n">backoff_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">destination</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Download a YAML material file from the given URL and save it locally.</span>
@@ -473,11 +475,13 @@ document.write(`
 <span class="sd">    save_location : MaterialType</span>
 <span class="sd">        The target material type (SELLMEIER or TABULATED).</span>
 <span class="sd">    max_retries : int, optional</span>
-<span class="sd">        Maximum number of retry attempts (default is 3).</span>
+<span class="sd">        Maximum number of retry attempts (default is 5).</span>
 <span class="sd">    retry_delay : float, optional</span>
 <span class="sd">        Delay (in seconds) between retries (default is 2.0).</span>
 <span class="sd">    backoff_factor : float, optional</span>
 <span class="sd">        Multiplier applied to delay after each failed attempt (default is 2.0).</span>
+<span class="sd">    destination : pathlib.Path or str, optional</span>
+<span class="sd">        Explicit output path for hierarchical catalog downloads.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -487,7 +491,9 @@ document.write(`
 <span class="sd">        For non-retriable HTTP or connection errors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Determine save save_location</span>
-    <span class="k">if</span> <span class="n">save_location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">destination</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">save_location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">:</span>
         <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">sellmeier_data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
     <span class="k">elif</span> <span class="n">save_location</span> <span class="o">==</span> <span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">:</span>
         <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">tabulated_data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
@@ -496,11 +502,8 @@ document.write(`
 
     <span class="c1"># Skip if already downloaded</span>
     <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File already exists: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">. Skipping download.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;File already exists: </span><span class="si">%s</span><span class="s2">. Skipping download.&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
         <span class="k">return</span>
-
-    <span class="c1"># Create directory if needed</span>
-    <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># Retry logic</span>
     <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
@@ -509,30 +512,33 @@ document.write(`
     <span class="k">while</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
         <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s2">: downloading </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Attempt </span><span class="si">%s</span><span class="s2"> of </span><span class="si">%s</span><span class="s2">: downloading </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">attempt</span><span class="p">,</span> <span class="n">max_retries</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">PyOptik</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
 
+            <span class="c1"># Only create a directory after a successful response. This keeps</span>
+            <span class="c1"># failed/offline downloads side-effect free.</span>
+            <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully downloaded and saved to: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Successfully downloaded and saved to: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Timeout</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Download attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s2"> failed due to network error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Download attempt </span><span class="si">%s</span><span class="s2"> failed due to network error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">attempt</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retrying in </span><span class="si">{</span><span class="n">delay</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds...&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Retrying in </span><span class="si">%.1f</span><span class="s2"> seconds...&quot;</span><span class="p">,</span> <span class="n">delay</span><span class="p">)</span>
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
                 <span class="n">delay</span> <span class="o">*=</span> <span class="n">backoff_factor</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exceeded maximum retries for </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Exceeded maximum retries for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
                 <span class="k">raise</span>
         <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP error while downloading </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;HTTP error while downloading </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
             <span class="k">raise</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error while saving </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected error while saving </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
             <span class="k">raise</span></div>
 
 </pre></div>

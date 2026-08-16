@@ -1,6 +1,6 @@
 """
 Group Index and Velocity of Fused Silica
-=======================================
+========================================
 
 This example demonstrates how to compute and plot the group index and
 group velocity of fused silica using :mod:`PyOptik`.

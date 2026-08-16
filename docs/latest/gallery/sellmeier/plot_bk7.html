@@ -54,7 +54,7 @@
     <link rel="icon" href="../../_static/thumbnail.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Compare the Refractive Index of BK7 and Fused Silica" href="plot_compare_glasses.html" />
+    <link rel="next" title="Plot the Refractive Index of Optical Material: Silica" href="plot_silica.html" />
     <link rel="prev" title="Examples: Sellmeier Material" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -398,21 +398,21 @@ document.write(`
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Sellmeier Material</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Plot the Refractive Index of Optical Material: BK7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_compare_glasses.html">Compare the Refractive Index of BK7 and Fused Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_silica.html">Plot the Refractive Index of Optical Material: Silica</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_water.html">Plot the Refractive Index of Optical Material: Water</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_compare_glasses.html">Compare the Refractive Index of BK7 and Fused Silica</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../tabulated/index.html">Examples: Tabulated Material</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silicon_nk.html">Plot the Refractive Index and Absorption of Silicon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silver.html">Plot the Refractive Index of Optical Material: Silver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silicon_nk.html">Plot the Refractive Index and Absorption of Silicon</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../utils/index.html">Examples: Utility Functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../utils/search_materials.html">Searching the MaterialBank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_sellmeier_file.html">Example: Create a Custom Sellmeier YAML File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/create_tabulated_file.html">Example: Create a Custom Tabulated Data YAML File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../utils/search_materials.html">Searching the MaterialBank</a></li>
 </ul>
 </li>
 </ul>
@@ -483,8 +483,8 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="plot-the-refractive-index-of-optical-material-bk7">
 <span id="sphx-glr-gallery-sellmeier-plot-bk7-py"></span><h1>Plot the Refractive Index of Optical Material: BK7<a class="headerlink" href="#plot-the-refractive-index-of-optical-material-bk7" title="Link to this heading">#</a></h1>
 <p>This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material BK7 glass over a specified range of wavelengths.</p>
-<img src="../../_images/sphx_glr_plot_bk7_001.png" srcset="../../_images/sphx_glr_plot_bk7_001.png" alt="Refractive Index vs. Wavelength: [BK7]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/PyOptik/material/base_class.py:60: UserWarning: Wavelength range goes from 5.0 micrometer to 5.0 micrometer which is outside the allowable range of 309.99999999999994 nanometer to 2.5 micrometer µm. [Material: BK7]
-  warnings.warn(
+<img src="../../_images/sphx_glr_plot_bk7_001.png" srcset="../../_images/sphx_glr_plot_bk7_001.png" alt="Refractive Index vs. Wavelength: [BK7]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/PyOptik/material/sellmeier_class.py:144: UserWarning: Wavelength range goes from 5.0 micrometer to 5.0 micrometer which is outside the allowable range of 309.99999999999994 nanometer to 2.5 micrometer µm. [Material: BK7]
+  self._check_wavelength(wavelength, out_of_range)
 
 &lt;Figure size 640x480 with 1 Axes&gt;
 </pre></div>
@@ -505,7 +505,7 @@ to download the full example code</p>
 <span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.191 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.212 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-sellmeier-plot-bk7-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/20dc1071f38d5da37a5f9a6d6536cd61/plot_bk7.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_bk7.ipynb</span></code></a></p>

@@ -11,6 +11,7 @@ def test_cli_help():
     assert result.returncode == 0
     assert 'library' in result.stdout
     assert '--remove-previous' in result.stdout
+    assert '--verbose' in result.stdout
 
 
 def test_cli_list_libraries():
@@ -21,4 +22,3 @@ def test_cli_list_libraries():
     )
     assert result.returncode == 0
     assert 'minimal' in result.stdout
-

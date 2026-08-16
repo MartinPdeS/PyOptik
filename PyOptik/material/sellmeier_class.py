@@ -4,11 +4,15 @@
 import yaml
 import numpy
 import itertools
+import logging
 from MPSPlots import helper
 from TypedUnit import Length, RefractiveIndex, validate_units, ureg
 
-from PyOptik.directories import sellmeier_data_path
+from PyOptik.directories import material_paths
+from PyOptik.material_type import MaterialType
 from PyOptik.material.base_class import BaseMaterial
+
+logger = logging.getLogger(__name__)
 
 
 class SellmeierMaterial(BaseMaterial):
@@ -28,7 +32,7 @@ class SellmeierMaterial(BaseMaterial):
     formula_type : int
         The formula type to use for refractive index calculation.
     """
-    def __init__(self, filename: str):
+    def __init__(self, filename: str, file_path=None):
         """
         Initializes the SellmeierMaterial with a filename.
 
@@ -37,8 +41,12 @@ class SellmeierMaterial(BaseMaterial):
 
         filename : str
             The name of the YAML file containing material properties.
+        file_path : pathlib.Path, optional
+            Explicit YAML path for hierarchy-preserving catalog pages. When
+            omitted, the bundled or user material directories are searched.
         """
         self.filename = filename
+        self.file_path = file_path
 
         self.coefficients = None
         self.wavelength_bound = None
@@ -48,47 +56,65 @@ class SellmeierMaterial(BaseMaterial):
         self._load_coefficients()
 
     def __repr__(self) -> str:
+        """Return the user-facing representation of the material."""
         return self.__str__()
 
     def __str__(self) -> str:
+        """Return the material name and ``Sellmeier`` model type."""
         return self.filename + '[Sellmeier]'
 
     def _load_coefficients(self) -> None:
         """
         Loads the Sellmeier coefficients, wavelength range, formula type, and reference from the specified YAML file.
         """
-        file_path = sellmeier_data_path / f'{self.filename}'
-
-        if not file_path.with_suffix('.yml').exists():
-            raise FileNotFoundError(f"YAML file {file_path} not found.")
+        file_path = self.file_path or next(
+            (directory / f"{self.filename}.yml"
+             for directory in material_paths(MaterialType.SELLMEIER)
+             if (directory / f"{self.filename}.yml").exists()),
+            None,
+        )
+        if file_path is None:
+            raise FileNotFoundError(f"Sellmeier YAML file '{self.filename}.yml' not found.")
 
         with file_path.with_suffix('.yml').open('r') as file:
             parsed_yaml = yaml.safe_load(file)
+        logger.debug("Loaded Sellmeier data from %s", file_path)
 
         # Extract the formula type
-        self.formula_type = int(parsed_yaml['DATA'][0]['type'].split()[-1])
+        try:
+            data = parsed_yaml["DATA"][0]
+            self.formula_type = int(data["type"].split()[-1])
+            coefficients = list(map(float, data["coefficients"].split()))
+        except (KeyError, IndexError, AttributeError, TypeError, ValueError) as error:
+            raise ValueError(f"Invalid Sellmeier data in YAML file {file_path}") from error
+        if self.formula_type not in {1, 2, 5, 6}:
+            raise ValueError(f"Unsupported formula type: {self.formula_type}")
+        if not coefficients or not numpy.all(numpy.isfinite(coefficients)):
+            raise ValueError(f"Sellmeier coefficients must be finite in {file_path}")
 
         # Extract coefficients and ensure the list has exactly 7 coefficients by padding with zeros if necessary
-        coefficients_str = parsed_yaml['DATA'][0]['coefficients']
-        coefficients = list(map(float, coefficients_str.split()))
         if len(coefficients) < 7:
             coefficients.extend([0.0] * (7 - len(coefficients)))
         self.coefficients = numpy.array(coefficients)
 
         # Extract wavelength range
         if 'wavelength_range' in parsed_yaml['DATA'][0]:
-            data_str = parsed_yaml['DATA'][0]['wavelength_range'].split()
+            data_str = data['wavelength_range'].split()
 
-            self.wavelength_bound = numpy.array([float(val) for val in data_str]) * ureg.micrometer
+            bounds = numpy.array([float(val) for val in data_str])
+            if len(bounds) != 2 or not numpy.all(numpy.isfinite(bounds)) or bounds[0] >= bounds[1]:
+                raise ValueError(f"Invalid wavelength_range in {file_path}")
+            self.wavelength_bound = bounds * ureg.micrometer
 
         else:
             self.wavelength_bound = None
 
         # # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
+        logger.debug("Validated Sellmeier material '%s' with formula %s", self.filename, self.formula_type)
 
     @validate_units
-    def compute_refractive_index(self, wavelength: Length | float) -> RefractiveIndex:
+    def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> RefractiveIndex:
         r"""
         Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).
 
@@ -96,6 +122,8 @@ class SellmeierMaterial(BaseMaterial):
         ----------
         wavelength : Length | float
             The wavelength \u03bb in meters, can be a single float or a numpy array.
+        out_of_range : {"warn", "raise", "clip"}, optional
+            Policy for wavelengths outside the source validity range.
 
         Returns
         -------
@@ -113,7 +141,9 @@ class SellmeierMaterial(BaseMaterial):
         return_as_scalar = numpy.isscalar(wavelength.magnitude)
 
         wavelength = numpy.atleast_1d(wavelength)
-        self._check_wavelength(wavelength)
+        self._check_wavelength(wavelength, out_of_range)
+        if out_of_range == "clip":
+            wavelength = self._clip_wavelength(wavelength)
 
         # Compute the refractive index based on the formula type
         zipped_coefficients = itertools.zip_longest(*[iter(self.coefficients[1:])] * 2)
@@ -154,8 +184,15 @@ class SellmeierMaterial(BaseMaterial):
 
         Parameters
         ----------
+        axes : matplotlib.axes.Axes
+            Axes on which to draw the dispersion curve.
         samples : int
             The number of samples to use for the wavelength range.
+
+        Returns
+        -------
+        None
+            The supplied axes are modified in place.
 
         Raises
         ------

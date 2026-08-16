@@ -10,11 +10,14 @@ from pathlib import Path
 from typing import List, Union, Optional, Tuple
 from tabulate import tabulate
 
-from PyOptik.directories import data_path, libraries_path
+from PyOptik.directories import data_path, package_data_path, libraries_path, material_paths, user_data_path
 from PyOptik.material.sellmeier_class import SellmeierMaterial
 from PyOptik.material.tabulated_class import TabulatedMaterial
 from PyOptik.utils import download_yml_file
 from PyOptik.material_type import MaterialType
+from PyOptik.catalog import MaterialCatalog, MaterialId
+
+logger = logging.getLogger(__name__)
 
 
 class _MaterialBank():
@@ -56,6 +59,74 @@ class _MaterialBank():
     use_tabulated: bool = True
     use_sellmeier: bool = True
 
+    def __init__(self):
+        """Initialize an empty material-instance cache and catalog."""
+        self._cache = {}
+        self.catalog = MaterialCatalog()
+
+    def get_page(self, identifier: MaterialId | str, book=None, page=None):
+        """Return a canonical shelf/book/page catalog entry.
+
+        Parameters
+        ----------
+        identifier : MaterialId or str
+            A canonical identifier, alias, or shelf name.
+        book, page : str, optional
+            Book and page components when ``identifier`` is a shelf name.
+
+        Returns
+        -------
+        MaterialPage
+            Matching catalog page.
+        """
+        return self.catalog.get(identifier, book=book, page=page)
+
+    def pages(self, shelf=None, book=None):
+        """List canonical material pages.
+
+        Parameters
+        ----------
+        shelf, book : str, optional
+            Optional hierarchy filters.
+
+        Returns
+        -------
+        list of MaterialPage
+            Matching pages sorted by canonical identifier.
+        """
+        return self.catalog.pages(shelf=shelf, book=book)
+
+    def download_pages(self, shelf=None, book=None):
+        """Download catalog pages while preserving their upstream hierarchy.
+
+        Parameters
+        ----------
+        shelf, book : str, optional
+            Optional hierarchy filters.
+
+        Returns
+        -------
+        list of MaterialPage
+            Pages selected for download.
+        """
+        return self.catalog.download(shelf=shelf, book=book)
+
+    def update_catalog(self, data_root=None):
+        """Download and activate the current upstream catalog index.
+
+        Parameters
+        ----------
+        data_root : pathlib.Path or str, optional
+            Root directory for the catalog and downloaded data.
+
+        Returns
+        -------
+        MaterialCatalog
+            The activated catalog instance.
+        """
+        self.catalog = MaterialCatalog.from_upstream(data_root=data_root)
+        return self.catalog
+
     def __getattr__(self, material_name: str) -> Union[SellmeierMaterial, TabulatedMaterial]:
         """
         Retrieve a material by name dynamically at the class level, respecting filter options.
@@ -77,13 +148,13 @@ class _MaterialBank():
         """
         # Apply the filtering logic based on class-level attributes
         if material_name in self.sellmeier:
-            return SellmeierMaterial(filename=material_name)
+            return self.get(material_name, kind=MaterialType.SELLMEIER)
         elif material_name in self.tabulated:
-            return TabulatedMaterial(filename=material_name)
+            return self.get(material_name, kind=MaterialType.TABULATED)
 
         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{material_name}'")
 
-    def get(self, material_name: str) -> Union[SellmeierMaterial, TabulatedMaterial]:
+    def get(self, material_name: str, kind: Optional[Union[MaterialType, str]] = None) -> Union[SellmeierMaterial, TabulatedMaterial]:
         """
         Retrieve a material by name, respecting filter options.
 
@@ -102,7 +173,25 @@ class _MaterialBank():
         AttributeError
             If the material is not found in the filtered or unfiltered lists.
         """
-        return self.__getattr__(material_name)
+        if kind is not None and not isinstance(kind, MaterialType):
+            try:
+                kind = MaterialType(kind.lower())
+            except ValueError as error:
+                raise ValueError("kind must be 'sellmeier' or 'tabulated'.") from error
+        candidates = [kind] if kind else [MaterialType.SELLMEIER, MaterialType.TABULATED]
+        for material_type in candidates:
+            names = self.sellmeier if material_type == MaterialType.SELLMEIER else self.tabulated
+            if material_name not in names:
+                continue
+            key = (material_type, material_name)
+            if key not in self._cache:
+                cls = SellmeierMaterial if material_type == MaterialType.SELLMEIER else TabulatedMaterial
+                logger.debug("Loading %s material '%s'", material_type.value, material_name)
+                self._cache[key] = cls(filename=material_name)
+            else:
+                logger.debug("Using cached %s material '%s'", material_type.value, material_name)
+            return self._cache[key]
+        raise AttributeError(f"Material '{material_name}' was not found.")
 
     @classmethod
     def set_filter(cls, use_tabulated: bool = False, use_sellmeier: bool = False) -> None:
@@ -131,6 +220,7 @@ class _MaterialBank():
 
         cls.use_tabulated = use_tabulated
         cls.use_sellmeier = use_sellmeier
+        logger.debug("Material filters set: tabulated=%s, sellmeier=%s", use_tabulated, use_sellmeier)
 
     def _list_materials(self, material_type: MaterialType) -> List[str]:
         """Return available material names for a given type.
@@ -145,10 +235,15 @@ class _MaterialBank():
         List[str]
             A list of material names of the specified type.
         """
-        directory = data_path / material_type.value
-        return [
-            os.path.splitext(f)[0] for f in os.listdir(directory) if os.path.isfile(directory / f) and f.endswith('.yml')
-        ]
+        if data_path != package_data_path:
+            directories = [data_path / material_type.value]
+        else:
+            directories = [directory for directory in material_paths(material_type)]
+        names = set()
+        for directory in directories:
+            if directory.exists():
+                names.update(path.stem for path in directory.glob("*.yml"))
+        return sorted(names)
 
     @property
     def sellmeier(self) -> List[str]:
@@ -184,7 +279,7 @@ class _MaterialBank():
         List[str]
             A combined list of all Sellmeier and Tabulated material names.
         """
-        return self.sellmeier + self.tabulated
+        return list(dict.fromkeys(self.sellmeier + self.tabulated))
 
     def __iter__(self):
         """Iterator over all available material names."""
@@ -276,14 +371,35 @@ class _MaterialBank():
         if material_type not in [MaterialType.SELLMEIER, MaterialType.TABULATED]:
             raise ValueError("Invalid material type. Please choose MaterialType.SELLMEIER or MaterialType.TABULATED.")
 
-        return download_yml_file(filename=filename, url=url, save_location=material_type)
+        result = download_yml_file(filename=filename, url=url, save_location=material_type)
+        logger.info("Material '%s' added to the %s bank", filename, material_type.value)
+        cls._cache.pop((material_type, filename), None)
+        return result
 
     @classmethod
     def add_sellmeier_to_bank(cls, filename: str, url: str) -> None:
+        """Download and add a Sellmeier material.
+
+        Parameters
+        ----------
+        filename : str
+            Local material name without the ``.yml`` suffix.
+        url : str
+            URL of the source YAML document.
+        """
         return cls.add_material_to_bank(filename=filename, url=url, material_type=MaterialType.SELLMEIER)
 
     @classmethod
     def add_tabulated_to_bank(cls, filename: str, url: str) -> None:
+        """Download and add a tabulated material.
+
+        Parameters
+        ----------
+        filename : str
+            Local material name without the ``.yml`` suffix.
+        url : str
+            URL of the source YAML document.
+        """
         return cls.add_material_to_bank(filename=filename, url=url, material_type=MaterialType.TABULATED)
 
     @classmethod
@@ -314,14 +430,21 @@ class _MaterialBank():
             raise ValueError("Invalid save_location. Please choose 'sellmeier', 'tabulated', or 'any'.")
 
         if save_location in ['any', 'sellmeier']:
-            sellmeier_file = data_path / 'sellmeier' / f"{filename}.yml"
-            if sellmeier_file.exists():
-                sellmeier_file.unlink()
+            for directory in material_paths(MaterialType.SELLMEIER):
+                sellmeier_file = directory / f"{filename}.yml"
+                if sellmeier_file.exists() and directory != package_data_path / 'sellmeier':
+                    sellmeier_file.unlink()
+                    logger.info("Removed Sellmeier material '%s'", filename)
 
         if save_location in ['any', 'tabulated']:
-            tabulated_file = data_path / 'tabulated' / f"{filename}.yml"
-            if tabulated_file.exists():
-                tabulated_file.unlink()
+            for directory in material_paths(MaterialType.TABULATED):
+                tabulated_file = directory / f"{filename}.yml"
+                if tabulated_file.exists() and directory != package_data_path / 'tabulated':
+                    tabulated_file.unlink()
+                    logger.info("Removed tabulated material '%s'", filename)
+        cls._cache = {
+            key: value for key, value in cls._cache.items() if key[1] != filename
+        }
 
     def clean_data_files(self, regex: str, save_location: Union[str, MaterialType] = 'any') -> None:
         """
@@ -352,18 +475,19 @@ class _MaterialBank():
 
         # Function to remove matching files in a given directory
         def remove_matching_files(directory: Path):
+            """Remove YAML files whose stem matches the compiled pattern."""
             for file in directory.glob("*.yml"):
                 if pattern.match(file.stem):
-                    logging.info(f"Removing file: {file}")
+                    logger.info("Removing file: %s", file)
                     file.unlink()
 
         # Remove files from the sellmeier location if specified
         if save_location in ['any', 'sellmeier']:
-            remove_matching_files(data_path / 'sellmeier')
+            remove_matching_files(user_data_path / 'sellmeier')
 
         # Remove files from the tabulated location if specified
         if save_location in ['any', 'tabulated']:
-            remove_matching_files(data_path / 'tabulated')
+            remove_matching_files(user_data_path / 'tabulated')
 
     def build_library(self, library: Union[str, List[str]] = 'classics', remove_previous: bool = False) -> None:
         """
@@ -389,11 +513,12 @@ class _MaterialBank():
 
         # Remove previous files if the flag is set
         if remove_previous:
-            logging.info("Removing previous files from the library.")
+            logger.info("Removing previous files from the library.")
             self.clean_data_files(regex=".*", save_location="sellmeier")  # Remove all sellmeier files
             self.clean_data_files(regex=".*", save_location="tabulated")  # Remove all tabulated files
 
         for lib in libraries_to_download:
+            logger.info("Building material library '%s'", lib)
             file_path = libraries_path / lib
             with open(file_path.with_suffix('.yml'), 'r') as file:
                 data_dict = yaml.safe_load(file)
@@ -443,6 +568,10 @@ class _MaterialBank():
         The YAML file is written to ``data/sellmeier`` within the package
         directory.
         """
+        if formula_type not in {1, 2, 5, 6}:
+            raise ValueError("formula_type must be one of 1, 2, 5, or 6.")
+        if not coefficients or not numpy.all(numpy.isfinite(coefficients)):
+            raise ValueError("coefficients must be a non-empty sequence of finite numbers.")
         reference = 'None' if reference is None else reference
 
         # Create the data dictionary for YAML
@@ -467,13 +596,15 @@ class _MaterialBank():
             data['SPECS'] = specs
 
         # Define the file path
-        file_path = data_path / 'sellmeier' / f"{filename}.yml"
+        file_path = user_data_path / 'sellmeier' / f"{filename}.yml"
+        file_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Write the data to a YAML file
         with open(file_path, 'w') as file:
             yaml.dump(data, file, default_flow_style=False)
 
-        logging.info(f"Sellmeier data saved to {file_path}")
+        logger.info("Sellmeier data saved to %s", file_path)
+        self._cache.pop((MaterialType.SELLMEIER, filename), None)
 
     def create_tabulated_file(
             self,
@@ -516,14 +647,15 @@ class _MaterialBank():
             yaml_data['COMMENTS'] = comments
 
         # Define the file path
-        file_path = data_path / 'tabulated' / f"{filename}.yml"
+        file_path = user_data_path / 'tabulated' / f"{filename}.yml"
+        file_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Write the data to a YAML file
         with open(file_path, 'w') as file:
             yaml.dump(yaml_data, file, default_flow_style=False)
 
-        logging.info(f"Tabulated nk data saved to {file_path}")
+        logger.info("Tabulated nk data saved to %s", file_path)
+        self._cache.pop((MaterialType.TABULATED, filename), None)
 
 
 MaterialBank = _MaterialBank()
-

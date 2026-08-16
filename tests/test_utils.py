@@ -13,11 +13,13 @@ def test_dummy():
     """Dummy test to ensure pytest runs correctly."""
     assert True
 
+@pytest.mark.network
 def test_main():
     MaterialBank.build_library('minimal', remove_previous=True)
 
 url_water = 'https://refractiveindex.info/database/data/main/H2O/nk/Daimon-19.0C.yml'
 
+@pytest.mark.network
 def test_download_yml_files():
     """
     Test downloading YAML files to different locations. Ensures that files are
@@ -36,6 +38,7 @@ def test_download_yml_files():
     )
 
 
+@pytest.mark.network
 def test_add_custom():
     MaterialBank.add_tabulated_to_bank(
         filename='test_tabulated',
@@ -57,6 +60,7 @@ def test_fail_add_custom():
         )
 
 
+@pytest.mark.network
 def test_remove_item():
     """
     Test the removal of an element from a library. Ensures that an element can
@@ -158,6 +162,7 @@ def test_download_yml_file_http_error_log(caplog):
             save_location=MaterialType.SELLMEIER
         )
 
+@pytest.mark.network
 def test_main():
     MaterialBank.build_library('classics', remove_previous=False)
 

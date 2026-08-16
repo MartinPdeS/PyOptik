@@ -2,6 +2,8 @@ from PyOptik import MaterialBank
 import argparse
 import logging
 
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     """Command line entry point for downloading material libraries."""
@@ -22,14 +24,24 @@ def main() -> None:
         action="store_true",
         help="List available library names and exit",
     )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Enable detailed download and material-loading logs",
+    )
     args = parser.parse_args()
+
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
 
     if args.list_libraries:
         for lib in MaterialBank.list_available_libraries():
             print(lib)
         return
 
-    logging.info("Building material library")
+    logger.info("Building material library")
     MaterialBank.build_library(args.library, remove_previous=args.remove_previous)
 
 

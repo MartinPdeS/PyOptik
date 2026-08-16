@@ -3,11 +3,15 @@
 
 import numpy
 import yaml
+import logging
 from MPSPlots import helper
 from TypedUnit import Length, validate_units, ureg
 
 from PyOptik.material.base_class import BaseMaterial
-from PyOptik.directories import tabulated_data_path
+from PyOptik.directories import material_paths
+from PyOptik.material_type import MaterialType
+
+logger = logging.getLogger(__name__)
 
 
 class TabulatedMaterial(BaseMaterial):
@@ -28,7 +32,7 @@ class TabulatedMaterial(BaseMaterial):
         Reference information for the material data.
     """
 
-    def __init__(self, filename: str):
+    def __init__(self, filename: str, file_path=None):
         """
         Initializes the TabulatedMaterial with a filename.
 
@@ -36,8 +40,12 @@ class TabulatedMaterial(BaseMaterial):
         ----------
         filename : str
             The name of the YAML file containing material properties.
+        file_path : pathlib.Path, optional
+            Explicit YAML path for hierarchy-preserving catalog pages. When
+            omitted, the bundled or user material directories are searched.
         """
         self.filename = filename
+        self.file_path = file_path
 
         # Initialize attributes
         self.wavelength_bound = None
@@ -50,9 +58,11 @@ class TabulatedMaterial(BaseMaterial):
         self._load_tabulated_data()
 
     def __repr__(self) -> str:
+        """Return the user-facing representation of the material."""
         return self.__str__()
 
     def __str__(self) -> str:
+        """Return the material name and ``Tabulated`` model type."""
         return self.filename + '[Tabulated]'
 
     def _load_tabulated_data(self) -> None:
@@ -66,18 +76,27 @@ class TabulatedMaterial(BaseMaterial):
         ValueError
             If the YAML data is malformed or missing required keys.
         """
-        file_path = tabulated_data_path / f'{self.filename}'
-
-        if not file_path.with_suffix('.yml').exists():
-            raise FileNotFoundError(f"YAML file {file_path} not found.")
+        file_path = self.file_path or next(
+            (directory / f"{self.filename}.yml"
+             for directory in material_paths(MaterialType.TABULATED)
+             if (directory / f"{self.filename}.yml").exists()),
+            None,
+        )
+        if file_path is None:
+            raise FileNotFoundError(f"Tabulated YAML file '{self.filename}.yml' not found.")
 
         with file_path.with_suffix('.yml').open('r') as file:
             parsed_yaml = yaml.safe_load(file)
+        logger.debug("Loaded tabulated data from %s", file_path)
 
         try:
             # Extract data points
             data_points = parsed_yaml['DATA'][0]['data'].strip().split('\n')
             data = numpy.array([[float(value) for value in point.split()] for point in data_points])
+            if data.ndim != 2 or data.shape[1] != 3 or len(data) < 2:
+                raise ValueError("tabulated data must contain at least two rows of wavelength, n, k")
+            if not numpy.all(numpy.isfinite(data)) or numpy.any(numpy.diff(data[:, 0]) <= 0):
+                raise ValueError("tabulated wavelengths must be finite and strictly increasing")
 
             self.wavelength = data[:, 0] * ureg.micrometer
             self.n_values = data[:, 1]
@@ -89,9 +108,10 @@ class TabulatedMaterial(BaseMaterial):
 
         # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
+        logger.debug("Validated tabulated material '%s' with %s points", self.filename, len(self.wavelength))
 
     @validate_units
-    def compute_refractive_index(self, wavelength: Length | float) -> numpy.ndarray:
+    def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> numpy.ndarray:
         """
         Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).
 
@@ -99,11 +119,14 @@ class TabulatedMaterial(BaseMaterial):
         ----------
         wavelength : Length | float
             Wavelength(s) in micrometers for which to interpolate n and k.
+        out_of_range : {"warn", "raise", "clip"}, optional
+            Policy for wavelengths outside the tabulated range.
 
         Returns
         -------
-        numpy.ndarray
-            Complex refractive index values (n + i*k) for the given wavelength(s).
+        complex or numpy.ndarray
+            Complex refractive index values (n + i*k). A scalar input returns
+            a scalar complex value; array-like input returns an array.
 
         Raises
         ------
@@ -117,7 +140,14 @@ class TabulatedMaterial(BaseMaterial):
 
         wavelength = numpy.atleast_1d(wavelength)
 
-        self._check_wavelength(wavelength)
+        self._check_wavelength(wavelength, out_of_range)
+
+        if out_of_range == "clip":
+            wavelength = self._clip_wavelength(wavelength)
+        elif out_of_range == "raise":
+            # _check_wavelength has already raised if needed; this keeps the
+            # behavior explicit for future range implementations.
+            pass
 
         n_interp = numpy.interp(wavelength.to(ureg.meter).magnitude, self.wavelength.to(ureg.meter).magnitude, self.n_values)
         k_interp = numpy.interp(wavelength.to(ureg.meter).magnitude, self.wavelength.to(ureg.meter).magnitude, self.k_values)
@@ -133,8 +163,15 @@ class TabulatedMaterial(BaseMaterial):
 
         Parameters
         ----------
+        axes : matplotlib.axes.Axes
+            Axes on which to draw the curves.
         samples : int
             The number of samples to use for the wavelength range.
+
+        Returns
+        -------
+        None
+            The supplied axes and its absorption twin are modified in place.
 
         Raises
         ------

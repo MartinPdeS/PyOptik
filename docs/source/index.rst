@@ -5,7 +5,7 @@
     :start-line: 0
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
     code.rst
     examples.rst

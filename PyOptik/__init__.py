@@ -4,9 +4,14 @@ try:
 except ImportError:
     __version__ = "0.0.0"
 
+import logging
+
+logging.getLogger(__name__).addHandler(logging.NullHandler())
+
 
 from .material_bank import MaterialBank
 from .material_type import MaterialType
+from .catalog import MaterialCatalog, MaterialId, MaterialPage
 
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial

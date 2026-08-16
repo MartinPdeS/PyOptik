@@ -4,11 +4,32 @@
 from typing import Callable
 import numpy
 import warnings
+import logging
 
 from TypedUnit import Length, AnyUnit, Time, ureg, validate_units
 
+logger = logging.getLogger(__name__)
+
 class BaseMaterial(object):
+    """Common interface for refractive-index material models.
+
+    Subclasses provide :meth:`compute_refractive_index`; this class supplies
+    unit handling, validity-range checks, and group-delay calculations.
+    """
+
     def __eq__(self, other) -> bool:
+        """Compare materials by concrete type and filename.
+
+        Parameters
+        ----------
+        other : object
+            Object to compare with this material.
+
+        Returns
+        -------
+        bool
+            True when both objects represent the same material class and file.
+        """
         if not isinstance(other, self.__class__):
             return False
 
@@ -39,7 +60,7 @@ class BaseMaterial(object):
         """
         return self.__str__()
 
-    def _check_wavelength(self, wavelength: Length) -> None:
+    def _check_wavelength(self, wavelength: Length, out_of_range: str = "warn") -> None:
         """
         Checks if a wavelength is within the material's allowable range and raises a warning if it is not.
 
@@ -47,21 +68,61 @@ class BaseMaterial(object):
         ----------
         wavelength : Length
             The wavelength to check, in micrometers.
+        out_of_range : {"warn", "raise", "clip"}, optional
+            Policy for wavelengths outside ``wavelength_bound``.
 
         Raises
         ------
         UserWarning
             If the wavelength is outside the allowable range.
+        ValueError
+            If ``out_of_range`` is invalid or has value ``"raise"`` for an
+            out-of-range wavelength.
         """
+        if out_of_range not in {"warn", "raise", "clip"}:
+            raise ValueError("out_of_range must be 'warn', 'raise', or 'clip'.")
         if self.wavelength_bound is not None:
             min_value, max_value = self.wavelength_bound
 
             if numpy.any((wavelength < min_value) | (wavelength > max_value)):
-                warnings.warn(
+                message = (
                     f"Wavelength range goes from {wavelength.min().to_compact()} to {wavelength.max().to_compact()} "
                     f"which is outside the allowable range of {min_value.to_compact()} to {max_value.to_compact()} µm. "
                     f"[Material: {self.filename}]"
                 )
+                if out_of_range == "raise":
+                    logger.error("Wavelength validation failed: %s", message)
+                    raise ValueError(message)
+                if out_of_range == "clip":
+                    logger.debug("Clipping out-of-range wavelengths for material '%s'", self.filename)
+                    return
+                logger.warning(message)
+                warnings.warn(
+                    message,
+                    stacklevel=2,
+                )
+
+    def _clip_wavelength(self, wavelength: Length) -> Length:
+        """Clip wavelengths to the material validity interval.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Wavelength quantity to clip.
+
+        Returns
+        -------
+        Length
+            Wavelengths constrained to the material's validity interval.
+        """
+        if self.wavelength_bound is None:
+            return wavelength
+        values = numpy.clip(
+            wavelength.to(ureg.meter).magnitude,
+            self.wavelength_bound[0].to(ureg.meter).magnitude,
+            self.wavelength_bound[1].to(ureg.meter).magnitude,
+        )
+        return values * ureg.meter
 
     def ensure_units(func) -> Callable:
         """Decorator ensuring the wavelength argument carries ureg.
@@ -78,6 +139,7 @@ class BaseMaterial(object):
             converts them to metre-based :class:`~PyOptik.ureg.Quantity` objects.
         """
         def wrapper(self, wavelength: Length = None, *args, **kwargs):
+            """Apply the unit-normalization behavior of the decorator."""
             if wavelength is None:
                 if self.wavelength_bound is None:
                     raise ValueError('Wavelength must be provided for computation.')

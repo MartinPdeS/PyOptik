@@ -3,14 +3,15 @@ import logging
 from pathlib import Path
 import time
 
-from PyOptik.directories import sellmeier_data_path, tabulated_data_path
+from PyOptik.directories import user_sellmeier_data_path, user_tabulated_data_path
 from PyOptik.material_type import MaterialType
 import PyOptik
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-)
+# Backwards-compatible names; callers may monkeypatch these to redirect downloads.
+sellmeier_data_path = user_sellmeier_data_path
+tabulated_data_path = user_tabulated_data_path
+
+logger = logging.getLogger(__name__)
 
 
 def download_yml_file(
@@ -20,6 +21,7 @@ def download_yml_file(
     max_retries: int = 5,
     retry_delay: float = 2.0,
     backoff_factor: float = 2.0,
+    destination: Path | None = None,
 ) -> None:
     """
     Download a YAML material file from the given URL and save it locally.
@@ -36,11 +38,13 @@ def download_yml_file(
     save_location : MaterialType
         The target material type (SELLMEIER or TABULATED).
     max_retries : int, optional
-        Maximum number of retry attempts (default is 3).
+        Maximum number of retry attempts (default is 5).
     retry_delay : float, optional
         Delay (in seconds) between retries (default is 2.0).
     backoff_factor : float, optional
         Multiplier applied to delay after each failed attempt (default is 2.0).
+    destination : pathlib.Path or str, optional
+        Explicit output path for hierarchical catalog downloads.
 
     Raises
     ------
@@ -50,7 +54,9 @@ def download_yml_file(
         For non-retriable HTTP or connection errors.
     """
     # Determine save save_location
-    if save_location == MaterialType.SELLMEIER:
+    if destination is not None:
+        file_path = Path(destination)
+    elif save_location == MaterialType.SELLMEIER:
         file_path: Path = sellmeier_data_path / f"{filename}.yml"
     elif save_location == MaterialType.TABULATED:
         file_path: Path = tabulated_data_path / f"{filename}.yml"
@@ -59,11 +65,8 @@ def download_yml_file(
 
     # Skip if already downloaded
     if file_path.exists():
-        logging.info(f"File already exists: {file_path}. Skipping download.")
+        logger.info("File already exists: %s. Skipping download.", file_path)
         return
-
-    # Create directory if needed
-    file_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Retry logic
     attempt = 0
@@ -72,28 +75,31 @@ def download_yml_file(
     while attempt < max_retries:
         attempt += 1
         try:
-            logging.info(f"Attempt {attempt} of {max_retries}: downloading {url}")
+            logger.info("Attempt %s of %s: downloading %s", attempt, max_retries, url)
             response = requests.get(url, timeout=PyOptik.TIMEOUT)
             response.raise_for_status()
 
+            # Only create a directory after a successful response. This keeps
+            # failed/offline downloads side-effect free.
+            file_path.parent.mkdir(parents=True, exist_ok=True)
             with open(file_path, "wb") as f:
                 f.write(response.content)
 
-            logging.info(f"Successfully downloaded and saved to: {file_path}")
+            logger.info("Successfully downloaded and saved to: %s", file_path)
             return
 
         except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
-            logging.warning(f"Download attempt {attempt} failed due to network error: {e}")
+            logger.warning("Download attempt %s failed due to network error: %s", attempt, e)
             if attempt < max_retries:
-                logging.info(f"Retrying in {delay:.1f} seconds...")
+                logger.info("Retrying in %.1f seconds...", delay)
                 time.sleep(delay)
                 delay *= backoff_factor
             else:
-                logging.error(f"Exceeded maximum retries for {url}")
+                logger.error("Exceeded maximum retries for %s", url)
                 raise
         except requests.exceptions.HTTPError as e:
-            logging.error(f"HTTP error while downloading {url}: {e}")
+            logger.error("HTTP error while downloading %s: %s", url, e)
             raise
         except Exception as e:
-            logging.error(f"Unexpected error while saving {url} to {file_path}: {e}")
+            logger.exception("Unexpected error while saving %s to %s", url, file_path)
             raise

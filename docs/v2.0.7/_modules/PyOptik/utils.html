@@ -459,6 +459,7 @@ document.write(`
     <span class="n">retry_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
     <span class="n">backoff_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
     <span class="n">destination</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Download a YAML material file from the given URL and save it locally.</span>
@@ -482,6 +483,8 @@ document.write(`
 <span class="sd">        Multiplier applied to delay after each failed attempt (default is 2.0).</span>
 <span class="sd">    destination : pathlib.Path or str, optional</span>
 <span class="sd">        Explicit output path for hierarchical catalog downloads.</span>
+<span class="sd">    overwrite : bool, optional</span>
+<span class="sd">        Replace an existing file instead of resuming from the local copy.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -501,7 +504,7 @@ document.write(`
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid save_location: </span><span class="si">{</span><span class="n">save_location</span><span class="si">}</span><span class="s2">. Must be SELLMEIER or TABULATED.&quot;</span><span class="p">)</span>
 
     <span class="c1"># Skip if already downloaded</span>
-    <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;File already exists: </span><span class="si">%s</span><span class="s2">. Skipping download.&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
         <span class="k">return</span>
 

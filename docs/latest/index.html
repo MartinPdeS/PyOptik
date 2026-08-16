@@ -590,6 +590,13 @@ not collide simply because they share a short name.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>Download the complete <code class="docutils literal notranslate"><span class="pre">n,k</span></code> catalog with resumable progress tracking:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">catalog</span><span class="o">.</span><span class="n">download_all</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Each page is stored once and recorded in <code class="docutils literal notranslate"><span class="pre">manifest.json</span></code> with its source URL,
+local path, status, timestamp, and SHA-256 checksum. Re-running the command
+uses cached files, so interrupted downloads can resume safely.</p>
 <p>Access a page by its canonical identifier and load its material model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;specs/SCHOTT-optical/N-BK7&quot;</span><span class="p">)</span>
 <span class="n">bk7</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -626,8 +633,17 @@ collections:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>--list-libraries
 python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>classics
 python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>metals<span class="w"> </span>--verbose
+python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>download-all<span class="w"> </span>--data-root<span class="w"> </span>./refractiveindex-data
 </pre></div>
 </div>
+<p>After installation, the equivalent console command is <code class="docutils literal notranslate"><span class="pre">pyoptik</span>
+<span class="pre">download-all</span> <span class="pre">--data-root</span> <span class="pre">./refractiveindex-data</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">download-all</span></code> command first refreshes the upstream catalog, then
+downloads every material page while preserving its <code class="docutils literal notranslate"><span class="pre">shelf/book/page</span></code>
+hierarchy. Existing pages are reused by default, so the operation is
+resumable; pass <code class="docutils literal notranslate"><span class="pre">--force</span></code> to refresh them or <code class="docutils literal notranslate"><span class="pre">--fail-fast</span></code> to stop after
+the first failed page. Progress and failures are reported through the normal
+PyOptik logging system, with <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> enabling detailed diagnostics.</p>
 </section>
 <section id="custom-materials">
 <h2>Custom materials<a class="headerlink" href="#custom-materials" title="Link to this heading">#</a></h2>

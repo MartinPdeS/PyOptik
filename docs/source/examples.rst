@@ -12,4 +12,3 @@ Explore our gallery of examples demonstrating the usage of PyOptik. These exampl
     /gallery/group_properties/index.rst
     /gallery/sellmeier/index.rst
     /gallery/tabulated/index.rst
-    /gallery/utils/index.rst

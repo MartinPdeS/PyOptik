@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Convenience paths used throughout the :mod:`PyOptik` package.
+"""Filesystem paths used by :mod:`PyOptik`.
 
-This module exposes commonly referenced directories such as the project
-root, documentation and data folders.  It is imported by other modules to
-construct absolute paths in a centralised manner and therefore simplifies
-file handling across the code base.
+Material data is downloaded into the per-user data directory; PyOptik does
+not provide a bundled material database.
 """
 
 from pathlib import Path
@@ -37,13 +35,6 @@ logo_path = doc_path.joinpath('images/logo.png')
 
 examples_path = root_path.joinpath('examples')
 
-sellmeier_data_path = root_path.joinpath('data/sellmeier')
-
-tabulated_data_path = root_path.joinpath('data/tabulated')
-
-data_path = root_path.joinpath('data')
-package_data_path = data_path
-
 
 def _default_user_data_path() -> Path:
     """Return the per-user directory for downloaded/custom material data."""
@@ -63,11 +54,8 @@ user_data_path = _default_user_data_path()
 user_sellmeier_data_path = user_data_path / "sellmeier"
 user_tabulated_data_path = user_data_path / "tabulated"
 
-libraries_path = root_path.joinpath('libraries')
-
-
 def material_paths(material_type):
-    """Return user and bundled data directories for a material type.
+    """Return the user data directory for a material type.
 
     Parameters
     ----------
@@ -77,13 +65,11 @@ def material_paths(material_type):
     Returns
     -------
     tuple of pathlib.Path
-        User data directory followed by the bundled package directory.
+        The user data directory. The tuple form is retained for callers that
+        iterate over search locations.
     """
     directory_name = material_type.value
-    return (
-        user_data_path / directory_name,
-        data_path / directory_name,
-    )
+    return (user_data_path / directory_name,)
 
 
 if __name__ == '__main__':

@@ -10,37 +10,32 @@ def test_cli_help():
         text=True,
     )
     assert result.returncode == 0
-    assert 'library' in result.stdout
-    assert '--remove-previous' in result.stdout
+    assert 'command' in result.stdout
     assert '--verbose' in result.stdout
     assert 'download-all' in result.stdout
-
-
-def test_cli_list_libraries():
-    result = subprocess.run(
-        [sys.executable, '-m', 'PyOptik', '--list-libraries'],
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0
-    assert 'minimal' in result.stdout
+    assert 'setup' in result.stdout
 
 
 def test_cli_download_all_dispatch(monkeypatch, tmp_path):
-    """The complete-catalog command updates and then downloads the catalog."""
+    """The complete-catalog command uses the bulk snapshot workflow."""
     module = importlib.import_module("PyOptik.__main__")
     calls = {}
 
-    class FakeMaterialBank:
+    class FakeMaterialCatalog:
         @staticmethod
-        def update_catalog(data_root=None):
-            calls["data_root"] = data_root
+        def from_snapshot(data_root=None, force=False, progress=None):
+            calls["from_snapshot"] = {
+                "data_root": data_root,
+                "force": force,
+                "progress": progress,
+            }
+            return FakeMaterialCatalog
 
         @staticmethod
         def download_all(**kwargs):
             calls["download_all"] = kwargs
 
-    monkeypatch.setattr(module, "MaterialBank", FakeMaterialBank)
+    monkeypatch.setattr(module, "MaterialCatalog", FakeMaterialCatalog)
     monkeypatch.setattr(
         sys,
         "argv",
@@ -56,5 +51,38 @@ def test_cli_download_all_dispatch(monkeypatch, tmp_path):
 
     module.main()
 
-    assert calls["data_root"] == tmp_path
-    assert calls["download_all"] == {"force": True, "continue_on_error": False}
+    assert {
+        key: value for key, value in calls["from_snapshot"].items() if key != "progress"
+    } == {
+        "data_root": tmp_path,
+        "force": True,
+    }
+    assert callable(calls["from_snapshot"]["progress"])
+    assert "download_all" not in calls
+
+
+def test_cli_setup_uses_snapshot(monkeypatch, tmp_path):
+    """The beginner setup command selects the bulk snapshot workflow."""
+    module = importlib.import_module("PyOptik.__main__")
+    calls = {}
+
+    class FakeMaterialCatalog:
+        @staticmethod
+        def from_snapshot(**kwargs):
+            calls["from_snapshot"] = kwargs
+            return FakeMaterialCatalog
+
+    monkeypatch.setattr(module, "MaterialCatalog", FakeMaterialCatalog)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["pyoptik", "setup", "--data-root", str(tmp_path), "--no-progress"],
+    )
+
+    module.main()
+
+    assert calls["from_snapshot"] == {
+        "data_root": tmp_path,
+        "force": False,
+        "progress": None,
+    }

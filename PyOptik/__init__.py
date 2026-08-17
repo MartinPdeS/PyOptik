@@ -9,14 +9,12 @@ import logging
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
-from .material_bank import MaterialBank
 from .material_type import MaterialType
-from .catalog import MaterialCatalog, MaterialId, MaterialPage
+from .catalog import MaterialCatalog, MaterialId, MaterialPage, download_snapshot
 
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial
 from .material import base_class
 
-Material = MaterialBank  # For retro-compatibility
 
 TIMEOUT = 10  # Default timeout for requests in seconds

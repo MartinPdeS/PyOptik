@@ -5,15 +5,18 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Optional
-from urllib.parse import unquote, urlparse
 from datetime import datetime, timezone
 import hashlib
 import json
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import tempfile
+import zipfile
 
 import yaml
+import requests
 
-from PyOptik.directories import libraries_path, user_data_path
+from PyOptik.directories import user_data_path
 from PyOptik.material_type import MaterialType
 from PyOptik.utils import download_yml_file
 
@@ -23,6 +26,11 @@ UPSTREAM_CATALOG_URL = (
     "https://raw.githubusercontent.com/polyanskiy/refractiveindex.info-database/"
     "main/database/catalog-nk.yml"
 )
+UPSTREAM_ARCHIVE_URL = (
+    "https://github.com/polyanskiy/refractiveindex.info-database/"
+    "archive/refs/heads/main.zip"
+)
+UPSTREAM_TIMEOUT = 10
 
 
 @dataclass(frozen=True)
@@ -53,7 +61,6 @@ class MaterialPage:
     source_url: Optional[str] = None
     description: Optional[str] = None
     metadata: Optional[dict] = None
-    legacy_name: Optional[str] = None
     data_root: Optional[Path] = None
 
     @property
@@ -82,11 +89,12 @@ class MaterialPage:
                 return TabulatedMaterial(self.name, file_path=self.local_path)
             raise ValueError(f"No supported optical dataset found in {self.local_path}")
 
-        if self.legacy_name is not None:
-            if self.data_path and "/nk/" in self.data_path:
-                return TabulatedMaterial(self.legacy_name)
-            return SellmeierMaterial(self.legacy_name)
-        raise FileNotFoundError(f"Material page data is not available: {self.id}")
+        raise FileNotFoundError(
+            f"Material data for '{self.id}' is not available locally. "
+            "Download the upstream snapshot with Python using "
+            "'from PyOptik import download_snapshot; download_snapshot()' "
+            "or from the terminal with 'pyoptik setup'."
+        )
 
 
 class MaterialCatalog:
@@ -99,22 +107,17 @@ class MaterialCatalog:
         ----------
         catalog_file : pathlib.Path or str, optional
             Path to an upstream ``catalog-nk.yml`` file. If omitted, the
-            packaged catalog is used when available, otherwise the legacy
-            PyOptik repertoire is converted into catalog entries.
+            packaged catalog is used when available. If no catalog is
+            available, the catalog starts empty and the user can call
+            :func:`download_snapshot`.
         data_root : pathlib.Path or str, optional
             Root directory for hierarchy-preserving downloaded data.
         """
         self.data_root = Path(data_root or (user_data_path / "rii")).expanduser()
         self._pages: dict[MaterialId, MaterialPage] = {}
-        self._aliases: dict[str, MaterialId] = {}
         if catalog_file is not None:
             self.load_catalog(catalog_file)
-        else:
-            default_catalog = libraries_path / "catalog-nk.yml"
-            if default_catalog.exists():
-                self.load_catalog(default_catalog)
-            else:
-                self._load_legacy_repertoire(libraries_path / "repertoire.yml")
+        logger.info("Initialized catalog with %s material pages", len(self._pages))
 
     @classmethod
     def from_upstream(cls, data_root: Optional[Path | str] = None, url: str = UPSTREAM_CATALOG_URL):
@@ -127,7 +130,142 @@ class MaterialCatalog:
             save_location=MaterialType.SELLMEIER,
             destination=catalog_file,
         )
-        return cls(catalog_file=catalog_file, data_root=root)
+        catalog = cls(catalog_file=catalog_file, data_root=root)
+        manifest = catalog._read_manifest()
+        manifest["catalog"] = {
+            "source": url,
+            "mode": "pages",
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }
+        for material_page in catalog.pages():
+            if not material_page.data_path:
+                continue
+            destination = root / material_page.data_path
+            if destination.exists():
+                manifest["pages"][material_page.id.key] = {
+                    "source_url": material_page.source_url,
+                    "local_path": str(destination.relative_to(root)),
+                    "status": "snapshot",
+                    "sha256": catalog._sha256(destination),
+                    "updated_at": datetime.now(timezone.utc).isoformat(),
+                }
+        catalog._write_manifest(manifest)
+        return catalog
+
+    @classmethod
+    def from_snapshot(
+        cls,
+        data_root: Optional[Path | str] = None,
+        url: str = UPSTREAM_ARCHIVE_URL,
+        force: bool = False,
+        progress=None,
+    ):
+        """Download and extract the complete upstream database snapshot.
+
+        Parameters
+        ----------
+        data_root : pathlib.Path or str, optional
+            Root directory where the upstream ``database`` contents are
+            extracted.
+        url : str, optional
+            URL of a ZIP archive containing the upstream database.
+        force : bool, optional
+            Download the archive even when a catalog is already present.
+        progress : callable, optional
+            Callback receiving ``(downloaded_bytes, total_bytes)`` while the
+            archive is downloaded.
+
+        Returns
+        -------
+        MaterialCatalog
+            Catalog backed by the extracted snapshot.
+        """
+        root = Path(data_root or (user_data_path / "rii")).expanduser()
+        catalog_file = root / "catalog-nk.yml"
+        existing_manifest = None
+        if catalog_file.exists() and not force:
+            try:
+                with (root / "manifest.json").open("r") as stream:
+                    existing_manifest = json.load(stream)
+            except (FileNotFoundError, json.JSONDecodeError):
+                existing_manifest = None
+        if (
+            catalog_file.exists()
+            and not force
+            and existing_manifest is not None
+            and existing_manifest.get("catalog", {}).get("mode") == "snapshot"
+        ):
+            existing_catalog = cls(catalog_file=catalog_file, data_root=root)
+            complete = all(
+                page.data_path is None
+                or (page.local_path is not None and page.local_path.exists())
+                for page in existing_catalog.pages()
+            )
+            if complete:
+                logger.info("Using existing upstream snapshot at %s", root)
+                return existing_catalog
+            logger.warning("Existing upstream snapshot is incomplete; refreshing it")
+
+        logger.info("Downloading upstream database snapshot from %s", url)
+        response = requests.get(url, timeout=UPSTREAM_TIMEOUT, stream=True)
+        response.raise_for_status()
+        root.mkdir(parents=True, exist_ok=True)
+
+        with tempfile.TemporaryDirectory(prefix="pyoptik-snapshot-") as temporary:
+            archive = Path(temporary) / "database.zip"
+            total_bytes = int(getattr(response, "headers", {}).get("content-length", 0))
+            downloaded_bytes = 0
+            if hasattr(response, "iter_content"):
+                with archive.open("wb") as stream:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                        if not chunk:
+                            continue
+                        stream.write(chunk)
+                        downloaded_bytes += len(chunk)
+                        if progress:
+                            progress(downloaded_bytes, total_bytes)
+            else:
+                content = response.content
+                archive.write_bytes(content)
+                if progress:
+                    progress(len(content), len(content))
+            with zipfile.ZipFile(archive) as bundle:
+                members = bundle.namelist()
+                database_member = next(
+                    (name for name in members if "/database/" in name),
+                    None,
+                )
+                if database_member is None:
+                    raise ValueError("Upstream archive does not contain a database directory")
+                database_prefix = database_member.split("/database/", 1)[0] + "/database/"
+                root_resolved = root.resolve()
+                for member in members:
+                    if not member.startswith(database_prefix) or member == database_prefix:
+                        continue
+                    relative = Path(member[len(database_prefix):])
+                    if relative.parts and relative.parts[0] == "data":
+                        relative = Path(*relative.parts[1:])
+                    if not relative.parts:
+                        continue
+                    destination = (root / relative).resolve()
+                    if not destination.is_relative_to(root_resolved):
+                        raise ValueError(f"Unsafe path in upstream archive: {member}")
+                    if member.endswith("/"):
+                        destination.mkdir(parents=True, exist_ok=True)
+                    else:
+                        destination.parent.mkdir(parents=True, exist_ok=True)
+                        destination.write_bytes(bundle.read(member))
+
+        catalog = cls(catalog_file=catalog_file, data_root=root)
+        manifest = catalog._read_manifest()
+        manifest["catalog"] = {
+            "source": url,
+            "mode": "snapshot",
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }
+        catalog._write_manifest(manifest)
+        logger.info("Extracted upstream snapshot with %s catalog pages", len(catalog.pages()))
+        return catalog
 
     def load_catalog(self, catalog_file: Path | str) -> None:
         """Load an upstream ``catalog-nk.yml`` file."""
@@ -164,38 +302,6 @@ class MaterialCatalog:
 
         walk(document)
         logger.info("Loaded %s material pages from %s", len(self._pages), catalog_file)
-
-    def _load_legacy_repertoire(self, repertoire_file: Path) -> None:
-        """Create a compatibility catalog from PyOptik's old URL map."""
-        with repertoire_file.open("r") as stream:
-            repertoire = yaml.safe_load(stream) or {}
-        for kind, entries in repertoire.items():
-            material_type = MaterialType(kind)
-            for alias, url in (entries or {}).items():
-                parsed = [unquote(part) for part in urlparse(url).path.split("/") if part]
-                try:
-                    data_index = parsed.index("data")
-                    path_parts = parsed[data_index + 1:]
-                    data_path = "/".join(path_parts)
-                    page = Path(path_parts[-1]).stem
-                    book = "/".join(path_parts[1:-1]) or "unknown"
-                    shelf = path_parts[0]
-                except (ValueError, IndexError):
-                    logger.warning("Could not derive hierarchy from URL: %s", url)
-                    continue
-                identifier = MaterialId(shelf, book, page)
-                self._pages.setdefault(
-                    identifier,
-                    MaterialPage(
-                        id=identifier,
-                        name=page,
-                        data_path=data_path,
-                        source_url=url,
-                        legacy_name=alias,
-                        data_root=self.data_root,
-                    ),
-                )
-                self._aliases[alias] = identifier
 
     def pages(self, shelf: Optional[str] = None, book: Optional[str] = None) -> list[MaterialPage]:
         """Return pages filtered by shelf and/or book."""
@@ -274,8 +380,6 @@ class MaterialCatalog:
             key = identifier
         elif book is not None and page is not None:
             key = MaterialId(identifier, book, page)
-        elif identifier in self._aliases:
-            key = self._aliases[identifier]
         else:
             parts = identifier.split("/")
             if len(parts) < 3:
@@ -294,6 +398,7 @@ class MaterialCatalog:
         force: bool = False,
         continue_on_error: bool = False,
         progress=None,
+        workers: int = 1,
     ) -> list[MaterialPage]:
         """Download matching pages into a resumable hierarchical cache.
 
@@ -309,23 +414,27 @@ class MaterialCatalog:
         progress : callable, optional
             Callback receiving ``(completed, total, page, status)`` after each
             page. Status is one of ``"downloaded"``, ``"cached"``,
-            ``"skipped"``, or ``"error"``.
+            ``"skipped"``, ``"snapshot"``, or ``"error"``.
+        workers : int, optional
+            Number of concurrent page downloads. Keep this bounded to respect
+            the upstream service.
 
         Returns
         -------
         list of MaterialPage
             Pages selected by the filters.
         """
+        if workers < 1:
+            raise ValueError("workers must be at least 1")
         selected = self.pages(shelf=shelf, book=book)
         manifest = self._read_manifest()
         total = len(selected)
-        for number, material_page in enumerate(selected, start=1):
-            status = "skipped"
+
+        def fetch(item):
+            """Download one page and return a manifest-ready result tuple."""
+            number, material_page = item
             if not material_page.source_url or not material_page.data_path:
-                logger.warning("No download URL for material page %s", material_page.id)
-                if progress:
-                    progress(number, total, material_page, status)
-                continue
+                return number, material_page, "skipped", None, None
             destination = self.data_root / material_page.data_path
             try:
                 was_cached = destination.exists() and not force
@@ -337,33 +446,62 @@ class MaterialCatalog:
                     overwrite=force,
                 )
                 status = "cached" if was_cached else "downloaded"
-                manifest["pages"][material_page.id.key] = {
+                record = {
                     "source_url": material_page.source_url,
                     "local_path": str(destination.relative_to(self.data_root)),
                     "status": status,
                     "sha256": self._sha256(destination),
                     "updated_at": datetime.now(timezone.utc).isoformat(),
                 }
-                logger.info("[%s/%s] %s: %s", number, total, status, material_page.id)
+                return number, material_page, status, record, None
             except Exception as error:
-                status = "error"
-                manifest["pages"][material_page.id.key] = {
+                record = {
                     "source_url": material_page.source_url,
                     "local_path": str(destination.relative_to(self.data_root)),
-                    "status": status,
+                    "status": "error",
                     "error": str(error),
                     "updated_at": datetime.now(timezone.utc).isoformat(),
                 }
-                logger.error("[%s/%s] failed: %s (%s)", number, total, material_page.id, error)
+                return number, material_page, "error", record, error
+
+        items = list(enumerate(selected, start=1))
+        if workers == 1:
+            results = (fetch(item) for item in items)
+            executor = None
+        else:
+            executor = ThreadPoolExecutor(max_workers=workers)
+            results = (future.result() for future in as_completed(
+                [executor.submit(fetch, item) for item in items]
+            ))
+        try:
+            for number, material_page, status, record, error in results:
+                if record is not None:
+                    manifest["pages"][material_page.id.key] = record
+                if status == "skipped":
+                    logger.warning("No download URL for material page %s", material_page.id)
+                elif status == "error":
+                    logger.error("[%s/%s] failed: %s (%s)", number, total, material_page.id, error)
+                    if not continue_on_error:
+                        self._write_manifest(manifest)
+                        raise error
+                else:
+                    logger.info("[%s/%s] %s: %s", number, total, status, material_page.id)
                 self._write_manifest(manifest)
-                if not continue_on_error:
-                    raise
-            self._write_manifest(manifest)
-            if progress:
-                progress(number, total, material_page, status)
+                if progress:
+                    progress(number, total, material_page, status)
+        finally:
+            if executor is not None:
+                executor.shutdown(wait=True)
         return selected
 
-    def download_all(self, *, force: bool = False, continue_on_error: bool = True, progress=None) -> list[MaterialPage]:
+    def download_all(
+        self,
+        *,
+        force: bool = False,
+        continue_on_error: bool = True,
+        progress=None,
+        workers: int = 1,
+    ) -> list[MaterialPage]:
         """Download every page in the catalog.
 
         Parameters
@@ -374,6 +512,8 @@ class MaterialCatalog:
             Continue after failed pages and record failures in the manifest.
         progress : callable, optional
             Callback receiving ``(completed, total, page, status)``.
+        workers : int, optional
+            Number of concurrent page downloads.
 
         Returns
         -------
@@ -384,8 +524,44 @@ class MaterialCatalog:
             force=force,
             continue_on_error=continue_on_error,
             progress=progress,
+            workers=workers,
         )
 
     def __iter__(self) -> Iterable[MaterialPage]:
         """Iterate over catalog pages in canonical identifier order."""
         return iter(self.pages())
+
+
+def download_snapshot(
+    data_root: Optional[Path | str] = None,
+    *,
+    force: bool = False,
+    progress=None,
+) -> MaterialCatalog:
+    """Download and activate the complete upstream material snapshot.
+
+    Parameters
+    ----------
+    data_root : pathlib.Path or str, optional
+        Directory where the snapshot should be stored.
+    force : bool, optional
+        Refresh an existing snapshot.
+    progress : callable, optional
+        Callback receiving ``(downloaded_bytes, total_bytes)``.
+
+    Returns
+    -------
+    MaterialCatalog
+        Catalog backed by the downloaded snapshot.
+
+    Examples
+    --------
+    >>> from PyOptik import download_snapshot
+    >>> catalog = download_snapshot()
+    >>> silver = catalog.get("main/Ag/Johnson").load()
+    """
+    return MaterialCatalog.from_snapshot(
+        data_root=data_root,
+        force=force,
+        progress=progress,
+    )

@@ -1,6 +1,11 @@
+import io
+import zipfile
+
 import yaml
 
-from PyOptik import MaterialCatalog, MaterialId
+import pytest
+
+from PyOptik import MaterialCatalog, MaterialId, download_snapshot
 
 
 def test_catalog_reads_upstream_hierarchy(tmp_path):
@@ -48,6 +53,28 @@ def test_catalog_loads_local_page(tmp_path):
     assert material.compute_refractive_index(450e-9).imag > 0
 
 
+def test_missing_page_explains_snapshot_setup(tmp_path):
+    catalog_file = tmp_path / "catalog.yml"
+    catalog_file.write_text(
+        "- SHELF: main\n  content:\n    - BOOK: Ag\n      content:\n        - PAGE: Johnson\n          data: main/Ag/nk/Johnson.yml\n"
+    )
+    page = MaterialCatalog(catalog_file, tmp_path / "rii").get("main/Ag/Johnson")
+
+    with pytest.raises(FileNotFoundError, match="download_snapshot.*pyoptik setup"):
+        page.load()
+
+
+def test_download_snapshot_wrapper(monkeypatch, tmp_path):
+    expected = object()
+
+    def fake_snapshot(**kwargs):
+        assert kwargs == {"data_root": tmp_path, "force": True, "progress": None}
+        return expected
+
+    monkeypatch.setattr(MaterialCatalog, "from_snapshot", fake_snapshot)
+    assert download_snapshot(tmp_path, force=True) is expected
+
+
 def test_catalog_from_upstream_uses_local_cache(monkeypatch, tmp_path):
     def fake_download(**kwargs):
         destination = kwargs["destination"]
@@ -59,6 +86,32 @@ def test_catalog_from_upstream_uses_local_cache(monkeypatch, tmp_path):
     monkeypatch.setattr("PyOptik.catalog.download_yml_file", fake_download)
     catalog = MaterialCatalog.from_upstream(data_root=tmp_path / "rii")
     assert catalog.shelves() == ["main"]
+
+
+def test_catalog_from_snapshot_extracts_database(monkeypatch, tmp_path):
+    archive = io.BytesIO()
+    with zipfile.ZipFile(archive, "w") as bundle:
+        bundle.writestr(
+            "database-main/database/catalog-nk.yml",
+            "- SHELF: main\n  content:\n    - BOOK: Si\n      content:\n        - PAGE: Test\n          data: main/Si/nk/Test.yml\n",
+        )
+        bundle.writestr("database-main/database/data/main/Si/nk/Test.yml", "DATA: []\n")
+
+    class Response:
+        content = archive.getvalue()
+
+        @staticmethod
+        def raise_for_status():
+            return None
+
+    monkeypatch.setattr("PyOptik.catalog.requests.get", lambda *args, **kwargs: Response())
+    root = tmp_path / "rii"
+    catalog = MaterialCatalog.from_snapshot(data_root=root)
+
+    assert catalog.shelves() == ["main"]
+    assert (root / "main/Si/nk/Test.yml").read_text() == "DATA: []\n"
+    manifest = yaml.safe_load((root / "manifest.json").read_text())
+    assert manifest["catalog"]["mode"] == "snapshot"
 
 
 def test_download_all_writes_resumable_manifest(monkeypatch, tmp_path):

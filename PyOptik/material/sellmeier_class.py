@@ -43,7 +43,7 @@ class SellmeierMaterial(BaseMaterial):
             The name of the YAML file containing material properties.
         file_path : pathlib.Path, optional
             Explicit YAML path for hierarchy-preserving catalog pages. When
-            omitted, the bundled or user material directories are searched.
+            omitted, the user material directory is searched.
         """
         self.filename = filename
         self.file_path = file_path

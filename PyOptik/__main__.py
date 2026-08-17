@@ -1,7 +1,9 @@
-from PyOptik import MaterialBank
 import argparse
 import logging
 from pathlib import Path
+import sys
+
+from PyOptik import MaterialCatalog
 
 logger = logging.getLogger(__name__)
 
@@ -9,28 +11,19 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     """Run the PyOptik material-library command line interface.
 
-    The default command downloads one of PyOptik's curated libraries.  Use
-    ``download-all`` to mirror every material page exposed by the upstream
-    refractiveindex.info catalog into the local hierarchical data store.
+    The default command downloads the complete upstream material snapshot.
+    Use ``download-all`` for the explicit catalog download command or its
+    page-based fallback mode.
     """
     parser = argparse.ArgumentParser(
-        description="Download curated or upstream PyOptik material libraries"
+        description="Set up or download the canonical PyOptik material catalog"
     )
     parser.add_argument(
-        "library",
+        "command",
         nargs="?",
-        default="all",
-        help="Library name, or 'download-all' for the complete upstream catalog",
-    )
-    parser.add_argument(
-        "--remove-previous",
-        action="store_true",
-        help="Remove previously downloaded files before downloading",
-    )
-    parser.add_argument(
-        "--list-libraries",
-        action="store_true",
-        help="List available library names and exit",
+        default="setup",
+        choices=("setup", "download-all"),
+        help="Canonical catalog command (default: setup)",
     )
     parser.add_argument(
         "--verbose",
@@ -53,6 +46,23 @@ def main() -> None:
         default=None,
         help="Root directory for the complete upstream catalog",
     )
+    parser.add_argument(
+        "--source",
+        choices=("snapshot", "pages"),
+        default="snapshot",
+        help="Download source: one upstream snapshot (default) or individual pages",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help="Concurrent page downloads when --source=pages (default: 8)",
+    )
+    parser.add_argument(
+        "--no-progress",
+        action="store_true",
+        help="Disable the snapshot download progress bar",
+    )
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -60,28 +70,54 @@ def main() -> None:
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
 
-    if args.list_libraries:
-        for lib in MaterialBank.list_available_libraries():
-            print(lib)
-        return
+    if args.command == "setup" and args.source != "snapshot":
+        parser.error("setup always uses the upstream snapshot; use download-all for page mode")
+    source = "snapshot" if args.command == "setup" else args.source
+    logger.info(
+        "Setting up the upstream material catalog"
+        if args.command == "setup"
+        else "Updating the upstream material catalog"
+    )
 
-    if args.library == "download-all":
-        if args.remove_previous:
-            parser.error(
-                "--remove-previous cannot be combined with the download-all command; "
-                "use --force to refresh cached upstream pages"
+    def show_progress(downloaded: int, total: int) -> None:
+        """Render snapshot download progress on the terminal."""
+        width = 30
+        if total:
+            complete = min(width, int(width * downloaded / total))
+            bar = "=" * complete + ">" + " " * max(0, width - complete - 1)
+            percent = 100 * downloaded / total
+            message = (
+                f"\rDownloading snapshot [{bar}] {percent:5.1f}% "
+                f"({downloaded / 1024**2:.1f}/{total / 1024**2:.1f} MiB)"
             )
-        logger.info("Updating the upstream material catalog")
-        MaterialBank.update_catalog(data_root=args.data_root)
-        logger.info("Downloading the complete upstream material catalog")
-        MaterialBank.download_all(
-            force=args.force,
-            continue_on_error=not args.fail_fast,
-        )
-        return
+        else:
+            message = f"\rDownloading snapshot: {downloaded / 1024**2:.1f} MiB"
+        print(message, end="", file=sys.stderr, flush=True)
 
-    logger.info("Building material library")
-    MaterialBank.build_library(args.library, remove_previous=args.remove_previous)
+    progress = None if args.no_progress else show_progress
+    if source == "snapshot":
+        catalog = MaterialCatalog.from_snapshot(
+            data_root=args.data_root,
+            force=args.force,
+            progress=progress,
+        )
+    else:
+        catalog = MaterialCatalog.from_upstream(data_root=args.data_root)
+    if progress:
+        print(file=sys.stderr)
+    logger.info(
+        "Finalizing the complete upstream material catalog"
+        if source == "snapshot"
+        else "Downloading the complete upstream material catalog"
+    )
+    if source == "snapshot":
+        logger.info("Snapshot download complete; material pages are already available locally")
+        return
+    catalog.download_all(
+        force=args.force,
+        continue_on_error=not args.fail_fast,
+        workers=args.workers,
+    )
 
 
 if __name__ == "__main__":

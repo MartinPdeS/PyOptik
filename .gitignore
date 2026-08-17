@@ -17,6 +17,7 @@
 !README.rst
 !notebook.ipynb
 !CMakeLists.txt
+!Makefile
 !pytest.ini
 !.coveragerc
 

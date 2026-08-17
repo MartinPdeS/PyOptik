@@ -45,7 +45,7 @@ Features
 * NumPy-compatible scalar and array evaluation.
 * Plotting helpers for dispersion and absorption data.
 * Hierarchical catalog access using upstream ``shelf / book / page`` identity.
-* Curated material aliases such as ``MaterialBank.BK7`` for quick workflows.
+* Explicit upstream page selection using ``shelf/book/page`` identifiers.
 * Downloadable custom and upstream material data with local caching.
 
 Installation
@@ -69,6 +69,21 @@ Verify the installation with the same interpreter that will run your code:
 
    python -c "import PyOptik; print(PyOptik.__version__)"
 
+Material data is not bundled with PyOptik. Install the package first, then
+download the upstream snapshot when it is needed:
+
+.. code-block:: bash
+
+   pyoptik setup
+
+or from Python:
+
+.. code-block:: python
+
+   from PyOptik import download_snapshot
+
+   catalog = download_snapshot()
+
 First calculation
 -----------------
 
@@ -78,9 +93,10 @@ micrometres, and nanometres.
 .. code-block:: python
 
    from TypedUnit import ureg
-   from PyOptik import MaterialBank
+   from PyOptik import MaterialCatalog
 
-   bk7 = MaterialBank.BK7
+   catalog = MaterialCatalog.from_snapshot()
+   bk7 = catalog.get("specs/SCHOTT-optical/P-BK7").load()
    index = bk7.compute_refractive_index(550 * ureg.nanometer)
 
    print(index)
@@ -96,9 +112,10 @@ Sellmeier materials evaluate a dispersion formula:
 .. code-block:: python
 
    from TypedUnit import ureg
-   from PyOptik import MaterialBank
+   from PyOptik import MaterialCatalog
 
-   silica = MaterialBank.fused_silica
+   catalog = MaterialCatalog.from_snapshot()
+   silica = catalog.get("main/SiO2/Malitson").load()
    wavelengths = [800, 1310, 1550] * ureg.nanometer
    index = silica.compute_refractive_index(wavelengths)
 
@@ -106,7 +123,10 @@ Tabulated materials interpolate complex optical constants:
 
 .. code-block:: python
 
-   silicon = MaterialBank.silicon
+   from PyOptik import MaterialCatalog
+
+   catalog = MaterialCatalog.from_snapshot()
+   silicon = catalog.get("main/Si/Aspnes").load()
    index = silicon.compute_refractive_index(1.55 * ureg.micrometer)
 
 The real part is the refractive index ``n`` and the imaginary part is the
@@ -157,10 +177,11 @@ Material models include simple dispersion plots:
 
 .. code-block:: python
 
-   from PyOptik import MaterialBank
+   from PyOptik import MaterialCatalog
 
-   MaterialBank.BK7.plot()
-   MaterialBank.gold.plot()
+   catalog = MaterialCatalog.from_snapshot()
+   catalog.get("specs/SCHOTT-optical/P-BK7").load().plot()
+   catalog.get("main/Au/Johnson").load().plot()
 
 For non-interactive environments such as CI or servers, select a headless
 Matplotlib backend before importing plotting code:
@@ -197,7 +218,8 @@ Download a complete source collection, such as an optical-glass book:
        book="SCHOTT-optical",
    )
 
-Download the complete ``n,k`` catalog with resumable progress tracking:
+Download the complete optical catalog, including tabulated and formula-based
+materials, with resumable progress tracking:
 
 .. code-block:: python
 
@@ -214,105 +236,46 @@ Access a page by its canonical identifier and load its material model:
    page = catalog.get("specs/SCHOTT-optical/N-BK7")
    bk7 = page.load()
 
-The shorter compatibility interface remains available:
-
-.. code-block:: python
-
-   from PyOptik import MaterialBank
-
-   catalog = MaterialBank.update_catalog()
-   page = MaterialBank.get_page("specs/SCHOTT-optical/N-BK7")
-
 Material data is cached in a user data directory. Set
 ``PYOPTIK_DATA_DIR`` to choose a different location.
 
-Curated libraries and aliases
------------------------------
-
-For quick workflows, ``MaterialBank`` provides aliases and curated download
-collections:
-
-.. code-block:: python
-
-   from PyOptik import MaterialBank
-
-   MaterialBank.build_library("classics")
-   MaterialBank.print_available()
-
-   MaterialBank.build_library("metals")
-   gold = MaterialBank.get("gold", kind="tabulated")
-
-Available collections can be listed with:
-
-.. code-block:: python
-
-   print(MaterialBank.list_available_libraries())
-
-The command-line interface provides the same collection download workflow:
+The command-line interface provides the canonical catalog workflow:
 
 .. code-block:: bash
 
-   python -m PyOptik --list-libraries
-   python -m PyOptik classics
-   python -m PyOptik metals --verbose
+   pyoptik setup
    python -m PyOptik download-all --data-root ./refractiveindex-data
+   python -m PyOptik download-all --source pages --workers 8
 
 After installation, the equivalent console command is ``pyoptik
 download-all --data-root ./refractiveindex-data``.
 
-The ``download-all`` command first refreshes the upstream catalog, then
-downloads every material page while preserving its ``shelf/book/page``
-hierarchy. Existing pages are reused by default, so the operation is
-resumable; pass ``--force`` to refresh them or ``--fail-fast`` to stop after
-the first failed page. Progress and failures are reported through the normal
-PyOptik logging system, with ``--verbose`` enabling detailed diagnostics.
+For a beginner-friendly first-time setup, use:
 
-Custom materials
-----------------
+.. code-block:: bash
 
-Add a source YAML file from a URL:
+   pyoptik setup
 
-.. code-block:: python
+This downloads the complete upstream snapshot, preserves the original
+hierarchy, and can be safely run again. Use ``pyoptik setup --force`` to
+refresh the local snapshot.
 
-   from PyOptik import MaterialBank, MaterialType
-
-   MaterialBank.add_material_to_bank(
-       filename="water_19C",
-       material_type=MaterialType.SELLMEIER,
-       url="https://refractiveindex.info/database/data/main/H2O/nk/Daimon-19.0C.yml",
-   )
-
-Create a custom Sellmeier file:
+The same setup is available from Python:
 
 .. code-block:: python
 
-   MaterialBank.create_sellmeier_file(
-       filename="my_glass",
-       formula_type=2,
-       coefficients=[0, 1.0, 0.01, 0.5, 0.1],
-       wavelength_range=(0.4, 2.0),
-       reference="Internal measurement",
-   )
+   from PyOptik import download_snapshot
 
-Create a custom tabulated ``n,k`` file:
+   catalog = download_snapshot()
+   silver = catalog.get("main/Ag/Johnson").load()
 
-.. code-block:: python
-
-   MaterialBank.create_tabulated_file(
-       filename="my_metal",
-       data=[
-           (0.50, 0.95, 1.80),
-           (0.60, 0.90, 2.10),
-           (0.70, 0.85, 2.40),
-       ],
-       reference="Internal measurement",
-   )
-
-Remove user-installed data with:
-
-.. code-block:: python
-
-   MaterialBank.remove_item("water_19C")
+The default ``download-all`` command downloads one upstream snapshot and
+extracts every material page locally, preserving its ``shelf/book/page``
+hierarchy. This avoids thousands of individual HTTP requests. Existing
+snapshots are reused; pass ``--force`` to refresh the snapshot. The
+``--source pages`` fallback downloads individual pages and supports bounded
+parallelism with ``--workers``. ``--fail-fast`` stops after the first failed
+page, while ``--verbose`` enables detailed diagnostics.
 
 Common issues
 -------------
@@ -322,8 +285,8 @@ Common issues
 * Use the canonical catalog identifier when provenance or source selection
   matters.
 * Use ``MPLBACKEND=Agg`` for documentation builds, CI, and remote servers.
-* If a material cannot be found, build the required curated library or load
-  the upstream catalog with ``MaterialCatalog.from_upstream()``.
+* If a material cannot be found, run ``pyoptik setup`` or call
+  ``download_snapshot()`` before loading its canonical page.
 
 Development and testing
 -----------------------

@@ -24,7 +24,7 @@ Group Index and Velocity of Fused Silica
 This example demonstrates how to compute and plot the group index and
 group velocity of fused silica using :mod:`PyOptik`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-26
+.. GENERATED FROM PYTHON SOURCE LINES 10-27
 
 .. code-block:: Python
 
@@ -33,11 +33,12 @@ group velocity of fused silica using :mod:`PyOptik`.
     from MPSPlots.styles import mps
     from TypedUnit import ureg
 
-    from PyOptik import MaterialBank
+    from PyOptik import MaterialCatalog
 
 
     # Retrieve the material
-    material = MaterialBank.fused_silica
+    catalog = MaterialCatalog.from_snapshot()
+    material = catalog.get("main/SiO2/Malitson").load()
 
     # Compute values over a wavelength range
     wavelengths = numpy.linspace(0.5, 1.6, 200) * ureg.micrometer
@@ -51,7 +52,7 @@ group velocity of fused silica using :mod:`PyOptik`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-49
+.. GENERATED FROM PYTHON SOURCE LINES 28-50
 
 .. code-block:: Python
 
@@ -63,14 +64,14 @@ group velocity of fused silica using :mod:`PyOptik`.
         ylabel="Group index",
         title="Fused Silica Group Properties",
     )
-    ax1.plot(wavelengths.to(ureg.micrometer).magnitude, n_g.magnitude, label="n_g")
+    ax1.plot(wavelengths, n_g, label="n_g")
     ax1.legend(loc="upper left")
 
     ax2 = ax1.twinx()
     ax2.set(ylabel="Group velocity [m/s]")
     ax2.plot(
-        wavelengths.to(ureg.micrometer).magnitude,
-        v_g.to("m/s").magnitude,
+        wavelengths,
+        v_g.to("m/s"),
         color="tab:red",
         label="v_g",
     )
@@ -86,13 +87,20 @@ group velocity of fused silica using :mod:`PyOptik`.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/matplotlib/cbook.py:1407: UnitStrippedWarning: The unit of the quantity is stripped when downcasting to ndarray.
+      return np.asanyarray(x, float)
+
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.274 seconds)
+   **Total running time of the script:** (0 minutes 1.246 seconds)
 
 
 .. _sphx_glr_download_gallery_group_properties_plot_group_properties.py:

@@ -23,12 +23,12 @@ Plot the Refractive Index of Optical Material: Silica
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica glass over a specified range of wavelengths.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-21
+.. GENERATED FROM PYTHON SOURCE LINES 10-22
 
 
 
 .. image-sg:: /gallery/sellmeier/images/sphx_glr_plot_silica_001.png
-   :alt: Refractive Index vs. Wavelength: [fused_silica]
+   :alt: Refractive Index vs. Wavelength: [Malitson]
    :srcset: /gallery/sellmeier/images/sphx_glr_plot_silica_001.png
    :class: sphx-glr-single-img
 
@@ -37,6 +37,11 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
  .. code-block:: none
 
+    findfont: Font family ['cursive'] not found. Falling back to DejaVu Sans.
+    findfont: Generic family 'cursive' not found because none of the following families were found: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, Comic Neue, Comic Sans MS, cursive
+    findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
+    findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
+    findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
 
     <Figure size 640x480 with 1 Axes>
 
@@ -49,10 +54,11 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 .. code-block:: Python
 
     from TypedUnit import ureg
-    from PyOptik import MaterialBank
+    from PyOptik import MaterialCatalog
 
     # Initialize the material with the Sellmeier model
-    material = MaterialBank.fused_silica
+    catalog = MaterialCatalog.from_snapshot()
+    material = catalog.get("main/SiO2/Malitson").load()
 
     # Calculate refractive index at specific wavelengths
     RI = material.compute_refractive_index(wavelength=[1310, 1550] * ureg.nanometer)
@@ -63,7 +69,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.192 seconds)
+   **Total running time of the script:** (0 minutes 4.277 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_silica.py:

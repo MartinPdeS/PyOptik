@@ -23,12 +23,12 @@ Plot the Refractive Index of Optical Material: Water
 
 This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material water over a specified range of wavelengths.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-23
+.. GENERATED FROM PYTHON SOURCE LINES 10-24
 
 
 
 .. image-sg:: /gallery/sellmeier/images/sphx_glr_plot_water_001.png
-   :alt: Refractive Index vs. Wavelength: [water]
+   :alt: Refractive Index vs. Wavelength: [Daimon-19.0C]
    :srcset: /gallery/sellmeier/images/sphx_glr_plot_water_001.png
    :class: sphx-glr-single-img
 
@@ -51,10 +51,11 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
     import numpy
     from TypedUnit import ureg
 
-    from PyOptik import MaterialBank
+    from PyOptik import MaterialCatalog
 
     # Initialize the material with the Sellmeier model
-    material = MaterialBank.water
+    catalog = MaterialCatalog.from_snapshot()
+    material = catalog.get("main/H2O/Daimon-19.0C").load()
 
     # Calculate refractive index at specific wavelengths
     RI = material.compute_refractive_index(wavelength=[800, 900] * ureg.nanometer)
@@ -65,7 +66,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.182 seconds)
+   **Total running time of the script:** (0 minutes 1.127 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_water.py:

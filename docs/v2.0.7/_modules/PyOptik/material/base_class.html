@@ -448,14 +448,14 @@ document.write(`
 <div class="viewcode-block" id="BaseMaterial">
 <a class="viewcode-back" href="../../../code.html#PyOptik.material.base_class.BaseMaterial">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BaseMaterial</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Common interface for refractive-index material models.</span>
+<span class="w">    </span><span class="sd">"""Common interface for refractive-index material models.</span>
 
 <span class="sd">    Subclasses provide :meth:`compute_refractive_index`; this class supplies</span>
 <span class="sd">    unit handling, validity-range checks, and group-delay calculations.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare materials by concrete type and filename.</span>
+<span class="w">        </span><span class="sd">"""Compare materials by concrete type and filename.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -466,7 +466,7 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        bool</span>
 <span class="sd">            True when both objects represent the same material class and file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
 
@@ -476,36 +476,41 @@ document.write(`
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Provides an informal string representation of the Material object.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
 <span class="sd">            Informal representation of the Material object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Material: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Material: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Provides a formal string representation of the Material object, including key attributes.</span>
+<span class="w">        </span><span class="sd">"""Return a concise, informative representation of the material.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str</span>
-<span class="sd">            Formal representation of the Material object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+<span class="sd">        The representation includes the concrete model, source filename, and</span>
+<span class="sd">        validity range when available. Numerical arrays are intentionally not</span>
+<span class="sd">        included, so inspecting a material never produces a large output.</span>
+<span class="sd">        """</span>
+        <span class="n">details</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"filename=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">!r}</span><span class="s2">"</span><span class="p">]</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"file_path"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">details</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"file_path=</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">wavelength_bound</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"wavelength_bound"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wavelength_bound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">details</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"wavelength_range=</span><span class="si">{</span><span class="n">wavelength_bound</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">details</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_check_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;warn&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks if a wavelength is within the material&#39;s allowable range and raises a warning if it is not.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Checks if a wavelength is within the material's allowable range and raises a warning if it is not.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        wavelength : Length</span>
 <span class="sd">            The wavelength to check, in micrometers.</span>
-<span class="sd">        out_of_range : {&quot;warn&quot;, &quot;raise&quot;, &quot;clip&quot;}, optional</span>
+<span class="sd">        out_of_range : {"warn", "raise", "clip"}, optional</span>
 <span class="sd">            Policy for wavelengths outside ``wavelength_bound``.</span>
 
 <span class="sd">        Raises</span>
@@ -513,25 +518,25 @@ document.write(`
 <span class="sd">        UserWarning</span>
 <span class="sd">            If the wavelength is outside the allowable range.</span>
 <span class="sd">        ValueError</span>
-<span class="sd">            If ``out_of_range`` is invalid or has value ``&quot;raise&quot;`` for an</span>
+<span class="sd">            If ``out_of_range`` is invalid or has value ``"raise"`` for an</span>
 <span class="sd">            out-of-range wavelength.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">out_of_range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;warn&quot;</span><span class="p">,</span> <span class="s2">&quot;raise&quot;</span><span class="p">,</span> <span class="s2">&quot;clip&quot;</span><span class="p">}:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;out_of_range must be &#39;warn&#39;, &#39;raise&#39;, or &#39;clip&#39;.&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">out_of_range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"warn"</span><span class="p">,</span> <span class="s2">"raise"</span><span class="p">,</span> <span class="s2">"clip"</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"out_of_range must be 'warn', 'raise', or 'clip'."</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span>
 
             <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">((</span><span class="n">wavelength</span> <span class="o">&lt;</span> <span class="n">min_value</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">wavelength</span> <span class="o">&gt;</span> <span class="n">max_value</span><span class="p">)):</span>
                 <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Wavelength range goes from </span><span class="si">{</span><span class="n">wavelength</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">wavelength</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;which is outside the allowable range of </span><span class="si">{</span><span class="n">min_value</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">max_value</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm. &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;[Material: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">]&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Wavelength range goes from </span><span class="si">{</span><span class="n">wavelength</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">wavelength</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> "</span>
+                    <span class="sa">f</span><span class="s2">"which is outside the allowable range of </span><span class="si">{</span><span class="n">min_value</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">max_value</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm. "</span>
+                    <span class="sa">f</span><span class="s2">"[Material: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">]"</span>
                 <span class="p">)</span>
-                <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">&quot;raise&quot;</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Wavelength validation failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">"raise"</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Wavelength validation failed: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">&quot;clip&quot;</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Clipping out-of-range wavelengths for material &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">"clip"</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Clipping out-of-range wavelengths for material '</span><span class="si">%s</span><span class="s2">'"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
                     <span class="k">return</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
@@ -540,7 +545,7 @@ document.write(`
                 <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_clip_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Length</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clip wavelengths to the material validity interval.</span>
+<span class="w">        </span><span class="sd">"""Clip wavelengths to the material validity interval.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -550,8 +555,8 @@ document.write(`
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Length</span>
-<span class="sd">            Wavelengths constrained to the material&#39;s validity interval.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            Wavelengths constrained to the material's validity interval.</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">wavelength</span>
         <span class="n">values</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
@@ -562,7 +567,7 @@ document.write(`
         <span class="k">return</span> <span class="n">values</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">ensure_units</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decorator ensuring the wavelength argument carries ureg.</span>
+<span class="w">        </span><span class="sd">"""Decorator ensuring the wavelength argument carries ureg.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -574,12 +579,12 @@ document.write(`
 <span class="sd">        Callable</span>
 <span class="sd">            Wrapped version of ``func`` that accepts numerical wavelengths and</span>
 <span class="sd">            converts them to metre-based :class:`~PyOptik.ureg.Quantity` objects.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Apply the unit-normalization behavior of the decorator.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">"""Apply the unit-normalization behavior of the decorator."""</span>
             <span class="k">if</span> <span class="n">wavelength</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Wavelength must be provided for computation.&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Wavelength must be provided for computation.'</span><span class="p">)</span>
                 <span class="n">wavelength</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="o">.</span><span class="n">units</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
@@ -589,7 +594,7 @@ document.write(`
 
     <span class="nd">@validate_units</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_group_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Length</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Calculate the group refractive index n_g(\u03bb).</span>
 <span class="sd">        The group index is defined as n_g(\u03bb) = n(\u03bb) - \u03bb * dn/d\u03bb,</span>
 <span class="sd">        where n(\u03bb) is the refractive index and dn/d\u03bb is the derivative of</span>
@@ -609,7 +614,7 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        ureg.Quantity</span>
 <span class="sd">            Group refractive index at the specified wavelength, in dimensionless ureg.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
         <span class="n">n_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">n_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
@@ -618,7 +623,7 @@ document.write(`
 
     <span class="nd">@validate_units</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_group_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyUnit</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Calculate the group velocity v_g(\u03bb) = c / n_g(\u03bb),</span>
 <span class="sd">        where c is the speed of light in vacuum and n_g(\u03bb) is the group index.</span>
 
@@ -631,7 +636,7 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        AnyUnit</span>
 <span class="sd">            Group velocity at the specified wavelength, in metres per second.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ng</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mi">299792458</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">ureg</span><span class="o">.</span><span class="n">second</span>
         <span class="k">return</span> <span class="n">c</span> <span class="o">/</span> <span class="n">ng</span>
@@ -642,7 +647,7 @@ document.write(`
         <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span>
         <span class="n">length</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Time</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the group delay for a given propagation length.</span>
+<span class="w">        </span><span class="sd">"""Calculate the group delay for a given propagation length.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -655,7 +660,7 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        Time</span>
 <span class="sd">            Group delay for the specified wavelength and length.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">vg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">length</span> <span class="o">/</span> <span class="n">vg</span>
 
@@ -666,7 +671,7 @@ document.write(`
         <span class="n">length</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
         <span class="n">delta</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyUnit</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate ``d\u03c4_g/d\u03bb`` for a given propagation length.</span>
+<span class="w">        </span><span class="sd">"""Calculate ``d\u03c4_g/d\u03bb`` for a given propagation length.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -682,7 +687,7 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        AnyUnit</span>
 <span class="sd">            Group delay dispersion evaluated at ``wavelength``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">gd_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
         <span class="n">gd_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">gd_plus</span> <span class="o">-</span> <span class="n">gd_minus</span><span class="p">)</span> <span class="o">/</span> <span class="n">delta</span></div>

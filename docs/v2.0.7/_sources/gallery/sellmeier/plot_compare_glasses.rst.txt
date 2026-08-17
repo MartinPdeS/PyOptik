@@ -22,11 +22,11 @@ Compare the Refractive Index of BK7 and Fused Silica
 ====================================================
 
 This example compares two common optical glasses available in
-:class:`~PyOptik.material_bank.MaterialBank`. It computes and plots the
+:class:`~PyOptik.catalog.MaterialCatalog`. It computes and plots the
 refractive index of BK7 and fused silica over the visible to near
 infrared wavelength range.
 
-.. GENERATED FROM PYTHON SOURCE LINES 12-30
+.. GENERATED FROM PYTHON SOURCE LINES 12-31
 
 .. code-block:: Python
 
@@ -35,12 +35,13 @@ infrared wavelength range.
     from MPSPlots.styles import mps
     from TypedUnit import ureg
 
-    from PyOptik import MaterialBank
+    from PyOptik import MaterialCatalog
 
 
     # Retrieve materials
-    bk7 = MaterialBank.BK7
-    silica = MaterialBank.fused_silica
+    catalog = MaterialCatalog.from_snapshot()
+    bk7 = catalog.get("specs/SCHOTT-optical/P-BK7").load()
+    silica = catalog.get("main/SiO2/Malitson").load()
 
     # Prepare wavelength range
     wavelengths = numpy.linspace(0.4, 1.6, 300) * ureg.micrometer
@@ -55,7 +56,7 @@ infrared wavelength range.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-44
+.. GENERATED FROM PYTHON SOURCE LINES 32-45
 
 .. code-block:: Python
 
@@ -67,8 +68,8 @@ infrared wavelength range.
         xlabel="Wavelength [µm]",
         ylabel="Refractive index",
     )
-    ax.plot(wavelengths.to(ureg.micrometer).magnitude, n_bk7.real, label="BK7")
-    ax.plot(wavelengths.to(ureg.micrometer).magnitude, n_silica.real, label="Fused Silica")
+    ax.plot(wavelengths, n_bk7.real, label="BK7")
+    ax.plot(wavelengths, n_silica.real, label="Fused Silica")
     ax.legend()
 
     plt.show()
@@ -81,13 +82,20 @@ infrared wavelength range.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/matplotlib/cbook.py:1407: UnitStrippedWarning: The unit of the quantity is stripped when downcasting to ndarray.
+      return np.asanyarray(x, float)
+
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.196 seconds)
+   **Total running time of the script:** (0 minutes 1.193 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_compare_glasses.py:

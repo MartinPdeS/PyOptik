@@ -12,11 +12,12 @@ import matplotlib.pyplot as plt
 from MPSPlots.styles import mps
 from TypedUnit import ureg
 
-from PyOptik import MaterialBank
+from PyOptik import MaterialCatalog
 
 
 # Retrieve the material
-material = MaterialBank.fused_silica
+catalog = MaterialCatalog.from_snapshot()
+material = catalog.get("main/SiO2/Malitson").load()
 
 # Compute values over a wavelength range
 wavelengths = numpy.linspace(0.5, 1.6, 200) * ureg.micrometer
@@ -32,14 +33,14 @@ ax1.set(
     ylabel="Group index",
     title="Fused Silica Group Properties",
 )
-ax1.plot(wavelengths.to(ureg.micrometer).magnitude, n_g.magnitude, label="n_g")
+ax1.plot(wavelengths, n_g, label="n_g")
 ax1.legend(loc="upper left")
 
 ax2 = ax1.twinx()
 ax2.set(ylabel="Group velocity [m/s]")
 ax2.plot(
-    wavelengths.to(ureg.micrometer).magnitude,
-    v_g.to("m/s").magnitude,
+    wavelengths,
+    v_g.to("m/s"),
     color="tab:red",
     label="v_g",
 )

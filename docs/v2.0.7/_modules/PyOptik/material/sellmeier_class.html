@@ -453,7 +453,7 @@ document.write(`
 <div class="viewcode-block" id="SellmeierMaterial">
 <a class="viewcode-back" href="../../../code.html#PyOptik.SellmeierMaterial">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SellmeierMaterial</span><span class="p">(</span><span class="n">BaseMaterial</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class representing a material with Sellmeier coefficients for refractive index computation.</span>
 
 <span class="sd">    Attributes</span>
@@ -468,9 +468,9 @@ document.write(`
 <span class="sd">        Reference information for the material data.</span>
 <span class="sd">    formula_type : int</span>
 <span class="sd">        The formula type to use for refractive index calculation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initializes the SellmeierMaterial with a filename.</span>
 
 <span class="sd">        Parameters</span>
@@ -480,8 +480,8 @@ document.write(`
 <span class="sd">            The name of the YAML file containing material properties.</span>
 <span class="sd">        file_path : pathlib.Path, optional</span>
 <span class="sd">            Explicit YAML path for hierarchy-preserving catalog pages. When</span>
-<span class="sd">            omitted, the bundled or user material directories are searched.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            omitted, the user material directory is searched.</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
 
@@ -492,42 +492,38 @@ document.write(`
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_coefficients</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the user-facing representation of the material.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
-
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the material name and ``Sellmeier`` model type.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;[Sellmeier]&#39;</span>
+<span class="w">        </span><span class="sd">"""Return the material name and ``Sellmeier`` model type."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">'[Sellmeier]'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Loads the Sellmeier coefficients, wavelength range, formula type, and reference from the specified YAML file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="ow">or</span> <span class="nb">next</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+            <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml"</span>
              <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">material_paths</span><span class="p">(</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">)</span>
-             <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span>
+             <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml"</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span>
             <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sellmeier YAML file &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sellmeier YAML file '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml' not found."</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="n">file_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">file_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">'.yml'</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">parsed_yaml</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loaded Sellmeier data from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Loaded Sellmeier data from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="c1"># Extract the formula type</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="p">[</span><span class="s2">&quot;DATA&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">coefficients</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;coefficients&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="p">[</span><span class="s2">"DATA"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">coefficients</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">"coefficients"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid Sellmeier data in YAML file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid Sellmeier data in YAML file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported formula type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported formula type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">coefficients</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sellmeier coefficients must be finite in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sellmeier coefficients must be finite in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="c1"># Extract coefficients and ensure the list has exactly 7 coefficients by padding with zeros if necessary</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
@@ -535,31 +531,31 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span>
 
         <span class="c1"># Extract wavelength range</span>
-        <span class="k">if</span> <span class="s1">&#39;wavelength_range&#39;</span> <span class="ow">in</span> <span class="n">parsed_yaml</span><span class="p">[</span><span class="s1">&#39;DATA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="n">data_str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;wavelength_range&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">'wavelength_range'</span> <span class="ow">in</span> <span class="n">parsed_yaml</span><span class="p">[</span><span class="s1">'DATA'</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">data_str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'wavelength_range'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 
             <span class="n">bounds</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data_str</span><span class="p">])</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">bounds</span><span class="p">))</span> <span class="ow">or</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid wavelength_range in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid wavelength_range in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="n">bounds</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># # Extract reference</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;REFERENCES&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validated Sellmeier material &#39;</span><span class="si">%s</span><span class="s2">&#39; with formula </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'REFERENCES'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Validated Sellmeier material '</span><span class="si">%s</span><span class="s2">' with formula </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="p">)</span>
 
     <span class="nd">@validate_units</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;warn&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RefractiveIndex</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RefractiveIndex</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        wavelength : Length | float</span>
 <span class="sd">            The wavelength \u03bb in meters, can be a single float or a numpy array.</span>
-<span class="sd">        out_of_range : {&quot;warn&quot;, &quot;raise&quot;, &quot;clip&quot;}, optional</span>
+<span class="sd">        out_of_range : {"warn", "raise", "clip"}, optional</span>
 <span class="sd">            Policy for wavelengths outside the source validity range.</span>
 
 <span class="sd">        Returns</span>
@@ -571,7 +567,7 @@ document.write(`
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the wavelength is outside the specified range or if an unsupported formula type is encountered.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">Length</span><span class="p">):</span>
             <span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span>
 
@@ -579,7 +575,7 @@ document.write(`
 
         <span class="n">wavelength</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">&quot;clip&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">"clip"</span><span class="p">:</span>
             <span class="n">wavelength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clip_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
 
         <span class="c1"># Compute the refractive index based on the formula type</span>
@@ -610,13 +606,13 @@ document.write(`
                     <span class="n">n</span> <span class="o">=</span> <span class="n">B</span> <span class="o">/</span> <span class="p">(</span><span class="n">C</span> <span class="o">-</span> <span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="o">**-</span><span class="mi">2</span><span class="p">)</span>
 
             <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported formula type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported formula type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_as_scalar</span> <span class="k">else</span> <span class="n">n</span>
 
     <span class="nd">@helper</span><span class="o">.</span><span class="n">pre_plot</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plots the refractive index as a function of wavelength over a specified range.</span>
 
 <span class="sd">        Parameters</span>
@@ -635,7 +631,7 @@ document.write(`
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the wavelength is not a 1D array or list of float values.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">wavelength</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
@@ -646,28 +642,28 @@ document.write(`
         <span class="n">refractive_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
 
         <span class="n">axes</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Refractive Index&#39;</span><span class="p">,</span>
-            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Wavelength [$\mu$m]&#39;</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Refractive Index vs. Wavelength: [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">]&quot;</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Refractive Index'</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">'Wavelength [$\mu$m]'</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Refractive Index vs. Wavelength: [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">]"</span>
         <span class="p">)</span>
-        <span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">refractive_index</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real Part&#39;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">refractive_index</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Real Part'</span><span class="p">)</span>
         <span class="n">axes</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Provides a formal string representation of the Material object, including key attributes.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
 <span class="sd">            Formal representation of the Material object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Material: &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39;,</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;coefficients: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;wavelength_range: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;formula_type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;reference: &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="si">}</span><span class="s2">&#39;)&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Material: '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">',</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"coefficients: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"wavelength_range: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"formula_type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"reference: '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="si">}</span><span class="s2">')"</span>
         <span class="p">)</span></div>
 
 </pre></div>

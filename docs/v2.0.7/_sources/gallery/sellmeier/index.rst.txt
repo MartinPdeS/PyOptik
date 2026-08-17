@@ -30,14 +30,14 @@ To run these examples, make sure you have installed all required dependencies as
 
 .. only:: html
 
-  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_bk7_thumb.png
+  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_silica_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_sellmeier_plot_bk7.py`
+  :ref:`sphx_glr_gallery_sellmeier_plot_silica.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: BK7</div>
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Silica</div>
     </div>
 
 
@@ -47,14 +47,14 @@ To run these examples, make sure you have installed all required dependencies as
 
 .. only:: html
 
-  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_silica_thumb.png
+  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_bk7_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_sellmeier_plot_silica.py`
+  :ref:`sphx_glr_gallery_sellmeier_plot_bk7.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Silica</div>
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: BK7</div>
     </div>
 
 
@@ -77,7 +77,7 @@ To run these examples, make sure you have installed all required dependencies as
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example compares two common optical glasses available in MaterialBank. It computes and plo...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example compares two common optical glasses available in MaterialCatalog. It computes and ...">
 
 .. only:: html
 
@@ -100,8 +100,8 @@ To run these examples, make sure you have installed all required dependencies as
 .. toctree::
    :hidden:
 
-   /gallery/sellmeier/plot_bk7
    /gallery/sellmeier/plot_silica
+   /gallery/sellmeier/plot_bk7
    /gallery/sellmeier/plot_water
    /gallery/sellmeier/plot_compare_glasses
 

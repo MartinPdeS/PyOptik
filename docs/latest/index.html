@@ -409,7 +409,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><strong>Date</strong>: Aug 16, 2026, <strong>Version</strong>: 2.0.7</p>
+  <p><strong>Date</strong>: Aug 17, 2026, <strong>Version</strong>: 2.0.7</p>
 <p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png" /></p>
 <table class="table">
 <colgroup>
@@ -466,7 +466,7 @@ electromagnetic modeling, and experimental data analysis.</p>
 <li><p>NumPy-compatible scalar and array evaluation.</p></li>
 <li><p>Plotting helpers for dispersion and absorption data.</p></li>
 <li><p>Hierarchical catalog access using upstream <code class="docutils literal notranslate"><span class="pre">shelf</span> <span class="pre">/</span> <span class="pre">book</span> <span class="pre">/</span> <span class="pre">page</span></code> identity.</p></li>
-<li><p>Curated material aliases such as <code class="docutils literal notranslate"><span class="pre">MaterialBank.BK7</span></code> for quick workflows.</p></li>
+<li><p>Explicit upstream page selection using <code class="docutils literal notranslate"><span class="pre">shelf/book/page</span></code> identifiers.</p></li>
 <li><p>Downloadable custom and upstream material data with local caching.</p></li>
 </ul>
 </section>
@@ -481,7 +481,18 @@ electromagnetic modeling, and experimental data analysis.</p>
 </pre></div>
 </div>
 <p>Verify the installation with the same interpreter that will run your code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import PyOptik; print(PyOptik.__version__)&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import PyOptik; print(PyOptik.__version__)"</span>
+</pre></div>
+</div>
+<p>Material data is not bundled with PyOptik. Install the package first, then
+download the upstream snapshot when it is needed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
+</pre></div>
+</div>
+<p>or from Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_snapshot</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">download_snapshot</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -490,9 +501,10 @@ electromagnetic modeling, and experimental data analysis.</p>
 <p>Wavelengths should carry units. This avoids ambiguity between metres,
 micrometres, and nanometres.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
 
-<span class="n">bk7</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
+<span class="n">bk7</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/P-BK7"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 <span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mi">550</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
@@ -505,15 +517,19 @@ metres. Unit-bearing quantities are recommended for new code.</p>
 <h2>Material models<a class="headerlink" href="#material-models" title="Link to this heading">#</a></h2>
 <p>Sellmeier materials evaluate a dispersion formula:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
 
-<span class="n">silica</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">fused_silica</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
+<span class="n">silica</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/SiO2/Malitson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 <span class="n">wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">1310</span><span class="p">,</span> <span class="mi">1550</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
 <span class="n">index</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Tabulated materials interpolate complex optical constants:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">silicon</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">silicon</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
+<span class="n">silicon</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Si/Aspnes"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 <span class="n">index</span> <span class="o">=</span> <span class="n">silicon</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">1.55</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -526,13 +542,13 @@ Out-of-range behavior can be selected explicitly:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wavelength</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
 
 <span class="c1"># Default: issue a warning and evaluate.</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">&quot;warn&quot;</span><span class="p">)</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">"warn"</span><span class="p">)</span>
 
 <span class="c1"># Fail fast for production calculations.</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">)</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">"raise"</span><span class="p">)</span>
 
 <span class="c1"># Evaluate at the nearest validity boundary.</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">&quot;clip&quot;</span><span class="p">)</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">"clip"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -556,16 +572,17 @@ Out-of-range behavior can be selected explicitly:</p>
 <section id="plotting">
 <h2>Plotting<a class="headerlink" href="#plotting" title="Link to this heading">#</a></h2>
 <p>Material models include simple dispersion plots:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
 
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">BK7</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">gold</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/P-BK7"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Au/Johnson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>For non-interactive environments such as CI or servers, select a headless
 Matplotlib backend before importing plotting code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"Agg"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -580,17 +597,18 @@ not collide simply because they share a short name.</p>
 <span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_upstream</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">shelves</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">books</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="s2">&quot;specs&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">books</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="s2">"specs"</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Download a complete source collection, such as an optical-glass book:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">catalog</span><span class="o">.</span><span class="n">download</span><span class="p">(</span>
-    <span class="n">shelf</span><span class="o">=</span><span class="s2">&quot;specs&quot;</span><span class="p">,</span>
-    <span class="n">book</span><span class="o">=</span><span class="s2">&quot;SCHOTT-optical&quot;</span><span class="p">,</span>
+    <span class="n">shelf</span><span class="o">=</span><span class="s2">"specs"</span><span class="p">,</span>
+    <span class="n">book</span><span class="o">=</span><span class="s2">"SCHOTT-optical"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Download the complete <code class="docutils literal notranslate"><span class="pre">n,k</span></code> catalog with resumable progress tracking:</p>
+<p>Download the complete optical catalog, including tabulated and formula-based
+materials, with resumable progress tracking:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">catalog</span><span class="o">.</span><span class="n">download_all</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -598,91 +616,41 @@ not collide simply because they share a short name.</p>
 local path, status, timestamp, and SHA-256 checksum. Re-running the command
 uses cached files, so interrupted downloads can resume safely.</p>
 <p>Access a page by its canonical identifier and load its material model:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;specs/SCHOTT-optical/N-BK7&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/N-BK7"</span><span class="p">)</span>
 <span class="n">bk7</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>The shorter compatibility interface remains available:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">update_catalog</span><span class="p">()</span>
-<span class="n">page</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="s2">&quot;specs/SCHOTT-optical/N-BK7&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Material data is cached in a user data directory. Set
 <code class="docutils literal notranslate"><span class="pre">PYOPTIK_DATA_DIR</span></code> to choose a different location.</p>
-</section>
-<section id="curated-libraries-and-aliases">
-<h2>Curated libraries and aliases<a class="headerlink" href="#curated-libraries-and-aliases" title="Link to this heading">#</a></h2>
-<p>For quick workflows, <code class="docutils literal notranslate"><span class="pre">MaterialBank</span></code> provides aliases and curated download
-collections:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
-
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s2">&quot;classics&quot;</span><span class="p">)</span>
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">print_available</span><span class="p">()</span>
-
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">build_library</span><span class="p">(</span><span class="s2">&quot;metals&quot;</span><span class="p">)</span>
-<span class="n">gold</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gold&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;tabulated&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Available collections can be listed with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">MaterialBank</span><span class="o">.</span><span class="n">list_available_libraries</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>The command-line interface provides the same collection download workflow:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>--list-libraries
-python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>classics
-python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>metals<span class="w"> </span>--verbose
+<p>The command-line interface provides the canonical catalog workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
 python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>download-all<span class="w"> </span>--data-root<span class="w"> </span>./refractiveindex-data
+python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>download-all<span class="w"> </span>--source<span class="w"> </span>pages<span class="w"> </span>--workers<span class="w"> </span><span class="m">8</span>
 </pre></div>
 </div>
 <p>After installation, the equivalent console command is <code class="docutils literal notranslate"><span class="pre">pyoptik</span>
 <span class="pre">download-all</span> <span class="pre">--data-root</span> <span class="pre">./refractiveindex-data</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">download-all</span></code> command first refreshes the upstream catalog, then
-downloads every material page while preserving its <code class="docutils literal notranslate"><span class="pre">shelf/book/page</span></code>
-hierarchy. Existing pages are reused by default, so the operation is
-resumable; pass <code class="docutils literal notranslate"><span class="pre">--force</span></code> to refresh them or <code class="docutils literal notranslate"><span class="pre">--fail-fast</span></code> to stop after
-the first failed page. Progress and failures are reported through the normal
-PyOptik logging system, with <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> enabling detailed diagnostics.</p>
-</section>
-<section id="custom-materials">
-<h2>Custom materials<a class="headerlink" href="#custom-materials" title="Link to this heading">#</a></h2>
-<p>Add a source YAML file from a URL:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span><span class="p">,</span> <span class="n">MaterialType</span>
+<p>For a beginner-friendly first-time setup, use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
+</pre></div>
+</div>
+<p>This downloads the complete upstream snapshot, preserves the original
+hierarchy, and can be safely run again. Use <code class="docutils literal notranslate"><span class="pre">pyoptik</span> <span class="pre">setup</span> <span class="pre">--force</span></code> to
+refresh the local snapshot.</p>
+<p>The same setup is available from Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_snapshot</span>
 
-<span class="n">MaterialBank</span><span class="o">.</span><span class="n">add_material_to_bank</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;water_19C&quot;</span><span class="p">,</span>
-    <span class="n">material_type</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span>
-    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://refractiveindex.info/database/data/main/H2O/nk/Daimon-19.0C.yml&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">download_snapshot</span><span class="p">()</span>
+<span class="n">silver</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Ag/Johnson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Create a custom Sellmeier file:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MaterialBank</span><span class="o">.</span><span class="n">create_sellmeier_file</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;my_glass&quot;</span><span class="p">,</span>
-    <span class="n">formula_type</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">coefficients</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
-    <span class="n">wavelength_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
-    <span class="n">reference</span><span class="o">=</span><span class="s2">&quot;Internal measurement&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>Create a custom tabulated <code class="docutils literal notranslate"><span class="pre">n,k</span></code> file:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MaterialBank</span><span class="o">.</span><span class="n">create_tabulated_file</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;my_metal&quot;</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">(</span><span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">1.80</span><span class="p">),</span>
-        <span class="p">(</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.90</span><span class="p">,</span> <span class="mf">2.10</span><span class="p">),</span>
-        <span class="p">(</span><span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">2.40</span><span class="p">),</span>
-    <span class="p">],</span>
-    <span class="n">reference</span><span class="o">=</span><span class="s2">&quot;Internal measurement&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>Remove user-installed data with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MaterialBank</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="s2">&quot;water_19C&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>The default <code class="docutils literal notranslate"><span class="pre">download-all</span></code> command downloads one upstream snapshot and
+extracts every material page locally, preserving its <code class="docutils literal notranslate"><span class="pre">shelf/book/page</span></code>
+hierarchy. This avoids thousands of individual HTTP requests. Existing
+snapshots are reused; pass <code class="docutils literal notranslate"><span class="pre">--force</span></code> to refresh the snapshot. The
+<code class="docutils literal notranslate"><span class="pre">--source</span> <span class="pre">pages</span></code> fallback downloads individual pages and supports bounded
+parallelism with <code class="docutils literal notranslate"><span class="pre">--workers</span></code>. <code class="docutils literal notranslate"><span class="pre">--fail-fast</span></code> stops after the first failed
+page, while <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> enables detailed diagnostics.</p>
 </section>
 <section id="common-issues">
 <h2>Common issues<a class="headerlink" href="#common-issues" title="Link to this heading">#</a></h2>
@@ -692,8 +660,8 @@ PyOptik logging system, with <code class="docutils literal notranslate"><span cl
 <li><p>Use the canonical catalog identifier when provenance or source selection
 matters.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">MPLBACKEND=Agg</span></code> for documentation builds, CI, and remote servers.</p></li>
-<li><p>If a material cannot be found, build the required curated library or load
-the upstream catalog with <code class="docutils literal notranslate"><span class="pre">MaterialCatalog.from_upstream()</span></code>.</p></li>
+<li><p>If a material cannot be found, run <code class="docutils literal notranslate"><span class="pre">pyoptik</span> <span class="pre">setup</span></code> or call
+<code class="docutils literal notranslate"><span class="pre">download_snapshot()</span></code> before loading its canonical page.</p></li>
 </ul>
 </section>
 <section id="development-and-testing">
@@ -701,11 +669,11 @@ the upstream catalog with <code class="docutils literal notranslate"><span class
 <p>Clone the repository and install development dependencies:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/MartinPdeS/PyOptik.git
 <span class="nb">cd</span><span class="w"> </span>PyOptik
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[testing,documentation,dev]&quot;</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[testing,documentation,dev]"</span>
 </pre></div>
 </div>
 <p>Run the offline test suite:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MPLBACKEND</span><span class="o">=</span>Agg<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not network&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MPLBACKEND</span><span class="o">=</span>Agg<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not network"</span>
 </pre></div>
 </div>
 <p>Build the documentation:</p>
@@ -728,14 +696,12 @@ material page for its original scientific or manufacturer reference.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="code.html">Source Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="code.html#materialbank">MaterialBank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#catalog-and-upstream-hierarchy">Catalog and Upstream Hierarchy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#material-models">Material Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#sellmeiermaterial">SellmeierMaterial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#tabulatedmaterial">TabulatedMaterial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#base-utilities">Base Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#enumerations">Enumerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#utility-functions">Utility Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="code.html#directives-for-sphinx-gallery">Directives for Sphinx Gallery</a></li>
@@ -779,8 +745,6 @@ material page for its original scientific or manufacturer reference.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-and-pulse-properties">Group and pulse properties</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting">Plotting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical-material-catalog">Hierarchical material catalog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curated-libraries-and-aliases">Curated libraries and aliases</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-materials">Custom materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-issues">Common issues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-and-testing">Development and testing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-and-references">Documentation and references</a></li>

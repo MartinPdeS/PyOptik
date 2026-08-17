@@ -13,10 +13,11 @@ import matplotlib.pyplot as plt
 from TypedUnit import ureg
 from MPSPlots.styles import mps
 
-from PyOptik import MaterialBank
+from PyOptik import MaterialCatalog
 
 
-material = MaterialBank.silicon
+catalog = MaterialCatalog.from_snapshot()
+material = catalog.get("main/Si/Aspnes").load()
 
 wavelengths = numpy.linspace(0.3, 1.1, 300) * ureg.micrometer
 index = material.compute_refractive_index(wavelengths)
@@ -30,12 +31,12 @@ ax1.set(
     xlabel="Wavelength [µm]",
     ylabel="n",
 )
-ax1.plot(wavelengths.to(ureg.micrometer).magnitude, index.real, label="n", color="tab:blue")
+ax1.plot(wavelengths, index.real, label="n", color="tab:blue")
 ax1.legend(loc="upper left")
 
 ax2 = ax1.twinx()
 ax2.set(ylabel="k")
-ax2.plot(wavelengths.to(ureg.micrometer).magnitude, index.imag, color="tab:red", label="k")
+ax2.plot(wavelengths, index.imag, color="tab:red", label="k")
 ax2.legend(loc="upper right")
 
 plt.show()

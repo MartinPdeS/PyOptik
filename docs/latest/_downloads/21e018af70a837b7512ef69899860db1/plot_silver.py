@@ -10,10 +10,11 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 import numpy
 from TypedUnit import ureg
 
-from PyOptik import MaterialBank
+from PyOptik import MaterialCatalog
 
-# Initialize the material with the Sellmeier model
-material = MaterialBank.silver
+# Load the tabulated Johnson silver dataset
+catalog = MaterialCatalog.from_snapshot()
+material = catalog.get("main/Ag/Johnson").load()
 
 # Calculate refractive index at specific wavelengths
 RI = material.compute_refractive_index(wavelength=[1310, 1550] * ureg.nanometer)

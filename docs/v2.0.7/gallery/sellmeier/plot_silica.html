@@ -54,8 +54,8 @@
     <link rel="icon" href="../../_static/thumbnail.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Plot the Refractive Index of Optical Material: Water" href="plot_water.html" />
-    <link rel="prev" title="Plot the Refractive Index of Optical Material: BK7" href="plot_bk7.html" />
+    <link rel="next" title="Plot the Refractive Index of Optical Material: BK7" href="plot_bk7.html" />
+    <link rel="prev" title="Examples: Sellmeier Material" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -397,22 +397,16 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples: Sellmeier Material</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="plot_bk7.html">Plot the Refractive Index of Optical Material: BK7</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Plot the Refractive Index of Optical Material: Silica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_bk7.html">Plot the Refractive Index of Optical Material: BK7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_water.html">Plot the Refractive Index of Optical Material: Water</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_compare_glasses.html">Compare the Refractive Index of BK7 and Fused Silica</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../tabulated/index.html">Examples: Tabulated Material</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silver.html">Plot the Refractive Index of Optical Material: Silver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_polyethylene.html">Plot the Refractive Index of Optical Material: Polyethylene</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tabulated/plot_silicon_nk.html">Plot the Refractive Index and Absorption of Silicon</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../utils/index.html">Examples: Utility Functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../utils/search_materials.html">Searching the MaterialBank</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../utils/create_sellmeier_file.html">Example: Create a Custom Sellmeier YAML File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../utils/create_tabulated_file.html">Example: Create a Custom Tabulated Data YAML File</a></li>
 </ul>
 </li>
 </ul>
@@ -483,17 +477,24 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="plot-the-refractive-index-of-optical-material-silica">
 <span id="sphx-glr-gallery-sellmeier-plot-silica-py"></span><h1>Plot the Refractive Index of Optical Material: Silica<a class="headerlink" href="#plot-the-refractive-index-of-optical-material-silica" title="Link to this heading">#</a></h1>
 <p>This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica glass over a specified range of wavelengths.</p>
-<img src="../../_images/sphx_glr_plot_silica_001.png" srcset="../../_images/sphx_glr_plot_silica_001.png" alt="Refractive Index vs. Wavelength: [fused_silica]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 640x480 with 1 Axes&gt;
+<img src="../../_images/sphx_glr_plot_silica_001.png" srcset="../../_images/sphx_glr_plot_silica_001.png" alt="Refractive Index vs. Wavelength: [Malitson]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>findfont: Font family ['cursive'] not found. Falling back to DejaVu Sans.
+findfont: Generic family 'cursive' not found because none of the following families were found: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, Comic Neue, Comic Sans MS, cursive
+findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
+findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
+findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
+
+&lt;Figure size 640x480 with 1 Axes&gt;
 </pre></div>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialBank</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
 
 <span class="c1"># Initialize the material with the Sellmeier model</span>
-<span class="n">material</span> <span class="o">=</span> <span class="n">MaterialBank</span><span class="o">.</span><span class="n">fused_silica</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/SiO2/Malitson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
 <span class="c1"># Calculate refractive index at specific wavelengths</span>
 <span class="n">RI</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mi">1310</span><span class="p">,</span> <span class="mi">1550</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span>
@@ -502,7 +503,7 @@ to download the full example code</p>
 <span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.192 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.277 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-sellmeier-plot-silica-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/3a47f9c4fef80ecee53f963ff63b5fba/plot_silica.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silica.ipynb</span></code></a></p>

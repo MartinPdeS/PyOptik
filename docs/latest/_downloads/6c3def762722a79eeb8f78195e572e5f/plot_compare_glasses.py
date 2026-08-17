@@ -3,7 +3,7 @@ Compare the Refractive Index of BK7 and Fused Silica
 ====================================================
 
 This example compares two common optical glasses available in
-:class:`~PyOptik.material_bank.MaterialBank`. It computes and plots the
+:class:`~PyOptik.catalog.MaterialCatalog`. It computes and plots the
 refractive index of BK7 and fused silica over the visible to near
 infrared wavelength range.
 """
@@ -14,12 +14,13 @@ import matplotlib.pyplot as plt
 from MPSPlots.styles import mps
 from TypedUnit import ureg
 
-from PyOptik import MaterialBank
+from PyOptik import MaterialCatalog
 
 
 # Retrieve materials
-bk7 = MaterialBank.BK7
-silica = MaterialBank.fused_silica
+catalog = MaterialCatalog.from_snapshot()
+bk7 = catalog.get("specs/SCHOTT-optical/P-BK7").load()
+silica = catalog.get("main/SiO2/Malitson").load()
 
 # Prepare wavelength range
 wavelengths = numpy.linspace(0.4, 1.6, 300) * ureg.micrometer
@@ -36,8 +37,8 @@ ax.set(
     xlabel="Wavelength [µm]",
     ylabel="Refractive index",
 )
-ax.plot(wavelengths.to(ureg.micrometer).magnitude, n_bk7.real, label="BK7")
-ax.plot(wavelengths.to(ureg.micrometer).magnitude, n_silica.real, label="Fused Silica")
+ax.plot(wavelengths, n_bk7.real, label="BK7")
+ax.plot(wavelengths, n_silica.real, label="Fused Silica")
 ax.legend()
 
 plt.show()

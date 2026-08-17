@@ -433,50 +433,62 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for PyOptik.catalog</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Catalog and upstream-identity support for optical material data.&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Catalog and upstream-identity support for optical material data."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">unquote</span><span class="p">,</span> <span class="n">urlparse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">libraries_path</span><span class="p">,</span> <span class="n">user_data_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">user_data_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialType</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_yml_file</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">UPSTREAM_CATALOG_URL</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;https://raw.githubusercontent.com/polyanskiy/refractiveindex.info-database/&quot;</span>
-    <span class="s2">&quot;main/database/catalog-nk.yml&quot;</span>
+    <span class="s2">"https://raw.githubusercontent.com/polyanskiy/refractiveindex.info-database/"</span>
+    <span class="s2">"main/database/catalog-nk.yml"</span>
 <span class="p">)</span>
+<span class="n">UPSTREAM_ARCHIVE_URL</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">"https://github.com/polyanskiy/refractiveindex.info-database/"</span>
+    <span class="s2">"archive/refs/heads/main.zip"</span>
+<span class="p">)</span>
+<span class="n">UPSTREAM_TIMEOUT</span> <span class="o">=</span> <span class="mi">10</span>
 
 
 <div class="viewcode-block" id="MaterialId">
 <a class="viewcode-back" href="../../code.html#PyOptik.MaterialId">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">MaterialId</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Canonical upstream identity: shelf, book, and page.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Canonical upstream identity: shelf, book, and page."""</span>
 
     <span class="n">shelf</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">book</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">page</span><span class="p">:</span> <span class="nb">str</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the canonical ``shelf/book/page`` path.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">shelf</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">book</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the canonical ``shelf/book/page`` path."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">shelf</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">book</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return an unambiguous representation using the canonical ID."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"MaterialId(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="si">!r}</span><span class="s2">)"</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">key</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the canonical identifier as a string.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the canonical identifier as a string."""</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
@@ -485,7 +497,7 @@ document.write(`
 <a class="viewcode-back" href="../../code.html#PyOptik.MaterialPage">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">MaterialPage</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A catalog page and its associated optical-data file.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""A catalog page and its associated optical-data file."""</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="n">MaterialId</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -493,106 +505,257 @@ document.write(`
     <span class="n">source_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">legacy_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">local_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the local cached path, if a data path is known.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the local cached path, if a data path is known."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the canonical identifier of this page.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the canonical identifier of this page."""</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return a concise description of this catalog page.</span>
+
+<span class="sd">        The representation intentionally omits YAML metadata and source URLs,</span>
+<span class="sd">        which may be large or distracting when inspecting a catalog.</span>
+<span class="sd">        """</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="s2">"available"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"missing"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"MaterialPage(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, data=</span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">)"</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load this page as the appropriate PyOptik material object.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Load this page as the appropriate PyOptik material object."""</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.sellmeier_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">SellmeierMaterial</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.tabulated_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
                 <span class="n">document</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-            <span class="n">entries</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DATA&quot;</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;formula&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">):</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"DATA"</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">"formula"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">SellmeierMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;tabulated&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">"tabulated"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">TabulatedMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No supported optical dataset found in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No supported optical dataset found in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">legacy_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="ow">and</span> <span class="s2">&quot;/nk/&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">TabulatedMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">legacy_name</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">SellmeierMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">legacy_name</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material page data is not available: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Material data for '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">' is not available locally. "</span>
+            <span class="s2">"Download the upstream snapshot with Python using "</span>
+            <span class="s2">"'from PyOptik import download_snapshot; download_snapshot()' "</span>
+            <span class="s2">"or from the terminal with 'pyoptik setup'."</span>
+        <span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="MaterialCatalog">
 <a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MaterialCatalog</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browse and download materials using the upstream hierarchy.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Browse and download materials using the upstream hierarchy."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a material catalog.</span>
+<span class="w">        </span><span class="sd">"""Create a material catalog.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        catalog_file : pathlib.Path or str, optional</span>
 <span class="sd">            Path to an upstream ``catalog-nk.yml`` file. If omitted, the</span>
-<span class="sd">            packaged catalog is used when available, otherwise the legacy</span>
-<span class="sd">            PyOptik repertoire is converted into catalog entries.</span>
+<span class="sd">            packaged catalog is used when available. If no catalog is</span>
+<span class="sd">            available, the catalog starts empty and the user can call</span>
+<span class="sd">            :func:`download_snapshot`.</span>
 <span class="sd">        data_root : pathlib.Path or str, optional</span>
 <span class="sd">            Root directory for hierarchy-preserving downloaded data.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_root</span> <span class="ow">or</span> <span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s2">&quot;rii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_root</span> <span class="ow">or</span> <span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s2">"rii"</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">MaterialId</span><span class="p">,</span> <span class="n">MaterialPage</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_aliases</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MaterialId</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">catalog_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_catalog</span><span class="p">(</span><span class="n">catalog_file</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">default_catalog</span> <span class="o">=</span> <span class="n">libraries_path</span> <span class="o">/</span> <span class="s2">&quot;catalog-nk.yml&quot;</span>
-            <span class="k">if</span> <span class="n">default_catalog</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">load_catalog</span><span class="p">(</span><span class="n">default_catalog</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_load_legacy_repertoire</span><span class="p">(</span><span class="n">libraries_path</span> <span class="o">/</span> <span class="s2">&quot;repertoire.yml&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initialized catalog with </span><span class="si">%s</span><span class="s2"> material pages"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return a concise summary of the catalog state.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Class name, number of indexed pages, and local data root. Page</span>
+<span class="sd">            metadata is deliberately excluded to keep interactive output</span>
+<span class="sd">            readable for catalogs containing thousands of materials.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"MaterialCatalog(pages=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">)</span><span class="si">}</span><span class="s2">, data_root=</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">)</span><span class="si">!r}</span><span class="s2">)"</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_upstream</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">UPSTREAM_CATALOG_URL</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download and load the current upstream catalog index.&quot;&quot;&quot;</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_root</span> <span class="ow">or</span> <span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s2">&quot;rii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
-        <span class="n">catalog_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">&quot;catalog-nk.yml&quot;</span>
+<span class="w">        </span><span class="sd">"""Download and load the current upstream catalog index."""</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_root</span> <span class="ow">or</span> <span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s2">"rii"</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+        <span class="n">catalog_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">"catalog-nk.yml"</span>
         <span class="n">download_yml_file</span><span class="p">(</span>
             <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
             <span class="n">filename</span><span class="o">=</span><span class="n">catalog_file</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
             <span class="n">save_location</span><span class="o">=</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">,</span>
             <span class="n">destination</span><span class="o">=</span><span class="n">catalog_file</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog_file</span><span class="o">=</span><span class="n">catalog_file</span><span class="p">,</span> <span class="n">data_root</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">catalog</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog_file</span><span class="o">=</span><span class="n">catalog_file</span><span class="p">,</span> <span class="n">data_root</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">manifest</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">_read_manifest</span><span class="p">()</span>
+        <span class="n">manifest</span><span class="p">[</span><span class="s2">"catalog"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"source"</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+            <span class="s2">"mode"</span><span class="p">:</span> <span class="s2">"pages"</span><span class="p">,</span>
+            <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">material_page</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">material_page</span><span class="o">.</span><span class="n">data_path</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">destination</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="n">material_page</span><span class="o">.</span><span class="n">data_path</span>
+            <span class="k">if</span> <span class="n">destination</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">manifest</span><span class="p">[</span><span class="s2">"pages"</span><span class="p">][</span><span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">"source_url"</span><span class="p">:</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
+                    <span class="s2">"local_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root</span><span class="p">)),</span>
+                    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"snapshot"</span><span class="p">,</span>
+                    <span class="s2">"sha256"</span><span class="p">:</span> <span class="n">catalog</span><span class="o">.</span><span class="n">_sha256</span><span class="p">(</span><span class="n">destination</span><span class="p">),</span>
+                    <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                <span class="p">}</span>
+        <span class="n">catalog</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">catalog</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_snapshot</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">UPSTREAM_ARCHIVE_URL</span><span class="p">,</span>
+        <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Download and extract the complete upstream database snapshot.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_root : pathlib.Path or str, optional</span>
+<span class="sd">            Root directory where the upstream ``database`` contents are</span>
+<span class="sd">            extracted.</span>
+<span class="sd">        url : str, optional</span>
+<span class="sd">            URL of a ZIP archive containing the upstream database.</span>
+<span class="sd">        force : bool, optional</span>
+<span class="sd">            Download the archive even when a catalog is already present.</span>
+<span class="sd">        progress : callable, optional</span>
+<span class="sd">            Callback receiving ``(downloaded_bytes, total_bytes)`` while the</span>
+<span class="sd">            archive is downloaded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        MaterialCatalog</span>
+<span class="sd">            Catalog backed by the extracted snapshot.</span>
+<span class="sd">        """</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_root</span> <span class="ow">or</span> <span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s2">"rii"</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+        <span class="n">catalog_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">"catalog-nk.yml"</span>
+        <span class="n">existing_manifest</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">catalog_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">"manifest.json"</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                    <span class="n">existing_manifest</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+                <span class="n">existing_manifest</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">catalog_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">force</span>
+            <span class="ow">and</span> <span class="n">existing_manifest</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="n">existing_manifest</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"catalog"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"mode"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"snapshot"</span>
+        <span class="p">):</span>
+            <span class="n">existing_catalog</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog_file</span><span class="o">=</span><span class="n">catalog_file</span><span class="p">,</span> <span class="n">data_root</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+            <span class="n">complete</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">page</span><span class="o">.</span><span class="n">data_path</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">page</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
+                <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">existing_catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">complete</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Using existing upstream snapshot at </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">existing_catalog</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Existing upstream snapshot is incomplete; refreshing it"</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Downloading upstream database snapshot from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">UPSTREAM_TIMEOUT</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">"pyoptik-snapshot-"</span><span class="p">)</span> <span class="k">as</span> <span class="n">temporary</span><span class="p">:</span>
+            <span class="n">archive</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">temporary</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"database.zip"</span>
+            <span class="n">total_bytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="s2">"headers"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content-length"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">downloaded_bytes</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="s2">"iter_content"</span><span class="p">):</span>
+                <span class="k">with</span> <span class="n">archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="p">:</span>
+                            <span class="k">continue</span>
+                        <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                        <span class="n">downloaded_bytes</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+                            <span class="n">progress</span><span class="p">(</span><span class="n">downloaded_bytes</span><span class="p">,</span> <span class="n">total_bytes</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
+                <span class="n">archive</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+                    <span class="n">progress</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+            <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">archive</span><span class="p">)</span> <span class="k">as</span> <span class="n">bundle</span><span class="p">:</span>
+                <span class="n">members</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+                <span class="n">database_member</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">members</span> <span class="k">if</span> <span class="s2">"/database/"</span> <span class="ow">in</span> <span class="n">name</span><span class="p">),</span>
+                    <span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">database_member</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Upstream archive does not contain a database directory"</span><span class="p">)</span>
+                <span class="n">database_prefix</span> <span class="o">=</span> <span class="n">database_member</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/database/"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"/database/"</span>
+                <span class="n">root_resolved</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">member</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">database_prefix</span><span class="p">)</span> <span class="ow">or</span> <span class="n">member</span> <span class="o">==</span> <span class="n">database_prefix</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">relative</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">member</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">database_prefix</span><span class="p">):])</span>
+                    <span class="k">if</span> <span class="n">relative</span><span class="o">.</span><span class="n">parts</span> <span class="ow">and</span> <span class="n">relative</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"data"</span><span class="p">:</span>
+                        <span class="n">relative</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="o">*</span><span class="n">relative</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">relative</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">destination</span> <span class="o">=</span> <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="n">relative</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">destination</span><span class="o">.</span><span class="n">is_relative_to</span><span class="p">(</span><span class="n">root_resolved</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsafe path in upstream archive: </span><span class="si">{</span><span class="n">member</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"/"</span><span class="p">):</span>
+                        <span class="n">destination</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">destination</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                        <span class="n">destination</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">bundle</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">member</span><span class="p">))</span>
+
+        <span class="n">catalog</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog_file</span><span class="o">=</span><span class="n">catalog_file</span><span class="p">,</span> <span class="n">data_root</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">manifest</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">_read_manifest</span><span class="p">()</span>
+        <span class="n">manifest</span><span class="p">[</span><span class="s2">"catalog"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"source"</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+            <span class="s2">"mode"</span><span class="p">:</span> <span class="s2">"snapshot"</span><span class="p">,</span>
+            <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="n">catalog</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracted upstream snapshot with </span><span class="si">%s</span><span class="s2"> catalog pages"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">catalog</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">load_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog_file</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load an upstream ``catalog-nk.yml`` file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Load an upstream ``catalog-nk.yml`` file."""</span>
         <span class="n">catalog_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">catalog_file</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">catalog_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">catalog_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
             <span class="n">document</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">walk</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">shelf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Recursively convert catalog YAML nodes into material pages.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">"""Recursively convert catalog YAML nodes into material pages."""</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
                     <span class="n">walk</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">shelf</span><span class="p">,</span> <span class="n">book</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-                <span class="n">current_shelf</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SHELF&quot;</span><span class="p">,</span> <span class="n">shelf</span><span class="p">)</span>
-                <span class="n">current_book</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;BOOK&quot;</span><span class="p">,</span> <span class="n">book</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PAGE&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">current_shelf</span> <span class="ow">and</span> <span class="n">current_book</span><span class="p">:</span>
-                    <span class="n">page</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s2">&quot;PAGE&quot;</span><span class="p">])</span>
+                <span class="n">current_shelf</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"SHELF"</span><span class="p">,</span> <span class="n">shelf</span><span class="p">)</span>
+                <span class="n">current_book</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"BOOK"</span><span class="p">,</span> <span class="n">book</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"PAGE"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">current_shelf</span> <span class="ow">and</span> <span class="n">current_book</span><span class="p">:</span>
+                    <span class="n">page</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s2">"PAGE"</span><span class="p">])</span>
                     <span class="n">identifier</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">current_shelf</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_book</span><span class="p">),</span> <span class="n">page</span><span class="p">)</span>
-                    <span class="n">data_path</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+                    <span class="n">data_path</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"data"</span><span class="p">)</span>
                     <span class="n">source_url</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;https://refractiveindex.info/database/data/</span><span class="si">{</span><span class="n">data_path</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"https://refractiveindex.info/database/data/</span><span class="si">{</span><span class="n">data_path</span><span class="si">}</span><span class="s2">"</span>
                         <span class="k">if</span> <span class="n">data_path</span> <span class="k">else</span> <span class="kc">None</span>
                     <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">MaterialPage</span><span class="p">(</span>
@@ -600,48 +763,16 @@ document.write(`
                         <span class="n">name</span><span class="o">=</span><span class="n">page</span><span class="p">,</span>
                         <span class="n">data_path</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span>
                         <span class="n">source_url</span><span class="o">=</span><span class="n">source_url</span><span class="p">,</span>
-                        <span class="n">description</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+                        <span class="n">description</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">),</span>
                         <span class="n">data_root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span>
                     <span class="p">)</span>
-                <span class="n">walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="p">[]),</span> <span class="n">current_shelf</span><span class="p">,</span> <span class="n">current_book</span><span class="p">)</span>
+                <span class="n">walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content"</span><span class="p">,</span> <span class="p">[]),</span> <span class="n">current_shelf</span><span class="p">,</span> <span class="n">current_book</span><span class="p">)</span>
 
         <span class="n">walk</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loaded </span><span class="si">%s</span><span class="s2"> material pages from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">),</span> <span class="n">catalog_file</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load_legacy_repertoire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repertoire_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a compatibility catalog from PyOptik&#39;s old URL map.&quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">repertoire_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
-            <span class="n">repertoire</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">kind</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="n">repertoire</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">material_type</span> <span class="o">=</span> <span class="n">MaterialType</span><span class="p">(</span><span class="n">kind</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">alias</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="p">(</span><span class="n">entries</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">parsed</span> <span class="o">=</span> <span class="p">[</span><span class="n">unquote</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">part</span><span class="p">]</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">data_index</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
-                    <span class="n">path_parts</span> <span class="o">=</span> <span class="n">parsed</span><span class="p">[</span><span class="n">data_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
-                    <span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_parts</span><span class="p">)</span>
-                    <span class="n">page</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path_parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">stem</span>
-                    <span class="n">book</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="s2">&quot;unknown&quot;</span>
-                    <span class="n">shelf</span> <span class="o">=</span> <span class="n">path_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not derive hierarchy from URL: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
-                    <span class="k">continue</span>
-                <span class="n">identifier</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="n">shelf</span><span class="p">,</span> <span class="n">book</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
-                    <span class="n">identifier</span><span class="p">,</span>
-                    <span class="n">MaterialPage</span><span class="p">(</span>
-                        <span class="nb">id</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
-                        <span class="n">name</span><span class="o">=</span><span class="n">page</span><span class="p">,</span>
-                        <span class="n">data_path</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span>
-                        <span class="n">source_url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-                        <span class="n">legacy_name</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span>
-                        <span class="n">data_root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span>
-                    <span class="p">),</span>
-                <span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_aliases</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">=</span> <span class="n">identifier</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Loaded </span><span class="si">%s</span><span class="s2"> material pages from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">),</span> <span class="n">catalog_file</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return pages filtered by shelf and/or book.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return pages filtered by shelf and/or book."""</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
             <span class="p">(</span><span class="n">page</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
              <span class="k">if</span> <span class="p">(</span><span class="n">shelf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">shelf</span> <span class="o">==</span> <span class="n">shelf</span><span class="p">)</span>
@@ -650,17 +781,17 @@ document.write(`
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">shelves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return sorted upstream shelf identifiers.</span>
+<span class="w">        </span><span class="sd">"""Return sorted upstream shelf identifiers.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        list of str</span>
 <span class="sd">            Unique shelf identifiers represented in the catalog.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">shelf</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">books</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return sorted book identifiers, optionally within one shelf.</span>
+<span class="w">        </span><span class="sd">"""Return sorted book identifiers, optionally within one shelf.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -671,63 +802,61 @@ document.write(`
 <span class="sd">        -------</span>
 <span class="sd">        list of str</span>
 <span class="sd">            Unique book identifiers.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">book</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">)})</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">manifest_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the path of the resumable download manifest.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">/</span> <span class="s2">&quot;manifest.json&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the path of the resumable download manifest."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">/</span> <span class="s2">"manifest.json"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_read_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read the download manifest, tolerating a missing or invalid file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Read the download manifest, tolerating a missing or invalid file."""</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;catalog&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"catalog"</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">"pages"</span><span class="p">:</span> <span class="p">{}}</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
                 <span class="n">manifest</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
-            <span class="n">manifest</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;catalog&quot;</span><span class="p">,</span> <span class="p">{})</span>
-            <span class="n">manifest</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;pages&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">manifest</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"catalog"</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">manifest</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"pages"</span><span class="p">,</span> <span class="p">{})</span>
             <span class="k">return</span> <span class="n">manifest</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Ignoring invalid download manifest </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;catalog&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Ignoring invalid download manifest </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"catalog"</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">"pages"</span><span class="p">:</span> <span class="p">{}}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_write_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manifest</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Atomically write the download manifest after a page completes.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Atomically write the download manifest after a page completes."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">temporary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.json.tmp&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">temporary</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">temporary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json.tmp"</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">temporary</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">temporary</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">manifest_path</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_sha256</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the SHA-256 digest of a local file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the SHA-256 digest of a local file."""</span>
         <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
-        <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span> <span class="sa">b</span><span class="s2">""</span><span class="p">):</span>
                 <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">MaterialId</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MaterialPage</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a page by ``MaterialId``, canonical path, or components.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Get a page by ``MaterialId``, canonical path, or components."""</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">MaterialId</span><span class="p">):</span>
             <span class="n">key</span> <span class="o">=</span> <span class="n">identifier</span>
         <span class="k">elif</span> <span class="n">book</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">key</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">book</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aliases</span><span class="p">:</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aliases</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">parts</span> <span class="o">=</span> <span class="n">identifier</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">identifier</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown material page: </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown material page: </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"/"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown material page: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown material page: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -737,8 +866,9 @@ document.write(`
         <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">continue_on_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download matching pages into a resumable hierarchical cache.</span>
+<span class="w">        </span><span class="sd">"""Download matching pages into a resumable hierarchical cache.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -751,24 +881,28 @@ document.write(`
 <span class="sd">            first download error is raised.</span>
 <span class="sd">        progress : callable, optional</span>
 <span class="sd">            Callback receiving ``(completed, total, page, status)`` after each</span>
-<span class="sd">            page. Status is one of ``&quot;downloaded&quot;``, ``&quot;cached&quot;``,</span>
-<span class="sd">            ``&quot;skipped&quot;``, or ``&quot;error&quot;``.</span>
+<span class="sd">            page. Status is one of ``"downloaded"``, ``"cached"``,</span>
+<span class="sd">            ``"skipped"``, ``"snapshot"``, or ``"error"``.</span>
+<span class="sd">        workers : int, optional</span>
+<span class="sd">            Number of concurrent page downloads. Keep this bounded to respect</span>
+<span class="sd">            the upstream service.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        list of MaterialPage</span>
 <span class="sd">            Pages selected by the filters.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">workers</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"workers must be at least 1"</span><span class="p">)</span>
         <span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="n">book</span><span class="p">)</span>
         <span class="n">manifest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_manifest</span><span class="p">()</span>
         <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">number</span><span class="p">,</span> <span class="n">material_page</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selected</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;skipped&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">fetch</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">"""Download one page and return a manifest-ready result tuple."""</span>
+            <span class="n">number</span><span class="p">,</span> <span class="n">material_page</span> <span class="o">=</span> <span class="n">item</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">material_page</span><span class="o">.</span><span class="n">data_path</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No download URL for material page </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-                    <span class="n">progress</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
-                <span class="k">continue</span>
+                <span class="k">return</span> <span class="n">number</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="s2">"skipped"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
             <span class="n">destination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">/</span> <span class="n">material_page</span><span class="o">.</span><span class="n">data_path</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">was_cached</span> <span class="o">=</span> <span class="n">destination</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force</span>
@@ -779,35 +913,64 @@ document.write(`
                     <span class="n">destination</span><span class="o">=</span><span class="n">destination</span><span class="p">,</span>
                     <span class="n">overwrite</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
                 <span class="p">)</span>
-                <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;cached&quot;</span> <span class="k">if</span> <span class="n">was_cached</span> <span class="k">else</span> <span class="s2">&quot;downloaded&quot;</span>
-                <span class="n">manifest</span><span class="p">[</span><span class="s2">&quot;pages&quot;</span><span class="p">][</span><span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
-                    <span class="s2">&quot;local_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">)),</span>
-                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
-                    <span class="s2">&quot;sha256&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sha256</span><span class="p">(</span><span class="n">destination</span><span class="p">),</span>
-                    <span class="s2">&quot;updated_at&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s2">"cached"</span> <span class="k">if</span> <span class="n">was_cached</span> <span class="k">else</span> <span class="s2">"downloaded"</span>
+                <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">"source_url"</span><span class="p">:</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
+                    <span class="s2">"local_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">)),</span>
+                    <span class="s2">"status"</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                    <span class="s2">"sha256"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sha256</span><span class="p">(</span><span class="n">destination</span><span class="p">),</span>
+                    <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
                 <span class="p">}</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">number</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="kc">None</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-                <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span>
-                <span class="n">manifest</span><span class="p">[</span><span class="s2">&quot;pages&quot;</span><span class="p">][</span><span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
-                    <span class="s2">&quot;local_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">)),</span>
-                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
-                    <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
-                    <span class="s2">&quot;updated_at&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">"source_url"</span><span class="p">:</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
+                    <span class="s2">"local_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">)),</span>
+                    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+                    <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+                    <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
                 <span class="p">}</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">] failed: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">number</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">error</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">selected</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">workers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">fetch</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">)</span>
+            <span class="n">executor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">fetch</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+            <span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">number</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">record</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">manifest</span><span class="p">[</span><span class="s2">"pages"</span><span class="p">][</span><span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span>
+                <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">"skipped"</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"No download URL for material page </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"[</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">] failed: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)"</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">continue_on_error</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">error</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"[</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">continue_on_error</span><span class="p">:</span>
-                    <span class="k">raise</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-                <span class="n">progress</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+                    <span class="n">progress</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">material_page</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">executor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">selected</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">download_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">continue_on_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download every page in the catalog.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">download_all</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">continue_on_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Download every page in the catalog.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -817,21 +980,62 @@ document.write(`
 <span class="sd">            Continue after failed pages and record failures in the manifest.</span>
 <span class="sd">        progress : callable, optional</span>
 <span class="sd">            Callback receiving ``(completed, total, page, status)``.</span>
+<span class="sd">        workers : int, optional</span>
+<span class="sd">            Number of concurrent page downloads.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        list of MaterialPage</span>
 <span class="sd">            All catalog pages.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">(</span>
             <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
             <span class="n">continue_on_error</span><span class="o">=</span><span class="n">continue_on_error</span><span class="p">,</span>
             <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+            <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over catalog pages in canonical identifier order.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Iterate over catalog pages in canonical identifier order."""</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="download_snapshot">
+<a class="viewcode-back" href="../../code.html#PyOptik.download_snapshot">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">download_snapshot</span><span class="p">(</span>
+    <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MaterialCatalog</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Download and activate the complete upstream material snapshot.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_root : pathlib.Path or str, optional</span>
+<span class="sd">        Directory where the snapshot should be stored.</span>
+<span class="sd">    force : bool, optional</span>
+<span class="sd">        Refresh an existing snapshot.</span>
+<span class="sd">    progress : callable, optional</span>
+<span class="sd">        Callback receiving ``(downloaded_bytes, total_bytes)``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    MaterialCatalog</span>
+<span class="sd">        Catalog backed by the downloaded snapshot.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from PyOptik import download_snapshot</span>
+<span class="sd">    &gt;&gt;&gt; catalog = download_snapshot()</span>
+<span class="sd">    &gt;&gt;&gt; silver = catalog.get("main/Ag/Johnson").load()</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">(</span>
+        <span class="n">data_root</span><span class="o">=</span><span class="n">data_root</span><span class="p">,</span>
+        <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
+        <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 </pre></div>
 

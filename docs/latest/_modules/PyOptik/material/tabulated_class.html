@@ -452,7 +452,7 @@ document.write(`
 <div class="viewcode-block" id="TabulatedMaterial">
 <a class="viewcode-back" href="../../../code.html#PyOptik.TabulatedMaterial">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TabulatedMaterial</span><span class="p">(</span><span class="n">BaseMaterial</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class representing a material with tabulated refractive index (n) and absorption (k) values.</span>
 
 <span class="sd">    Attributes</span>
@@ -467,10 +467,10 @@ document.write(`
 <span class="sd">        Array of tabulated absorption values (k) corresponding to the wavelengths.</span>
 <span class="sd">    reference : Optional[str]</span>
 <span class="sd">        Reference information for the material data.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initializes the TabulatedMaterial with a filename.</span>
 
 <span class="sd">        Parameters</span>
@@ -479,8 +479,8 @@ document.write(`
 <span class="sd">            The name of the YAML file containing material properties.</span>
 <span class="sd">        file_path : pathlib.Path, optional</span>
 <span class="sd">            Explicit YAML path for hierarchy-preserving catalog pages. When</span>
-<span class="sd">            omitted, the bundled or user material directories are searched.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            omitted, the user material directory is searched.</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
 
@@ -494,16 +494,12 @@ document.write(`
         <span class="c1"># Load tabulated data from the YAML file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_tabulated_data</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the user-facing representation of the material.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
-
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the material name and ``Tabulated`` model type.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;[Tabulated]&#39;</span>
+<span class="w">        </span><span class="sd">"""Return the material name and ``Tabulated`` model type."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">'[Tabulated]'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_tabulated_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Loads the tabulated refractive index and absorption values from the specified YAML file.</span>
 
 <span class="sd">        Raises</span>
@@ -512,51 +508,51 @@ document.write(`
 <span class="sd">            If the specified YAML file does not exist.</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the YAML data is malformed or missing required keys.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="ow">or</span> <span class="nb">next</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span>
+            <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml"</span>
              <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">material_paths</span><span class="p">(</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">TABULATED</span><span class="p">)</span>
-             <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span>
+             <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml"</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span>
             <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tabulated YAML file &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Tabulated YAML file '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml' not found."</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="n">file_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">file_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">'.yml'</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">parsed_yaml</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loaded tabulated data from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Loaded tabulated data from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Extract data points</span>
-            <span class="n">data_points</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="p">[</span><span class="s1">&#39;DATA&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">data_points</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="p">[</span><span class="s1">'DATA'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'data'</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">point</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">data_points</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;tabulated data must contain at least two rows of wavelength, n, k&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"tabulated data must contain at least two rows of wavelength, n, k"</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="ow">or</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;tabulated wavelengths must be finite and strictly increasing&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"tabulated wavelengths must be finite and strictly increasing"</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_values</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">k_values</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid or missing data in YAML file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid or missing data in YAML file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span>
 
         <span class="c1"># Extract reference</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;REFERENCES&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validated tabulated material &#39;</span><span class="si">%s</span><span class="s2">&#39; with </span><span class="si">%s</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'REFERENCES'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Validated tabulated material '</span><span class="si">%s</span><span class="s2">' with </span><span class="si">%s</span><span class="s2"> points"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="p">))</span>
 
     <span class="nd">@validate_units</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;warn&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        wavelength : Length | float</span>
 <span class="sd">            Wavelength(s) in micrometers for which to interpolate n and k.</span>
-<span class="sd">        out_of_range : {&quot;warn&quot;, &quot;raise&quot;, &quot;clip&quot;}, optional</span>
+<span class="sd">        out_of_range : {"warn", "raise", "clip"}, optional</span>
 <span class="sd">            Policy for wavelengths outside the tabulated range.</span>
 
 <span class="sd">        Returns</span>
@@ -569,7 +565,7 @@ document.write(`
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the wavelength is outside the tabulated range.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">Length</span><span class="p">):</span>
             <span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span>
 
@@ -579,9 +575,9 @@ document.write(`
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">&quot;clip&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">"clip"</span><span class="p">:</span>
             <span class="n">wavelength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clip_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">&quot;raise&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">"raise"</span><span class="p">:</span>
             <span class="c1"># _check_wavelength has already raised if needed; this keeps the</span>
             <span class="c1"># behavior explicit for future range implementations.</span>
             <span class="k">pass</span>
@@ -595,7 +591,7 @@ document.write(`
 
     <span class="nd">@helper</span><span class="o">.</span><span class="n">pre_plot</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plots the tabulated refractive index (n) and absorption (k) as a function of wavelength.</span>
 
 <span class="sd">        Parameters</span>
@@ -614,7 +610,7 @@ document.write(`
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the wavelength is not a 1D array or list of float values.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">wavelength</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
@@ -624,35 +620,35 @@ document.write(`
         <span class="n">n_values</span><span class="p">,</span> <span class="n">k_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span>
 
         <span class="n">axes</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Refractive Index and Absorption vs. Wavelength [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
-            <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Wavelength [µm]&#39;</span><span class="p">,</span>
-            <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Refractive Index (n)&#39;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Refractive Index and Absorption vs. Wavelength [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="s1">'Wavelength [µm]'</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Refractive Index (n)'</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">n_values</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">n_values</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'tab:blue'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'n'</span><span class="p">)</span>
 
         <span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
 
         <span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-            <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Wavelength [µm]&#39;</span><span class="p">,</span>
-            <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Absorption (k)&#39;</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="s1">'Wavelength [µm]'</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Absorption (k)'</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">k_values</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">k_values</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'tab:red'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'k'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Provides a formal string representation of the TabulatedMaterial object, including key attributes.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
 <span class="sd">            Formal representation of the TabulatedMaterial object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">TabulatedMaterial: &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39;,</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;wavelength_range: [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm],</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;reference: &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="si">}</span><span class="s2">&#39;)&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">TabulatedMaterial: '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">',</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"wavelength_range: [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm],</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"reference: '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="si">}</span><span class="s2">')"</span>
         <span class="p">)</span></div>
 
 </pre></div>

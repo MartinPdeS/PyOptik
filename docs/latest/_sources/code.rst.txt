@@ -13,20 +13,6 @@ Class Documentation
 Below, you will find detailed, automatically generated documentation for significant classes and functions in the `PyOptik` library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.
 
 
-.. _material_bank:
-
-MaterialBank
-------------
-
-The `MaterialBank` is the main interface for the user.
-
-.. autoclass:: PyOptik.material_bank._MaterialBank
-    :members:
-    :member-order: bysource
-    :show-inheritance:
-    :undoc-members:
-
-
 Catalog and Upstream Hierarchy
 ------------------------------
 
@@ -42,6 +28,8 @@ or when downloading a complete material collection.
 
 .. autoclass:: PyOptik.MaterialCatalog
     :members:
+
+.. autofunction:: PyOptik.download_snapshot
 
 
 Material Models
@@ -88,18 +76,10 @@ Enumerations
 .. autoclass:: PyOptik.MaterialType
     :members:
 
-Utility Functions
------------------
-
-The `PyOptik.utils` module contains various utility functions that facilitate tasks like downloading data files, creating custom material definitions, and managing directories effectively.
-
-.. autofunction:: PyOptik.utils.download_yml_file
-
-
 Directives for Sphinx Gallery
 =============================
 
 To further enhance your understanding of `PyOptik`, we have integrated practical examples throughout the documentation using Sphinx Gallery. These examples demonstrate how to use the library's classes and functions in realistic scenarios.
 
 .. note::
-    You can find example usage of the `SellmeierMaterial` and `TabulatedMaterial` classes, as well as utility functions, in the "Examples" section of the documentation. These examples are automatically generated from the source code and provide hands-on insight into the practical applications of the library.
+    You can find example usage of the `SellmeierMaterial` and `TabulatedMaterial` classes in the "Examples" section. These examples are automatically generated from the source code and provide hands-on insight into practical applications of the library.

@@ -56,9 +56,14 @@ test:
   commands:
     - python -m pytest
   source_files:
-    - tests/test_sellmeier.py
-    - tests/test_tabulated.py
-    - tests/test_usual_materials.py
+    - tests/conftest.py
+    - tests/test_base_material_decorator.py
+    - tests/test_catalog.py
+    - tests/test_docstrings.py
+    - tests/test_main_cli.py
+    - tests/test_material_models.py
+    - tests/test_utils_extra.py
+    - tests/test_validation_and_logging.py
 
 extra:
   recipe-maintainers:

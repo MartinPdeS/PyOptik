@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:12.776** total execution time for 8 files **from all galleries**:
+**00:09.522** total execution time for 8 files **from all galleries**:
 
 .. container::
 
@@ -33,26 +33,26 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_sellmeier_plot_silica.py` (``../examples/sellmeier/plot_silica.py``)
-     - 00:04.277
-     - 0.0
-   * - :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``../examples/tabulated/plot_silver.py``)
-     - 00:01.266
+     - 00:03.676
      - 0.0
    * - :ref:`sphx_glr_gallery_tabulated_plot_silicon_nk.py` (``../examples/tabulated/plot_silicon_nk.py``)
-     - 00:01.263
+     - 00:00.933
      - 0.0
    * - :ref:`sphx_glr_gallery_group_properties_plot_group_properties.py` (``../examples/group_properties/plot_group_properties.py``)
-     - 00:01.246
+     - 00:00.909
      - 0.0
    * - :ref:`sphx_glr_gallery_tabulated_plot_polyethylene.py` (``../examples/tabulated/plot_polyethylene.py``)
-     - 00:01.246
+     - 00:00.838
+     - 0.0
+   * - :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``../examples/tabulated/plot_silver.py``)
+     - 00:00.823
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_compare_glasses.py` (``../examples/sellmeier/plot_compare_glasses.py``)
-     - 00:01.193
+     - 00:00.788
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_bk7.py` (``../examples/sellmeier/plot_bk7.py``)
-     - 00:01.157
+     - 00:00.786
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_water.py` (``../examples/sellmeier/plot_water.py``)
-     - 00:01.127
+     - 00:00.769
      - 0.0

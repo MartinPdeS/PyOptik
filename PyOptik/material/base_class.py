@@ -50,15 +50,20 @@ class BaseMaterial(object):
         return f"Material: {self.filename}"
 
     def __repr__(self) -> str:
-        """
-        Provides a formal string representation of the Material object, including key attributes.
+        """Return a concise, informative representation of the material.
 
-        Returns
-        -------
-        str
-            Formal representation of the Material object.
+        The representation includes the concrete model, source filename, and
+        validity range when available. Numerical arrays are intentionally not
+        included, so inspecting a material never produces a large output.
         """
-        return self.__str__()
+        details = [f"filename={self.filename!r}"]
+        file_path = getattr(self, "file_path", None)
+        if file_path is not None:
+            details.append(f"file_path={str(file_path)!r}")
+        wavelength_bound = getattr(self, "wavelength_bound", None)
+        if wavelength_bound is not None:
+            details.append(f"wavelength_range={wavelength_bound!r}")
+        return f"{type(self).__name__}({', '.join(details)})"
 
     def _check_wavelength(self, wavelength: Length, out_of_range: str = "warn") -> None:
         """

@@ -55,10 +55,6 @@ class SellmeierMaterial(BaseMaterial):
 
         self._load_coefficients()
 
-    def __repr__(self) -> str:
-        """Return the user-facing representation of the material."""
-        return self.__str__()
-
     def __str__(self) -> str:
         """Return the material name and ``Sellmeier`` model type."""
         return self.filename + '[Sellmeier]'

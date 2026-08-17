@@ -45,6 +45,10 @@ class MaterialId:
         """Return the canonical ``shelf/book/page`` path."""
         return f"{self.shelf}/{self.book}/{self.page}"
 
+    def __repr__(self) -> str:
+        """Return an unambiguous representation using the canonical ID."""
+        return f"MaterialId({self.key!r})"
+
     @property
     def key(self) -> str:
         """Return the canonical identifier as a string."""
@@ -73,6 +77,15 @@ class MaterialPage:
     def __str__(self) -> str:
         """Return the canonical identifier of this page."""
         return str(self.id)
+
+    def __repr__(self) -> str:
+        """Return a concise description of this catalog page.
+
+        The representation intentionally omits YAML metadata and source URLs,
+        which may be large or distracting when inspecting a catalog.
+        """
+        state = "available" if self.local_path is not None and self.local_path.exists() else "missing"
+        return f"MaterialPage(id={self.id.key!r}, name={self.name!r}, data={state!r})"
 
     def load(self):
         """Load this page as the appropriate PyOptik material object."""
@@ -118,6 +131,18 @@ class MaterialCatalog:
         if catalog_file is not None:
             self.load_catalog(catalog_file)
         logger.info("Initialized catalog with %s material pages", len(self._pages))
+
+    def __repr__(self) -> str:
+        """Return a concise summary of the catalog state.
+
+        Returns
+        -------
+        str
+            Class name, number of indexed pages, and local data root. Page
+            metadata is deliberately excluded to keep interactive output
+            readable for catalogs containing thousands of materials.
+        """
+        return f"MaterialCatalog(pages={len(self._pages)}, data_root={str(self.data_root)!r})"
 
     @classmethod
     def from_upstream(cls, data_root: Optional[Path | str] = None, url: str = UPSTREAM_CATALOG_URL):

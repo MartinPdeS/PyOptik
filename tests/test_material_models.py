@@ -43,7 +43,12 @@ def _catalog(tmp_path):
 
 
 def test_canonical_formula_material_and_group_properties(tmp_path):
-    material = _catalog(tmp_path).get("specs/Example/Glass").load()
+    catalog = _catalog(tmp_path)
+    page = catalog.get("specs/Example/Glass")
+    material = page.load()
+    assert repr(catalog).startswith("MaterialCatalog(pages=2, data_root=")
+    assert repr(page) == "MaterialPage(id='specs/Example/Glass', name='Glass', data='available')"
+    assert repr(material).startswith("SellmeierMaterial(filename='Glass'")
     wavelength = 0.8 * ureg.micrometer
     assert float(material.compute_refractive_index(wavelength)) > 1
     assert float(material.compute_group_index(wavelength)) > 0
@@ -52,6 +57,7 @@ def test_canonical_formula_material_and_group_properties(tmp_path):
 
 def test_canonical_tabulated_material_and_group_properties(tmp_path):
     material = _catalog(tmp_path).get("main/Example/Metal").load()
+    assert repr(material).startswith("TabulatedMaterial(filename='Metal'")
     wavelengths = np.linspace(0.5, 1.0, 3) * ureg.micrometer
     index = material.compute_refractive_index(wavelengths)
     assert index.shape == wavelengths.shape

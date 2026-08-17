@@ -50,7 +50,7 @@ html_favicon = "_static/thumbnail.png"
 
 
 examples_files = [
-    'utils', 'sellmeier', 'tabulated', 'group_properties'
+    'sellmeier', 'tabulated', 'group_properties'
 ]
 
 sphinx_gallery_conf = {

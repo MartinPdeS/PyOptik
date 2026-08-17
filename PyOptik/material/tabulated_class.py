@@ -57,10 +57,6 @@ class TabulatedMaterial(BaseMaterial):
         # Load tabulated data from the YAML file
         self._load_tabulated_data()
 
-    def __repr__(self) -> str:
-        """Return the user-facing representation of the material."""
-        return self.__str__()
-
     def __str__(self) -> str:
         """Return the material name and ``Tabulated`` model type."""
         return self.filename + '[Tabulated]'

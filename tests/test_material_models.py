@@ -78,7 +78,7 @@ def test_formula_six_accumulates_all_gas_terms(tmp_path):
     from PyOptik.material import SellmeierMaterial
 
     material = SellmeierMaterial("gas", file_path=data_file)
-    wavelength_um = 0.5
+    wavelength_um = 0.6
     expected = 1.01 + 0.1 / (4.0 - wavelength_um ** -2) + 0.2 / (5.0 - wavelength_um ** -2)
     assert material.compute_refractive_index(wavelength_um * ureg.micrometer) == pytest.approx(expected)
 
@@ -91,8 +91,8 @@ def test_formula_six_accumulates_all_gas_terms(tmp_path):
     (5, "1.1 0.2 2", 1.1 + 0.2 * 0.5**2),
     (6, "0.1 0.2 5", 1.1 + 0.2 / (5 - 0.5**-2)),
     (7, "1.1 0.2 0.3 0.4", 1.1 + 0.2 / (0.5**2 - 0.028) + 0.3 / (0.5**2 - 0.028)**2 + 0.4 * 0.5**2),
-    (8, "0.1 0.2 0.3 0.04", np.sqrt((2 * (0.1 + 0.2 * 0.5**2 / (0.5**2 - 0.3) + 0.04 * 0.5**2) + 1) / (1 - (0.1 + 0.2 * 0.5**2 / (0.5**2 - 0.3) + 0.04 * 0.5**2)))),
-    (9, "1.1 0.2 0.3 0.04 0.1 0.2", np.sqrt(1.1 + 0.2 / (0.5**2 - 0.3) + 0.04 * (0.5 - 0.1) / ((0.5 - 0.1)**2 + 0.2))),
+    (8, "0.1 0.2 0.1 0.04", np.sqrt((2 * (0.1 + 0.2 * 0.5**2 / (0.5**2 - 0.1) + 0.04 * 0.5**2) + 1) / (1 - (0.1 + 0.2 * 0.5**2 / (0.5**2 - 0.1) + 0.04 * 0.5**2)))),
+    (9, "1.1 0.2 0.1 0.04 0.1 0.2", np.sqrt(1.1 + 0.2 / (0.5**2 - 0.1) + 0.04 * (0.5 - 0.1) / ((0.5 - 0.1)**2 + 0.2))),
 ])
 def test_all_upstream_formula_types_match_reference_equations(tmp_path, formula_type, coefficients, expected):
     data_file = tmp_path / f"formula-{formula_type}.yml"

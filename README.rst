@@ -166,10 +166,10 @@ Every material model provides group-related quantities:
        wavelength,
        length=10 * ureg.centimeter,
    )
-group_delay_dispersion = silica.compute_group_delay_dispersion(wavelength)
+   group_delay_dispersion = silica.compute_group_delay_dispersion(wavelength)
 
-# The wavelength-space slope is available separately.
-group_delay_wavelength_slope = silica.compute_group_delay_wavelength_slope(wavelength)
+   # The wavelength-space slope is available separately.
+   group_delay_wavelength_slope = silica.compute_group_delay_wavelength_slope(wavelength)
 
 These methods accept scalar or array wavelengths and return unit-aware values.
 ``compute_group_delay_dispersion`` is the conventional frequency-domain GDD,

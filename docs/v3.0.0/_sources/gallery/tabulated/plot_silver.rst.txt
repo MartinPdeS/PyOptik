@@ -28,23 +28,13 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
 .. image-sg:: /gallery/tabulated/images/sphx_glr_plot_silver_001.png
-   :alt: Refractive Index and Absorption vs. Wavelength [Johnson]
+   :alt: Optical constants: Johnson
    :srcset: /gallery/tabulated/images/sphx_glr_plot_silver_001.png
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
 
 
-    <Figure size 640x480 with 2 Axes>
-
-
-
-
-
-|
 
 .. code-block:: Python
 
@@ -66,7 +56,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.382 seconds)
+   **Total running time of the script:** (0 minutes 1.121 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_silver.py:

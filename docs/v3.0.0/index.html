@@ -29,7 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -51,7 +51,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.0.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="icon" href="_static/thumbnail.png"/>
+    <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Source Code" href="code.html" />
@@ -130,8 +130,8 @@
       
     
     
-    <img src="_static/thumbnail.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/thumbnail.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
     <p class="title logo__title">PyOptik</p>
@@ -409,8 +409,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><strong>Date</strong>: Aug 17, 2026, <strong>Version</strong>: 3.0.0</p>
-<p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png" /></p>
+  <p><strong>Date</strong>: Aug 21, 2026, <strong>Version</strong>: 3.0.0</p>
+<p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.svg" /></p>
 <table class="table">
 <colgroup>
 <col style="width: 35.0%" />
@@ -564,10 +564,15 @@ Out-of-range behavior can be selected explicitly:</p>
     <span class="n">wavelength</span><span class="p">,</span>
     <span class="n">length</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">centimeter</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">group_delay_dispersion</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_group_delay_dispersion</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>These methods accept scalar or array wavelengths and return unit-aware values.</p>
+<p>group_delay_dispersion = silica.compute_group_delay_dispersion(wavelength)</p>
+<p># The wavelength-space slope is available separately.
+group_delay_wavelength_slope = silica.compute_group_delay_wavelength_slope(wavelength)</p>
+<p>These methods accept scalar or array wavelengths and return unit-aware values.
+<code class="docutils literal notranslate"><span class="pre">compute_group_delay_dispersion</span></code> is the conventional frequency-domain GDD,
+<code class="docutils literal notranslate"><span class="pre">dτ_g/dω</span></code> (typically expressed in fs²); use
+<code class="docutils literal notranslate"><span class="pre">compute_group_delay_wavelength_slope</span></code> for <code class="docutils literal notranslate"><span class="pre">dτ_g/dλ</span></code>.</p>
 </section>
 <section id="plotting">
 <h2>Plotting<a class="headerlink" href="#plotting" title="Link to this heading">#</a></h2>
@@ -616,10 +621,16 @@ materials, with resumable progress tracking:</p>
 local path, status, timestamp, and SHA-256 checksum. Re-running the command
 uses cached files, so interrupted downloads can resume safely.</p>
 <p>Access a page by its canonical identifier and load its material model:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/N-BK7"</span><span class="p">)</span>
-<span class="n">bk7</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
+<p>page = catalog.get(“specs/SCHOTT-optical/N-BK7”)
+bk7 = page.load()</p>
+<p># Search by ID, descriptive name, or source URL; retain only cached pages.
+for page in catalog.search(“BK7”, shelf=”specs”, available=True):</p>
+<blockquote>
+<div><p>print(page.provenance())</p>
+</div></blockquote>
 <p>Material data is cached in a user data directory. Set
 <code class="docutils literal notranslate"><span class="pre">PYOPTIK_DATA_DIR</span></code> to choose a different location.</p>
 <p>The command-line interface provides the canonical catalog workflow:</p>

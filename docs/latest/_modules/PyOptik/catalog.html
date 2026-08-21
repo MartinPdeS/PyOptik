@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -50,7 +50,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.0.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="icon" href="../../_static/thumbnail.png"/>
+    <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -128,8 +128,8 @@
       
     
     
-    <img src="../../_static/thumbnail.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../_static/thumbnail.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
     <p class="title logo__title">PyOptik</p>
@@ -508,6 +508,41 @@ document.write(`
     <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Whether this page's data file is available in the local cache."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reference</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Return the local source reference, when the page has been cached."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                <span class="n">reference</span> <span class="o">=</span> <span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"REFERENCES"</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span> <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">YAMLError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">provenance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the canonical identity and source information for this page.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Serializable identity, cache-path, availability, and source fields.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+            <span class="s2">"name"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="s2">"reference"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="p">,</span>
+            <span class="s2">"source_url"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
+            <span class="s2">"local_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"available"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">available</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">local_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Return the local cached path, if a data path is known."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -524,11 +559,24 @@ document.write(`
 <span class="sd">        The representation intentionally omits YAML metadata and source URLs,</span>
 <span class="sd">        which may be large or distracting when inspecting a catalog.</span>
 <span class="sd">        """</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="s2">"available"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"missing"</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="s2">"available"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">available</span> <span class="k">else</span> <span class="s2">"missing"</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"MaterialPage(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, data=</span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">)"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Load this page as the appropriate PyOptik material object."""</span>
+<span class="w">        </span><span class="sd">"""Load this page as the appropriate PyOptik material object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        SellmeierMaterial or TabulatedMaterial</span>
+<span class="sd">            Material model selected from the local YAML data type.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the page has not been downloaded locally.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the file contains no supported optical dataset.</span>
+<span class="sd">        """</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.sellmeier_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">SellmeierMaterial</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.tabulated_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
 
@@ -589,7 +637,20 @@ document.write(`
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_upstream</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">UPSTREAM_CATALOG_URL</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Download and load the current upstream catalog index."""</span>
+<span class="w">        </span><span class="sd">"""Download and load the current upstream catalog index.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_root : pathlib.Path or str, optional</span>
+<span class="sd">            Directory used for the catalog index and downloaded pages.</span>
+<span class="sd">        url : str, optional</span>
+<span class="sd">            Catalog YAML URL.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        MaterialCatalog</span>
+<span class="sd">            Catalog indexed from the downloaded upstream YAML file.</span>
+<span class="sd">        """</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_root</span> <span class="ow">or</span> <span class="p">(</span><span class="n">user_data_path</span> <span class="o">/</span> <span class="s2">"rii"</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
         <span class="n">catalog_file</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">"catalog-nk.yml"</span>
         <span class="n">download_yml_file</span><span class="p">(</span>
@@ -731,6 +792,16 @@ document.write(`
             <span class="s2">"mode"</span><span class="p">:</span> <span class="s2">"snapshot"</span><span class="p">,</span>
             <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
         <span class="p">}</span>
+        <span class="k">for</span> <span class="n">material_page</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">material_page</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">material_page</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="n">manifest</span><span class="p">[</span><span class="s2">"pages"</span><span class="p">][</span><span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">"source_url"</span><span class="p">:</span> <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
+                <span class="s2">"local_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">material_page</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root</span><span class="p">)),</span>
+                <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"snapshot"</span><span class="p">,</span>
+                <span class="s2">"sha256"</span><span class="p">:</span> <span class="n">catalog</span><span class="o">.</span><span class="n">_sha256</span><span class="p">(</span><span class="n">material_page</span><span class="o">.</span><span class="n">local_path</span><span class="p">),</span>
+                <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="p">}</span>
         <span class="n">catalog</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracted upstream snapshot with </span><span class="si">%s</span><span class="s2"> catalog pages"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">()))</span>
         <span class="k">return</span> <span class="n">catalog</span>
@@ -772,13 +843,84 @@ document.write(`
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Loaded </span><span class="si">%s</span><span class="s2"> material pages from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">),</span> <span class="n">catalog_file</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Return pages filtered by shelf and/or book."""</span>
+<span class="w">        </span><span class="sd">"""Return pages filtered by shelf and/or book.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        shelf, book : str, optional</span>
+<span class="sd">            Canonical hierarchy filters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of MaterialPage</span>
+<span class="sd">            Matching pages in canonical identifier order.</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
             <span class="p">(</span><span class="n">page</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
              <span class="k">if</span> <span class="p">(</span><span class="n">shelf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">shelf</span> <span class="o">==</span> <span class="n">shelf</span><span class="p">)</span>
              <span class="ow">and</span> <span class="p">(</span><span class="n">book</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">book</span> <span class="o">==</span> <span class="n">book</span><span class="p">)),</span>
             <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">page</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
         <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reference</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">available</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Search catalog pages by text and provenance-aware filters.</span>
+
+<span class="sd">        Text matching is case-insensitive and covers canonical IDs, page names,</span>
+<span class="sd">        catalog descriptions, and source URLs. ``reference`` filters the</span>
+<span class="sd">        local YAML ``REFERENCES`` field, so it requires cached pages. Set</span>
+<span class="sd">        ``available=True`` to restrict results to local pages. Each result</span>
+<span class="sd">        exposes :meth:`MaterialPage.provenance` for a source record.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str, optional</span>
+<span class="sd">            Case-insensitive text query.</span>
+<span class="sd">        shelf, book : str, optional</span>
+<span class="sd">            Canonical hierarchy filters.</span>
+<span class="sd">        source : str, optional</span>
+<span class="sd">            Case-insensitive source-URL filter.</span>
+<span class="sd">        reference : str, optional</span>
+<span class="sd">            Case-insensitive local YAML reference filter.</span>
+<span class="sd">        available : bool, optional</span>
+<span class="sd">            Restrict results by cache availability.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of MaterialPage</span>
+<span class="sd">            Matching pages in canonical identifier order.</span>
+<span class="sd">        """</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">query</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span>
+        <span class="n">source_term</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="k">if</span> <span class="n">source</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">reference_term</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="k">if</span> <span class="n">reference</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">matched</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">material_page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">,</span> <span class="n">book</span><span class="o">=</span><span class="n">book</span><span class="p">):</span>
+            <span class="n">haystack</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span>
+                    <span class="n">material_page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+                    <span class="n">material_page</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">material_page</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                    <span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
+                <span class="p">)</span> <span class="k">if</span> <span class="n">value</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">terms</span> <span class="ow">and</span> <span class="n">terms</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">haystack</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">source_term</span> <span class="ow">and</span> <span class="n">source_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">material_page</span><span class="o">.</span><span class="n">source_url</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">reference_term</span> <span class="ow">and</span> <span class="n">reference_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">material_page</span><span class="o">.</span><span class="n">reference</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">available</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">material_page</span><span class="o">.</span><span class="n">available</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">matched</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">material_page</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">matched</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">shelves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Return sorted upstream shelf identifiers.</span>
@@ -842,8 +984,52 @@ document.write(`
                 <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">verify_integrity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">MaterialId</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Verify checksums recorded in the local download manifest.</span>
+
+<span class="sd">        Pages without a recorded checksum are omitted. The returned mapping is</span>
+<span class="sd">        keyed by canonical material identity, allowing callers to identify and</span>
+<span class="sd">        re-download only altered or incomplete cached files.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict of MaterialId to bool</span>
+<span class="sd">            Whether every manifest-recorded page matches its SHA-256 digest.</span>
+<span class="sd">        """</span>
+        <span class="n">checked</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_manifest</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"pages"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"sha256"</span><span class="p">)</span>
+            <span class="n">relative_path</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"local_path"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">expected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">relative_path</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">/</span> <span class="n">relative_path</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">identifier</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"/"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">checked</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sha256</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+        <span class="k">return</span> <span class="n">checked</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">MaterialId</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MaterialPage</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Get a page by ``MaterialId``, canonical path, or components."""</span>
+<span class="w">        </span><span class="sd">"""Get a page by ``MaterialId``, canonical path, or components.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        identifier : MaterialId or str</span>
+<span class="sd">            Canonical identifier, or shelf when ``book`` and ``page`` are set.</span>
+<span class="sd">        book, page : str, optional</span>
+<span class="sd">            Remaining canonical hierarchy components.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        MaterialPage</span>
+<span class="sd">            The selected catalog page.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If the identifier is unknown or incomplete.</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">MaterialId</span><span class="p">):</span>
             <span class="n">key</span> <span class="o">=</span> <span class="n">identifier</span>
         <span class="k">elif</span> <span class="n">book</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

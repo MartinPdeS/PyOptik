@@ -28,7 +28,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
 .. image-sg:: /gallery/tabulated/images/sphx_glr_plot_polyethylene_001.png
-   :alt: Refractive Index and Absorption vs. Wavelength [Smith]
+   :alt: Optical constants: Smith
    :srcset: /gallery/tabulated/images/sphx_glr_plot_polyethylene_001.png
    :class: sphx-glr-single-img
 
@@ -37,10 +37,9 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
  .. code-block:: none
 
-    /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:139: UserWarning: Wavelength range goes from 1.31 micrometer to 1.55 micrometer which is outside the allowable range of 40.0 micrometer to 200.0 micrometer µm. [Material: Smith]
+    /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:139: UserWarning: Wavelength range goes from 1.31 micrometer to 1.55 micrometer which is outside the allowable range of 40.0 micrometer to 200.0 micrometer µm. [Material: Smith]
       self._check_wavelength(wavelength, out_of_range)
 
-    <Figure size 640x480 with 2 Axes>
 
 
 
@@ -67,7 +66,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.389 seconds)
+   **Total running time of the script:** (0 minutes 1.119 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_polyethylene.py:

@@ -24,13 +24,12 @@ Group Index and Velocity of Fused Silica
 This example demonstrates how to compute and plot the group index and
 group velocity of fused silica using :mod:`PyOptik`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-27
+.. GENERATED FROM PYTHON SOURCE LINES 10-26
 
 .. code-block:: Python
 
     import numpy
     import matplotlib.pyplot as plt
-    from MPSPlots.styles import mps
     from TypedUnit import ureg
 
     from PyOptik import MaterialCatalog
@@ -52,12 +51,11 @@ group velocity of fused silica using :mod:`PyOptik`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-50
+.. GENERATED FROM PYTHON SOURCE LINES 27-48
 
 .. code-block:: Python
 
-    with plt.style.context(mps):
-        fig, ax1 = plt.subplots()
+    fig, ax1 = plt.subplots()
 
     ax1.set(
         xlabel="Wavelength [µm]",
@@ -91,7 +89,7 @@ group velocity of fused silica using :mod:`PyOptik`.
 
  .. code-block:: none
 
-    /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/matplotlib/cbook.py:1407: UnitStrippedWarning: The unit of the quantity is stripped when downcasting to ndarray.
+    /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/matplotlib/cbook.py:1407: UnitStrippedWarning: The unit of the quantity is stripped when downcasting to ndarray.
       return np.asanyarray(x, float)
 
 
@@ -100,7 +98,7 @@ group velocity of fused silica using :mod:`PyOptik`.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.386 seconds)
+   **Total running time of the script:** (0 minutes 1.069 seconds)
 
 
 .. _sphx_glr_download_gallery_group_properties_plot_group_properties.py:

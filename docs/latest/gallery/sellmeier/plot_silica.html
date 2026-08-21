@@ -29,7 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -51,7 +51,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.0.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="icon" href="../../_static/thumbnail.png"/>
+    <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Plot the Refractive Index of Optical Material: BK7" href="plot_bk7.html" />
@@ -131,8 +131,8 @@
       
     
     
-    <img src="../../_static/thumbnail.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../_static/thumbnail.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
     <p class="title logo__title">PyOptik</p>
@@ -477,19 +477,7 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="plot-the-refractive-index-of-optical-material-silica">
 <span id="sphx-glr-gallery-sellmeier-plot-silica-py"></span><h1>Plot the Refractive Index of Optical Material: Silica<a class="headerlink" href="#plot-the-refractive-index-of-optical-material-silica" title="Link to this heading">#</a></h1>
 <p>This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica glass over a specified range of wavelengths.</p>
-<img src="../../_images/sphx_glr_plot_silica_001.png" srcset="../../_images/sphx_glr_plot_silica_001.png" alt="Refractive Index vs. Wavelength: [Malitson]" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>findfont: Font family ['cursive'] not found. Falling back to DejaVu Sans.
-findfont: Generic family 'cursive' not found because none of the following families were found: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, Comic Neue, Comic Sans MS, cursive
-findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
-findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
-findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
-
-&lt;Figure size 640x480 with 1 Axes&gt;
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
+<img src="../../_images/sphx_glr_plot_silica_001.png" srcset="../../_images/sphx_glr_plot_silica_001.png" alt="Refractive index: Malitson" class = "sphx-glr-single-img"/><div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
 
 <span class="c1"># Initialize the material with the Sellmeier model</span>
@@ -503,7 +491,7 @@ findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
 <span class="n">material</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.718 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.326 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-sellmeier-plot-silica-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/3a47f9c4fef80ecee53f963ff63b5fba/plot_silica.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silica.ipynb</span></code></a></p>

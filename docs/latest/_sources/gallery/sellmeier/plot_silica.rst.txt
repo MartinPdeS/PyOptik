@@ -28,28 +28,13 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
 .. image-sg:: /gallery/sellmeier/images/sphx_glr_plot_silica_001.png
-   :alt: Refractive Index vs. Wavelength: [Malitson]
+   :alt: Refractive index: Malitson
    :srcset: /gallery/sellmeier/images/sphx_glr_plot_silica_001.png
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    findfont: Font family ['cursive'] not found. Falling back to DejaVu Sans.
-    findfont: Generic family 'cursive' not found because none of the following families were found: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, Comic Neue, Comic Sans MS, cursive
-    findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
-    findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
-    findfont: Font family ['Arial'] not found. Falling back to DejaVu Sans.
-
-    <Figure size 640x480 with 1 Axes>
 
 
-
-
-
-|
 
 .. code-block:: Python
 
@@ -69,7 +54,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.718 seconds)
+   **Total running time of the script:** (0 minutes 4.326 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_silica.py:

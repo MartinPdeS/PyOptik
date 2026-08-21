@@ -11,7 +11,6 @@ infrared wavelength range.
 # %%
 import numpy
 import matplotlib.pyplot as plt
-from MPSPlots.styles import mps
 from TypedUnit import ureg
 
 from PyOptik import MaterialCatalog
@@ -29,8 +28,7 @@ n_bk7 = bk7.compute_refractive_index(wavelengths)
 n_silica = silica.compute_refractive_index(wavelengths)
 
 # %% Plot comparison
-with plt.style.context(mps):
-    fig, ax = plt.subplots()
+fig, ax = plt.subplots()
 
 ax.set(
     title="BK7 vs Fused Silica",

@@ -9,7 +9,6 @@ group velocity of fused silica using :mod:`PyOptik`.
 # %%
 import numpy
 import matplotlib.pyplot as plt
-from MPSPlots.styles import mps
 from TypedUnit import ureg
 
 from PyOptik import MaterialCatalog
@@ -25,8 +24,7 @@ n_g = material.compute_group_index(wavelengths)
 v_g = material.compute_group_velocity(wavelengths)
 
 # %% Plot group index and velocity
-with plt.style.context(mps):
-    fig, ax1 = plt.subplots()
+fig, ax1 = plt.subplots()
 
 ax1.set(
     xlabel="Wavelength [µm]",

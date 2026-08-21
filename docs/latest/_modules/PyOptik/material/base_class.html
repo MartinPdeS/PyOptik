@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -50,7 +50,7 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.0.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="icon" href="../../../_static/thumbnail.png"/>
+    <link rel="icon" href="../../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -128,8 +128,8 @@
       
     
     
-    <img src="../../../_static/thumbnail.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../../_static/thumbnail.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
     <p class="title logo__title">PyOptik</p>
@@ -665,13 +665,15 @@ document.write(`
         <span class="k">return</span> <span class="n">length</span> <span class="o">/</span> <span class="n">vg</span>
 
     <span class="nd">@validate_units</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">compute_group_delay_dispersion</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_group_delay_wavelength_slope</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span>
         <span class="n">length</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
         <span class="n">delta</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyUnit</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Calculate ``d\u03c4_g/d\u03bb`` for a given propagation length.</span>
+<span class="w">        </span><span class="sd">"""Calculate the wavelength slope ``dτ_g/dλ`` for a given length.</span>
+
+<span class="sd">        This is a wavelength-space derivative, not conventional GDD.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -686,11 +688,60 @@ document.write(`
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        AnyUnit</span>
-<span class="sd">            Group delay dispersion evaluated at ``wavelength``.</span>
+<span class="sd">            Wavelength derivative of group delay evaluated at ``wavelength``.</span>
 <span class="sd">        """</span>
         <span class="n">gd_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
         <span class="n">gd_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">gd_plus</span> <span class="o">-</span> <span class="n">gd_minus</span><span class="p">)</span> <span class="o">/</span> <span class="n">delta</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">gd_plus</span> <span class="o">-</span> <span class="n">gd_minus</span><span class="p">)</span> <span class="o">/</span> <span class="n">delta</span>
+
+    <span class="nd">@validate_units</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_group_delay_dispersion</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span>
+        <span class="n">length</span><span class="p">:</span> <span class="n">Length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+        <span class="n">delta_angular_frequency</span><span class="p">:</span> <span class="n">AnyUnit</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">1e12</span> <span class="o">/</span> <span class="n">ureg</span><span class="o">.</span><span class="n">second</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyUnit</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Calculate conventional GDD, ``dτ_g/dω = d²β/dω² × length``.</span>
+
+<span class="sd">        The derivative is evaluated with a centred finite difference in</span>
+<span class="sd">        angular frequency and has time-squared units (commonly fs²). Use</span>
+<span class="sd">        :meth:`compute_group_delay_wavelength_slope` for ``dτ_g/dλ``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length</span>
+<span class="sd">            Central vacuum wavelength.</span>
+<span class="sd">        length : Length, optional</span>
+<span class="sd">            Propagation length.</span>
+<span class="sd">        delta_angular_frequency : ureg.Quantity, optional</span>
+<span class="sd">            Positive centred angular-frequency increment. The default is</span>
+<span class="sd">            ``2π × 1 THz``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        AnyUnit</span>
+<span class="sd">            Conventional group-delay dispersion with time-squared units.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If ``delta_angular_frequency`` does not carry units.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If ``delta_angular_frequency`` is not positive.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delta_angular_frequency</span><span class="p">,</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"delta_angular_frequency must carry units."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delta_angular_frequency</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"delta_angular_frequency must be positive."</span><span class="p">)</span>
+        <span class="n">speed_of_light</span> <span class="o">=</span> <span class="mi">299792458</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">ureg</span><span class="o">.</span><span class="n">second</span>
+        <span class="n">frequency_unit</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">ureg</span><span class="o">.</span><span class="n">second</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">speed_of_light</span> <span class="o">/</span> <span class="n">wavelength</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">frequency_unit</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">delta_angular_frequency</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">frequency_unit</span><span class="p">)</span>
+        <span class="n">wavelength_plus</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">speed_of_light</span> <span class="o">/</span> <span class="p">(</span><span class="n">omega</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">wavelength_minus</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">speed_of_light</span> <span class="o">/</span> <span class="p">(</span><span class="n">omega</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">delay_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span><span class="n">wavelength_plus</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+        <span class="n">delay_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span><span class="n">wavelength_minus</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">delay_plus</span> <span class="o">-</span> <span class="n">delay_minus</span><span class="p">)</span> <span class="o">/</span> <span class="n">delta</span></div>
 
 </pre></div>
 

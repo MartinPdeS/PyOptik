@@ -28,23 +28,13 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 
 .. image-sg:: /gallery/sellmeier/images/sphx_glr_plot_water_001.png
-   :alt: Refractive Index vs. Wavelength: [Daimon-19.0C]
+   :alt: Refractive index: Daimon-19.0C
    :srcset: /gallery/sellmeier/images/sphx_glr_plot_water_001.png
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
 
 
-    <Figure size 640x480 with 1 Axes>
-
-
-
-
-
-|
 
 .. code-block:: Python
 
@@ -66,7 +56,7 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.265 seconds)
+   **Total running time of the script:** (0 minutes 1.053 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_water.py:

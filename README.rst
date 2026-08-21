@@ -239,12 +239,12 @@ Access a page by its canonical identifier and load its material model:
 
 .. code-block:: python
 
-page = catalog.get("specs/SCHOTT-optical/N-BK7")
-bk7 = page.load()
+   page = catalog.get("specs/SCHOTT-optical/N-BK7")
+   bk7 = page.load()
 
-# Search by ID, descriptive name, or source URL; retain only cached pages.
-for page in catalog.search("BK7", shelf="specs", available=True):
-    print(page.provenance())
+   # Search by ID, descriptive name, or source URL; retain only cached pages.
+   for page in catalog.search("BK7", shelf="specs", available=True):
+       print(page.provenance())
 
 Material data is cached in a user data directory. Set
 ``PYOPTIK_DATA_DIR`` to choose a different location.

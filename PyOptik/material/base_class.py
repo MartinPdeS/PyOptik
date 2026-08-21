@@ -228,13 +228,15 @@ class BaseMaterial(object):
         return length / vg
 
     @validate_units
-    def compute_group_delay_dispersion(
+    def compute_group_delay_wavelength_slope(
         self,
         wavelength: Length,
         length: Length = 1 * ureg.meter,
         delta: Length = 1 * ureg.nanometer,
     ) -> AnyUnit:
-        """Calculate ``d\u03c4_g/d\u03bb`` for a given propagation length.
+        """Calculate the wavelength slope ``dτ_g/dλ`` for a given length.
+
+        This is a wavelength-space derivative, not conventional GDD.
 
         Parameters
         ----------
@@ -249,8 +251,57 @@ class BaseMaterial(object):
         Returns
         -------
         AnyUnit
-            Group delay dispersion evaluated at ``wavelength``.
+            Wavelength derivative of group delay evaluated at ``wavelength``.
         """
         gd_plus = self.compute_group_delay(wavelength + delta / 2, length)
         gd_minus = self.compute_group_delay(wavelength - delta / 2, length)
         return (gd_plus - gd_minus) / delta
+
+    @validate_units
+    def compute_group_delay_dispersion(
+        self,
+        wavelength: Length,
+        length: Length = 1 * ureg.meter,
+        delta_angular_frequency: AnyUnit = 2 * numpy.pi * 1e12 / ureg.second,
+    ) -> AnyUnit:
+        """Calculate conventional GDD, ``dτ_g/dω = d²β/dω² × length``.
+
+        The derivative is evaluated with a centred finite difference in
+        angular frequency and has time-squared units (commonly fs²). Use
+        :meth:`compute_group_delay_wavelength_slope` for ``dτ_g/dλ``.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Central vacuum wavelength.
+        length : Length, optional
+            Propagation length.
+        delta_angular_frequency : ureg.Quantity, optional
+            Positive centred angular-frequency increment. The default is
+            ``2π × 1 THz``.
+
+        Returns
+        -------
+        AnyUnit
+            Conventional group-delay dispersion with time-squared units.
+
+        Raises
+        ------
+        TypeError
+            If ``delta_angular_frequency`` does not carry units.
+        ValueError
+            If ``delta_angular_frequency`` is not positive.
+        """
+        if not isinstance(delta_angular_frequency, ureg.Quantity):
+            raise TypeError("delta_angular_frequency must carry units.")
+        if delta_angular_frequency.magnitude <= 0:
+            raise ValueError("delta_angular_frequency must be positive.")
+        speed_of_light = 299792458 * ureg.meter / ureg.second
+        frequency_unit = 1 / ureg.second
+        omega = (2 * numpy.pi * speed_of_light / wavelength).to(frequency_unit)
+        delta = delta_angular_frequency.to(frequency_unit)
+        wavelength_plus = 2 * numpy.pi * speed_of_light / (omega + delta / 2)
+        wavelength_minus = 2 * numpy.pi * speed_of_light / (omega - delta / 2)
+        delay_plus = self.compute_group_delay(wavelength_plus, length)
+        delay_minus = self.compute_group_delay(wavelength_minus, length)
+        return (delay_plus - delay_minus) / delta

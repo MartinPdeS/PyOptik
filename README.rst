@@ -166,9 +166,15 @@ Every material model provides group-related quantities:
        wavelength,
        length=10 * ureg.centimeter,
    )
-   group_delay_dispersion = silica.compute_group_delay_dispersion(wavelength)
+group_delay_dispersion = silica.compute_group_delay_dispersion(wavelength)
+
+# The wavelength-space slope is available separately.
+group_delay_wavelength_slope = silica.compute_group_delay_wavelength_slope(wavelength)
 
 These methods accept scalar or array wavelengths and return unit-aware values.
+``compute_group_delay_dispersion`` is the conventional frequency-domain GDD,
+``dτ_g/dω`` (typically expressed in fs²); use
+``compute_group_delay_wavelength_slope`` for ``dτ_g/dλ``.
 
 Plotting
 --------
@@ -233,8 +239,12 @@ Access a page by its canonical identifier and load its material model:
 
 .. code-block:: python
 
-   page = catalog.get("specs/SCHOTT-optical/N-BK7")
-   bk7 = page.load()
+page = catalog.get("specs/SCHOTT-optical/N-BK7")
+bk7 = page.load()
+
+# Search by ID, descriptive name, or source URL; retain only cached pages.
+for page in catalog.search("BK7", shelf="specs", available=True):
+    print(page.provenance())
 
 Material data is cached in a user data directory. Set
 ``PYOPTIK_DATA_DIR`` to choose a different location.
@@ -328,7 +338,7 @@ material page for its original scientific or manufacturer reference.
    :alt: Supported Python versions
    :target: https://pypi.org/project/pyoptik/
 
-.. |logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
+.. |logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.svg
    :alt: PyOptik logo
 
 .. |docs| image:: https://github.com/martinpdes/pyoptik/actions/workflows/deploy_documentation.yml/badge.svg

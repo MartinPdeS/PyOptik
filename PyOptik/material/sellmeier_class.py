@@ -3,9 +3,8 @@
 
 import yaml
 import numpy
-import itertools
 import logging
-from MPSPlots import helper
+from matplotlib import pyplot as plt
 from TypedUnit import Length, RefractiveIndex, validate_units, ureg
 
 from PyOptik.directories import material_paths
@@ -83,14 +82,11 @@ class SellmeierMaterial(BaseMaterial):
             coefficients = list(map(float, data["coefficients"].split()))
         except (KeyError, IndexError, AttributeError, TypeError, ValueError) as error:
             raise ValueError(f"Invalid Sellmeier data in YAML file {file_path}") from error
-        if self.formula_type not in {1, 2, 5, 6}:
+        if self.formula_type not in set(range(1, 10)):
             raise ValueError(f"Unsupported formula type: {self.formula_type}")
         if not coefficients or not numpy.all(numpy.isfinite(coefficients)):
             raise ValueError(f"Sellmeier coefficients must be finite in {file_path}")
 
-        # Extract coefficients and ensure the list has exactly 7 coefficients by padding with zeros if necessary
-        if len(coefficients) < 7:
-            coefficients.extend([0.0] * (7 - len(coefficients)))
         self.coefficients = numpy.array(coefficients)
 
         # Extract wavelength range
@@ -141,47 +137,83 @@ class SellmeierMaterial(BaseMaterial):
         if out_of_range == "clip":
             wavelength = self._clip_wavelength(wavelength)
 
-        # Compute the refractive index based on the formula type
-        zipped_coefficients = itertools.zip_longest(*[iter(self.coefficients[1:])] * 2)
+        # Formula definitions follow the RefractiveIndex.INFO database
+        # documentation. Wavelengths are expressed in micrometres here.
+        wavelength_um = wavelength.to(ureg.micrometer).magnitude
+        coefficients = self.coefficients
+        padded = numpy.pad(coefficients, (0, 10))
 
         match self.formula_type:
             case 1:  # Formula 1 computation (standard Sellmeier)
-                n_squared = 1.0
-                for (B, C) in zipped_coefficients:
-                    n_squared += (B * wavelength.to(ureg.micrometer).magnitude**2) / (wavelength.to(ureg.micrometer).magnitude**2 - C**2)
-
+                n_squared = 1.0 + padded[0]
+                for B, C in zip(coefficients[1::2], coefficients[2::2]):
+                    n_squared += B * wavelength_um**2 / (wavelength_um**2 - C**2)
                 n = numpy.sqrt(n_squared)
 
             case 2:  # Formula 2 computation (extended Sellmeier)
-                n_squared = 1 + self.coefficients[0]
-                for (B, C) in zipped_coefficients:
-                    n_squared += (B * wavelength.to(ureg.micrometer).magnitude**2) / (wavelength.to(ureg.micrometer).magnitude**2 - C)
+                n_squared = 1 + padded[0]
+                for B, C in zip(coefficients[1::2], coefficients[2::2]):
+                    n_squared += B * wavelength_um**2 / (wavelength_um**2 - C)
+                n = numpy.sqrt(n_squared)
+
+            case 3:  # Polynomial
+                n_squared = padded[0]
+                for B, exponent in zip(coefficients[1::2], coefficients[2::2]):
+                    n_squared += B * wavelength_um**exponent
+                n = numpy.sqrt(n_squared)
+
+            case 4:  # RefractiveIndex.INFO
+                n_squared = padded[0]
+                for index in range(1, min(8, len(coefficients)), 4):
+                    B, exponent, C, power = padded[index:index + 4]
+                    n_squared += B * wavelength_um**exponent / (wavelength_um**2 - C**power)
+                for B, exponent in zip(coefficients[9::2], coefficients[10::2]):
+                    n_squared += B * wavelength_um**exponent
                 n = numpy.sqrt(n_squared)
 
             case 5:  # Formula 5 computation (extended Sellmeier)
-                n = 1 + self.coefficients[0]
-                for (B, C) in zipped_coefficients:
-                    n += B * wavelength.to(ureg.micrometer).magnitude**C
+                n = padded[0]
+                for B, exponent in zip(coefficients[1::2], coefficients[2::2]):
+                    n += B * wavelength_um**exponent
 
             case 6:
-                n = 1 + self.coefficients[0]
-                for (B, C) in zipped_coefficients:
-                    n = B / (C - wavelength.to(ureg.micrometer).magnitude**-2)
+                n = 1 + padded[0]
+                for B, C in zip(coefficients[1::2], coefficients[2::2]):
+                    n += B / (C - wavelength_um**-2)
+
+            case 7:  # Herzberger
+                n = padded[0] + padded[1] / (wavelength_um**2 - 0.028)
+                n += padded[2] / (wavelength_um**2 - 0.028)**2
+                for index, coefficient in enumerate(coefficients[3:], start=3):
+                    n += coefficient * wavelength_um**(2 * (index - 2))
+
+            case 8:  # Retro
+                temporary = padded[0] + padded[1] * wavelength_um**2 / (wavelength_um**2 - padded[2])
+                temporary += padded[3] * wavelength_um**2
+                n = numpy.sqrt((2 * temporary + 1) / (1 - temporary))
+
+            case 9:  # Exotic
+                n = numpy.sqrt(
+                    padded[0]
+                    + padded[1] / (wavelength_um**2 - padded[2])
+                    + padded[3] * (wavelength_um - padded[4])
+                    / ((wavelength_um - padded[4])**2 + padded[5])
+                )
 
             case _:
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
 
         return n[0] if return_as_scalar else n
 
-    @helper.pre_plot(nrows=1, ncols=1)
-    def plot(self, axes, samples: int = 100) -> None:
+    def plot(self, axes=None, samples: int = 100) -> None:
         """
         Plots the refractive index as a function of wavelength over a specified range.
 
         Parameters
         ----------
-        axes : matplotlib.axes.Axes
-            Axes on which to draw the dispersion curve.
+        axes : matplotlib.axes.Axes, optional
+            Axes on which to draw the dispersion curve. A compact, styled
+            figure is created when omitted.
         samples : int
             The number of samples to use for the wavelength range.
 
@@ -195,6 +227,11 @@ class SellmeierMaterial(BaseMaterial):
         ValueError
             If the wavelength is not a 1D array or list of float values.
         """
+        if axes is None:
+            figure, axes = plt.subplots(figsize=(7, 4.5), layout="constrained")
+        else:
+            figure = axes.figure
+        figure.set_size_inches(7, 4.5, forward=True)
         wavelength = numpy.linspace(
             self.wavelength_bound[0].magnitude,
             self.wavelength_bound[1].magnitude,
@@ -207,10 +244,16 @@ class SellmeierMaterial(BaseMaterial):
         axes.set(
             ylabel='Refractive Index',
             xlabel=r'Wavelength [$\mu$m]',
-            title=f"Refractive Index vs. Wavelength: [{self.filename}]"
+            title=f"Refractive index: {self.filename}",
         )
-        axes.plot(wavelength.to(ureg.micrometer).magnitude, refractive_index.real, linewidth=2, label='Real Part')
+        axes.set_title(axes.get_title(), fontsize=14, pad=12)
+        axes.set_xlabel(axes.get_xlabel(), fontsize=11)
+        axes.set_ylabel(axes.get_ylabel(), fontsize=11)
+        axes.tick_params(labelsize=10)
+        axes.grid(alpha=0.25, linewidth=0.7)
+        axes.plot(wavelength.to(ureg.micrometer).magnitude, refractive_index.real, linewidth=2, label='n')
         axes.legend()
+        return None
 
     def print(self) -> str:
         """

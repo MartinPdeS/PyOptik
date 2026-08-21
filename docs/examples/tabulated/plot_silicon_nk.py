@@ -11,7 +11,6 @@ infrared wavelength range.
 import numpy
 import matplotlib.pyplot as plt
 from TypedUnit import ureg
-from MPSPlots.styles import mps
 
 from PyOptik import MaterialCatalog
 
@@ -23,8 +22,7 @@ wavelengths = numpy.linspace(0.3, 1.1, 300) * ureg.micrometer
 index = material.compute_refractive_index(wavelengths)
 
 # %% Plot n and k
-with plt.style.context(mps):
-    fig, ax1 = plt.subplots()
+fig, ax1 = plt.subplots()
 
 ax1.set(
     title="Silicon Refractive Index and Absorption",

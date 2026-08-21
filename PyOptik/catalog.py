@@ -68,6 +68,41 @@ class MaterialPage:
     data_root: Optional[Path] = None
 
     @property
+    def available(self) -> bool:
+        """Whether this page's data file is available in the local cache."""
+        return self.local_path is not None and self.local_path.exists()
+
+    @property
+    def reference(self) -> Optional[str]:
+        """Return the local source reference, when the page has been cached."""
+        if not self.available:
+            return None
+        try:
+            with self.local_path.open("r") as stream:
+                reference = (yaml.safe_load(stream) or {}).get("REFERENCES")
+                return str(reference) if reference is not None else None
+        except (OSError, yaml.YAMLError):
+            return None
+
+    def provenance(self) -> dict:
+        """Return the canonical identity and source information for this page.
+
+        Returns
+        -------
+        dict
+            Serializable identity, cache-path, availability, and source fields.
+        """
+        return {
+            "id": self.id.key,
+            "name": self.name,
+            "description": self.description,
+            "reference": self.reference,
+            "source_url": self.source_url,
+            "local_path": str(self.local_path) if self.local_path else None,
+            "available": self.available,
+        }
+
+    @property
     def local_path(self) -> Optional[Path]:
         """Return the local cached path, if a data path is known."""
         if self.data_path is None or self.data_root is None:
@@ -84,11 +119,24 @@ class MaterialPage:
         The representation intentionally omits YAML metadata and source URLs,
         which may be large or distracting when inspecting a catalog.
         """
-        state = "available" if self.local_path is not None and self.local_path.exists() else "missing"
+        state = "available" if self.available else "missing"
         return f"MaterialPage(id={self.id.key!r}, name={self.name!r}, data={state!r})"
 
     def load(self):
-        """Load this page as the appropriate PyOptik material object."""
+        """Load this page as the appropriate PyOptik material object.
+
+        Returns
+        -------
+        SellmeierMaterial or TabulatedMaterial
+            Material model selected from the local YAML data type.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the page has not been downloaded locally.
+        ValueError
+            If the file contains no supported optical dataset.
+        """
         from PyOptik.material.sellmeier_class import SellmeierMaterial
         from PyOptik.material.tabulated_class import TabulatedMaterial
 
@@ -146,7 +194,20 @@ class MaterialCatalog:
 
     @classmethod
     def from_upstream(cls, data_root: Optional[Path | str] = None, url: str = UPSTREAM_CATALOG_URL):
-        """Download and load the current upstream catalog index."""
+        """Download and load the current upstream catalog index.
+
+        Parameters
+        ----------
+        data_root : pathlib.Path or str, optional
+            Directory used for the catalog index and downloaded pages.
+        url : str, optional
+            Catalog YAML URL.
+
+        Returns
+        -------
+        MaterialCatalog
+            Catalog indexed from the downloaded upstream YAML file.
+        """
         root = Path(data_root or (user_data_path / "rii")).expanduser()
         catalog_file = root / "catalog-nk.yml"
         download_yml_file(
@@ -288,6 +349,16 @@ class MaterialCatalog:
             "mode": "snapshot",
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }
+        for material_page in catalog.pages():
+            if material_page.local_path is None or not material_page.local_path.exists():
+                continue
+            manifest["pages"][material_page.id.key] = {
+                "source_url": material_page.source_url,
+                "local_path": str(material_page.local_path.relative_to(root)),
+                "status": "snapshot",
+                "sha256": catalog._sha256(material_page.local_path),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }
         catalog._write_manifest(manifest)
         logger.info("Extracted upstream snapshot with %s catalog pages", len(catalog.pages()))
         return catalog
@@ -329,13 +400,84 @@ class MaterialCatalog:
         logger.info("Loaded %s material pages from %s", len(self._pages), catalog_file)
 
     def pages(self, shelf: Optional[str] = None, book: Optional[str] = None) -> list[MaterialPage]:
-        """Return pages filtered by shelf and/or book."""
+        """Return pages filtered by shelf and/or book.
+
+        Parameters
+        ----------
+        shelf, book : str, optional
+            Canonical hierarchy filters.
+
+        Returns
+        -------
+        list of MaterialPage
+            Matching pages in canonical identifier order.
+        """
         return sorted(
             (page for page in self._pages.values()
              if (shelf is None or page.id.shelf == shelf)
              and (book is None or page.id.book == book)),
             key=lambda page: page.id.key,
         )
+
+    def search(
+        self,
+        query: Optional[str] = None,
+        *,
+        shelf: Optional[str] = None,
+        book: Optional[str] = None,
+        source: Optional[str] = None,
+        reference: Optional[str] = None,
+        available: Optional[bool] = None,
+    ) -> list[MaterialPage]:
+        """Search catalog pages by text and provenance-aware filters.
+
+        Text matching is case-insensitive and covers canonical IDs, page names,
+        catalog descriptions, and source URLs. ``reference`` filters the
+        local YAML ``REFERENCES`` field, so it requires cached pages. Set
+        ``available=True`` to restrict results to local pages. Each result
+        exposes :meth:`MaterialPage.provenance` for a source record.
+
+        Parameters
+        ----------
+        query : str, optional
+            Case-insensitive text query.
+        shelf, book : str, optional
+            Canonical hierarchy filters.
+        source : str, optional
+            Case-insensitive source-URL filter.
+        reference : str, optional
+            Case-insensitive local YAML reference filter.
+        available : bool, optional
+            Restrict results by cache availability.
+
+        Returns
+        -------
+        list of MaterialPage
+            Matching pages in canonical identifier order.
+        """
+        terms = (query or "").casefold()
+        source_term = source.casefold() if source else None
+        reference_term = reference.casefold() if reference else None
+        matched = []
+        for material_page in self.pages(shelf=shelf, book=book):
+            haystack = " ".join(
+                value for value in (
+                    material_page.id.key,
+                    material_page.name,
+                    material_page.description,
+                    material_page.source_url,
+                ) if value
+            ).casefold()
+            if terms and terms not in haystack:
+                continue
+            if source_term and source_term not in (material_page.source_url or "").casefold():
+                continue
+            if reference_term and reference_term not in (material_page.reference or "").casefold():
+                continue
+            if available is not None and material_page.available is not available:
+                continue
+            matched.append(material_page)
+        return matched
 
     def shelves(self) -> list[str]:
         """Return sorted upstream shelf identifiers.
@@ -399,8 +541,52 @@ class MaterialCatalog:
                 digest.update(block)
         return digest.hexdigest()
 
+    def verify_integrity(self) -> dict[MaterialId, bool]:
+        """Verify checksums recorded in the local download manifest.
+
+        Pages without a recorded checksum are omitted. The returned mapping is
+        keyed by canonical material identity, allowing callers to identify and
+        re-download only altered or incomplete cached files.
+
+        Returns
+        -------
+        dict of MaterialId to bool
+            Whether every manifest-recorded page matches its SHA-256 digest.
+        """
+        checked = {}
+        for key, record in self._read_manifest().get("pages", {}).items():
+            expected = record.get("sha256")
+            relative_path = record.get("local_path")
+            if not expected or not relative_path:
+                continue
+            path = self.data_root / relative_path
+            parts = key.split("/")
+            if len(parts) < 3:
+                continue
+            identifier = MaterialId(parts[0], "/".join(parts[1:-1]), parts[-1])
+            checked[identifier] = path.is_file() and self._sha256(path) == expected
+        return checked
+
     def get(self, identifier: MaterialId | str, book: Optional[str] = None, page: Optional[str] = None) -> MaterialPage:
-        """Get a page by ``MaterialId``, canonical path, or components."""
+        """Get a page by ``MaterialId``, canonical path, or components.
+
+        Parameters
+        ----------
+        identifier : MaterialId or str
+            Canonical identifier, or shelf when ``book`` and ``page`` are set.
+        book, page : str, optional
+            Remaining canonical hierarchy components.
+
+        Returns
+        -------
+        MaterialPage
+            The selected catalog page.
+
+        Raises
+        ------
+        KeyError
+            If the identifier is unknown or incomplete.
+        """
         if isinstance(identifier, MaterialId):
             key = identifier
         elif book is not None and page is not None:

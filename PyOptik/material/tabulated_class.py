@@ -4,7 +4,7 @@
 import numpy
 import yaml
 import logging
-from MPSPlots import helper
+from matplotlib import pyplot as plt
 from TypedUnit import Length, validate_units, ureg
 
 from PyOptik.material.base_class import BaseMaterial
@@ -152,15 +152,15 @@ class TabulatedMaterial(BaseMaterial):
 
         return index[0] if return_as_scalar else index
 
-    @helper.pre_plot(nrows=1, ncols=1)
-    def plot(self, axes, samples: int = 100) -> None:
+    def plot(self, axes=None, samples: int = 100) -> None:
         """
         Plots the tabulated refractive index (n) and absorption (k) as a function of wavelength.
 
         Parameters
         ----------
-        axes : matplotlib.axes.Axes
-            Axes on which to draw the curves.
+        axes : matplotlib.axes.Axes, optional
+            Axes on which to draw the curves. A compact, styled figure is
+            created when omitted.
         samples : int
             The number of samples to use for the wavelength range.
 
@@ -174,6 +174,11 @@ class TabulatedMaterial(BaseMaterial):
         ValueError
             If the wavelength is not a 1D array or list of float values.
         """
+        if axes is None:
+            figure, axes = plt.subplots(figsize=(7, 4.5), layout="constrained")
+        else:
+            figure = axes.figure
+        figure.set_size_inches(7, 4.5, forward=True)
         wavelength = numpy.linspace(
             self.wavelength_bound[0].magnitude,
             self.wavelength_bound[1].magnitude,
@@ -183,21 +188,28 @@ class TabulatedMaterial(BaseMaterial):
         n_values, k_values = self.compute_refractive_index(wavelength).real, self.compute_refractive_index(wavelength).imag
 
         axes.set(
-            title=f"Refractive Index and Absorption vs. Wavelength [{self.filename}]",
+            title=f"Optical constants: {self.filename}",
             xlabel='Wavelength [µm]',
             ylabel='Refractive Index (n)',
         )
 
-        axes.plot(wavelength.to(ureg.micrometer).magnitude, n_values, 'o-', color='tab:blue', label='n')
+        axes.set_title(axes.get_title(), fontsize=14, pad=12)
+        axes.set_xlabel(axes.get_xlabel(), fontsize=11)
+        axes.set_ylabel(axes.get_ylabel(), fontsize=11)
+        axes.tick_params(labelsize=10)
+        axes.grid(alpha=0.25, linewidth=0.7)
+        axes.plot(wavelength.to(ureg.micrometer).magnitude, n_values, '-', color='tab:blue', label='n')
 
         ax2 = axes.twinx()
 
         ax2.set(
-            xlabel='Wavelength [µm]',
             ylabel='Absorption (k)',
         )
+        ax2.set_ylabel('Absorption (k)', fontsize=11)
+        ax2.tick_params(labelsize=10)
 
-        ax2.plot(wavelength.to(ureg.micrometer).magnitude, k_values, 'o-', color='tab:red', label='k')
+        ax2.plot(wavelength.to(ureg.micrometer).magnitude, k_values, '-', color='tab:red', label='k')
+        return None
 
     def print(self) -> str:
         """

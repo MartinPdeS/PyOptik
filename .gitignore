@@ -20,6 +20,7 @@
 !Makefile
 !pytest.ini
 !.coveragerc
+!CHANGELOG.md
 
 # But ignore docs/build inside docs and code
 docs/build/

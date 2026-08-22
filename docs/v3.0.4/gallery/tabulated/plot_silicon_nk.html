@@ -161,6 +161,13 @@
                     </li>
                 
 
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../../examples.html">
                         Coding examples
@@ -302,6 +309,13 @@ document.write(`
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../code.html">
                         Source Code
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../conventions.html">
+                        Physical conventions and data provenance
                       </a>
                     </li>
                 
@@ -493,7 +507,7 @@ infrared wavelength range.</p>
 <span class="n">index</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:139: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:166: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
   self._check_wavelength(wavelength, out_of_range)
 </pre></div>
 </div>
@@ -519,7 +533,7 @@ infrared wavelength range.</p>
   return np.asanyarray(x, float)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.269 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.070 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-tabulated-plot-silicon-nk-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/8e53266e980903fc9ceab419be25b527/plot_silicon_nk.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silicon_nk.ipynb</span></code></a></p>

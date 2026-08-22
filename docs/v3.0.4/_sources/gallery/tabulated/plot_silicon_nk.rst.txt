@@ -50,7 +50,7 @@ infrared wavelength range.
 
  .. code-block:: none
 
-    /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:139: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
+    /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:166: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
       self._check_wavelength(wavelength, out_of_range)
 
 
@@ -98,7 +98,7 @@ infrared wavelength range.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.269 seconds)
+   **Total running time of the script:** (0 minutes 1.070 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_silicon_nk.py:

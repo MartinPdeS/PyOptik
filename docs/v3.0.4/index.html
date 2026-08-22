@@ -161,6 +161,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="examples.html">
                         Coding examples
                       </a>
@@ -306,6 +313,13 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="examples.html">
                         Coding examples
                       </a>
@@ -409,7 +423,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><strong>Date</strong>: Aug 21, 2026, <strong>Version</strong>: 3.0.4</p>
+  <p><strong>Date</strong>: Aug 22, 2026, <strong>Version</strong>: 3.0.4</p>
 <p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.svg" /></p>
 <table class="table">
 <colgroup>
@@ -535,6 +549,11 @@ metres. Unit-bearing quantities are recommended for new code.</p>
 </div>
 <p>The real part is the refractive index <code class="docutils literal notranslate"><span class="pre">n</span></code> and the imaginary part is the
 extinction coefficient <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">material.n(wavelength)</span></code>, <code class="docutils literal notranslate"><span class="pre">material.k(wavelength)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">material.relative_permittivity(wavelength)</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">material.absorption_coefficient(wavelength)</span></code> for common derived properties.
+See the documentation’s physical-conventions page for the vacuum-wavelength,
+<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">k</span></code>, GDD, interpolation, and extrapolation conventions.</p>
 <section id="validity-ranges">
 <h3>Validity ranges<a class="headerlink" href="#validity-ranges" title="Link to this heading">#</a></h3>
 <p>Material data is only valid over the wavelength range supplied by its source.
@@ -715,6 +734,13 @@ material page for its original scientific or manufacturer reference.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="code.html#directives-for-sphinx-gallery">Directives for Sphinx Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Physical conventions and data provenance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#wavelength-and-optical-constants">Wavelength and optical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#dispersion-and-group-delay">Dispersion and group delay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#interpolation-and-validity-ranges">Interpolation and validity ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#provenance-and-conditions">Provenance and conditions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Coding examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references.html#upstream-database">Upstream database</a></li>

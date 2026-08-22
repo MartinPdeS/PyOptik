@@ -8,5 +8,6 @@
     :maxdepth: 2
 
     code.rst
+    conventions.rst
     examples.rst
     references.rst

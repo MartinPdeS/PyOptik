@@ -159,6 +159,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../examples.html">
                         Coding examples
                       </a>
@@ -295,6 +302,13 @@ document.write(`
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../code.html">
                         Source Code
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../conventions.html">
+                        Physical conventions and data provenance
                       </a>
                     </li>
                 
@@ -487,6 +501,8 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_coefficients</span><span class="p">()</span>
@@ -538,14 +554,17 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># # Extract reference</span>
+        <span class="c1"># Preserve upstream provenance and experimental conditions.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'REFERENCES'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'CONDITIONS'</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="n">parsed_yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'COMMENTS'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Validated Sellmeier material '</span><span class="si">%s</span><span class="s2">' with formula </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="p">)</span>
 
     <span class="nd">@validate_units</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RefractiveIndex</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
-<span class="sd">        Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).</span>
+<span class="sd">        Computes the refractive index n(\u03bb) using the appropriate</span>
+<span class="sd">        RefractiveIndex.INFO dispersion formula (types 1 through 9).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>

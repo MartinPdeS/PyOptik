@@ -159,6 +159,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../examples.html">
                         Coding examples
                       </a>
@@ -295,6 +302,13 @@ document.write(`
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../code.html">
                         Source Code
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../conventions.html">
+                        Physical conventions and data provenance
                       </a>
                     </li>
                 
@@ -453,6 +467,113 @@ document.write(`
 <span class="sd">    Subclasses provide :meth:`compute_refractive_index`; this class supplies</span>
 <span class="sd">    unit handling, validity-range checks, and group-delay calculations.</span>
 <span class="sd">    """</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">provenance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return source and validity metadata for this material.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Material name, source file, reference, conditions, validity range,</span>
+<span class="sd">            and catalog identity when the material was loaded from a catalog.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"name"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+            <span class="s2">"file_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"file_path"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"reference"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"reference"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">"conditions"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"conditions"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">"comments"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"comments"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">"wavelength_range"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"wavelength_bound"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">"catalog_id"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"catalog_id"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">"source_url"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"source_url"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the complex refractive index ``n + i k``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length</span>
+<span class="sd">            Vacuum wavelength.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Forwarded to :meth:`compute_refractive_index`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        complex or numpy.ndarray</span>
+<span class="sd">            Complex refractive index.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the real refractive index.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length</span>
+<span class="sd">            Vacuum wavelength.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Forwarded to :meth:`compute_refractive_index`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or numpy.ndarray</span>
+<span class="sd">            Real part of the complex refractive index.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">k</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the extinction coefficient.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length</span>
+<span class="sd">            Vacuum wavelength.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Forwarded to :meth:`compute_refractive_index`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or numpy.ndarray</span>
+<span class="sd">            Imaginary part of the complex refractive index.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">relative_permittivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return relative complex permittivity, ``(n + i k)²``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length</span>
+<span class="sd">            Vacuum wavelength.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Forwarded to :meth:`compute_refractive_index`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        complex or numpy.ndarray</span>
+<span class="sd">            Relative complex permittivity.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="nd">@validate_units</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">absorption_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyUnit</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the intensity absorption coefficient, ``α = 4πk / λ``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length</span>
+<span class="sd">            Vacuum wavelength.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Forwarded to :meth:`k`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        AnyUnit</span>
+<span class="sd">            Absorption coefficient with inverse-length units.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">/</span> <span class="n">wavelength</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Compare materials by concrete type and filename.</span>

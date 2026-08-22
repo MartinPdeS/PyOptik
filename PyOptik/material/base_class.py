@@ -17,6 +17,113 @@ class BaseMaterial(object):
     unit handling, validity-range checks, and group-delay calculations.
     """
 
+    @property
+    def provenance(self) -> dict:
+        """Return source and validity metadata for this material.
+
+        Returns
+        -------
+        dict
+            Material name, source file, reference, conditions, validity range,
+            and catalog identity when the material was loaded from a catalog.
+        """
+        return {
+            "name": self.filename,
+            "file_path": str(getattr(self, "file_path", "")) or None,
+            "reference": getattr(self, "reference", None),
+            "conditions": getattr(self, "conditions", None),
+            "comments": getattr(self, "comments", None),
+            "wavelength_range": getattr(self, "wavelength_bound", None),
+            "catalog_id": getattr(self, "catalog_id", None),
+            "source_url": getattr(self, "source_url", None),
+        }
+
+    def refractive_index(self, wavelength: Length, **kwargs):
+        """Return the complex refractive index ``n + i k``.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Vacuum wavelength.
+        **kwargs
+            Forwarded to :meth:`compute_refractive_index`.
+
+        Returns
+        -------
+        complex or numpy.ndarray
+            Complex refractive index.
+        """
+        return self.compute_refractive_index(wavelength, **kwargs)
+
+    def n(self, wavelength: Length, **kwargs):
+        """Return the real refractive index.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Vacuum wavelength.
+        **kwargs
+            Forwarded to :meth:`compute_refractive_index`.
+
+        Returns
+        -------
+        float or numpy.ndarray
+            Real part of the complex refractive index.
+        """
+        return self.compute_refractive_index(wavelength, **kwargs).real
+
+    def k(self, wavelength: Length, **kwargs):
+        """Return the extinction coefficient.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Vacuum wavelength.
+        **kwargs
+            Forwarded to :meth:`compute_refractive_index`.
+
+        Returns
+        -------
+        float or numpy.ndarray
+            Imaginary part of the complex refractive index.
+        """
+        return self.compute_refractive_index(wavelength, **kwargs).imag
+
+    def relative_permittivity(self, wavelength: Length, **kwargs):
+        """Return relative complex permittivity, ``(n + i k)²``.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Vacuum wavelength.
+        **kwargs
+            Forwarded to :meth:`compute_refractive_index`.
+
+        Returns
+        -------
+        complex or numpy.ndarray
+            Relative complex permittivity.
+        """
+        return self.compute_refractive_index(wavelength, **kwargs) ** 2
+
+    @validate_units
+    def absorption_coefficient(self, wavelength: Length, **kwargs) -> AnyUnit:
+        """Return the intensity absorption coefficient, ``α = 4πk / λ``.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Vacuum wavelength.
+        **kwargs
+            Forwarded to :meth:`k`.
+
+        Returns
+        -------
+        AnyUnit
+            Absorption coefficient with inverse-length units.
+        """
+        return 4 * numpy.pi * self.k(wavelength, **kwargs) / wavelength
+
     def __eq__(self, other) -> bool:
         """Compare materials by concrete type and filename.
 

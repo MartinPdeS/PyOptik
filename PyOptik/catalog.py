@@ -122,8 +122,14 @@ class MaterialPage:
         state = "available" if self.available else "missing"
         return f"MaterialPage(id={self.id.key!r}, name={self.name!r}, data={state!r})"
 
-    def load(self):
+    def load(self, *, interpolation: str = "linear"):
         """Load this page as the appropriate PyOptik material object.
+
+        Parameters
+        ----------
+        interpolation : {"linear", "pchip"}, optional
+            Tabulated-data interpolation method. Formula materials ignore this
+            option.
 
         Returns
         -------
@@ -145,9 +151,19 @@ class MaterialPage:
                 document = yaml.safe_load(stream) or {}
             entries = document.get("DATA", [])
             if any("formula" in str(entry.get("type", "")) for entry in entries):
-                return SellmeierMaterial(self.name, file_path=self.local_path)
+                material = SellmeierMaterial(self.name, file_path=self.local_path)
+                material.catalog_id = self.id.key
+                material.source_url = self.source_url
+                return material
             if any("tabulated" in str(entry.get("type", "")) for entry in entries):
-                return TabulatedMaterial(self.name, file_path=self.local_path)
+                material = TabulatedMaterial(
+                    self.name,
+                    file_path=self.local_path,
+                    interpolation=interpolation,
+                )
+                material.catalog_id = self.id.key
+                material.source_url = self.source_url
+                return material
             raise ValueError(f"No supported optical dataset found in {self.local_path}")
 
         raise FileNotFoundError(

@@ -65,6 +65,30 @@ def test_canonical_tabulated_material_and_group_properties(tmp_path):
     index = material.compute_refractive_index(wavelengths)
     assert index.shape == wavelengths.shape
     assert np.all(np.isfinite(material.compute_group_index(wavelengths).magnitude))
+    wavelength = 0.8 * ureg.micrometer
+    assert material.n(wavelength) == pytest.approx(material.compute_refractive_index(wavelength).real)
+    assert material.k(wavelength) == pytest.approx(material.compute_refractive_index(wavelength).imag)
+    assert material.relative_permittivity(wavelength) == pytest.approx(material.compute_refractive_index(wavelength) ** 2)
+    assert material.absorption_coefficient(wavelength).to(1 / ureg.meter).magnitude > 0
+
+
+def test_tabulated_n_and_k_blocks_support_pchip_and_provenance(tmp_path):
+    data_file = tmp_path / "split.yml"
+    data_file.write_text(
+        "REFERENCES: Example et al. 2026\n"
+        "CONDITIONS:\n  temperature: 293 K\n"
+        "DATA:\n"
+        "  - type: tabulated n\n    data: |\n      0.4 1.4\n      0.8 1.6\n      1.2 1.8\n"
+        "  - type: tabulated k\n    data: |\n      0.4 0.01\n      0.8 0.02\n      1.2 0.03\n"
+    )
+    from PyOptik.material import TabulatedMaterial
+
+    material = TabulatedMaterial("split", file_path=data_file, interpolation="pchip")
+    index = material.refractive_index(0.6 * ureg.micrometer)
+    assert index.real == pytest.approx(1.5)
+    assert index.imag == pytest.approx(0.015)
+    assert material.provenance["reference"] == "Example et al. 2026"
+    assert material.provenance["conditions"]["temperature"] == "293 K"
 
 
 def test_formula_six_accumulates_all_gas_terms(tmp_path):

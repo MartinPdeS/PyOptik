@@ -132,6 +132,12 @@ Tabulated materials interpolate complex optical constants:
 The real part is the refractive index ``n`` and the imaginary part is the
 extinction coefficient ``k``.
 
+Use ``material.n(wavelength)``, ``material.k(wavelength)``,
+``material.relative_permittivity(wavelength)``, and
+``material.absorption_coefficient(wavelength)`` for common derived properties.
+See the documentation's physical-conventions page for the vacuum-wavelength,
+``n + i k``, GDD, interpolation, and extrapolation conventions.
+
 Validity ranges
 ~~~~~~~~~~~~~~~
 

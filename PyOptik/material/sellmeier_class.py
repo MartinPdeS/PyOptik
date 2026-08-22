@@ -50,6 +50,8 @@ class SellmeierMaterial(BaseMaterial):
         self.coefficients = None
         self.wavelength_bound = None
         self.reference = None
+        self.conditions = None
+        self.comments = None
         self.formula_type = None
 
         self._load_coefficients()
@@ -101,14 +103,17 @@ class SellmeierMaterial(BaseMaterial):
         else:
             self.wavelength_bound = None
 
-        # # Extract reference
+        # Preserve upstream provenance and experimental conditions.
         self.reference = parsed_yaml.get('REFERENCES', None)
+        self.conditions = parsed_yaml.get('CONDITIONS', {})
+        self.comments = parsed_yaml.get('COMMENTS', None)
         logger.debug("Validated Sellmeier material '%s' with formula %s", self.filename, self.formula_type)
 
     @validate_units
     def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> RefractiveIndex:
         r"""
-        Computes the refractive index n(\u03bb) using the appropriate formula (either Formula 1, 2, 5, or 6).
+        Computes the refractive index n(\u03bb) using the appropriate
+        RefractiveIndex.INFO dispersion formula (types 1 through 9).
 
         Parameters
         ----------

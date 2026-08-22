@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   material data.
 - `compute_group_delay_wavelength_slope()` for the explicit wavelength-space
   derivative, `dτ_g/dλ`.
+- Convenience APIs for real index, extinction coefficient, relative
+  permittivity, and absorption coefficient.
+- Split tabulated ``n`` and ``k`` YAML support and opt-in monotonic PCHIP
+  interpolation.
+- A physical conventions and provenance documentation guide.
 - Numerical regression, unit-equivalence, catalog-search, and cache-integrity
   test coverage.
 - A new PyOptik prism logo and documentation favicon.

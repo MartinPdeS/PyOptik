@@ -32,7 +32,7 @@ class TabulatedMaterial(BaseMaterial):
         Reference information for the material data.
     """
 
-    def __init__(self, filename: str, file_path=None):
+    def __init__(self, filename: str, file_path=None, interpolation: str = "linear"):
         """
         Initializes the TabulatedMaterial with a filename.
 
@@ -43,9 +43,15 @@ class TabulatedMaterial(BaseMaterial):
         file_path : pathlib.Path, optional
             Explicit YAML path for hierarchy-preserving catalog pages. When
             omitted, the user material directory is searched.
+        interpolation : {"linear", "pchip"}, optional
+            Interpolation method. ``"linear"`` is the default;
+            ``"pchip"`` provides monotonic piecewise-cubic interpolation.
         """
         self.filename = filename
         self.file_path = file_path
+        if interpolation not in {"linear", "pchip"}:
+            raise ValueError("interpolation must be 'linear' or 'pchip'.")
+        self.interpolation = interpolation
 
         # Initialize attributes
         self.wavelength_bound = None
@@ -53,6 +59,10 @@ class TabulatedMaterial(BaseMaterial):
         self.n_values = None
         self.k_values = None
         self.reference = None
+        self.conditions = None
+        self.comments = None
+        self._n_wavelength = None
+        self._k_wavelength = None
 
         # Load tabulated data from the YAML file
         self._load_tabulated_data()
@@ -86,24 +96,41 @@ class TabulatedMaterial(BaseMaterial):
         logger.debug("Loaded tabulated data from %s", file_path)
 
         try:
-            # Extract data points
-            data_points = parsed_yaml['DATA'][0]['data'].strip().split('\n')
-            data = numpy.array([[float(value) for value in point.split()] for point in data_points])
-            if data.ndim != 2 or data.shape[1] != 3 or len(data) < 2:
-                raise ValueError("tabulated data must contain at least two rows of wavelength, n, k")
-            if not numpy.all(numpy.isfinite(data)) or numpy.any(numpy.diff(data[:, 0]) <= 0):
-                raise ValueError("tabulated wavelengths must be finite and strictly increasing")
-
-            self.wavelength = data[:, 0] * ureg.micrometer
-            self.n_values = data[:, 1]
-            self.k_values = data[:, 2]
-        except (KeyError, IndexError, ValueError):
+            for entry in parsed_yaml['DATA']:
+                kind = str(entry.get('type', '')).lower().split()
+                if len(kind) != 2 or kind[0] != 'tabulated' or kind[1] not in {'n', 'k', 'nk'}:
+                    continue
+                data = numpy.array(
+                    [[float(value) for value in row.split()] for row in entry['data'].strip().splitlines()]
+                )
+                expected_columns = 3 if kind[1] == 'nk' else 2
+                if data.ndim != 2 or data.shape[1] != expected_columns or len(data) < 2:
+                    raise ValueError(f"tabulated {kind[1]} data must contain at least two valid rows")
+                if not numpy.all(numpy.isfinite(data)) or numpy.any(numpy.diff(data[:, 0]) <= 0):
+                    raise ValueError("tabulated wavelengths must be finite and strictly increasing")
+                wavelengths = data[:, 0] * ureg.micrometer
+                if kind[1] in {'n', 'nk'}:
+                    self._n_wavelength = wavelengths
+                    self.n_values = data[:, 1]
+                if kind[1] == 'k':
+                    self._k_wavelength = wavelengths
+                    self.k_values = data[:, 1]
+                elif kind[1] == 'nk':
+                    self._k_wavelength = wavelengths
+                    self.k_values = data[:, 2]
+            if self.n_values is None and self.k_values is None:
+                raise ValueError("no supported tabulated n, k, or nk dataset found")
+            self.wavelength = self._n_wavelength if self._n_wavelength is not None else self._k_wavelength
+        except (KeyError, IndexError, TypeError, ValueError) as error:
             raise ValueError(f"Invalid or missing data in YAML file {file_path}")
 
-        self.wavelength_bound = [self.wavelength.min().magnitude, self.wavelength.max().magnitude] * ureg.micrometer
+        ranges = [values for values in (self._n_wavelength, self._k_wavelength) if values is not None]
+        self.wavelength_bound = [min(values.min().magnitude for values in ranges), max(values.max().magnitude for values in ranges)] * ureg.micrometer
 
         # Extract reference
         self.reference = parsed_yaml.get('REFERENCES', None)
+        self.conditions = parsed_yaml.get('CONDITIONS', {})
+        self.comments = parsed_yaml.get('COMMENTS', None)
         logger.debug("Validated tabulated material '%s' with %s points", self.filename, len(self.wavelength))
 
     @validate_units
@@ -145,12 +172,46 @@ class TabulatedMaterial(BaseMaterial):
             # behavior explicit for future range implementations.
             pass
 
-        n_interp = numpy.interp(wavelength.to(ureg.meter).magnitude, self.wavelength.to(ureg.meter).magnitude, self.n_values)
-        k_interp = numpy.interp(wavelength.to(ureg.meter).magnitude, self.wavelength.to(ureg.meter).magnitude, self.k_values)
+        values = wavelength.to(ureg.meter).magnitude
+        n_interp = self._interpolate(values, self._n_wavelength, self.n_values, default=1.0)
+        k_interp = self._interpolate(values, self._k_wavelength, self.k_values, default=0.0)
 
         index = n_interp + 1j * k_interp
 
         return index[0] if return_as_scalar else index
+
+    def _interpolate(self, values, wavelengths, data, default: float):
+        """Interpolate one optical-constant component with endpoint extrapolation."""
+        if wavelengths is None or data is None:
+            return numpy.full(values.shape, default, dtype=float)
+        x = wavelengths.to(ureg.meter).magnitude
+        if self.interpolation == "linear":
+            result = numpy.interp(values, x, data)
+            left = values < x[0]
+            right = values > x[-1]
+            result[left] = data[0] + (values[left] - x[0]) * (data[1] - data[0]) / (x[1] - x[0])
+            result[right] = data[-1] + (values[right] - x[-1]) * (data[-1] - data[-2]) / (x[-1] - x[-2])
+            return result
+        return self._pchip(values, x, data)
+
+    @staticmethod
+    def _pchip(values, x, y):
+        """Evaluate monotonic cubic Hermite interpolation with linear extrapolation."""
+        h = numpy.diff(x)
+        delta = numpy.diff(y) / h
+        slopes = numpy.empty_like(y, dtype=float)
+        slopes[0], slopes[-1] = delta[0], delta[-1]
+        for index in range(1, len(y) - 1):
+            if delta[index - 1] * delta[index] <= 0:
+                slopes[index] = 0.0
+            else:
+                w1, w2 = 2 * h[index] + h[index - 1], h[index] + 2 * h[index - 1]
+                slopes[index] = (w1 + w2) / (w1 / delta[index - 1] + w2 / delta[index])
+        intervals = numpy.clip(numpy.searchsorted(x, values, side='right') - 1, 0, len(x) - 2)
+        step = h[intervals]
+        t = (values - x[intervals]) / step
+        result = ((2*t**3 - 3*t**2 + 1) * y[intervals] + (t**3 - 2*t**2 + t) * step * slopes[intervals] + (-2*t**3 + 3*t**2) * y[intervals + 1] + (t**3 - t**2) * step * slopes[intervals + 1])
+        return result
 
     def plot(self, axes=None, samples: int = 100) -> None:
         """

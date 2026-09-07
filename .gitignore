@@ -4,10 +4,14 @@
 
 # Except ...
 !.github
+!conda.recipe
+!conda.recipe/meta.yaml
 !PyOptik
 !development
 !docs
 !tests
+!tools
+!tools/*.py
 !.flake8
 !.gitignore
 !.pre-commit-config.yaml
@@ -21,6 +25,7 @@
 !pytest.ini
 !.coveragerc
 !CHANGELOG.md
+!CONTRIBUTING.md
 
 # But ignore docs/build inside docs and code
 docs/build/

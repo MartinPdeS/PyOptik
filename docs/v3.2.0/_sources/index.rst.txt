@@ -41,30 +41,10 @@ Quick example
    print(interface.reflectance)
 
 .. toctree::
-   :caption: Start here
    :maxdepth: 2
 
    getting_started
-
-.. toctree::
-   :caption: User guide
-   :maxdepth: 2
-
-   materials_and_catalog
-   custom_materials
-   thin_films
-   catalog_browser
-
-.. toctree::
-   :caption: Learn by example
-   :maxdepth: 2
-
+   user_guide
    examples
-
-.. toctree::
-   :caption: Reference
-   :maxdepth: 2
-
-   conventions
    code
    references

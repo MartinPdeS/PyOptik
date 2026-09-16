@@ -15,6 +15,15 @@ from .catalog import MaterialCatalog, MaterialId, MaterialPage, download_snapsho
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial
 from .material import FormulaDataset, MaterialDocument, MaterialMetadata, TabulatedDataset, parse_material
+from .thin_film import (
+    FresnelResult,
+    ThinFilmLayer,
+    ThinFilmResult,
+    brewster_angle,
+    critical_angle,
+    fresnel_coefficients,
+    thin_film_stack,
+)
 from .material import base_class
 
 

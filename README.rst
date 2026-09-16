@@ -42,6 +42,7 @@ Features
 * Tabulated complex refractive index data, ``n + i k``.
 * Unit-aware wavelength calculations through ``TypedUnit`` and Pint.
 * Group index, group velocity, group delay, and group-delay dispersion.
+* Fresnel interfaces and coherent multilayer thin-film calculations.
 * NumPy-compatible scalar and array evaluation.
 * Plotting helpers for dispersion and absorption data.
 * Hierarchical catalog access using upstream ``shelf / book / page`` identity.
@@ -210,6 +211,55 @@ These methods accept scalar or array wavelengths and return unit-aware values.
 ``compute_group_delay_dispersion`` is the conventional frequency-domain GDD,
 ``dτ_g/dω`` (typically expressed in fs²); use
 ``compute_group_delay_wavelength_slope`` for ``dτ_g/dλ``.
+
+Interfaces and thin films
+-------------------------
+
+Calculate s- or p-polarized Fresnel coefficients at a single interface:
+
+.. code-block:: python
+
+   from TypedUnit import ureg
+   from PyOptik import fresnel_coefficients, brewster_angle, critical_angle
+
+   interface = fresnel_coefficients(
+       1.0,
+       1.5,
+       angle=45 * ureg.degree,
+       polarization="p",
+   )
+   print(interface.reflectance, interface.transmittance)
+
+   print(brewster_angle(1.0, 1.5).to(ureg.degree))
+   print(critical_angle(1.5, 1.0).to(ureg.degree))
+
+For coherent multilayers, supply constant indices or PyOptik material models.
+Each thickness should carry units:
+
+.. code-block:: python
+
+   import numpy
+   from PyOptik import ThinFilmLayer, thin_film_stack
+
+   wavelength = 600 * ureg.nanometer
+   substrate_index = 1.5
+   coating_index = numpy.sqrt(substrate_index)
+   coating = ThinFilmLayer(
+       coating_index,
+       wavelength / (4 * coating_index),
+   )
+   spectrum = thin_film_stack(
+       [500, 550, 600, 650, 700] * ureg.nanometer,
+       [coating],
+       incident_index=1.0,
+       substrate_index=substrate_index,
+       polarization="s",
+   )
+
+The returned results contain complex amplitude coefficients and the power
+fractions ``reflectance``, ``transmittance``, and ``absorptance``. The model is
+coherent and isotropic; it does not model roughness, anisotropy, or incoherent
+thick substrates.
 
 Plotting
 --------

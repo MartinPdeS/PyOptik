@@ -46,7 +46,7 @@ napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 
 html_logo = "_static/logo.svg"
-html_favicon = "_static/favicon.png"
+html_favicon = "_static/favicon.svg"
 
 
 examples_files = [
@@ -106,7 +106,11 @@ binder_branch = f"v{major}.{minor}.x"
 
 html_theme_options = dict()
 
-html_theme_options['logo'] = dict(text="", image="_static/logo.svg")
+html_theme_options['logo'] = dict(
+    text="",
+    image_light="_static/logo.svg",
+    image_dark="_static/logo-dark.svg",
+)
 html_theme_options["show_nav_level"] = 0
 
 html_theme_options.update({

@@ -1,1 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 420"><g transform="translate(35 45)"><path d="M165 25 300 280H30Z" fill="#123b75"/><path d="M165 25 165 280 30 280Z" fill="#2371c7"/><path d="M-10 194 165 164" stroke="#f4fbff" stroke-width="17"/><path d="M165 164 340 105M165 164 350 164M165 164 340 223" stroke-linecap="round" fill="none" stroke-width="13"/><path d="M165 164 340 105" stroke="#16bfe4" stroke-width="13"/><path d="M165 164 350 164" stroke="#23c99e" stroke-width="13"/><path d="M165 164 340 223" stroke="#f2ae3a" stroke-width="13"/></g><text x="430" y="190" font-family="Avenir Next,Arial,sans-serif" font-size="150" font-weight="700" fill="#102d5c">PyOptik</text><text x="437" y="264" font-family="Avenir Next,Arial,sans-serif" font-size="36" font-weight="600" letter-spacing="8" fill="#35669c">REFRACTIVE INDEX LIBRARY</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 240" role="img" aria-labelledby="title description">
+  <title id="title">PyOptik</title>
+  <desc id="description">A beam of light passing through a prism and separating into three colors.</desc>
+  <defs>
+    <linearGradient id="prism" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d73be"/>
+      <stop offset="1" stop-color="#0b2c4d"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M122 20 222 210H22Z" fill="url(#prism)" stroke="#45c2e6" stroke-width="6"/>
+    <path d="M0 133 105 116" stroke="#0e7490" stroke-width="10"/>
+    <path d="M105 116 146 111" stroke="#eaf8ff" stroke-width="10"/>
+    <path d="M146 111 250 65" stroke="#40c7ee" stroke-width="9"/>
+    <path d="M146 111 258 111" stroke="#32c69a" stroke-width="9"/>
+    <path d="M146 111 250 157" stroke="#f2b84b" stroke-width="9"/>
+  </g>
+  <g font-family="Inter, Avenir Next, Segoe UI, Arial, sans-serif">
+    <text x="290" y="126" fill="#102f52" font-size="92" font-weight="700" letter-spacing="-3">PyOptik</text>
+    <text x="296" y="174" fill="#39759e" font-size="24" font-weight="650" letter-spacing="5">OPTICAL MATERIALS</text>
+  </g>
+</svg>

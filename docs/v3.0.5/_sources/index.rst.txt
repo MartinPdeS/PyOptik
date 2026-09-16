@@ -9,6 +9,7 @@
 
     code.rst
     conventions.rst
+    thin_films.rst
     custom_materials.rst
     catalog_browser.rst
     examples.rst

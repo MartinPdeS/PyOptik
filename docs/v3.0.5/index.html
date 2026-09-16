@@ -168,6 +168,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="custom_materials.html">
                         Authoring custom materials
                       </a>
@@ -180,19 +187,19 @@
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
-                      </a>
-                    </li>
-                
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
@@ -342,6 +349,13 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="custom_materials.html">
                         Authoring custom materials
                       </a>
@@ -354,19 +368,19 @@ document.write(`
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
-                      </a>
-                    </li>
-                
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
@@ -521,6 +535,7 @@ electromagnetic modeling, and experimental data analysis.</p>
 <li><p>Tabulated complex refractive index data, <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">k</span></code>.</p></li>
 <li><p>Unit-aware wavelength calculations through <code class="docutils literal notranslate"><span class="pre">TypedUnit</span></code> and Pint.</p></li>
 <li><p>Group index, group velocity, group delay, and group-delay dispersion.</p></li>
+<li><p>Fresnel interfaces and coherent multilayer thin-film calculations.</p></li>
 <li><p>NumPy-compatible scalar and array evaluation.</p></li>
 <li><p>Plotting helpers for dispersion and absorption data.</p></li>
 <li><p>Hierarchical catalog access using upstream <code class="docutils literal notranslate"><span class="pre">shelf</span> <span class="pre">/</span> <span class="pre">book</span> <span class="pre">/</span> <span class="pre">page</span></code> identity.</p></li>
@@ -663,6 +678,50 @@ Out-of-range behavior can be selected explicitly:</p>
 <code class="docutils literal notranslate"><span class="pre">compute_group_delay_dispersion</span></code> is the conventional frequency-domain GDD,
 <code class="docutils literal notranslate"><span class="pre">dτ_g/dω</span></code> (typically expressed in fs²); use
 <code class="docutils literal notranslate"><span class="pre">compute_group_delay_wavelength_slope</span></code> for <code class="docutils literal notranslate"><span class="pre">dτ_g/dλ</span></code>.</p>
+</section>
+<section id="interfaces-and-thin-films">
+<h2>Interfaces and thin films<a class="headerlink" href="#interfaces-and-thin-films" title="Link to this heading">#</a></h2>
+<p>Calculate s- or p-polarized Fresnel coefficients at a single interface:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">fresnel_coefficients</span><span class="p">,</span> <span class="n">brewster_angle</span><span class="p">,</span> <span class="n">critical_angle</span>
+
+<span class="n">interface</span> <span class="o">=</span> <span class="n">fresnel_coefficients</span><span class="p">(</span>
+    <span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">angle</span><span class="o">=</span><span class="mi">45</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span>
+    <span class="n">polarization</span><span class="o">=</span><span class="s2">"p"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">reflectance</span><span class="p">,</span> <span class="n">interface</span><span class="o">.</span><span class="n">transmittance</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">brewster_angle</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">degree</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">critical_angle</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">degree</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For coherent multilayers, supply constant indices or PyOptik material models.
+Each thickness should carry units:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThinFilmLayer</span><span class="p">,</span> <span class="n">thin_film_stack</span>
+
+<span class="n">wavelength</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
+<span class="n">substrate_index</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">coating_index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">substrate_index</span><span class="p">)</span>
+<span class="n">coating</span> <span class="o">=</span> <span class="n">ThinFilmLayer</span><span class="p">(</span>
+    <span class="n">coating_index</span><span class="p">,</span>
+    <span class="n">wavelength</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">coating_index</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">spectrum</span> <span class="o">=</span> <span class="n">thin_film_stack</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">650</span><span class="p">,</span> <span class="mi">700</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">coating</span><span class="p">],</span>
+    <span class="n">incident_index</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">substrate_index</span><span class="o">=</span><span class="n">substrate_index</span><span class="p">,</span>
+    <span class="n">polarization</span><span class="o">=</span><span class="s2">"s"</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The returned results contain complex amplitude coefficients and the power
+fractions <code class="docutils literal notranslate"><span class="pre">reflectance</span></code>, <code class="docutils literal notranslate"><span class="pre">transmittance</span></code>, and <code class="docutils literal notranslate"><span class="pre">absorptance</span></code>. The model is
+coherent and isotropic; it does not model roughness, anisotropy, or incoherent
+thick substrates.</p>
 </section>
 <section id="plotting">
 <h2>Plotting<a class="headerlink" href="#plotting" title="Link to this heading">#</a></h2>
@@ -810,15 +869,24 @@ material page for its original scientific or manufacturer reference.</p>
 <li class="toctree-l2"><a class="reference internal" href="code.html#tabulatedmaterial">TabulatedMaterial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#base-utilities">Base Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#typed-material-documents">Typed Material Documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code.html#interface-and-thin-film-optics">Interface and Thin-Film Optics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#enumerations">Enumerations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="code.html#directives-for-sphinx-gallery">Directives for Sphinx Gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Physical conventions and data provenance</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#wavelength-and-optical-constants">Wavelength and optical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#interface-and-multilayer-power">Interface and multilayer power</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#dispersion-and-group-delay">Dispersion and group delay</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#interpolation-and-validity-ranges">Interpolation and validity ranges</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#provenance-and-conditions">Provenance and conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="thin_films.html">Interfaces and thin films</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="thin_films.html#single-interfaces">Single interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thin_films.html#characteristic-angles">Characteristic angles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thin_films.html#coherent-multilayers">Coherent multilayers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thin_films.html#model-limits">Model limits</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="custom_materials.html">Authoring custom materials</a><ul>
@@ -872,6 +940,7 @@ material page for its original scientific or manufacturer reference.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-and-pulse-properties">Group and pulse properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaces-and-thin-films">Interfaces and thin films</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting">Plotting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical-material-catalog">Hierarchical material catalog</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-issues">Common issues</a></li>

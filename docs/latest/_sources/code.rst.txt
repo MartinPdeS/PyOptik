@@ -91,6 +91,27 @@ catalog loading, user-defined material construction, and YAML export.
 .. autofunction:: PyOptik.parse_material
 
 
+Interface and Thin-Film Optics
+------------------------------
+
+.. autoclass:: PyOptik.FresnelResult
+    :members:
+
+.. autoclass:: PyOptik.ThinFilmLayer
+    :members:
+
+.. autoclass:: PyOptik.ThinFilmResult
+    :members:
+
+.. autofunction:: PyOptik.fresnel_coefficients
+
+.. autofunction:: PyOptik.brewster_angle
+
+.. autofunction:: PyOptik.critical_angle
+
+.. autofunction:: PyOptik.thin_film_stack
+
+
 Enumerations
 ------------
 

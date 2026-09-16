@@ -54,7 +54,7 @@
     <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Authoring custom materials" href="custom_materials.html" />
+    <link rel="next" title="Interfaces and thin films" href="thin_films.html" />
     <link rel="prev" title="Source Code" href="code.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -169,6 +169,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="custom_materials.html">
                         Authoring custom materials
                       </a>
@@ -181,19 +188,19 @@
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
-                      </a>
-                    </li>
-                
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
@@ -343,6 +350,13 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="custom_materials.html">
                         Authoring custom materials
                       </a>
@@ -355,19 +369,19 @@ document.write(`
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
-                      </a>
-                    </li>
-                
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
@@ -509,6 +523,16 @@ The convenience methods <code class="docutils literal notranslate"><span class="
 The relative permittivity is <code class="docutils literal notranslate"><span class="pre">N²</span></code> and the intensity absorption coefficient is
 <code class="docutils literal notranslate"><span class="pre">α</span> <span class="pre">=</span> <span class="pre">4πk</span> <span class="pre">/</span> <span class="pre">λ</span></code>.</p>
 </section>
+<section id="interface-and-multilayer-power">
+<h2>Interface and multilayer power<a class="headerlink" href="#interface-and-multilayer-power" title="Link to this heading">#</a></h2>
+<p>Fresnel and thin-film calculations use the same <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">k</span></code> convention.
+<code class="docutils literal notranslate"><span class="pre">reflectance</span></code>, <code class="docutils literal notranslate"><span class="pre">transmittance</span></code>, and <code class="docutils literal notranslate"><span class="pre">absorptance</span></code> are fractions of normal
+optical power flux and satisfy <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">+</span> <span class="pre">T</span> <span class="pre">+</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">1</span></code> up to numerical precision.
+The complex <code class="docutils literal notranslate"><span class="pre">reflection_amplitude</span></code> and <code class="docutils literal notranslate"><span class="pre">transmission_amplitude</span></code> retain
+phase information. Multilayer results use the characteristic-matrix field
+convention; power fractions are usually the portable quantities when comparing
+different polarization bases.</p>
+</section>
 <section id="dispersion-and-group-delay">
 <h2>Dispersion and group delay<a class="headerlink" href="#dispersion-and-group-delay" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">compute_group_delay_dispersion</span></code> returns conventional frequency-domain GDD,
@@ -562,6 +586,7 @@ Use it when recording simulation inputs or preparing results for publication.</p
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavelength-and-optical-constants">Wavelength and optical constants</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interface-and-multilayer-power">Interface and multilayer power</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dispersion-and-group-delay">Dispersion and group delay</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolation-and-validity-ranges">Interpolation and validity ranges</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance-and-conditions">Provenance and conditions</a></li>

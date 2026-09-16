@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyOptik.thin_film &#8212; PyOptik  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css?v=265c6c44" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script src="../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/PyOptik/thin_film';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.0.5';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+    <p class="title logo__title">PyOptik</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../code.html">
+                        Source Code
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../custom_materials.html">
+                        Authoring custom materials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../references.html">
+                        References
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/MartinPdeS/PyOptik" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/PyOptik/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://anaconda.org/MartinPdeS/PyOptik" title="Anaconda" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Anaconda</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../code.html">
+                        Source Code
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../conventions.html">
+                        Physical conventions and data provenance
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../custom_materials.html">
+                        Authoring custom materials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../references.html">
+                        References
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/MartinPdeS/PyOptik" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/PyOptik/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://anaconda.org/MartinPdeS/PyOptik" title="Anaconda" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Anaconda</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">PyOptik.thin_film</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for PyOptik.thin_film</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Fresnel interfaces and coherent thin-film transfer-matrix calculations."""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
+
+
+<div class="viewcode-block" id="ThinFilmLayer">
+<a class="viewcode-back" href="../../code.html#PyOptik.ThinFilmLayer">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ThinFilmLayer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""One homogeneous layer in a coherent optical stack.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material : complex or BaseMaterial</span>
+<span class="sd">        Constant complex refractive index or a PyOptik material model.</span>
+<span class="sd">    thickness : Length</span>
+<span class="sd">        Physical layer thickness. Bare numbers are interpreted as metres.</span>
+<span class="sd">    """</span>
+
+    <span class="n">material</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">thickness</span><span class="p">:</span> <span class="n">Any</span></div>
+
+
+
+<div class="viewcode-block" id="FresnelResult">
+<a class="viewcode-back" href="../../code.html#PyOptik.FresnelResult">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FresnelResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Amplitude coefficients and power fractions at one interface."""</span>
+
+    <span class="n">reflection_amplitude</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">transmission_amplitude</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">reflectance</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">transmittance</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">absorptance</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">transmitted_angle</span><span class="p">:</span> <span class="n">Any</span></div>
+
+
+
+<div class="viewcode-block" id="ThinFilmResult">
+<a class="viewcode-back" href="../../code.html#PyOptik.ThinFilmResult">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ThinFilmResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Coherent reflection, transmission, and absorption of a layer stack."""</span>
+
+    <span class="n">reflection_amplitude</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">transmission_amplitude</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">reflectance</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">transmittance</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">absorptance</span><span class="p">:</span> <span class="n">Any</span></div>
+
+
+
+<div class="viewcode-block" id="fresnel_coefficients">
+<a class="viewcode-back" href="../../code.html#PyOptik.fresnel_coefficients">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fresnel_coefficients</span><span class="p">(</span>
+    <span class="n">incident_index</span><span class="p">,</span>
+    <span class="n">transmitted_index</span><span class="p">,</span>
+    <span class="n">angle</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">polarization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"s"</span><span class="p">,</span>
+    <span class="n">wavelength</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FresnelResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Calculate Fresnel amplitude coefficients and power fractions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    incident_index, transmitted_index : complex or BaseMaterial</span>
+<span class="sd">        Refractive indices or material models on either side of the interface.</span>
+<span class="sd">    angle : float or angle quantity, optional</span>
+<span class="sd">        Incidence angle. Bare values are radians.</span>
+<span class="sd">    polarization : {"s", "p"}, optional</span>
+<span class="sd">        Electric-field polarization.</span>
+<span class="sd">    wavelength : Length, optional</span>
+<span class="sd">        Required when either index is a wavelength-dependent material model.</span>
+<span class="sd">    """</span>
+    <span class="n">polarization</span> <span class="o">=</span> <span class="n">_validate_polarization</span><span class="p">(</span><span class="n">polarization</span><span class="p">)</span>
+    <span class="n">theta_1</span> <span class="o">=</span> <span class="n">_angle_radians</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">n_1</span> <span class="o">=</span> <span class="n">_index_value</span><span class="p">(</span><span class="n">incident_index</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="n">n_2</span> <span class="o">=</span> <span class="n">_index_value</span><span class="p">(</span><span class="n">transmitted_index</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="n">sin_theta_2</span> <span class="o">=</span> <span class="n">n_1</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_2</span>
+    <span class="n">cos_theta_1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_1</span><span class="p">)</span>
+    <span class="n">cos_theta_2</span> <span class="o">=</span> <span class="n">_forward_cosine</span><span class="p">(</span><span class="n">n_2</span><span class="p">,</span> <span class="n">sin_theta_2</span><span class="p">)</span>
+    <span class="n">theta_2</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">scimath</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">sin_theta_2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">polarization</span> <span class="o">==</span> <span class="s2">"s"</span><span class="p">:</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">n_1</span> <span class="o">*</span> <span class="n">cos_theta_1</span> <span class="o">+</span> <span class="n">n_2</span> <span class="o">*</span> <span class="n">cos_theta_2</span>
+        <span class="n">reflection</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_1</span> <span class="o">*</span> <span class="n">cos_theta_1</span> <span class="o">-</span> <span class="n">n_2</span> <span class="o">*</span> <span class="n">cos_theta_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">n_2</span> <span class="o">*</span> <span class="n">cos_theta_1</span> <span class="o">+</span> <span class="n">n_1</span> <span class="o">*</span> <span class="n">cos_theta_2</span>
+        <span class="n">reflection</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_2</span> <span class="o">*</span> <span class="n">cos_theta_1</span> <span class="o">-</span> <span class="n">n_1</span> <span class="o">*</span> <span class="n">cos_theta_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="n">transmission</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_1</span> <span class="o">*</span> <span class="n">cos_theta_1</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="n">reflectance</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">reflection</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">flux_ratio</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">n_2</span> <span class="o">*</span> <span class="n">cos_theta_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">numpy</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">n_1</span> <span class="o">*</span> <span class="n">cos_theta_1</span><span class="p">)</span>
+    <span class="n">transmittance</span> <span class="o">=</span> <span class="n">flux_ratio</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">transmission</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">absorptance</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">reflectance</span> <span class="o">-</span> <span class="n">transmittance</span>
+    <span class="k">return</span> <span class="n">FresnelResult</span><span class="p">(</span>
+        <span class="n">_scalarize</span><span class="p">(</span><span class="n">reflection</span><span class="p">),</span>
+        <span class="n">_scalarize</span><span class="p">(</span><span class="n">transmission</span><span class="p">),</span>
+        <span class="n">_scalarize</span><span class="p">(</span><span class="n">reflectance</span><span class="p">),</span>
+        <span class="n">_scalarize</span><span class="p">(</span><span class="n">transmittance</span><span class="p">),</span>
+        <span class="n">_scalarize</span><span class="p">(</span><span class="n">absorptance</span><span class="p">),</span>
+        <span class="n">_scalarize</span><span class="p">(</span><span class="n">theta_2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">radian</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="brewster_angle">
+<a class="viewcode-back" href="../../code.html#PyOptik.brewster_angle">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">brewster_angle</span><span class="p">(</span><span class="n">incident_index</span><span class="p">,</span> <span class="n">transmitted_index</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the p-polarized Brewster angle for two lossless media."""</span>
+    <span class="n">n_1</span> <span class="o">=</span> <span class="n">_lossless_scalar_index</span><span class="p">(</span><span class="n">incident_index</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="n">n_2</span> <span class="o">=</span> <span class="n">_lossless_scalar_index</span><span class="p">(</span><span class="n">transmitted_index</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">n_2</span><span class="p">,</span> <span class="n">n_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">radian</span></div>
+
+
+
+<div class="viewcode-block" id="critical_angle">
+<a class="viewcode-back" href="../../code.html#PyOptik.critical_angle">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">critical_angle</span><span class="p">(</span><span class="n">incident_index</span><span class="p">,</span> <span class="n">transmitted_index</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the total-internal-reflection critical angle.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the media are absorbing or the incident index is not larger than</span>
+<span class="sd">        the transmitted index.</span>
+<span class="sd">    """</span>
+    <span class="n">n_1</span> <span class="o">=</span> <span class="n">_lossless_scalar_index</span><span class="p">(</span><span class="n">incident_index</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="n">n_2</span> <span class="o">=</span> <span class="n">_lossless_scalar_index</span><span class="p">(</span><span class="n">transmitted_index</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_1</span> <span class="o">&lt;=</span> <span class="n">n_2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"critical angle requires incident_index &gt; transmitted_index"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">n_2</span> <span class="o">/</span> <span class="n">n_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">radian</span></div>
+
+
+
+<div class="viewcode-block" id="thin_film_stack">
+<a class="viewcode-back" href="../../code.html#PyOptik.thin_film_stack">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">thin_film_stack</span><span class="p">(</span>
+    <span class="n">wavelength</span><span class="p">,</span>
+    <span class="n">layers</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ThinFilmLayer</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">incident_index</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">substrate_index</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">angle</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">polarization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"s"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ThinFilmResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Evaluate a coherent isotropic multilayer using characteristic matrices.</span>
+
+<span class="sd">    Wavelength may be scalar or one-dimensional. Layers may be</span>
+<span class="sd">    :class:`ThinFilmLayer` objects or ``(material, thickness)`` tuples. All</span>
+<span class="sd">    layers are treated as optically coherent; surface roughness, incoherent</span>
+<span class="sd">    substrates, anisotropy, and magnetic media are outside this model.</span>
+<span class="sd">    """</span>
+    <span class="n">polarization</span> <span class="o">=</span> <span class="n">_validate_polarization</span><span class="p">(</span><span class="n">polarization</span><span class="p">)</span>
+    <span class="n">wavelength_quantity</span> <span class="o">=</span> <span class="n">_wavelength_quantity</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
+    <span class="n">scalar_input</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">wavelength_quantity</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="n">wavelengths</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">wavelength_quantity</span><span class="p">)</span>
+    <span class="n">normalized_layers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">layer</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">ThinFilmLayer</span><span class="p">)</span> <span class="k">else</span> <span class="n">ThinFilmLayer</span><span class="p">(</span><span class="o">*</span><span class="n">layer</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span>
+    <span class="p">]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">_stack_at_wavelength</span><span class="p">(</span>
+            <span class="n">item</span><span class="p">,</span>
+            <span class="n">normalized_layers</span><span class="p">,</span>
+            <span class="n">incident_index</span><span class="p">,</span>
+            <span class="n">substrate_index</span><span class="p">,</span>
+            <span class="n">_angle_radians</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span>
+            <span class="n">polarization</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">wavelengths</span>
+    <span class="p">]</span>
+    <span class="n">reflection</span><span class="p">,</span> <span class="n">transmission</span><span class="p">,</span> <span class="n">reflectance</span><span class="p">,</span> <span class="n">transmittance</span><span class="p">,</span> <span class="n">absorptance</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">results</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">scalar_input</span><span class="p">:</span>
+        <span class="n">reflection</span><span class="p">,</span> <span class="n">transmission</span><span class="p">,</span> <span class="n">reflectance</span><span class="p">,</span> <span class="n">transmittance</span><span class="p">,</span> <span class="n">absorptance</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">_scalarize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span>
+            <span class="p">(</span><span class="n">reflection</span><span class="p">,</span> <span class="n">transmission</span><span class="p">,</span> <span class="n">reflectance</span><span class="p">,</span> <span class="n">transmittance</span><span class="p">,</span> <span class="n">absorptance</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ThinFilmResult</span><span class="p">(</span>
+        <span class="n">reflection</span><span class="p">,</span> <span class="n">transmission</span><span class="p">,</span> <span class="n">reflectance</span><span class="p">,</span> <span class="n">transmittance</span><span class="p">,</span> <span class="n">absorptance</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_stack_at_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">incident</span><span class="p">,</span> <span class="n">substrate</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">polarization</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Evaluate one wavelength of a coherent characteristic matrix."""</span>
+    <span class="n">n_0</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">_index_value</span><span class="p">(</span><span class="n">incident</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">))</span>
+    <span class="n">n_s</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">_index_value</span><span class="p">(</span><span class="n">substrate</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">))</span>
+    <span class="n">conserved</span> <span class="o">=</span> <span class="n">n_0</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">cos_0</span> <span class="o">=</span> <span class="n">_forward_cosine</span><span class="p">(</span><span class="n">n_0</span><span class="p">,</span> <span class="n">conserved</span> <span class="o">/</span> <span class="n">n_0</span><span class="p">)</span>
+    <span class="n">cos_s</span> <span class="o">=</span> <span class="n">_forward_cosine</span><span class="p">(</span><span class="n">n_s</span><span class="p">,</span> <span class="n">conserved</span> <span class="o">/</span> <span class="n">n_s</span><span class="p">)</span>
+    <span class="n">q_0</span> <span class="o">=</span> <span class="n">_admittance</span><span class="p">(</span><span class="n">n_0</span><span class="p">,</span> <span class="n">cos_0</span><span class="p">,</span> <span class="n">polarization</span><span class="p">)</span>
+    <span class="n">q_s</span> <span class="o">=</span> <span class="n">_admittance</span><span class="p">(</span><span class="n">n_s</span><span class="p">,</span> <span class="n">cos_s</span><span class="p">,</span> <span class="n">polarization</span><span class="p">)</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">wavelength_m</span> <span class="o">=</span> <span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+    <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">_index_value</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">material</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">))</span>
+        <span class="n">cosine</span> <span class="o">=</span> <span class="n">_forward_cosine</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">conserved</span> <span class="o">/</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">q_layer</span> <span class="o">=</span> <span class="n">_admittance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">cosine</span><span class="p">,</span> <span class="n">polarization</span><span class="p">)</span>
+        <span class="n">thickness_m</span> <span class="o">=</span> <span class="n">_length_meters</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">thickness</span><span class="p">)</span>
+        <span class="n">phase</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">index</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">*</span> <span class="n">thickness_m</span> <span class="o">/</span> <span class="n">wavelength_m</span>
+        <span class="n">layer_matrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phase</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span> <span class="o">/</span> <span class="n">q_layer</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">q_layer</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phase</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phase</span><span class="p">)],</span>
+        <span class="p">])</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">@</span> <span class="n">layer_matrix</span>
+    <span class="n">b_term</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">q_s</span>
+    <span class="n">c_term</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">q_s</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="n">q_0</span> <span class="o">*</span> <span class="n">b_term</span> <span class="o">+</span> <span class="n">c_term</span>
+    <span class="n">reflection</span> <span class="o">=</span> <span class="p">(</span><span class="n">q_0</span> <span class="o">*</span> <span class="n">b_term</span> <span class="o">-</span> <span class="n">c_term</span><span class="p">)</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="n">transmission</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">q_0</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="n">reflectance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">reflection</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">transmittance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">q_s</span> <span class="o">/</span> <span class="n">q_0</span><span class="p">)</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">transmission</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">absorptance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">real_if_close</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">reflectance</span> <span class="o">-</span> <span class="n">transmittance</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">reflection</span><span class="p">,</span> <span class="n">transmission</span><span class="p">,</span> <span class="n">reflectance</span><span class="p">,</span> <span class="n">transmittance</span><span class="p">,</span> <span class="n">absorptance</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_admittance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">cosine</span><span class="p">,</span> <span class="n">polarization</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the characteristic optical admittance."""</span>
+    <span class="k">return</span> <span class="n">index</span> <span class="o">*</span> <span class="n">cosine</span> <span class="k">if</span> <span class="n">polarization</span> <span class="o">==</span> <span class="s2">"s"</span> <span class="k">else</span> <span class="n">index</span> <span class="o">/</span> <span class="n">cosine</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_forward_cosine</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">sine</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Select the forward/decaying branch of the complex propagation angle."""</span>
+    <span class="n">cosine</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">scimath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sine</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">wavevector</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="n">cosine</span>
+    <span class="n">flip</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">wavevector</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">wavevector</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">wavevector</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">flip</span><span class="p">,</span> <span class="o">-</span><span class="n">cosine</span><span class="p">,</span> <span class="n">cosine</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_index_value</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Resolve a constant index or evaluate a PyOptik material model."""</span>
+    <span class="n">evaluator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"compute_refractive_index"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">evaluator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">wavelength</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"wavelength is required when using a material model"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">evaluator</span><span class="p">(</span><span class="n">wavelength</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_lossless_scalar_index</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return a positive real scalar refractive index."""</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_index_value</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"angle calculations require scalar refractive indices"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">index</span><span class="o">.</span><span class="n">real</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"angle calculations require positive lossless refractive indices"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_wavelength_quantity</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Normalize a wavelength to a positive length quantity."""</span>
+    <span class="n">quantity</span> <span class="o">=</span> <span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span>
+    <span class="n">meters</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">quantity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">meters</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">~</span><span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">meters</span><span class="p">))</span> <span class="ow">or</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">meters</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"wavelength must be finite, positive, and at most one-dimensional"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">quantity</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_length_meters</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Normalize one positive layer thickness to metres."""</span>
+    <span class="n">quantity</span> <span class="o">=</span> <span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span>
+    <span class="n">meters</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">quantity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">meters</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">meters</span><span class="p">)</span> <span class="ow">or</span> <span class="n">meters</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"layer thickness must be a non-negative scalar length"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">meters</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_angle_radians</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Normalize a scalar incidence angle to radians."""</span>
+    <span class="n">radians</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">radian</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
+    <span class="n">radians</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">radians</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">radians</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">radians</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">radians</span> <span class="o">&lt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"angle must be a finite scalar in [0, pi/2)"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">radians</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_polarization</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Normalize and validate a polarization name."""</span>
+    <span class="n">polarization</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">polarization</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"s"</span><span class="p">,</span> <span class="s2">"p"</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"polarization must be 's' or 'p'"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">polarization</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_scalarize</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Convert zero- or one-element arrays to Python/NumPy scalars."""</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">array</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2024, Martin Poinsinet de Sivry-Houle.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

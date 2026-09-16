@@ -169,6 +169,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="custom_materials.html">
                         Authoring custom materials
                       </a>
@@ -181,19 +188,19 @@
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
-                      </a>
-                    </li>
-                
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
@@ -343,6 +350,13 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="thin_films.html">
+                        Interfaces and thin films
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="custom_materials.html">
                         Authoring custom materials
                       </a>
@@ -355,19 +369,19 @@ document.write(`
                       </a>
                     </li>
                 
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
-                      </a>
-                    </li>
-                
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
@@ -741,6 +755,83 @@ catalog loading, user-defined material construction, and YAML export.</p>
 </dd></dl>
 
 </section>
+<section id="interface-and-thin-film-optics">
+<h2>Interface and Thin-Film Optics<a class="headerlink" href="#interface-and-thin-film-optics" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.FresnelResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FresnelResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reflection_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmission_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmittance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absorptance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#FresnelResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.FresnelResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Amplitude coefficients and power fractions at one interface.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.ThinFilmLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThinFilmLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#ThinFilmLayer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.ThinFilmLayer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>One homogeneous layer in a coherent optical stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material</strong> (<em>complex</em><em> or </em><a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><em>BaseMaterial</em></a>) – Constant complex refractive index or a PyOptik material model.</p></li>
+<li><p><strong>thickness</strong> (<em>Length</em>) – Physical layer thickness. Bare numbers are interpreted as metres.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.ThinFilmResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThinFilmResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reflection_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmission_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmittance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absorptance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#ThinFilmResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.ThinFilmResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Coherent reflection, transmission, and absorption of a layer stack.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.fresnel_coefficients">
+<span class="sig-name descname"><span class="pre">fresnel_coefficients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incident_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyOptik.FresnelResult" title="PyOptik.thin_film.FresnelResult"><span class="pre">FresnelResult</span></a></span></span><a class="reference internal" href="_modules/PyOptik/thin_film.html#fresnel_coefficients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.fresnel_coefficients" title="Link to this definition">#</a></dt>
+<dd><p>Calculate Fresnel amplitude coefficients and power fractions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>incident_index</strong> (<em>complex</em><em> or </em><a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><em>BaseMaterial</em></a>) – Refractive indices or material models on either side of the interface.</p></li>
+<li><p><strong>transmitted_index</strong> (<em>complex</em><em> or </em><a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><em>BaseMaterial</em></a>) – Refractive indices or material models on either side of the interface.</p></li>
+<li><p><strong>angle</strong> (<em>float</em><em> or </em><em>angle quantity</em><em>, </em><em>optional</em>) – Incidence angle. Bare values are radians.</p></li>
+<li><p><strong>polarization</strong> (<em>{&quot;s&quot;</em><em>, </em><em>&quot;p&quot;}</em><em>, </em><em>optional</em>) – Electric-field polarization.</p></li>
+<li><p><strong>wavelength</strong> (<em>Length</em><em>, </em><em>optional</em>) – Required when either index is a wavelength-dependent material model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.brewster_angle">
+<span class="sig-name descname"><span class="pre">brewster_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incident_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_index</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#brewster_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.brewster_angle" title="Link to this definition">#</a></dt>
+<dd><p>Return the p-polarized Brewster angle for two lossless media.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.critical_angle">
+<span class="sig-name descname"><span class="pre">critical_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incident_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_index</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#critical_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.critical_angle" title="Link to this definition">#</a></dt>
+<dd><p>Return the total-internal-reflection critical angle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the media are absorbing or the incident index is not larger than
+    the transmitted index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.thin_film_stack">
+<span class="sig-name descname"><span class="pre">thin_film_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#PyOptik.ThinFilmLayer" title="PyOptik.thin_film.ThinFilmLayer"><span class="pre">ThinFilmLayer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incident_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyOptik.ThinFilmResult" title="PyOptik.thin_film.ThinFilmResult"><span class="pre">ThinFilmResult</span></a></span></span><a class="reference internal" href="_modules/PyOptik/thin_film.html#thin_film_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.thin_film_stack" title="Link to this definition">#</a></dt>
+<dd><p>Evaluate a coherent isotropic multilayer using characteristic matrices.</p>
+<p>Wavelength may be scalar or one-dimensional. Layers may be
+<a class="reference internal" href="#PyOptik.ThinFilmLayer" title="PyOptik.ThinFilmLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThinFilmLayer</span></code></a> objects or <code class="docutils literal notranslate"><span class="pre">(material,</span> <span class="pre">thickness)</span></code> tuples. All
+layers are treated as optically coherent; surface roughness, incoherent
+substrates, anisotropy, and magnetic media are outside this model.</p>
+</dd></dl>
+
+</section>
 <section id="enumerations">
 <h2>Enumerations<a class="headerlink" href="#enumerations" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -822,6 +913,16 @@ catalog loading, user-defined material construction, and YAML export.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedDataset"><code class="docutils literal notranslate"><span class="pre">TabulatedDataset</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialDocument"><code class="docutils literal notranslate"><span class="pre">MaterialDocument</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.parse_material"><code class="docutils literal notranslate"><span class="pre">parse_material()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interface-and-thin-film-optics">Interface and Thin-Film Optics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FresnelResult"><code class="docutils literal notranslate"><span class="pre">FresnelResult</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmLayer"><code class="docutils literal notranslate"><span class="pre">ThinFilmLayer</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmResult"><code class="docutils literal notranslate"><span class="pre">ThinFilmResult</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.fresnel_coefficients"><code class="docutils literal notranslate"><span class="pre">fresnel_coefficients()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.brewster_angle"><code class="docutils literal notranslate"><span class="pre">brewster_angle()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.critical_angle"><code class="docutils literal notranslate"><span class="pre">critical_angle()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.thin_film_stack"><code class="docutils literal notranslate"><span class="pre">thin_film_stack()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerations">Enumerations</a><ul class="nav section-nav flex-column">

@@ -16,6 +16,17 @@ The convenience methods ``material.n(wavelength)``, ``material.k(wavelength)``,
 The relative permittivity is ``N²`` and the intensity absorption coefficient is
 ``α = 4πk / λ``.
 
+Interface and multilayer power
+------------------------------
+
+Fresnel and thin-film calculations use the same ``n + i k`` convention.
+``reflectance``, ``transmittance``, and ``absorptance`` are fractions of normal
+optical power flux and satisfy ``R + T + A = 1`` up to numerical precision.
+The complex ``reflection_amplitude`` and ``transmission_amplitude`` retain
+phase information. Multilayer results use the characteristic-matrix field
+convention; power fractions are usually the portable quantities when comparing
+different polarization bases.
+
 Dispersion and group delay
 --------------------------
 

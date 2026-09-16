@@ -2,19 +2,20 @@
 
 .. _source_code:
 
-Source Code
-===========
+API reference
+=============
 
-Welcome to the PyOptik Source Code Documentation. This section provides a comprehensive overview of the key classes, functions, and utilities available within the `PyOptik` library. Each component is documented in detail, with information on its members, inherited properties, and direct links to the source code.
+This page documents the public classes and functions. For task-oriented
+introductions, begin with :doc:`getting_started` or :doc:`examples`.
 
-Class Documentation
-===================
+Public API
+----------
 
 Below, you will find detailed, automatically generated documentation for significant classes and functions in the `PyOptik` library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.
 
 
-Catalog and Upstream Hierarchy
-------------------------------
+Catalog
+~~~~~~~
 
 PyOptik preserves the upstream ``shelf / book / page`` organization used by
 RefractiveIndex.INFO. The catalog API is useful when source provenance matters
@@ -32,12 +33,12 @@ or when downloading a complete material collection.
 .. autofunction:: PyOptik.download_snapshot
 
 
-Material Models
----------------
+Material models
+~~~~~~~~~~~~~~~
 
 
-SellmeierMaterial
------------------
+Sellmeier material
+^^^^^^^^^^^^^^^^^^
 
 The `SellmeierMaterial` class extends the `Material` base class to handle materials defined by the Sellmeier equation. It allows for precise modeling of refractive indices using parameters from the Sellmeier formula, which is essential for optical design and simulation.
 
@@ -49,8 +50,8 @@ The `SellmeierMaterial` class extends the `Material` base class to handle materi
 
 
 
-TabulatedMaterial
------------------
+Tabulated material
+^^^^^^^^^^^^^^^^^^
 
 The `TabulatedMaterial` class extends the `Material` base class to handle materials characterized by tabulated refractive index and absorption values. This class is particularly useful when working with empirical data from experiments or literature.
 
@@ -61,8 +62,8 @@ The `TabulatedMaterial` class extends the `Material` base class to handle materi
     :undoc-members:
 
 
-Base Utilities
---------------
+Base material
+^^^^^^^^^^^^^
 
 .. autoclass:: PyOptik.material.base_class.BaseMaterial
     :members:
@@ -70,8 +71,8 @@ Base Utilities
     :show-inheritance:
 
 
-Typed Material Documents
-------------------------
+Typed material documents
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 These immutable data objects provide the validated representation shared by
 catalog loading, user-defined material construction, and YAML export.
@@ -91,8 +92,8 @@ catalog loading, user-defined material construction, and YAML export.
 .. autofunction:: PyOptik.parse_material
 
 
-Interface and Thin-Film Optics
-------------------------------
+Interface and thin-film optics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autoclass:: PyOptik.FresnelResult
     :members:
@@ -113,15 +114,7 @@ Interface and Thin-Film Optics
 
 
 Enumerations
-------------
+~~~~~~~~~~~~
 
 .. autoclass:: PyOptik.MaterialType
     :members:
-
-Directives for Sphinx Gallery
-=============================
-
-To further enhance your understanding of `PyOptik`, we have integrated practical examples throughout the documentation using Sphinx Gallery. These examples demonstrate how to use the library's classes and functions in realistic scenarios.
-
-.. note::
-    You can find example usage of the `SellmeierMaterial` and `TabulatedMaterial` classes in the "Examples" section. These examples are automatically generated from the source code and provide hands-on insight into practical applications of the library.

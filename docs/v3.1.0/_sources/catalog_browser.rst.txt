@@ -1,5 +1,5 @@
-Terminal catalog browser
-========================
+Catalog browser
+===============
 
 PyOptik includes an optional full-screen terminal interface for exploring a
 downloaded RefractiveIndex.INFO snapshot. It uses Textual and is installed
@@ -39,4 +39,3 @@ field and ``q`` to quit.
 If no snapshot exists, the command reports its expected location and asks you
 to run ``pyoptik setup``. The browser never silently downloads or modifies
 catalog data.
-

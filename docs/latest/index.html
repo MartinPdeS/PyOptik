@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PyOptik &#8212; PyOptik  documentation</title>
+    <title>PyOptik documentation &#8212; PyOptik  documentation</title>
   
   
   
@@ -54,7 +54,7 @@
     <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Source Code" href="code.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,15 +154,22 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="code.html">
-                        Source Code
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="conventions.html">
-                        Physical conventions and data provenance
+                      <a class="nav-link nav-internal" href="materials_and_catalog.html">
+                        Materials and catalog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Custom materials
                       </a>
                     </li>
                 
@@ -175,15 +182,8 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="custom_materials.html">
-                        Authoring custom materials
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="catalog_browser.html">
-                        Terminal catalog browser
+                        Catalog browser
                       </a>
                     </li>
                 
@@ -195,7 +195,21 @@
                     
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="examples.html">
-                        Coding examples
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="conventions.html">
+                        Physical and numerical conventions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="code.html">
+                        API reference
                       </a>
                     </li>
                 
@@ -335,15 +349,22 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="code.html">
-                        Source Code
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="conventions.html">
-                        Physical conventions and data provenance
+                      <a class="nav-link nav-internal" href="materials_and_catalog.html">
+                        Materials and catalog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Custom materials
                       </a>
                     </li>
                 
@@ -356,15 +377,8 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="custom_materials.html">
-                        Authoring custom materials
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="catalog_browser.html">
-                        Terminal catalog browser
+                        Catalog browser
                       </a>
                     </li>
                 
@@ -376,7 +390,21 @@ document.write(`
                     
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="examples.html">
-                        Coding examples
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="conventions.html">
+                        Physical and numerical conventions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="code.html">
+                        API reference
                       </a>
                     </li>
                 
@@ -481,405 +509,79 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><strong>Date</strong>: Sep 16, 2026, <strong>Version</strong>: 3.1.0</p>
-<p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.svg" /></p>
+  <section id="pyoptik-documentation">
+<h1>PyOptik documentation<a class="headerlink" href="#pyoptik-documentation" title="Link to this heading">#</a></h1>
+<p><strong>PyOptik</strong> is a unit-aware Python toolkit for optical material data,
+dispersion, Fresnel interfaces, and coherent thin-film stacks. It combines a
+searchable RefractiveIndex.INFO catalog with APIs for measured and fitted
+materials.</p>
 <table class="table">
 <colgroup>
-<col style="width: 35.0%" />
-<col style="width: 65.0%" />
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Badge</p></th>
-<th class="head"><p>Status</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p>Python versions</p></td>
-<td><p><a class="reference external" href="https://pypi.org/project/pyoptik/"><img alt="Supported Python versions" src="https://img.shields.io/pypi/pyversions/pyoptik.svg" /></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="getting_started.html"><span class="doc">Getting started</span></a></p></td>
+<td><p>Install the package, download the catalog, and calculate refractive
+index with explicit wavelength units.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Documentation</p></td>
-<td><p><a class="reference external" href="https://martinpdes.github.io/PyOptik/"><img alt="Documentation status" src="https://github.com/martinpdes/pyoptik/actions/workflows/deploy_documentation.yml/badge.svg" /></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="examples.html"><span class="doc">Example gallery</span></a></p></td>
+<td><p>Follow executable examples for dispersion, custom data, interfaces,
+coatings, pulse properties, and catalog search.</p></td>
 </tr>
-<tr class="row-even"><td><p>Continuous integration</p></td>
-<td><p><a class="reference external" href="https://github.com/MartinPdeS/PyOptik/actions/workflows/tests.yml"><img alt="Continuous integration status" src="https://github.com/martinpdes/pyoptik/actions/workflows/tests.yml/badge.svg" /></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="thin_films.html"><span class="doc">Interfaces and thin films</span></a></p></td>
+<td><p>Calculate Fresnel coefficients and coherent multilayer spectra for s and
+p polarization.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Test coverage</p></td>
-<td><p><a class="reference external" href="https://htmlpreview.github.io/?https://github.com/MartinPdeS/PyOptik/blob/python-coverage-comment-action-data/htmlcov/index.html"><img alt="Test coverage" src="https://raw.githubusercontent.com/MartinPdeS/PyOptik/python-coverage-comment-action-data/badge.svg" /></a></p></td>
-</tr>
-<tr class="row-even"><td><p>PyPI package</p></td>
-<td><p><a class="reference external" href="https://pypi.org/project/pyoptik/"><img alt="PyPI version" src="https://badge.fury.io/py/pyoptik.svg" /></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>PyPI downloads</p></td>
-<td><p><a class="reference external" href="https://pypistats.org/packages/pyoptik"><img alt="PyPI downloads" src="https://img.shields.io/pypi/dm/pyoptik.svg" /></a></p></td>
-</tr>
-<tr class="row-even"><td><p>Anaconda package</p></td>
-<td><p><a class="reference external" href="https://anaconda.org/martinpdes/pyoptik"><img alt="Anaconda version" src="https://anaconda.org/martinpdes/pyoptik/badges/version.svg" /></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>Anaconda downloads</p></td>
-<td><p><a class="reference external" href="https://anaconda.org/martinpdes/pyoptik"><img alt="Anaconda downloads" src="https://anaconda.org/martinpdes/pyoptik/badges/downloads.svg" /></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="custom_materials.html"><span class="doc">Custom materials</span></a></p></td>
+<td><p>Construct materials from arrays, CSV files, or formula coefficients and
+export validated YAML.</p></td>
 </tr>
 </tbody>
 </table>
-<section id="pyoptik">
-<h1>PyOptik<a class="headerlink" href="#pyoptik" title="Link to this heading">#</a></h1>
-<p><strong>PyOptik</strong> is a Python library for evaluating optical material properties.
-It provides unit-aware refractive-index calculations, dispersion models,
-tabulated optical constants, group-delay properties, plotting helpers, and a
-catalog interface for the hierarchical <a class="reference external" href="https://refractiveindex.info">RefractiveIndex.INFO</a> database.</p>
-<p>The library is designed for optical design, photonics simulations,
-electromagnetic modeling, and experimental data analysis.</p>
-<section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Sellmeier and other dispersion-formula models.</p></li>
-<li><p>Tabulated complex refractive index data, <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">k</span></code>.</p></li>
-<li><p>Unit-aware wavelength calculations through <code class="docutils literal notranslate"><span class="pre">TypedUnit</span></code> and Pint.</p></li>
-<li><p>Group index, group velocity, group delay, and group-delay dispersion.</p></li>
-<li><p>Fresnel interfaces and coherent multilayer thin-film calculations.</p></li>
-<li><p>NumPy-compatible scalar and array evaluation.</p></li>
-<li><p>Plotting helpers for dispersion and absorption data.</p></li>
-<li><p>Hierarchical catalog access using upstream <code class="docutils literal notranslate"><span class="pre">shelf</span> <span class="pre">/</span> <span class="pre">book</span> <span class="pre">/</span> <span class="pre">page</span></code> identity.</p></li>
-<li><p>Explicit upstream page selection using <code class="docutils literal notranslate"><span class="pre">shelf/book/page</span></code> identifiers.</p></li>
-<li><p>Downloadable custom and upstream material data with local caching.</p></li>
-</ul>
-</section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
-<p>Install the latest release from PyPI:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>PyOptik
-</pre></div>
-</div>
-<p>The package is also available through Anaconda:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>martinpdes<span class="w"> </span>pyoptik
-</pre></div>
-</div>
-<p>Verify the installation with the same interpreter that will run your code:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import PyOptik; print(PyOptik.__version__)"</span>
-</pre></div>
-</div>
-<p>Material data is not bundled with PyOptik. Install the package first, then
-download the upstream snapshot when it is needed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
-</pre></div>
-</div>
-<p>or from Python:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_snapshot</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">download_snapshot</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-<section id="first-calculation">
-<h2>First calculation<a class="headerlink" href="#first-calculation" title="Link to this heading">#</a></h2>
-<p>Wavelengths should carry units. This avoids ambiguity between metres,
-micrometres, and nanometres.</p>
+<section id="quick-example">
+<h2>Quick example<a class="headerlink" href="#quick-example" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span><span class="p">,</span> <span class="n">fresnel_coefficients</span>
 
 <span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
-<span class="n">bk7</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/P-BK7"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mi">550</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span>
+<span class="n">glass</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/N-BK7"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="n">wavelength</span> <span class="o">=</span> <span class="mi">550</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">glass</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
+<span class="n">interface</span> <span class="o">=</span> <span class="n">fresnel_coefficients</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">glass</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="n">wavelength</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">reflectance</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For backward compatibility, bare numeric wavelengths are interpreted as
-metres. Unit-bearing quantities are recommended for new code.</p>
-</section>
-<section id="material-models">
-<h2>Material models<a class="headerlink" href="#material-models" title="Link to this heading">#</a></h2>
-<p>Sellmeier materials evaluate a dispersion formula:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
-<span class="n">silica</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/SiO2/Malitson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">1310</span><span class="p">,</span> <span class="mi">1550</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Tabulated materials interpolate complex optical constants:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
-<span class="n">silicon</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Si/Aspnes"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">silicon</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="mf">1.55</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The real part is the refractive index <code class="docutils literal notranslate"><span class="pre">n</span></code> and the imaginary part is the
-extinction coefficient <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">material.n(wavelength)</span></code>, <code class="docutils literal notranslate"><span class="pre">material.k(wavelength)</span></code>,
-<code class="docutils literal notranslate"><span class="pre">material.relative_permittivity(wavelength)</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">material.absorption_coefficient(wavelength)</span></code> for common derived properties.
-See the documentation’s physical-conventions page for the vacuum-wavelength,
-<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">k</span></code>, GDD, interpolation, and extrapolation conventions.</p>
-<section id="user-defined-materials">
-<h3>User-defined materials<a class="headerlink" href="#user-defined-materials" title="Link to this heading">#</a></h3>
-<p>Create tabulated materials directly from measured arrays or a CSV file, then
-export them in the same validated YAML format used by the catalog:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
-
-<span class="n">sample</span> <span class="o">=</span> <span class="n">TabulatedMaterial</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
-    <span class="s2">"sample"</span><span class="p">,</span>
-    <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">600</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
-    <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mf">1.40</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">,</span> <span class="mf">1.50</span><span class="p">],</span>
-    <span class="n">k</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">],</span>
-    <span class="n">reference</span><span class="o">=</span><span class="s2">"Laboratory measurement"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">"sample.yml"</span><span class="p">)</span>
-
-<span class="c1"># CSV headers default to: wavelength,n,k</span>
-<span class="n">imported</span> <span class="o">=</span> <span class="n">TabulatedMaterial</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span>
-    <span class="s2">"sample.csv"</span><span class="p">,</span>
-    <span class="n">wavelength_unit</span><span class="o">=</span><span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>Formula materials can be authored in the same way with
-<code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.from_coefficients(...)</span></code> and exported with <code class="docutils literal notranslate"><span class="pre">to_yaml()</span></code>.</p>
-</section>
-<section id="validity-ranges">
-<h3>Validity ranges<a class="headerlink" href="#validity-ranges" title="Link to this heading">#</a></h3>
-<p>Material data is only valid over the wavelength range supplied by its source.
-Out-of-range behavior can be selected explicitly:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wavelength</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
-
-<span class="c1"># Default: issue a warning and evaluate.</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">"warn"</span><span class="p">)</span>
-
-<span class="c1"># Fail fast for production calculations.</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">"raise"</span><span class="p">)</span>
-
-<span class="c1"># Evaluate at the nearest validity boundary.</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">bk7</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="o">=</span><span class="s2">"clip"</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="group-and-pulse-properties">
-<h2>Group and pulse properties<a class="headerlink" href="#group-and-pulse-properties" title="Link to this heading">#</a></h2>
-<p>Every material model provides group-related quantities:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wavelength</span> <span class="o">=</span> <span class="mi">1550</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
-
-<span class="n">group_index</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_group_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
-<span class="n">group_velocity</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_group_velocity</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
-<span class="n">group_delay</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_group_delay</span><span class="p">(</span>
-    <span class="n">wavelength</span><span class="p">,</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">centimeter</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">group_delay_dispersion</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_group_delay_dispersion</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
-
-<span class="c1"># The wavelength-space slope is available separately.</span>
-<span class="n">group_delay_wavelength_slope</span> <span class="o">=</span> <span class="n">silica</span><span class="o">.</span><span class="n">compute_group_delay_wavelength_slope</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>These methods accept scalar or array wavelengths and return unit-aware values.
-<code class="docutils literal notranslate"><span class="pre">compute_group_delay_dispersion</span></code> is the conventional frequency-domain GDD,
-<code class="docutils literal notranslate"><span class="pre">dτ_g/dω</span></code> (typically expressed in fs²); use
-<code class="docutils literal notranslate"><span class="pre">compute_group_delay_wavelength_slope</span></code> for <code class="docutils literal notranslate"><span class="pre">dτ_g/dλ</span></code>.</p>
-</section>
-<section id="interfaces-and-thin-films">
-<h2>Interfaces and thin films<a class="headerlink" href="#interfaces-and-thin-films" title="Link to this heading">#</a></h2>
-<p>Calculate s- or p-polarized Fresnel coefficients at a single interface:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">fresnel_coefficients</span><span class="p">,</span> <span class="n">brewster_angle</span><span class="p">,</span> <span class="n">critical_angle</span>
-
-<span class="n">interface</span> <span class="o">=</span> <span class="n">fresnel_coefficients</span><span class="p">(</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="n">angle</span><span class="o">=</span><span class="mi">45</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span>
-    <span class="n">polarization</span><span class="o">=</span><span class="s2">"p"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">reflectance</span><span class="p">,</span> <span class="n">interface</span><span class="o">.</span><span class="n">transmittance</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">brewster_angle</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">degree</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">critical_angle</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">degree</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>For coherent multilayers, supply constant indices or PyOptik material models.
-Each thickness should carry units:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThinFilmLayer</span><span class="p">,</span> <span class="n">thin_film_stack</span>
-
-<span class="n">wavelength</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span>
-<span class="n">substrate_index</span> <span class="o">=</span> <span class="mf">1.5</span>
-<span class="n">coating_index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">substrate_index</span><span class="p">)</span>
-<span class="n">coating</span> <span class="o">=</span> <span class="n">ThinFilmLayer</span><span class="p">(</span>
-    <span class="n">coating_index</span><span class="p">,</span>
-    <span class="n">wavelength</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">coating_index</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="n">spectrum</span> <span class="o">=</span> <span class="n">thin_film_stack</span><span class="p">(</span>
-    <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">650</span><span class="p">,</span> <span class="mi">700</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
-    <span class="p">[</span><span class="n">coating</span><span class="p">],</span>
-    <span class="n">incident_index</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">substrate_index</span><span class="o">=</span><span class="n">substrate_index</span><span class="p">,</span>
-    <span class="n">polarization</span><span class="o">=</span><span class="s2">"s"</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>The returned results contain complex amplitude coefficients and the power
-fractions <code class="docutils literal notranslate"><span class="pre">reflectance</span></code>, <code class="docutils literal notranslate"><span class="pre">transmittance</span></code>, and <code class="docutils literal notranslate"><span class="pre">absorptance</span></code>. The model is
-coherent and isotropic; it does not model roughness, anisotropy, or incoherent
-thick substrates.</p>
-</section>
-<section id="plotting">
-<h2>Plotting<a class="headerlink" href="#plotting" title="Link to this heading">#</a></h2>
-<p>Material models include simple dispersion plots:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_snapshot</span><span class="p">()</span>
-<span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/P-BK7"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Au/Johnson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>For non-interactive environments such as CI or servers, select a headless
-Matplotlib backend before importing plotting code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"Agg"</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="hierarchical-material-catalog">
-<h2>Hierarchical material catalog<a class="headerlink" href="#hierarchical-material-catalog" title="Link to this heading">#</a></h2>
-<p>RefractiveIndex.INFO organizes data by <strong>shelf</strong>, <strong>book</strong>, and <strong>page</strong>.
-PyOptik preserves this identity so that materials from different sources do
-not collide simply because they share a short name.</p>
-<p>Load the upstream catalog index:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialCatalog</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">MaterialCatalog</span><span class="o">.</span><span class="n">from_upstream</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">shelves</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">books</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="s2">"specs"</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Download a complete source collection, such as an optical-glass book:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">catalog</span><span class="o">.</span><span class="n">download</span><span class="p">(</span>
-    <span class="n">shelf</span><span class="o">=</span><span class="s2">"specs"</span><span class="p">,</span>
-    <span class="n">book</span><span class="o">=</span><span class="s2">"SCHOTT-optical"</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>Download the complete optical catalog, including tabulated and formula-based
-materials, with resumable progress tracking:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">catalog</span><span class="o">.</span><span class="n">download_all</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Each page is stored once and recorded in <code class="docutils literal notranslate"><span class="pre">manifest.json</span></code> with its source URL,
-local path, status, timestamp, and SHA-256 checksum. Re-running the command
-uses cached files, so interrupted downloads can resume safely.</p>
-<p>Access a page by its canonical identifier and load its material model:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"specs/SCHOTT-optical/N-BK7"</span><span class="p">)</span>
-<span class="n">bk7</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-
-<span class="c1"># Search by ID, descriptive name, or source URL; retain only cached pages.</span>
-<span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"BK7"</span><span class="p">,</span> <span class="n">shelf</span><span class="o">=</span><span class="s2">"specs"</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">provenance</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>Material data is cached in a user data directory. Set
-<code class="docutils literal notranslate"><span class="pre">PYOPTIK_DATA_DIR</span></code> to choose a different location.</p>
-<p>The command-line interface provides the canonical catalog workflow:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
-python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>download-all<span class="w"> </span>--data-root<span class="w"> </span>./refractiveindex-data
-python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> </span>download-all<span class="w"> </span>--source<span class="w"> </span>pages<span class="w"> </span>--workers<span class="w"> </span><span class="m">8</span>
-</pre></div>
-</div>
-<p>After installation, the equivalent console command is <code class="docutils literal notranslate"><span class="pre">pyoptik</span>
-<span class="pre">download-all</span> <span class="pre">--data-root</span> <span class="pre">./refractiveindex-data</span></code>.</p>
-<p>An optional terminal interface provides live search and a provenance pane for
-browsing the downloaded database:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"PyOptik[ui]"</span>
-pyoptik<span class="w"> </span>setup
-pyoptik<span class="w"> </span>browse
-</pre></div>
-</div>
-<p>Use the arrow keys or mouse to select a page, <code class="docutils literal notranslate"><span class="pre">/</span></code> to focus search, and <code class="docutils literal notranslate"><span class="pre">q</span></code>
-to quit. Pass <code class="docutils literal notranslate"><span class="pre">--data-root</span></code> when browsing a non-default snapshot location.</p>
-<p>For a beginner-friendly first-time setup, use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
-</pre></div>
-</div>
-<p>This downloads the complete upstream snapshot, preserves the original
-hierarchy, and can be safely run again. Use <code class="docutils literal notranslate"><span class="pre">pyoptik</span> <span class="pre">setup</span> <span class="pre">--force</span></code> to
-refresh the local snapshot.</p>
-<p>The same setup is available from Python:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_snapshot</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">download_snapshot</span><span class="p">()</span>
-<span class="n">silver</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Ag/Johnson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>The default <code class="docutils literal notranslate"><span class="pre">download-all</span></code> command downloads one upstream snapshot and
-extracts every material page locally, preserving its <code class="docutils literal notranslate"><span class="pre">shelf/book/page</span></code>
-hierarchy. This avoids thousands of individual HTTP requests. Existing
-snapshots are reused; pass <code class="docutils literal notranslate"><span class="pre">--force</span></code> to refresh the snapshot. The
-<code class="docutils literal notranslate"><span class="pre">--source</span> <span class="pre">pages</span></code> fallback downloads individual pages and supports bounded
-parallelism with <code class="docutils literal notranslate"><span class="pre">--workers</span></code>. <code class="docutils literal notranslate"><span class="pre">--fail-fast</span></code> stops after the first failed
-page, while <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> enables detailed diagnostics.</p>
-</section>
-<section id="common-issues">
-<h2>Common issues<a class="headerlink" href="#common-issues" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Attach units to wavelengths whenever possible.</p></li>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">out_of_range=&quot;raise&quot;</span></code> when extrapolation would invalidate a result.</p></li>
-<li><p>Use the canonical catalog identifier when provenance or source selection
-matters.</p></li>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">MPLBACKEND=Agg</span></code> for documentation builds, CI, and remote servers.</p></li>
-<li><p>If a material cannot be found, run <code class="docutils literal notranslate"><span class="pre">pyoptik</span> <span class="pre">setup</span></code> or call
-<code class="docutils literal notranslate"><span class="pre">download_snapshot()</span></code> before loading its canonical page.</p></li>
-</ul>
-</section>
-<section id="development-and-testing">
-<h2>Development and testing<a class="headerlink" href="#development-and-testing" title="Link to this heading">#</a></h2>
-<p>Clone the repository and install development dependencies:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/MartinPdeS/PyOptik.git
-<span class="nb">cd</span><span class="w"> </span>PyOptik
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[testing,documentation,dev]"</span>
-</pre></div>
-</div>
-<p>Run the offline test suite:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MPLBACKEND</span><span class="o">=</span>Agg<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not network"</span>
-</pre></div>
-</div>
-<p>Build the documentation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MPLBACKEND</span><span class="o">=</span>Agg<span class="w"> </span>sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>-W<span class="w"> </span>docs/source<span class="w"> </span>docs/build/html
-</pre></div>
-</div>
-<p>Network-dependent tests are marked with <code class="docutils literal notranslate"><span class="pre">network</span></code> and are excluded from
-normal CI runs.</p>
-</section>
-<section id="documentation-and-references">
-<h2>Documentation and references<a class="headerlink" href="#documentation-and-references" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://martinpdes.github.io/PyOptik/">Online documentation</a></p></li>
-<li><p><a class="reference external" href="https://github.com/polyanskiy/refractiveindex.info-database">RefractiveIndex.INFO database</a></p></li>
-<li><p><a class="reference external" href="https://github.com/MartinPdeS/PyOptik">PyOptik source repository</a></p></li>
-</ul>
-<p>The material data is sourced from RefractiveIndex.INFO. Refer to each
-material page for its original scientific or manufacturer reference.</p>
 <div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="code.html">Source Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="code.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="code.html#catalog-and-upstream-hierarchy">Catalog and Upstream Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#material-models">Material Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#sellmeiermaterial">SellmeierMaterial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#tabulatedmaterial">TabulatedMaterial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#base-utilities">Base Utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#typed-material-documents">Typed Material Documents</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#interface-and-thin-film-optics">Interface and Thin-Film Optics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="code.html#enumerations">Enumerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#your-first-calculation">Your first calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#common-properties">Common properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#next-steps">Next steps</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="code.html#directives-for-sphinx-gallery">Directives for Sphinx Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conventions.html">Physical conventions and data provenance</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="conventions.html#wavelength-and-optical-constants">Wavelength and optical constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conventions.html#interface-and-multilayer-power">Interface and multilayer power</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conventions.html#dispersion-and-group-delay">Dispersion and group delay</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conventions.html#interpolation-and-validity-ranges">Interpolation and validity ranges</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conventions.html#provenance-and-conditions">Provenance and conditions</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="materials_and_catalog.html">Materials and catalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="materials_and_catalog.html#material-models">Material models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materials_and_catalog.html#catalog-organization">Catalog organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materials_and_catalog.html#search-and-selection">Search and selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materials_and_catalog.html#provenance-and-integrity">Provenance and integrity</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_materials.html">Custom materials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#tabulated-data-from-arrays">Tabulated data from arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#csv-import">CSV import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#formula-materials">Formula materials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#typed-documents-and-validation">Typed documents and validation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="thin_films.html">Interfaces and thin films</a><ul>
@@ -889,19 +591,34 @@ material page for its original scientific or manufacturer reference.</p>
 <li class="toctree-l2"><a class="reference internal" href="thin_films.html#model-limits">Model limits</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="custom_materials.html">Authoring custom materials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#tabulated-data-from-arrays">Tabulated data from arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#csv-import">CSV import</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#formula-materials">Formula materials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#typed-documents-and-validation">Typed documents and validation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="catalog_browser.html">Terminal catalog browser</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="catalog_browser.html">Catalog browser</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="catalog_browser.html#installation-and-startup">Installation and startup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_browser.html#navigation">Navigation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Coding examples</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Learn by example</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example gallery</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Physical and numerical conventions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#wavelength-and-optical-constants">Wavelength and optical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#interface-and-multilayer-power">Interface and multilayer power</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#dispersion-and-group-delay">Dispersion and group delay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#interpolation-and-validity-ranges">Interpolation and validity ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#provenance-and-conditions">Provenance and conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="code.html#public-api">Public API</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references.html#upstream-database">Upstream database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="references.html#pyoptik">PyOptik</a></li>
@@ -931,21 +648,9 @@ material page for its original scientific or manufacturer reference.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-calculation">First calculation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-models">Material models</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-defined-materials">User-defined materials</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validity-ranges">Validity ranges</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-example">Quick example</a><ul class="nav section-nav flex-column">
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-and-pulse-properties">Group and pulse properties</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaces-and-thin-films">Interfaces and thin films</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting">Plotting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical-material-catalog">Hierarchical material catalog</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-issues">Common issues</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-and-testing">Development and testing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-and-references">Documentation and references</a></li>
 </ul>
   </nav></div>
 

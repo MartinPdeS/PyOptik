@@ -1,5 +1,5 @@
-Authoring custom materials
-==========================
+Custom materials
+================
 
 PyOptik can construct optical materials directly from measured arrays, CSV
 files, or dispersion coefficients. Custom materials support the same unit-aware
@@ -99,4 +99,3 @@ Malformed coefficient sets, invalid table shapes, non-finite values, unsorted
 wavelengths, unsupported formula types, and malformed metadata raise
 ``ValueError`` with source context. YAML export writes through a temporary file
 and atomically replaces the destination after successful serialization.
-

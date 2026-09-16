@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Source Code &#8212; PyOptik  documentation</title>
+    <title>API reference &#8212; PyOptik  documentation</title>
   
   
   
@@ -54,8 +54,8 @@
     <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Physical conventions and data provenance" href="conventions.html" />
-    <link rel="prev" title="PyOptik" href="index.html" />
+    <link rel="next" title="References" href="references.html" />
+    <link rel="prev" title="Physical and numerical conventions" href="conventions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,16 +154,23 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Source Code
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="conventions.html">
-                        Physical conventions and data provenance
+                      <a class="nav-link nav-internal" href="materials_and_catalog.html">
+                        Materials and catalog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Custom materials
                       </a>
                     </li>
                 
@@ -176,15 +183,8 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="custom_materials.html">
-                        Authoring custom materials
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="catalog_browser.html">
-                        Terminal catalog browser
+                        Catalog browser
                       </a>
                     </li>
                 
@@ -196,7 +196,21 @@
                     
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="examples.html">
-                        Coding examples
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="conventions.html">
+                        Physical and numerical conventions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link dropdown-item nav-internal" href="#">
+                        API reference
                       </a>
                     </li>
                 
@@ -335,16 +349,23 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Source Code
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="conventions.html">
-                        Physical conventions and data provenance
+                      <a class="nav-link nav-internal" href="materials_and_catalog.html">
+                        Materials and catalog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Custom materials
                       </a>
                     </li>
                 
@@ -357,15 +378,8 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="custom_materials.html">
-                        Authoring custom materials
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="catalog_browser.html">
-                        Terminal catalog browser
+                        Catalog browser
                       </a>
                     </li>
                 
@@ -377,7 +391,21 @@ document.write(`
                     
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="examples.html">
-                        Coding examples
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="conventions.html">
+                        Physical and numerical conventions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link dropdown-item nav-internal" href="#">
+                        API reference
                       </a>
                     </li>
                 
@@ -491,7 +519,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Source Code</li>
+    <li class="breadcrumb-item active" aria-current="page">API reference</li>
   </ul>
 </nav>
 </div>
@@ -508,15 +536,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="source-code">
-<span id="id1"></span><h1>Source Code<a class="headerlink" href="#source-code" title="Link to this heading">#</a></h1>
-<p>Welcome to the PyOptik Source Code Documentation. This section provides a comprehensive overview of the key classes, functions, and utilities available within the <cite>PyOptik</cite> library. Each component is documented in detail, with information on its members, inherited properties, and direct links to the source code.</p>
-</section>
-<section id="class-documentation">
-<h1>Class Documentation<a class="headerlink" href="#class-documentation" title="Link to this heading">#</a></h1>
+  <section id="api-reference">
+<span id="source-code"></span><h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
+<p>This page documents the public classes and functions. For task-oriented
+introductions, begin with <a class="reference internal" href="getting_started.html"><span class="doc">Getting started</span></a> or <a class="reference internal" href="examples.html"><span class="doc">Example gallery</span></a>.</p>
+<section id="public-api">
+<h2>Public API<a class="headerlink" href="#public-api" title="Link to this heading">#</a></h2>
 <p>Below, you will find detailed, automatically generated documentation for significant classes and functions in the <cite>PyOptik</cite> library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.</p>
-<section id="catalog-and-upstream-hierarchy">
-<h2>Catalog and Upstream Hierarchy<a class="headerlink" href="#catalog-and-upstream-hierarchy" title="Link to this heading">#</a></h2>
+<section id="catalog">
+<h3>Catalog<a class="headerlink" href="#catalog" title="Link to this heading">#</a></h3>
 <p>PyOptik preserves the upstream <code class="docutils literal notranslate"><span class="pre">shelf</span> <span class="pre">/</span> <span class="pre">book</span> <span class="pre">/</span> <span class="pre">page</span></code> organization used by
 RefractiveIndex.INFO. The catalog API is useful when source provenance matters
 or when downloading a complete material collection.</p>
@@ -570,10 +598,9 @@ or when downloading a complete material collection.</p>
 
 </section>
 <section id="material-models">
-<h2>Material Models<a class="headerlink" href="#material-models" title="Link to this heading">#</a></h2>
-</section>
-<section id="sellmeiermaterial">
-<h2>SellmeierMaterial<a class="headerlink" href="#sellmeiermaterial" title="Link to this heading">#</a></h2>
+<h3>Material models<a class="headerlink" href="#material-models" title="Link to this heading">#</a></h3>
+<section id="sellmeier-material">
+<h4>Sellmeier material<a class="headerlink" href="#sellmeier-material" title="Link to this heading">#</a></h4>
 <p>The <cite>SellmeierMaterial</cite> class extends the <cite>Material</cite> base class to handle materials defined by the Sellmeier equation. It allows for precise modeling of refractive indices using parameters from the Sellmeier formula, which is essential for optical design and simulation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="PyOptik.SellmeierMaterial">
@@ -638,8 +665,8 @@ or when downloading a complete material collection.</p>
 </dd></dl>
 
 </section>
-<section id="tabulatedmaterial">
-<h2>TabulatedMaterial<a class="headerlink" href="#tabulatedmaterial" title="Link to this heading">#</a></h2>
+<section id="tabulated-material">
+<h4>Tabulated material<a class="headerlink" href="#tabulated-material" title="Link to this heading">#</a></h4>
 <p>The <cite>TabulatedMaterial</cite> class extends the <cite>Material</cite> base class to handle materials characterized by tabulated refractive index and absorption values. This class is particularly useful when working with empirical data from experiments or literature.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="PyOptik.TabulatedMaterial">
@@ -704,8 +731,8 @@ or when downloading a complete material collection.</p>
 </dd></dl>
 
 </section>
-<section id="base-utilities">
-<h2>Base Utilities<a class="headerlink" href="#base-utilities" title="Link to this heading">#</a></h2>
+<section id="base-material">
+<h4>Base material<a class="headerlink" href="#base-material" title="Link to this heading">#</a></h4>
 <dl class="py class">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseMaterial</span></span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial" title="Link to this definition">#</a></dt>
@@ -716,8 +743,9 @@ unit handling, validity-range checks, and group-delay calculations.</p>
 </dd></dl>
 
 </section>
+</section>
 <section id="typed-material-documents">
-<h2>Typed Material Documents<a class="headerlink" href="#typed-material-documents" title="Link to this heading">#</a></h2>
+<h3>Typed material documents<a class="headerlink" href="#typed-material-documents" title="Link to this heading">#</a></h3>
 <p>These immutable data objects provide the validated representation shared by
 catalog loading, user-defined material construction, and YAML export.</p>
 <dl class="py class">
@@ -756,7 +784,7 @@ catalog loading, user-defined material construction, and YAML export.</p>
 
 </section>
 <section id="interface-and-thin-film-optics">
-<h2>Interface and Thin-Film Optics<a class="headerlink" href="#interface-and-thin-film-optics" title="Link to this heading">#</a></h2>
+<h3>Interface and thin-film optics<a class="headerlink" href="#interface-and-thin-film-optics" title="Link to this heading">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="PyOptik.FresnelResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FresnelResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reflection_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmission_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmittance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absorptance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#FresnelResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.FresnelResult" title="Link to this definition">#</a></dt>
@@ -833,7 +861,7 @@ substrates, anisotropy, and magnetic media are outside this model.</p>
 
 </section>
 <section id="enumerations">
-<h2>Enumerations<a class="headerlink" href="#enumerations" title="Link to this heading">#</a></h2>
+<h3>Enumerations<a class="headerlink" href="#enumerations" title="Link to this heading">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="PyOptik.MaterialType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material_type.html#MaterialType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialType" title="Link to this definition">#</a></dt>
@@ -843,13 +871,6 @@ substrates, anisotropy, and magnetic media are outside this model.</p>
 
 </section>
 </section>
-<section id="directives-for-sphinx-gallery">
-<h1>Directives for Sphinx Gallery<a class="headerlink" href="#directives-for-sphinx-gallery" title="Link to this heading">#</a></h1>
-<p>To further enhance your understanding of <cite>PyOptik</cite>, we have integrated practical examples throughout the documentation using Sphinx Gallery. These examples demonstrate how to use the library’s classes and functions in realistic scenarios.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can find example usage of the <cite>SellmeierMaterial</cite> and <cite>TabulatedMaterial</cite> classes in the “Examples” section. These examples are automatically generated from the source code and provide hands-on insight into practical applications of the library.</p>
-</div>
 </section>
 
 
@@ -871,69 +892,68 @@ substrates, anisotropy, and magnetic media are outside this model.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Source Code</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#class-documentation">Class Documentation</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catalog-and-upstream-hierarchy">Catalog and Upstream Hierarchy</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialId"><code class="docutils literal notranslate"><span class="pre">MaterialId</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialPage"><code class="docutils literal notranslate"><span class="pre">MaterialPage</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialCatalog"><code class="docutils literal notranslate"><span class="pre">MaterialCatalog</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.download_snapshot"><code class="docutils literal notranslate"><span class="pre">download_snapshot()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#public-api">Public API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catalog">Catalog</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialId"><code class="docutils literal notranslate"><span class="pre">MaterialId</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialPage"><code class="docutils literal notranslate"><span class="pre">MaterialPage</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialCatalog"><code class="docutils literal notranslate"><span class="pre">MaterialCatalog</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.download_snapshot"><code class="docutils literal notranslate"><span class="pre">download_snapshot()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-models">Material Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sellmeiermaterial">SellmeierMaterial</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.filename"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.filename</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.coefficients"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.coefficients</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.wavelength_range"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.wavelength_range</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.reference"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.reference</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.formula_type"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.formula_type</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabulatedmaterial">TabulatedMaterial</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.filename"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.filename</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.wavelength"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.wavelength</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.n_values"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.n_values</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.k_values"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.k_values</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.reference"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.reference</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#material-models">Material models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sellmeier-material">Sellmeier material</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.filename"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.filename</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.coefficients"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.coefficients</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.wavelength_range"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.wavelength_range</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.reference"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.reference</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.formula_type"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.formula_type</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-utilities">Base Utilities</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.material.base_class.BaseMaterial"><code class="docutils literal notranslate"><span class="pre">BaseMaterial</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typed-material-documents">Typed Material Documents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialMetadata"><code class="docutils literal notranslate"><span class="pre">MaterialMetadata</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FormulaDataset"><code class="docutils literal notranslate"><span class="pre">FormulaDataset</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedDataset"><code class="docutils literal notranslate"><span class="pre">TabulatedDataset</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialDocument"><code class="docutils literal notranslate"><span class="pre">MaterialDocument</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.parse_material"><code class="docutils literal notranslate"><span class="pre">parse_material()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interface-and-thin-film-optics">Interface and Thin-Film Optics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FresnelResult"><code class="docutils literal notranslate"><span class="pre">FresnelResult</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmLayer"><code class="docutils literal notranslate"><span class="pre">ThinFilmLayer</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmResult"><code class="docutils literal notranslate"><span class="pre">ThinFilmResult</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.fresnel_coefficients"><code class="docutils literal notranslate"><span class="pre">fresnel_coefficients()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.brewster_angle"><code class="docutils literal notranslate"><span class="pre">brewster_angle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.critical_angle"><code class="docutils literal notranslate"><span class="pre">critical_angle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.thin_film_stack"><code class="docutils literal notranslate"><span class="pre">thin_film_stack()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerations">Enumerations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialType"><code class="docutils literal notranslate"><span class="pre">MaterialType</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tabulated-material">Tabulated material</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.filename"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.filename</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.wavelength"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.wavelength</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.n_values"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.n_values</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.k_values"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.k_values</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.reference"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.reference</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#directives-for-sphinx-gallery">Directives for Sphinx Gallery</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#base-material">Base material</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.material.base_class.BaseMaterial"><code class="docutils literal notranslate"><span class="pre">BaseMaterial</span></code></a></li>
 </ul>
-
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typed-material-documents">Typed material documents</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialMetadata"><code class="docutils literal notranslate"><span class="pre">MaterialMetadata</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FormulaDataset"><code class="docutils literal notranslate"><span class="pre">FormulaDataset</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedDataset"><code class="docutils literal notranslate"><span class="pre">TabulatedDataset</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialDocument"><code class="docutils literal notranslate"><span class="pre">MaterialDocument</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.parse_material"><code class="docutils literal notranslate"><span class="pre">parse_material()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interface-and-thin-film-optics">Interface and thin-film optics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FresnelResult"><code class="docutils literal notranslate"><span class="pre">FresnelResult</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmLayer"><code class="docutils literal notranslate"><span class="pre">ThinFilmLayer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmResult"><code class="docutils literal notranslate"><span class="pre">ThinFilmResult</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.fresnel_coefficients"><code class="docutils literal notranslate"><span class="pre">fresnel_coefficients()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.brewster_angle"><code class="docutils literal notranslate"><span class="pre">brewster_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.critical_angle"><code class="docutils literal notranslate"><span class="pre">critical_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.thin_film_stack"><code class="docutils literal notranslate"><span class="pre">thin_film_stack()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerations">Enumerations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialType"><code class="docutils literal notranslate"><span class="pre">MaterialType</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">

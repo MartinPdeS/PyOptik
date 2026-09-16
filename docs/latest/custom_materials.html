@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Authoring custom materials &#8212; PyOptik  documentation</title>
+    <title>Custom materials &#8212; PyOptik  documentation</title>
   
   
   
@@ -54,8 +54,8 @@
     <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Terminal catalog browser" href="catalog_browser.html" />
-    <link rel="prev" title="Interfaces and thin films" href="thin_films.html" />
+    <link rel="next" title="Interfaces and thin films" href="thin_films.html" />
+    <link rel="prev" title="Materials and catalog" href="materials_and_catalog.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -155,15 +155,22 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="code.html">
-                        Source Code
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="conventions.html">
-                        Physical conventions and data provenance
+                      <a class="nav-link nav-internal" href="materials_and_catalog.html">
+                        Materials and catalog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Custom materials
                       </a>
                     </li>
                 
@@ -175,16 +182,9 @@
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Authoring custom materials
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="catalog_browser.html">
-                        Terminal catalog browser
+                        Catalog browser
                       </a>
                     </li>
                 
@@ -196,7 +196,21 @@
                     
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="examples.html">
-                        Coding examples
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="conventions.html">
+                        Physical and numerical conventions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="code.html">
+                        API reference
                       </a>
                     </li>
                 
@@ -336,15 +350,22 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="code.html">
-                        Source Code
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="conventions.html">
-                        Physical conventions and data provenance
+                      <a class="nav-link nav-internal" href="materials_and_catalog.html">
+                        Materials and catalog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Custom materials
                       </a>
                     </li>
                 
@@ -356,16 +377,9 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Authoring custom materials
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="catalog_browser.html">
-                        Terminal catalog browser
+                        Catalog browser
                       </a>
                     </li>
                 
@@ -377,7 +391,21 @@ document.write(`
                     
                     <li class="nav-item">
                       <a class="nav-link dropdown-item nav-internal" href="examples.html">
-                        Coding examples
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="conventions.html">
+                        Physical and numerical conventions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="code.html">
+                        API reference
                       </a>
                     </li>
                 
@@ -491,7 +519,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Authoring...</li>
+    <li class="breadcrumb-item active" aria-current="page">Custom materials</li>
   </ul>
 </nav>
 </div>
@@ -508,8 +536,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="authoring-custom-materials">
-<h1>Authoring custom materials<a class="headerlink" href="#authoring-custom-materials" title="Link to this heading">#</a></h1>
+  <section id="custom-materials">
+<h1>Custom materials<a class="headerlink" href="#custom-materials" title="Link to this heading">#</a></h1>
 <p>PyOptik can construct optical materials directly from measured arrays, CSV
 files, or dispersion coefficients. Custom materials support the same unit-aware
 calculations, interpolation policies, provenance fields, and YAML format as

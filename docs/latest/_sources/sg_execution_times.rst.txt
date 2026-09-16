@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:12.179** total execution time for 13 files **from all galleries**:
+**00:15.295** total execution time for 13 files **from all galleries**:
 
 .. container::
 
@@ -33,41 +33,41 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_sellmeier_plot_silica.py` (``../examples/sellmeier/plot_silica.py``)
-     - 00:03.746
+     - 00:04.420
      - 0.0
    * - :ref:`sphx_glr_gallery_thin_films_plot_bragg_mirror.py` (``../examples/thin_films/plot_bragg_mirror.py``)
-     - 00:01.231
+     - 00:01.447
      - 0.0
    * - :ref:`sphx_glr_gallery_tabulated_plot_polyethylene.py` (``../examples/tabulated/plot_polyethylene.py``)
-     - 00:00.864
+     - 00:01.156
      - 0.0
    * - :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``../examples/tabulated/plot_silver.py``)
-     - 00:00.856
+     - 00:01.138
      - 0.0
    * - :ref:`sphx_glr_gallery_group_properties_plot_group_properties.py` (``../examples/group_properties/plot_group_properties.py``)
-     - 00:00.845
-     - 0.0
-   * - :ref:`sphx_glr_gallery_sellmeier_plot_compare_glasses.py` (``../examples/sellmeier/plot_compare_glasses.py``)
-     - 00:00.835
+     - 00:01.094
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_bk7.py` (``../examples/sellmeier/plot_bk7.py``)
-     - 00:00.820
-     - 0.0
-   * - :ref:`sphx_glr_gallery_tabulated_plot_silicon_nk.py` (``../examples/tabulated/plot_silicon_nk.py``)
-     - 00:00.818
+     - 00:01.085
      - 0.0
    * - :ref:`sphx_glr_gallery_sellmeier_plot_water.py` (``../examples/sellmeier/plot_water.py``)
-     - 00:00.816
+     - 00:01.082
      - 0.0
    * - :ref:`sphx_glr_gallery_catalog_plot_catalog_search.py` (``../examples/catalog/plot_catalog_search.py``)
-     - 00:00.815
+     - 00:01.078
+     - 0.0
+   * - :ref:`sphx_glr_gallery_sellmeier_plot_compare_glasses.py` (``../examples/sellmeier/plot_compare_glasses.py``)
+     - 00:01.067
+     - 0.0
+   * - :ref:`sphx_glr_gallery_tabulated_plot_silicon_nk.py` (``../examples/tabulated/plot_silicon_nk.py``)
+     - 00:01.066
      - 0.0
    * - :ref:`sphx_glr_gallery_thin_films_plot_antireflection_coating.py` (``../examples/thin_films/plot_antireflection_coating.py``)
-     - 00:00.204
+     - 00:00.252
      - 0.0
    * - :ref:`sphx_glr_gallery_interfaces_plot_fresnel_angles.py` (``../examples/interfaces/plot_fresnel_angles.py``)
-     - 00:00.200
+     - 00:00.242
      - 0.0
    * - :ref:`sphx_glr_gallery_custom_materials_plot_measured_material.py` (``../examples/custom_materials/plot_measured_material.py``)
-     - 00:00.128
+     - 00:00.170
      - 0.0

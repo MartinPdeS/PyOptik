@@ -111,7 +111,7 @@ Exported files use the same validated schema as catalog materials.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.128 seconds)
+   **Total running time of the script:** (0 minutes 0.170 seconds)
 
 
 .. _sphx_glr_download_gallery_custom_materials_plot_measured_material.py:

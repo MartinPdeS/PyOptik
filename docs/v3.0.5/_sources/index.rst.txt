@@ -9,5 +9,7 @@
 
     code.rst
     conventions.rst
+    custom_materials.rst
+    catalog_browser.rst
     examples.rst
     references.rst

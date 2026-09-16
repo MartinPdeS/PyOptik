@@ -166,18 +166,40 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="../../../custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../references.html">
+                      <a class="nav-link nav-internal" href="../../../catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../../references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
       
@@ -314,18 +336,40 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="../../../custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../references.html">
+                      <a class="nav-link nav-internal" href="../../../catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../../references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
         
@@ -646,8 +690,13 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"out_of_range must be 'warn', 'raise', or 'clip'."</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="n">lower</span> <span class="o">=</span> <span class="n">min_value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="n">upper</span> <span class="o">=</span> <span class="n">max_value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="n">below</span> <span class="o">=</span> <span class="p">(</span><span class="n">values</span> <span class="o">&lt;</span> <span class="n">lower</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">above</span> <span class="o">=</span> <span class="p">(</span><span class="n">values</span> <span class="o">&gt;</span> <span class="n">upper</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">((</span><span class="n">wavelength</span> <span class="o">&lt;</span> <span class="n">min_value</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">wavelength</span> <span class="o">&gt;</span> <span class="n">max_value</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">below</span> <span class="o">|</span> <span class="n">above</span><span class="p">):</span>
                 <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="sa">f</span><span class="s2">"Wavelength range goes from </span><span class="si">{</span><span class="n">wavelength</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">wavelength</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> "</span>
                     <span class="sa">f</span><span class="s2">"which is outside the allowable range of </span><span class="si">{</span><span class="n">min_value</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">max_value</span><span class="o">.</span><span class="n">to_compact</span><span class="p">()</span><span class="si">}</span><span class="s2"> µm. "</span>

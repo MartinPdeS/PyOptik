@@ -168,18 +168,40 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="references.html">
+                      <a class="nav-link nav-internal" href="catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
       
@@ -320,18 +342,40 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="references.html">
+                      <a class="nav-link nav-internal" href="catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
         
@@ -423,7 +467,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><strong>Date</strong>: Sep 07, 2026, <strong>Version</strong>: 3.0.5</p>
+  <p><strong>Date</strong>: Sep 16, 2026, <strong>Version</strong>: 3.0.5</p>
 <p><img alt="PyOptik logo" src="https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.svg" /></p>
 <table class="table">
 <colgroup>
@@ -554,6 +598,32 @@ extinction coefficient <code class="docutils literal notranslate"><span class="p
 <code class="docutils literal notranslate"><span class="pre">material.absorption_coefficient(wavelength)</span></code> for common derived properties.
 See the documentation’s physical-conventions page for the vacuum-wavelength,
 <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i</span> <span class="pre">k</span></code>, GDD, interpolation, and extrapolation conventions.</p>
+<section id="user-defined-materials">
+<h3>User-defined materials<a class="headerlink" href="#user-defined-materials" title="Link to this heading">#</a></h3>
+<p>Create tabulated materials directly from measured arrays or a CSV file, then
+export them in the same validated YAML format used by the catalog:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">TabulatedMaterial</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
+    <span class="s2">"sample"</span><span class="p">,</span>
+    <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">600</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="p">[</span><span class="mf">1.40</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">,</span> <span class="mf">1.50</span><span class="p">],</span>
+    <span class="n">k</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">],</span>
+    <span class="n">reference</span><span class="o">=</span><span class="s2">"Laboratory measurement"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">"sample.yml"</span><span class="p">)</span>
+
+<span class="c1"># CSV headers default to: wavelength,n,k</span>
+<span class="n">imported</span> <span class="o">=</span> <span class="n">TabulatedMaterial</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span>
+    <span class="s2">"sample.csv"</span><span class="p">,</span>
+    <span class="n">wavelength_unit</span><span class="o">=</span><span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Formula materials can be authored in the same way with
+<code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.from_coefficients(...)</span></code> and exported with <code class="docutils literal notranslate"><span class="pre">to_yaml()</span></code>.</p>
+</section>
 <section id="validity-ranges">
 <h3>Validity ranges<a class="headerlink" href="#validity-ranges" title="Link to this heading">#</a></h3>
 <p>Material data is only valid over the wavelength range supplied by its source.
@@ -659,6 +729,15 @@ python<span class="w"> </span>-m<span class="w"> </span>PyOptik<span class="w"> 
 </div>
 <p>After installation, the equivalent console command is <code class="docutils literal notranslate"><span class="pre">pyoptik</span>
 <span class="pre">download-all</span> <span class="pre">--data-root</span> <span class="pre">./refractiveindex-data</span></code>.</p>
+<p>An optional terminal interface provides live search and a provenance pane for
+browsing the downloaded database:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"PyOptik[ui]"</span>
+pyoptik<span class="w"> </span>setup
+pyoptik<span class="w"> </span>browse
+</pre></div>
+</div>
+<p>Use the arrow keys or mouse to select a page, <code class="docutils literal notranslate"><span class="pre">/</span></code> to focus search, and <code class="docutils literal notranslate"><span class="pre">q</span></code>
+to quit. Pass <code class="docutils literal notranslate"><span class="pre">--data-root</span></code> when browsing a non-default snapshot location.</p>
 <p>For a beginner-friendly first-time setup, use:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyoptik<span class="w"> </span>setup
 </pre></div>
@@ -730,6 +809,7 @@ material page for its original scientific or manufacturer reference.</p>
 <li class="toctree-l2"><a class="reference internal" href="code.html#sellmeiermaterial">SellmeierMaterial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#tabulatedmaterial">TabulatedMaterial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#base-utilities">Base Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code.html#typed-material-documents">Typed Material Documents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#enumerations">Enumerations</a></li>
 </ul>
 </li>
@@ -739,6 +819,18 @@ material page for its original scientific or manufacturer reference.</p>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#dispersion-and-group-delay">Dispersion and group delay</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#interpolation-and-validity-ranges">Interpolation and validity ranges</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#provenance-and-conditions">Provenance and conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_materials.html">Authoring custom materials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#tabulated-data-from-arrays">Tabulated data from arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#csv-import">CSV import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#formula-materials">Formula materials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_materials.html#typed-documents-and-validation">Typed documents and validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catalog_browser.html">Terminal catalog browser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="catalog_browser.html#installation-and-startup">Installation and startup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="catalog_browser.html#navigation">Navigation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Coding examples</a></li>
@@ -775,6 +867,7 @@ material page for its original scientific or manufacturer reference.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-calculation">First calculation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-models">Material models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-defined-materials">User-defined materials</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validity-ranges">Validity ranges</a></li>
 </ul>
 </li>

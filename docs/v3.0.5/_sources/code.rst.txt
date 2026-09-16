@@ -70,6 +70,27 @@ Base Utilities
     :show-inheritance:
 
 
+Typed Material Documents
+------------------------
+
+These immutable data objects provide the validated representation shared by
+catalog loading, user-defined material construction, and YAML export.
+
+.. autoclass:: PyOptik.MaterialMetadata
+    :members:
+
+.. autoclass:: PyOptik.FormulaDataset
+    :members:
+
+.. autoclass:: PyOptik.TabulatedDataset
+    :members:
+
+.. autoclass:: PyOptik.MaterialDocument
+    :members:
+
+.. autofunction:: PyOptik.parse_material
+
+
 Enumerations
 ------------
 

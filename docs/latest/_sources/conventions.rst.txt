@@ -34,6 +34,10 @@ linear endpoint extrapolation when ``out_of_range="warn"``; set
 ``out_of_range="raise"`` for strict validity enforcement, or
 ``out_of_range="clip"`` to evaluate at the nearest source boundary.
 
+Comparisons at validity endpoints tolerate floating-point round-off introduced
+by unit conversion. Thus, for example, ``600 nm`` remains inside a source range
+ending at ``0.6 µm``.
+
 Provenance and conditions
 -------------------------
 

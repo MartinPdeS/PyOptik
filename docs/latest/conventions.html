@@ -54,7 +54,7 @@
     <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Coding examples" href="examples.html" />
+    <link rel="next" title="Authoring custom materials" href="custom_materials.html" />
     <link rel="prev" title="Source Code" href="code.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -169,18 +169,40 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="references.html">
+                      <a class="nav-link nav-internal" href="catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
       
@@ -321,18 +343,40 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="references.html">
+                      <a class="nav-link nav-internal" href="catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
         
@@ -480,6 +524,9 @@ monotonic piecewise-cubic interpolation without overshoot. Both methods use
 linear endpoint extrapolation when <code class="docutils literal notranslate"><span class="pre">out_of_range=&quot;warn&quot;</span></code>; set
 <code class="docutils literal notranslate"><span class="pre">out_of_range=&quot;raise&quot;</span></code> for strict validity enforcement, or
 <code class="docutils literal notranslate"><span class="pre">out_of_range=&quot;clip&quot;</span></code> to evaluate at the nearest source boundary.</p>
+<p>Comparisons at validity endpoints tolerate floating-point round-off introduced
+by unit conversion. Thus, for example, <code class="docutils literal notranslate"><span class="pre">600</span> <span class="pre">nm</span></code> remains inside a source range
+ending at <code class="docutils literal notranslate"><span class="pre">0.6</span> <span class="pre">µm</span></code>.</p>
 </section>
 <section id="provenance-and-conditions">
 <h2>Provenance and conditions<a class="headerlink" href="#provenance-and-conditions" title="Link to this heading">#</a></h2>

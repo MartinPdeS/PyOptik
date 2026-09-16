@@ -166,18 +166,40 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="../../custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../references.html">
+                      <a class="nav-link nav-internal" href="../../catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
       
@@ -314,18 +336,40 @@ document.write(`
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../examples.html">
-                        Coding examples
+                      <a class="nav-link nav-internal" href="../../custom_materials.html">
+                        Authoring custom materials
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../references.html">
+                      <a class="nav-link nav-internal" href="../../catalog_browser.html">
+                        Terminal catalog browser
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Coding examples
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../references.html">
                         References
                       </a>
                     </li>
                 
+                </ul>
+            </li>
+            
   </ul>
 </nav></div>
         
@@ -599,17 +643,16 @@ document.write(`
 <span class="sd">        """</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.sellmeier_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">SellmeierMaterial</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.tabulated_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_material</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
-                <span class="n">document</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-            <span class="n">entries</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"DATA"</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">"formula"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">):</span>
+            <span class="n">document</span> <span class="o">=</span> <span class="n">parse_material</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">document</span><span class="o">.</span><span class="n">formula_datasets</span><span class="p">:</span>
                 <span class="n">material</span> <span class="o">=</span> <span class="n">SellmeierMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">)</span>
                 <span class="n">material</span><span class="o">.</span><span class="n">catalog_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span>
                 <span class="n">material</span><span class="o">.</span><span class="n">source_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_url</span>
                 <span class="k">return</span> <span class="n">material</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">"tabulated"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">document</span><span class="o">.</span><span class="n">tabulated_datasets</span><span class="p">:</span>
                 <span class="n">material</span> <span class="o">=</span> <span class="n">TabulatedMaterial</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">,</span>

@@ -106,7 +106,7 @@ binder_branch = f"v{major}.{minor}.x"
 
 html_theme_options = dict()
 
-html_theme_options['logo'] = dict(text=package_name, image="_static/logo.svg")
+html_theme_options['logo'] = dict(text="", image="_static/logo.svg")
 html_theme_options["show_nav_level"] = 0
 
 html_theme_options.update({

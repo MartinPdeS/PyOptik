@@ -17,3 +17,14 @@ div.highlight a {
 .bd-footer .footer-items__end, .bd-footer .footer-items__start {
   flex-direction: row;
 }
+
+/* Keep the compact primary navigation on one line at desktop widths. */
+@media (min-width: 960px) {
+  .bd-header .navbar-nav {
+    flex-wrap: nowrap;
+  }
+
+  .bd-header .nav-link {
+    white-space: nowrap;
+  }
+}

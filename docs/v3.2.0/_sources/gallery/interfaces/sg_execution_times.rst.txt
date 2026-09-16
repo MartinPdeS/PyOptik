@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.201** total execution time for 1 file **from gallery/interfaces**:
+**00:00.318** total execution time for 1 file **from gallery/interfaces**:
 
 .. container::
 
@@ -33,5 +33,5 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_interfaces_plot_fresnel_angles.py` (``plot_fresnel_angles.py``)
-     - 00:00.201
+     - 00:00.318
      - 0.0

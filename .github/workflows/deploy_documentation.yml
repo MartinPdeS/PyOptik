@@ -4,11 +4,14 @@ name: Documentation
 on:
   push:
     branches: [ "master" ]
-    tags: '*'
+    tags: [ "v*" ]
   pull_request:
     branches: [ "master" ]
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+concurrency:
+  group: documentation-build-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   pages: write
@@ -21,3 +24,4 @@ jobs:
       python-version: "3.11"
       package-name: "PyOptik"
       apt-package: xvfb jq
+      deploy-pages: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')) }}

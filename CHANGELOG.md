@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-09-16
+
+### Added
+
+- Task-oriented getting-started and material-catalog guides.
+- Executable gallery examples for measured-material import and YAML round
+  trips, Fresnel polarization and Brewster angle, quarter-wave antireflection
+  coatings, dielectric Bragg mirrors, and catalog provenance workflows.
+- Direct README links to the principal guides, examples, and API reference.
+
+### Changed
+
+- Documentation navigation now groups content into Start here, User guide,
+  Learn by example, and Reference sections.
+- The documentation landing page, page titles, API hierarchy, and gallery
+  descriptions now use clearer task-oriented language.
+
 ## [3.1.0] - 2026-09-16
 
 ### Added
@@ -62,5 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   plotting helpers.
 - Retired logo assets.
 
-[Unreleased]: https://github.com/MartinPdeS/PyOptik/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/MartinPdeS/PyOptik/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/MartinPdeS/PyOptik/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/MartinPdeS/PyOptik/compare/v3.0.5...v3.1.0

@@ -7,7 +7,6 @@ This module demonstrates the usage of the PyOptik library to calculate and plot 
 """
 
 # %%
-import numpy
 from TypedUnit import ureg
 
 from PyOptik import MaterialCatalog

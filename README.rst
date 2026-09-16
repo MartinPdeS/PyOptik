@@ -35,6 +35,24 @@ catalog interface for the hierarchical `RefractiveIndex.INFO
 The library is designed for optical design, photonics simulations,
 electromagnetic modeling, and experimental data analysis.
 
+Documentation
+-------------
+
+The full documentation is organized by task:
+
+* `Getting started <https://martinpdes.github.io/PyOptik/getting_started.html>`_
+  for installation and a first unit-aware calculation.
+* `Materials and catalog <https://martinpdes.github.io/PyOptik/materials_and_catalog.html>`_
+  for model selection, search, provenance, and cache integrity.
+* `Custom materials <https://martinpdes.github.io/PyOptik/custom_materials.html>`_
+  for arrays, CSV import, coefficients, validation, and YAML export.
+* `Interfaces and thin films <https://martinpdes.github.io/PyOptik/thin_films.html>`_
+  for Fresnel coefficients and coherent multilayer design.
+* `Example gallery <https://martinpdes.github.io/PyOptik/examples.html>`_
+  for complete, executable workflows.
+* `API reference <https://martinpdes.github.io/PyOptik/code.html>`_ for public
+  classes and functions.
+
 Features
 --------
 
@@ -281,6 +299,20 @@ Matplotlib backend before importing plotting code:
 
    import matplotlib
    matplotlib.use("Agg")
+
+Worked examples
+---------------
+
+The documentation gallery includes downloadable Python scripts and notebooks
+for:
+
+* Sellmeier and tabulated material dispersion;
+* group index and group velocity;
+* importing, interpolating, exporting, and reloading measured optical data;
+* s- and p-polarized Fresnel reflectance and Brewster angle;
+* quarter-wave antireflection coatings;
+* multilayer dielectric Bragg mirrors; and
+* catalog search, canonical source selection, and provenance capture.
 
 Hierarchical material catalog
 -----------------------------

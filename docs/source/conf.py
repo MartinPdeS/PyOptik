@@ -50,7 +50,13 @@ html_favicon = "_static/favicon.png"
 
 
 examples_files = [
-    'sellmeier', 'tabulated', 'group_properties'
+    'sellmeier',
+    'tabulated',
+    'group_properties',
+    'custom_materials',
+    'interfaces',
+    'thin_films',
+    'catalog',
 ]
 
 sphinx_gallery_conf = {

@@ -1,5 +1,5 @@
-Physical conventions and data provenance
-========================================
+Physical and numerical conventions
+==================================
 
 Wavelength and optical constants
 --------------------------------

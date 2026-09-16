@@ -1,9 +1,10 @@
 .. _examples_gallery:
 
-Coding examples
+Example gallery
 ===============
 
-Explore our gallery of examples demonstrating the usage of PyOptik. These examples range from general API usage to specific applications, presented in a tutorial format to guide users through practical implementations.
+Executable, tested examples covering material data, dispersion, interfaces,
+coatings, pulse properties, and catalog discovery.
 
 .. toctree::
     :maxdepth: 2
@@ -12,3 +13,7 @@ Explore our gallery of examples demonstrating the usage of PyOptik. These exampl
     /gallery/group_properties/index.rst
     /gallery/sellmeier/index.rst
     /gallery/tabulated/index.rst
+    /gallery/custom_materials/index.rst
+    /gallery/interfaces/index.rst
+    /gallery/thin_films/index.rst
+    /gallery/catalog/index.rst

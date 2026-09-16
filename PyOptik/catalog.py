@@ -145,17 +145,16 @@ class MaterialPage:
         """
         from PyOptik.material.sellmeier_class import SellmeierMaterial
         from PyOptik.material.tabulated_class import TabulatedMaterial
+        from PyOptik.material.dataset import parse_material
 
         if self.local_path is not None and self.local_path.exists():
-            with self.local_path.open("r") as stream:
-                document = yaml.safe_load(stream) or {}
-            entries = document.get("DATA", [])
-            if any("formula" in str(entry.get("type", "")) for entry in entries):
+            document = parse_material(self.local_path)
+            if document.formula_datasets:
                 material = SellmeierMaterial(self.name, file_path=self.local_path)
                 material.catalog_id = self.id.key
                 material.source_url = self.source_url
                 return material
-            if any("tabulated" in str(entry.get("type", "")) for entry in entries):
+            if document.tabulated_datasets:
                 material = TabulatedMaterial(
                     self.name,
                     file_path=self.local_path,

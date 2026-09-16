@@ -14,6 +14,19 @@ def test_cli_help():
     assert '--verbose' in result.stdout
     assert 'download-all' in result.stdout
     assert 'setup' in result.stdout
+    assert 'browse' in result.stdout
+
+
+def test_cli_browse_dispatch(monkeypatch, tmp_path):
+    """The browse command forwards the configured catalog root."""
+    module = importlib.import_module("PyOptik.__main__")
+    calls = {}
+    import PyOptik.tui as tui
+
+    monkeypatch.setattr(tui, "run_browser", lambda root: calls.setdefault("root", root))
+    monkeypatch.setattr(sys, "argv", ["pyoptik", "browse", "--data-root", str(tmp_path)])
+    module.main()
+    assert calls["root"] == tmp_path
 
 
 def test_cli_download_all_dispatch(monkeypatch, tmp_path):

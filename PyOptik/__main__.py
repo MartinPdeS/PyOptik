@@ -22,7 +22,7 @@ def main() -> None:
         "command",
         nargs="?",
         default="setup",
-        choices=("setup", "download-all"),
+        choices=("setup", "download-all", "browse"),
         help="Canonical catalog command (default: setup)",
     )
     parser.add_argument(
@@ -69,6 +69,16 @@ def main() -> None:
         level=logging.DEBUG if args.verbose else logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
+
+    if args.command == "browse":
+        if args.force or args.fail_fast or args.source != "snapshot" or args.workers != 8 or args.no_progress:
+            parser.error("download options cannot be used with browse")
+        from PyOptik.tui import run_browser
+        try:
+            run_browser(args.data_root)
+        except (FileNotFoundError, RuntimeError) as error:
+            parser.error(str(error))
+        return
 
     if args.command == "setup" and args.source != "snapshot":
         parser.error("setup always uses the upstream snapshot; use download-all for page mode")

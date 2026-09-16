@@ -195,8 +195,13 @@ class BaseMaterial(object):
             raise ValueError("out_of_range must be 'warn', 'raise', or 'clip'.")
         if self.wavelength_bound is not None:
             min_value, max_value = self.wavelength_bound
+            values = wavelength.to(ureg.meter).magnitude
+            lower = min_value.to(ureg.meter).magnitude
+            upper = max_value.to(ureg.meter).magnitude
+            below = (values < lower) & ~numpy.isclose(values, lower, rtol=1e-12, atol=0.0)
+            above = (values > upper) & ~numpy.isclose(values, upper, rtol=1e-12, atol=0.0)
 
-            if numpy.any((wavelength < min_value) | (wavelength > max_value)):
+            if numpy.any(below | above):
                 message = (
                     f"Wavelength range goes from {wavelength.min().to_compact()} to {wavelength.max().to_compact()} "
                     f"which is outside the allowable range of {min_value.to_compact()} to {max_value.to_compact()} µm. "

@@ -14,6 +14,7 @@ from .catalog import MaterialCatalog, MaterialId, MaterialPage, download_snapsho
 
 from .material import TabulatedMaterial
 from .material import SellmeierMaterial
+from .material import FormulaDataset, MaterialDocument, MaterialMetadata, TabulatedDataset, parse_material
 from .material import base_class
 
 

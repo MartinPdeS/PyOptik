@@ -138,6 +138,35 @@ Use ``material.n(wavelength)``, ``material.k(wavelength)``,
 See the documentation's physical-conventions page for the vacuum-wavelength,
 ``n + i k``, GDD, interpolation, and extrapolation conventions.
 
+User-defined materials
+~~~~~~~~~~~~~~~~~~~~~~
+
+Create tabulated materials directly from measured arrays or a CSV file, then
+export them in the same validated YAML format used by the catalog:
+
+.. code-block:: python
+
+   from TypedUnit import ureg
+   from PyOptik import TabulatedMaterial
+
+   sample = TabulatedMaterial.from_arrays(
+       "sample",
+       [400, 500, 600] * ureg.nanometer,
+       n=[1.40, 1.45, 1.50],
+       k=[0.01, 0.02, 0.04],
+       reference="Laboratory measurement",
+   )
+   sample.to_yaml("sample.yml")
+
+   # CSV headers default to: wavelength,n,k
+   imported = TabulatedMaterial.from_csv(
+       "sample.csv",
+       wavelength_unit=ureg.nanometer,
+   )
+
+Formula materials can be authored in the same way with
+``SellmeierMaterial.from_coefficients(...)`` and exported with ``to_yaml()``.
+
 Validity ranges
 ~~~~~~~~~~~~~~~
 
@@ -265,6 +294,18 @@ The command-line interface provides the canonical catalog workflow:
 
 After installation, the equivalent console command is ``pyoptik
 download-all --data-root ./refractiveindex-data``.
+
+An optional terminal interface provides live search and a provenance pane for
+browsing the downloaded database:
+
+.. code-block:: bash
+
+   python -m pip install "PyOptik[ui]"
+   pyoptik setup
+   pyoptik browse
+
+Use the arrow keys or mouse to select a page, ``/`` to focus search, and ``q``
+to quit. Pass ``--data-root`` when browsing a non-default snapshot location.
 
 For a beginner-friendly first-time setup, use:
 

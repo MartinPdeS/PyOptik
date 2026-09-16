@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import yaml
 import numpy
 import logging
 from matplotlib import pyplot as plt
@@ -10,6 +9,7 @@ from TypedUnit import Length, RefractiveIndex, validate_units, ureg
 from PyOptik.directories import material_paths
 from PyOptik.material_type import MaterialType
 from PyOptik.material.base_class import BaseMaterial
+from PyOptik.material.dataset import FormulaDataset, MaterialDocument, MaterialMetadata, parse_material
 
 logger = logging.getLogger(__name__)
 
@@ -73,41 +73,72 @@ class SellmeierMaterial(BaseMaterial):
         if file_path is None:
             raise FileNotFoundError(f"Sellmeier YAML file '{self.filename}.yml' not found.")
 
-        with file_path.with_suffix('.yml').open('r') as file:
-            parsed_yaml = yaml.safe_load(file)
-        logger.debug("Loaded Sellmeier data from %s", file_path)
-
-        # Extract the formula type
+        file_path = file_path.with_suffix('.yml')
         try:
-            data = parsed_yaml["DATA"][0]
-            self.formula_type = int(data["type"].split()[-1])
-            coefficients = list(map(float, data["coefficients"].split()))
-        except (KeyError, IndexError, AttributeError, TypeError, ValueError) as error:
-            raise ValueError(f"Invalid Sellmeier data in YAML file {file_path}") from error
-        if self.formula_type not in set(range(1, 10)):
-            raise ValueError(f"Unsupported formula type: {self.formula_type}")
-        if not coefficients or not numpy.all(numpy.isfinite(coefficients)):
-            raise ValueError(f"Sellmeier coefficients must be finite in {file_path}")
-
-        self.coefficients = numpy.array(coefficients)
-
-        # Extract wavelength range
-        if 'wavelength_range' in parsed_yaml['DATA'][0]:
-            data_str = data['wavelength_range'].split()
-
-            bounds = numpy.array([float(val) for val in data_str])
-            if len(bounds) != 2 or not numpy.all(numpy.isfinite(bounds)) or bounds[0] >= bounds[1]:
-                raise ValueError(f"Invalid wavelength_range in {file_path}")
-            self.wavelength_bound = bounds * ureg.micrometer
-
-        else:
-            self.wavelength_bound = None
-
-        # Preserve upstream provenance and experimental conditions.
-        self.reference = parsed_yaml.get('REFERENCES', None)
-        self.conditions = parsed_yaml.get('CONDITIONS', {})
-        self.comments = parsed_yaml.get('COMMENTS', None)
+            document = parse_material(file_path)
+        except ValueError as error:
+            raise ValueError(f"Invalid Sellmeier data in YAML file {file_path}: {error}") from error
+        logger.debug("Loaded Sellmeier data from %s", file_path)
+        if not document.formula_datasets:
+            raise ValueError(f"No formula dataset found in {file_path}")
+        dataset = document.formula_datasets[0]
+        self._document = document
+        self.formula_type = dataset.formula_type
+        self.coefficients = numpy.asarray(dataset.coefficients)
+        self.wavelength_bound = (
+            numpy.asarray(dataset.wavelength_range) * ureg.micrometer
+            if dataset.wavelength_range is not None else None
+        )
+        self.reference = document.metadata.reference
+        self.conditions = dict(document.metadata.conditions)
+        self.comments = document.metadata.comments
         logger.debug("Validated Sellmeier material '%s' with formula %s", self.filename, self.formula_type)
+
+    @classmethod
+    def from_coefficients(
+        cls,
+        name: str,
+        coefficients,
+        *,
+        formula_type: int = 1,
+        wavelength_range=None,
+        reference: str | None = None,
+        conditions=None,
+        comments: str | None = None,
+    ):
+        """Construct a formula material without an intermediate YAML file.
+
+        ``wavelength_range`` may be a unit-bearing two-element quantity or a
+        pair interpreted as micrometres.
+        """
+        if wavelength_range is None:
+            bounds = None
+        elif isinstance(wavelength_range, ureg.Quantity):
+            bounds = tuple(float(value) for value in wavelength_range.to(ureg.micrometer).magnitude)
+        else:
+            bounds = tuple(float(value) for value in wavelength_range)
+        document = MaterialDocument(
+            (FormulaDataset(formula_type, tuple(float(value) for value in coefficients), bounds),),
+            MaterialMetadata(reference, dict(conditions or {}), comments),
+        )
+        material = cls.__new__(cls)
+        material.filename = name
+        material.file_path = None
+        material._document = document
+        dataset = document.formula_datasets[0]
+        material.formula_type = dataset.formula_type
+        material.coefficients = numpy.asarray(dataset.coefficients)
+        material.wavelength_bound = (
+            numpy.asarray(bounds) * ureg.micrometer if bounds is not None else None
+        )
+        material.reference = reference
+        material.conditions = dict(conditions or {})
+        material.comments = comments
+        return material
+
+    def to_yaml(self, path):
+        """Export this material as a validated, reloadable YAML document."""
+        return self._document.to_yaml(path)
 
     @validate_units
     def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> RefractiveIndex:

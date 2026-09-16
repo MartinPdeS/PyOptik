@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import numpy
-import yaml
 import logging
+import csv
+from pathlib import Path
 from matplotlib import pyplot as plt
 from TypedUnit import Length, validate_units, ureg
 
 from PyOptik.material.base_class import BaseMaterial
+from PyOptik.material.dataset import MaterialDocument, MaterialMetadata, TabulatedDataset, parse_material
 from PyOptik.directories import material_paths
 from PyOptik.material_type import MaterialType
 
@@ -91,47 +93,99 @@ class TabulatedMaterial(BaseMaterial):
         if file_path is None:
             raise FileNotFoundError(f"Tabulated YAML file '{self.filename}.yml' not found.")
 
-        with file_path.with_suffix('.yml').open('r') as file:
-            parsed_yaml = yaml.safe_load(file)
-        logger.debug("Loaded tabulated data from %s", file_path)
-
+        file_path = file_path.with_suffix('.yml')
         try:
-            for entry in parsed_yaml['DATA']:
-                kind = str(entry.get('type', '')).lower().split()
-                if len(kind) != 2 or kind[0] != 'tabulated' or kind[1] not in {'n', 'k', 'nk'}:
-                    continue
-                data = numpy.array(
-                    [[float(value) for value in row.split()] for row in entry['data'].strip().splitlines()]
-                )
-                expected_columns = 3 if kind[1] == 'nk' else 2
-                if data.ndim != 2 or data.shape[1] != expected_columns or len(data) < 2:
-                    raise ValueError(f"tabulated {kind[1]} data must contain at least two valid rows")
-                if not numpy.all(numpy.isfinite(data)) or numpy.any(numpy.diff(data[:, 0]) <= 0):
-                    raise ValueError("tabulated wavelengths must be finite and strictly increasing")
-                wavelengths = data[:, 0] * ureg.micrometer
-                if kind[1] in {'n', 'nk'}:
-                    self._n_wavelength = wavelengths
-                    self.n_values = data[:, 1]
-                if kind[1] == 'k':
-                    self._k_wavelength = wavelengths
-                    self.k_values = data[:, 1]
-                elif kind[1] == 'nk':
-                    self._k_wavelength = wavelengths
-                    self.k_values = data[:, 2]
-            if self.n_values is None and self.k_values is None:
-                raise ValueError("no supported tabulated n, k, or nk dataset found")
-            self.wavelength = self._n_wavelength if self._n_wavelength is not None else self._k_wavelength
-        except (KeyError, IndexError, TypeError, ValueError) as error:
-            raise ValueError(f"Invalid or missing data in YAML file {file_path}")
-
-        ranges = [values for values in (self._n_wavelength, self._k_wavelength) if values is not None]
-        self.wavelength_bound = [min(values.min().magnitude for values in ranges), max(values.max().magnitude for values in ranges)] * ureg.micrometer
-
-        # Extract reference
-        self.reference = parsed_yaml.get('REFERENCES', None)
-        self.conditions = parsed_yaml.get('CONDITIONS', {})
-        self.comments = parsed_yaml.get('COMMENTS', None)
+            document = parse_material(file_path)
+        except ValueError as error:
+            raise ValueError(f"Invalid or missing data in YAML file {file_path}: {error}") from error
+        logger.debug("Loaded tabulated data from %s", file_path)
+        if not document.tabulated_datasets:
+            raise ValueError(f"No tabulated dataset found in {file_path}")
+        self._apply_document(document)
         logger.debug("Validated tabulated material '%s' with %s points", self.filename, len(self.wavelength))
+
+    def _apply_document(self, document: MaterialDocument) -> None:
+        """Populate interpolation arrays from a validated document."""
+        self._document = document
+        for dataset in document.tabulated_datasets:
+            wavelengths = numpy.asarray(dataset.wavelength_um) * ureg.micrometer
+            values = numpy.asarray(dataset.values)
+            if dataset.kind in {'n', 'nk'}:
+                self._n_wavelength, self.n_values = wavelengths, values[:, 0]
+            if dataset.kind == 'k':
+                self._k_wavelength, self.k_values = wavelengths, values[:, 0]
+            elif dataset.kind == 'nk':
+                self._k_wavelength, self.k_values = wavelengths, values[:, 1]
+        self.wavelength = self._n_wavelength if self._n_wavelength is not None else self._k_wavelength
+        ranges = [values for values in (self._n_wavelength, self._k_wavelength) if values is not None]
+        lower = max(values.min().magnitude for values in ranges)
+        upper = min(values.max().magnitude for values in ranges)
+        if lower >= upper:
+            raise ValueError("tabulated n and k wavelength ranges do not overlap")
+        self.wavelength_bound = [lower, upper] * ureg.micrometer
+        self.reference = document.metadata.reference
+        self.conditions = dict(document.metadata.conditions)
+        self.comments = document.metadata.comments
+
+    @classmethod
+    def from_arrays(
+        cls, name, wavelength, *, n=None, k=None, interpolation="linear",
+        reference=None, conditions=None, comments=None,
+    ):
+        """Construct a tabulated material from wavelength, ``n``, and ``k`` arrays."""
+        if n is None and k is None:
+            raise ValueError("at least one of n or k must be provided")
+        if isinstance(wavelength, ureg.Quantity):
+            wavelength_um = numpy.asarray(wavelength.to(ureg.micrometer).magnitude, dtype=float)
+        else:
+            wavelength_um = numpy.asarray(wavelength, dtype=float)
+        if wavelength_um.ndim != 1:
+            raise ValueError("wavelength must be a one-dimensional sequence")
+        n_values = None if n is None else numpy.asarray(n, dtype=float)
+        k_values = None if k is None else numpy.asarray(k, dtype=float)
+        for label, values in (("n", n_values), ("k", k_values)):
+            if values is not None and (values.ndim != 1 or values.shape != wavelength_um.shape):
+                raise ValueError(f"{label} must be one-dimensional and match wavelength")
+        if n_values is not None and k_values is not None:
+            kind = "nk"
+            rows = tuple((float(real), float(imag)) for real, imag in zip(n_values, k_values))
+        else:
+            kind = "n" if n_values is not None else "k"
+            component = n_values if n_values is not None else k_values
+            rows = tuple((float(value),) for value in component)
+        document = MaterialDocument(
+            (TabulatedDataset(kind, tuple(float(value) for value in wavelength_um), rows),),
+            MaterialMetadata(reference, dict(conditions or {}), comments),
+        )
+        material = cls.__new__(cls)
+        material.filename, material.file_path, material.interpolation = name, None, interpolation
+        if interpolation not in {"linear", "pchip"}:
+            raise ValueError("interpolation must be 'linear' or 'pchip'.")
+        material.wavelength_bound = material.wavelength = None
+        material.n_values = material.k_values = None
+        material._n_wavelength = material._k_wavelength = None
+        material._apply_document(document)
+        return material
+
+    @classmethod
+    def from_csv(
+        cls, path, *, name=None, wavelength_unit=ureg.micrometer,
+        wavelength_column="wavelength", n_column="n", k_column="k", **kwargs,
+    ):
+        """Construct a material from a header-based CSV file."""
+        path = Path(path)
+        with path.open(newline="", encoding="utf-8") as stream:
+            rows = list(csv.DictReader(stream))
+        if not rows or wavelength_column not in rows[0]:
+            raise ValueError(f"CSV must contain a '{wavelength_column}' column")
+        wavelength = numpy.asarray([float(row[wavelength_column]) for row in rows]) * wavelength_unit
+        n = [float(row[n_column]) for row in rows] if n_column in rows[0] and rows[0][n_column] != "" else None
+        k = [float(row[k_column]) for row in rows] if k_column in rows[0] and rows[0][k_column] != "" else None
+        return cls.from_arrays(name or path.stem, wavelength, n=n, k=k, **kwargs)
+
+    def to_yaml(self, path):
+        """Export this material as a validated, reloadable YAML document."""
+        return self._document.to_yaml(path)
 
     @validate_units
     def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> numpy.ndarray:

@@ -10,14 +10,14 @@ matplotlib.use("Agg")
 
 # Redirect all already-imported path aliases as well as the environment-based
 # configuration. Tests must never write into a developer's package data dir.
-import PyOptik.directories as directories
+import PyOptik.directories as directories  # noqa: E402
 
 test_data_path = Path(os.environ["PYOPTIK_DATA_DIR"])
 directories.user_data_path = test_data_path
 directories.user_sellmeier_data_path = test_data_path / "sellmeier"
 directories.user_tabulated_data_path = test_data_path / "tabulated"
 
-import PyOptik.utils as utils
+import PyOptik.utils as utils  # noqa: E402
 
 utils.sellmeier_data_path = directories.user_sellmeier_data_path
 utils.tabulated_data_path = directories.user_tabulated_data_path

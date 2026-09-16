@@ -10,6 +10,7 @@ from TypedUnit import Length, AnyUnit, Time, ureg, validate_units
 
 logger = logging.getLogger(__name__)
 
+
 class BaseMaterial(object):
     """Common interface for refractive-index material models.
 

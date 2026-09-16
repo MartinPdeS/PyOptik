@@ -14,6 +14,7 @@ class Dummy(BaseMaterial):
     def identity(self, wavelength: ureg.Quantity) -> ureg.Quantity:
         return wavelength
 
+
 def test_ensure_units_numeric():
     dummy = Dummy()
     out = dummy.identity(1.5)

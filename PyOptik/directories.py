@@ -54,6 +54,7 @@ user_data_path = _default_user_data_path()
 user_sellmeier_data_path = user_data_path / "sellmeier"
 user_tabulated_data_path = user_data_path / "tabulated"
 
+
 def material_paths(material_type):
     """Return the user data directory for a material type.
 

@@ -1,4 +1,3 @@
-from pathlib import Path
 from unittest.mock import Mock
 import pytest
 import requests
@@ -15,6 +14,7 @@ class DummyResponse:
     def raise_for_status(self):
         if self.status_code >= 400:
             raise requests.exceptions.HTTPError(f"status {self.status_code}")
+
 
 def test_download_success(monkeypatch, tmp_path):
     monkeypatch.setattr('PyOptik.utils.sellmeier_data_path', tmp_path)
@@ -36,6 +36,7 @@ def test_download_timeout(monkeypatch):
     monkeypatch.setattr(requests, 'get', Mock(side_effect=requests.exceptions.Timeout))
     with pytest.raises(requests.exceptions.Timeout):
         download_yml_file('http://foo', 'file', MaterialType.SELLMEIER)
+
 
 if __name__ == "__main__":
     pytest.main(["-W error", "-s", __file__])

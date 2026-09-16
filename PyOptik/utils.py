@@ -103,6 +103,6 @@ def download_yml_file(
         except requests.exceptions.HTTPError as e:
             logger.error("HTTP error while downloading %s: %s", url, e)
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Unexpected error while saving %s to %s", url, file_path)
             raise

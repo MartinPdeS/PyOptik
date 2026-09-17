@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:01.084** total execution time for 1 file **from gallery/catalog**:
+**00:01.026** total execution time for 1 file **from gallery/catalog**:
 
 .. container::
 
@@ -33,5 +33,5 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_catalog_plot_catalog_search.py` (``plot_catalog_search.py``)
-     - 00:01.084
+     - 00:01.026
      - 0.0

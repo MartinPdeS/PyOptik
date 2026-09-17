@@ -1,6 +1,5 @@
 """Fresnel interfaces and coherent thin-film transfer-matrix calculations."""
 
-from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Iterable

@@ -1,6 +1,5 @@
 """Catalog and upstream-identity support for optical material data."""
 
-from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path

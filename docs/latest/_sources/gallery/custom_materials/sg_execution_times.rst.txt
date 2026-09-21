@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.165** total execution time for 1 file **from gallery/custom_materials**:
+**00:00.185** total execution time for 1 file **from gallery/custom_materials**:
 
 .. container::
 
@@ -33,5 +33,5 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_custom_materials_plot_measured_material.py` (``plot_measured_material.py``)
-     - 00:00.165
+     - 00:00.185
      - 0.0

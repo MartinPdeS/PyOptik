@@ -1,5 +1,6 @@
 import io
 import zipfile
+from pathlib import Path
 
 import yaml
 
@@ -37,6 +38,31 @@ def test_catalog_reads_upstream_hierarchy(tmp_path):
     matches = catalog.search("bk7", source="refractiveindex.info", available=False)
     assert [item.id.key for item in matches] == ["specs/SCHOTT-optical/N-BK7"]
     assert matches[0].provenance()["available"] is False
+
+
+def test_catalog_opens_unicode_yaml_as_utf8(tmp_path, monkeypatch):
+    catalog_file = tmp_path / "catalog-nk.yml"
+    catalog_file.write_text(
+        "- SHELF: main\n"
+        "  content:\n"
+        "  - BOOK: Au\n"
+        "    content:\n"
+        "    - PAGE: Test\n"
+        "      name: Gold – thin film\n"
+        "      data: main/Au/nk/Test.yml\n",
+        encoding="utf-8",
+    )
+    original_open = Path.open
+
+    def checked_open(path, *args, **kwargs):
+        if path == catalog_file:
+            assert kwargs.get("encoding") == "utf-8"
+        return original_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", checked_open)
+
+    catalog = MaterialCatalog(catalog_file=catalog_file, data_root=tmp_path / "rii")
+    assert catalog.get("main/Au/Test").description == "Gold – thin film"
 
 
 def test_catalog_loads_local_page(tmp_path):

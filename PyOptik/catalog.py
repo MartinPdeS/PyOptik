@@ -77,7 +77,7 @@ class MaterialPage:
         if not self.available:
             return None
         try:
-            with self.local_path.open("r") as stream:
+            with self.local_path.open("r", encoding="utf-8") as stream:
                 reference = (yaml.safe_load(stream) or {}).get("REFERENCES")
                 return str(reference) if reference is not None else None
         except (OSError, yaml.YAMLError):
@@ -285,7 +285,7 @@ class MaterialCatalog:
         existing_manifest = None
         if catalog_file.exists() and not force:
             try:
-                with (root / "manifest.json").open("r") as stream:
+                with (root / "manifest.json").open("r", encoding="utf-8") as stream:
                     existing_manifest = json.load(stream)
             except (FileNotFoundError, json.JSONDecodeError):
                 existing_manifest = None
@@ -380,7 +380,7 @@ class MaterialCatalog:
     def load_catalog(self, catalog_file: Path | str) -> None:
         """Load an upstream ``catalog-nk.yml`` file."""
         catalog_file = Path(catalog_file)
-        with catalog_file.open("r") as stream:
+        with catalog_file.open("r", encoding="utf-8") as stream:
             document = yaml.safe_load(stream) or []
         self._pages.clear()
 
@@ -528,7 +528,7 @@ class MaterialCatalog:
         if not self.manifest_path.exists():
             return {"catalog": {}, "pages": {}}
         try:
-            with self.manifest_path.open("r") as stream:
+            with self.manifest_path.open("r", encoding="utf-8") as stream:
                 manifest = json.load(stream)
             manifest.setdefault("catalog", {})
             manifest.setdefault("pages", {})
@@ -541,7 +541,7 @@ class MaterialCatalog:
         """Atomically write the download manifest after a page completes."""
         self.data_root.mkdir(parents=True, exist_ok=True)
         temporary = self.manifest_path.with_suffix(".json.tmp")
-        with temporary.open("w") as stream:
+        with temporary.open("w", encoding="utf-8") as stream:
             json.dump(manifest, stream, indent=2, sort_keys=True)
             stream.write("\n")
         temporary.replace(self.manifest_path)

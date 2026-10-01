@@ -1,5 +1,28 @@
 |logo|
 
+.. list-table::
+   :widths: 35 65
+   :header-rows: 1
+
+   * - Badge
+     - Status
+   * - Python versions
+     - |python|
+   * - Documentation
+     - |docs|
+   * - Continuous integration
+     - |ci/cd|
+   * - Test coverage
+     - |coverage|
+   * - PyPI package
+     - |PyPi|
+   * - PyPI downloads
+     - |PyPi_download|
+   * - Anaconda package
+     - |anaconda|
+   * - Anaconda downloads
+     - |anaconda_download|
+
 PyOptik
 =======
 
@@ -484,32 +507,6 @@ Common issues
 * Use ``MPLBACKEND=Agg`` for documentation builds, CI, and remote servers.
 * If a material cannot be found, run ``pyoptik setup`` or call
   ``download_snapshot()`` before loading its canonical page.
-
-Project status
---------------
-
-.. list-table::
-   :widths: 35 65
-   :header-rows: 1
-
-   * - Badge
-     - Status
-   * - Python versions
-     - |python|
-   * - Documentation
-     - |docs|
-   * - Continuous integration
-     - |ci/cd|
-   * - Test coverage
-     - |coverage|
-   * - PyPI package
-     - |PyPi|
-   * - PyPI downloads
-     - |PyPi_download|
-   * - Anaconda package
-     - |anaconda|
-   * - Anaconda downloads
-     - |anaconda_download|
 
 Development and testing
 -----------------------

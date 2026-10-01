@@ -1,39 +1,96 @@
 |logo|
 
-.. list-table::
-   :widths: 35 65
-   :header-rows: 1
-
-   * - Badge
-     - Status
-   * - Python versions
-     - |python|
-   * - Documentation
-     - |docs|
-   * - Continuous integration
-     - |ci/cd|
-   * - Test coverage
-     - |coverage|
-   * - PyPI package
-     - |PyPi|
-   * - PyPI downloads
-     - |PyPi_download|
-   * - Anaconda package
-     - |anaconda|
-   * - Anaconda downloads
-     - |anaconda_download|
-
 PyOptik
 =======
 
-**PyOptik** is a Python library for evaluating optical material properties.
-It provides unit-aware refractive-index calculations, dispersion models,
-tabulated optical constants, group-delay properties, plotting helpers, and a
-catalog interface for the hierarchical `RefractiveIndex.INFO
-<https://refractiveindex.info>`_ database.
+**Get wavelength-dependent optical constants and calculate dispersion or
+coating reflectance in Python.** PyOptik combines the RefractiveIndex.INFO
+material catalog with unit-aware calculations for optical materials,
+interfaces, and coherent thin-film stacks.
 
-The library is designed for optical design, photonics simulations,
-electromagnetic modeling, and experimental data analysis.
+.. image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/master/docs/source/_static/tutorials/antireflection_coating.png
+   :alt: Coated glass has a reflection minimum at 550 nm compared with uncoated glass.
+   :width: 700
+
+Make your first plot
+--------------------
+
+Install PyOptik:
+
+.. code-block:: bash
+
+   python -m pip install PyOptik
+
+Compare bare glass with an ideal quarter-wave coating. This example needs
+no material database download:
+
+.. code-block:: python
+
+   import matplotlib.pyplot as plt
+   import numpy as np
+   from TypedUnit import ureg
+   from PyOptik import ThinFilmLayer, thin_film_stack
+
+   wavelengths = np.linspace(350, 900, 600) * ureg.nanometer
+   coating_index = np.sqrt(1.52)
+   coating = ThinFilmLayer(coating_index, 550 * ureg.nanometer / (4 * coating_index))
+   bare = thin_film_stack(wavelengths, [], substrate_index=1.52)
+   coated = thin_film_stack(wavelengths, [coating], substrate_index=1.52)
+
+   plt.plot(wavelengths.magnitude, 100 * bare.reflectance, label="Bare glass")
+   plt.plot(wavelengths.magnitude, 100 * coated.reflectance, label="Coated glass")
+   plt.xlabel("Vacuum wavelength [nm]")
+   plt.ylabel("Reflectance [%]")
+   plt.legend()
+   plt.show()
+
+The ideal coating suppresses reflection at 550 nm. The
+`full coating tutorial <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/antireflection_coating.html>`_
+explains the physics and assumptions.
+
+Load a material by name
+-----------------------
+
+Use a familiar name or formula. Common names load documented datasets;
+choose another source whenever your experiment needs it. The first lookup
+downloads the material snapshot; later lookups use the local cache:
+
+.. code-block:: python
+
+   from PyOptik import material
+   from TypedUnit import ureg
+
+   bk7 = material("N-BK7")
+   silica = material("SiO2")
+   gold = material("Au")
+
+   print(bk7.n(532 * ureg.nm))
+   print(gold.nk(633 * ureg.nm))
+   print(gold.catalog_id)  # main/Au/Johnson
+   bk7.plot()
+
+Defaults are Malitson for silica, Johnson and Christy for gold and silver,
+Hale and Querry for water, and SCHOTT N-BK7 for ``BK7``/``N-BK7``. Inspect the
+resolved source through ``catalog_id`` and ``provenance``. Override a default
+with ``material("Au", source="Rakic-LD")``, or inspect all candidates with
+``find_materials("gold")``. Use ``use_default=False`` to require a source
+when several datasets match. Other ambiguous names list the candidates
+instead of guessing. See the
+`default-source table <https://martinpdes.github.io/PyOptik/docs/latest/materials_and_catalog.html#find-a-material-by-name>`_
+for canonical IDs; use ``material("main/Au/Johnson")`` to pin a dataset.
+
+Learn through a useful result
+-----------------------------
+
+* `Calculate silica group index and dispersion in Python <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/silica_dispersion.html>`_
+  — compare phase and group index, then calculate GDD through 1 mm of glass.
+* `Plot gold's refractive index and extinction coefficient <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/gold_optical_constants.html>`_
+  — load measured optical constants and plot n and k.
+* `Design an antireflection coating in Python <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/antireflection_coating.html>`_
+  — choose a layer thickness and compare coated and uncoated glass.
+
+Each tutorial includes a plot, a downloadable script and notebook, and an
+**Open in Colab** button.
 
 Documentation
 -------------
@@ -56,6 +113,7 @@ The full documentation is organized by task:
 Features
 --------
 
+* Material lookup by common name with documented defaults and source overrides.
 * Sellmeier and other dispersion-formula models.
 * Tabulated complex refractive index data, ``n + i k``.
 * Unit-aware wavelength calculations through ``TypedUnit`` and Pint.
@@ -426,6 +484,32 @@ Common issues
 * Use ``MPLBACKEND=Agg`` for documentation builds, CI, and remote servers.
 * If a material cannot be found, run ``pyoptik setup`` or call
   ``download_snapshot()`` before loading its canonical page.
+
+Project status
+--------------
+
+.. list-table::
+   :widths: 35 65
+   :header-rows: 1
+
+   * - Badge
+     - Status
+   * - Python versions
+     - |python|
+   * - Documentation
+     - |docs|
+   * - Continuous integration
+     - |ci/cd|
+   * - Test coverage
+     - |coverage|
+   * - PyPI package
+     - |PyPi|
+   * - PyPI downloads
+     - |PyPi_download|
+   * - Anaconda package
+     - |anaconda|
+   * - Anaconda downloads
+     - |anaconda_download|
 
 Development and testing
 -----------------------

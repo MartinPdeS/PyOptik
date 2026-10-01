@@ -17,20 +17,37 @@ Install the optional terminal browser with ``python -m pip install
 Your first calculation
 ----------------------
 
-Load a page by its canonical ``shelf/book/page`` identifier and attach units
-to every wavelength:
+Use a familiar glass name and attach units to every wavelength:
 
 .. code-block:: python
 
    from TypedUnit import ureg
-   from PyOptik import MaterialCatalog
+   from PyOptik import material
 
-   catalog = MaterialCatalog.from_snapshot()
-   glass = catalog.get("specs/SCHOTT-optical/N-BK7").load()
-
+   glass = material("N-BK7")
    wavelength = 550 * ureg.nanometer
-   index = glass.compute_refractive_index(wavelength)
-   print(index)
+   print(glass.n(wavelength))
+   print(glass.catalog_id)  # specs/SCHOTT-optical/N-BK7
+
+``BK7`` and ``N-BK7`` select SCHOTT N-BK7. Common material names also have
+documented sources, so a first calculation needs no catalog browsing:
+
+.. code-block:: python
+
+   silica = material("fused silica")  # main/SiO2/Malitson
+   gold = material("gold")  # main/Au/Johnson
+   print(gold.nk(633 * ureg.nm))
+
+Pass ``source="Rakic-LD"`` to choose another gold dataset. Use
+``material("Au", use_default=False)`` to require an explicit source; if
+several datasets match it raises ``AmbiguousMaterialError`` with descriptions
+and canonical IDs. Names without a documented default follow the same rule.
+Defaults never depend on catalog ordering or cache availability. See
+:doc:`materials_and_catalog` for the default-source table and discovery.
+
+The shortcut downloads a snapshot if no local catalog exists. Subsequent
+lookups use the local index. To repair an incomplete cache, run
+``pyoptik setup`` again.
 
 Arrays use the same API:
 

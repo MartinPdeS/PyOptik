@@ -6,6 +6,13 @@ Example gallery
 Executable, tested examples covering material data, dispersion, interfaces,
 coatings, pulse properties, and catalog discovery.
 
+New to PyOptik? Start with the :doc:`tutorials` for silica dispersion, gold
+optical constants, or an antireflection coating. Each includes an Open in
+Colab notebook.
+
+For a quick introduction to defaults, source overrides, and provenance, see
+:doc:`gallery/catalog/plot_material_by_name`.
+
 .. toctree::
     :maxdepth: 2
     :hidden:

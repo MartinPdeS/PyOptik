@@ -6,6 +6,15 @@ dispersion, Fresnel interfaces, and coherent thin-film stacks. It combines a
 searchable RefractiveIndex.INFO catalog with APIs for measured and fitted
 materials.
 
+Start with a plot
+-----------------
+
+* :doc:`Calculate silica group index and dispersion <tutorials/silica_dispersion>`.
+* :doc:`Plot gold's refractive index and extinction coefficient <tutorials/gold_optical_constants>`.
+* :doc:`Design an antireflection coating <tutorials/antireflection_coating>`.
+
+Each tutorial includes a complete script and an **Open in Colab** notebook.
+
 .. list-table::
    :widths: 28 72
 
@@ -28,10 +37,9 @@ Quick example
 .. code-block:: python
 
    from TypedUnit import ureg
-   from PyOptik import MaterialCatalog, fresnel_coefficients
+   from PyOptik import material, fresnel_coefficients
 
-   catalog = MaterialCatalog.from_snapshot()
-   glass = catalog.get("specs/SCHOTT-optical/N-BK7").load()
+   glass = material("N-BK7")
 
    wavelength = 550 * ureg.nanometer
    index = glass.compute_refractive_index(wavelength)
@@ -44,6 +52,7 @@ Quick example
    :maxdepth: 2
 
    getting_started
+   tutorials
    user_guide
    examples
    code

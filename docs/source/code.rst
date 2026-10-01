@@ -14,6 +14,18 @@ Public API
 Below, you will find detailed, automatically generated documentation for significant classes and functions in the `PyOptik` library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.
 
 
+Material discovery
+~~~~~~~~~~~~~~~~~~
+
+Call ``material(name, source=...)`` after ``from PyOptik import material``.
+The equivalent ``load_material`` function documents the full call signature.
+
+.. autofunction:: PyOptik.load_material
+
+.. autofunction:: PyOptik.find_materials
+
+.. autoexception:: PyOptik.AmbiguousMaterialError
+
 Catalog
 ~~~~~~~
 

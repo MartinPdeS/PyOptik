@@ -56,6 +56,24 @@ class BaseMaterial(object):
         """
         return self.compute_refractive_index(wavelength, **kwargs)
 
+    def nk(self, wavelength: Length, **kwargs):
+        """Return the complex refractive index ``n + i k``.
+
+        Parameters
+        ----------
+        wavelength : Length
+            Vacuum wavelength, as a scalar or array with units.
+        **kwargs
+            Forwarded to :meth:`compute_refractive_index`, including
+            ``out_of_range``.
+
+        Returns
+        -------
+        complex or numpy.ndarray
+            Complex refractive index. Alias of :meth:`refractive_index`.
+        """
+        return self.compute_refractive_index(wavelength, **kwargs)
+
     def n(self, wavelength: Length, **kwargs):
         """Return the real refractive index.
 

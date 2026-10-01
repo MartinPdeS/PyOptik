@@ -30,3 +30,5 @@ from .material import base_class  # noqa: E402
 
 
 TIMEOUT = 10  # Default timeout for requests in seconds
+
+from .discovery import AmbiguousMaterialError, find_materials, load_material  # noqa: E402

@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.0] - 2026-10-01
+
+### Added
+
+- `material(name)` and `load_material(name)` for common-name and chemical-formula
+  lookup, with documented defaults for silica, gold, silver, water, and N-BK7.
+- Explicit source overrides, canonical-ID lookup, and `use_default=False` for
+  workflows that require an explicit choice among competing datasets.
+- `find_materials()` and `AmbiguousMaterialError.candidates` for discovery with
+  dataset descriptions and provenance; missing defaults never select substitutes.
+- `nk()` as a short alias for complex refractive-index evaluation.
+- A gallery example covering lookup, defaults, source overrides, and provenance.
+- Three focused tutorials with plots, scripts, downloadable notebooks, and
+  Google Colab links: silica dispersion, gold optical constants, and coatings.
+
+### Changed
+
+- The README leads with a useful plot and runnable example, with status badges
+  further down the page.
+- Getting-started documentation and material-data tutorials now introduce
+  common-name lookup alongside the canonical catalog API.
+- The existing `PyOptik.material` package remains importable and is callable as
+  a convenience loader, preserving existing class and submodule imports.
+
 ## [3.2.0] - 2026-09-16
 
 ### Added
@@ -79,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   plotting helpers.
 - Retired logo assets.
 
-[Unreleased]: https://github.com/MartinPdeS/PyOptik/compare/v3.2.0...HEAD
+[Unreleased]: https://github.com/MartinPdeS/PyOptik/compare/v3.3.0...HEAD
+[3.3.0]: https://github.com/MartinPdeS/PyOptik/compare/v3.2.1...v3.3.0
 [3.2.0]: https://github.com/MartinPdeS/PyOptik/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/MartinPdeS/PyOptik/compare/v3.0.5...v3.1.0

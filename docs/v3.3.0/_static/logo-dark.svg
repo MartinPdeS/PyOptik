@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 240" role="img" aria-labelledby="title description">
+  <title id="title">PyOptik</title>
+  <desc id="description">A beam of light passing through a prism and separating into three colors.</desc>
+  <defs>
+    <linearGradient id="prism" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#278bd5"/>
+      <stop offset="1" stop-color="#12395f"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M122 20 222 210H22Z" fill="url(#prism)" stroke="#62d5f2" stroke-width="6"/>
+    <path d="M0 133 105 116" stroke="#d9f5ff" stroke-width="10"/>
+    <path d="M105 116 146 111" stroke="#ffffff" stroke-width="10"/>
+    <path d="M146 111 250 65" stroke="#50d7f6" stroke-width="9"/>
+    <path d="M146 111 258 111" stroke="#48d8aa" stroke-width="9"/>
+    <path d="M146 111 250 157" stroke="#ffc95c" stroke-width="9"/>
+  </g>
+  <g font-family="Inter, Avenir Next, Segoe UI, Arial, sans-serif">
+    <text x="290" y="126" fill="#f3f8fc" font-size="92" font-weight="700" letter-spacing="-3">PyOptik</text>
+    <text x="296" y="174" fill="#9cc9e5" font-size="24" font-weight="650" letter-spacing="5">OPTICAL MATERIALS</text>
+  </g>
+</svg>

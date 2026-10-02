@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:08.730** total execution time for 2 files **from gallery/catalog**:
+**00:05.935** total execution time for 2 files **from gallery/catalog**:
 
 .. container::
 
@@ -33,8 +33,8 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_catalog_plot_material_by_name.py` (``plot_material_by_name.py``)
-     - 00:07.565
+     - 00:05.127
      - 0.0
    * - :ref:`sphx_glr_gallery_catalog_plot_catalog_search.py` (``plot_catalog_search.py``)
-     - 00:01.165
+     - 00:00.808
      - 0.0

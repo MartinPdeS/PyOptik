@@ -9,9 +9,10 @@ permissions:
 
 jobs:
   linux:
-    uses: MartinPdeS/MPSActions/.github/workflows/publish_compiled_package_to_anaconda.yml@v5
+    uses: MartinPdeS/MPSActions/.github/workflows/publish_compiled_package_to_anaconda.yml@v6
     with:
-      python_versions: '["3.13"]'
+      # One noarch archive supports all declared Python versions; test it on 3.14.
+      python_versions: '["3.14"]'
       apt_package: ""
       os_list: '["ubuntu-latest"]'
       package_name: pyoptik

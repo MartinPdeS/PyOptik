@@ -11,6 +11,7 @@ readme = "README.rst"
 requires-python = ">=3.10"
 authors = [{ name="Martin Poinsinet de Sivry-Houle", email="martin.poinsinet.de.sivry@gmail.com"}]
 classifiers = [
+    "Programming Language :: Python :: 3.14",
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: Implementation :: CPython',

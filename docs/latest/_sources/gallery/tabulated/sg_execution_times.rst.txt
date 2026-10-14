@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:03.626** total execution time for 3 files **from gallery/tabulated**:
+**00:03.902** total execution time for 3 files **from gallery/tabulated**:
 
 .. container::
 
@@ -33,11 +33,11 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_tabulated_plot_polyethylene.py` (``plot_polyethylene.py``)
-     - 00:01.237
+     - 00:01.346
      - 0.0
    * - :ref:`sphx_glr_gallery_tabulated_plot_silver.py` (``plot_silver.py``)
-     - 00:01.230
+     - 00:01.310
      - 0.0
    * - :ref:`sphx_glr_gallery_tabulated_plot_silicon_nk.py` (``plot_silicon_nk.py``)
-     - 00:01.159
+     - 00:01.246
      - 0.0

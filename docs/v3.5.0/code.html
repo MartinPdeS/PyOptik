@@ -1,0 +1,1092 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API reference &#8212; PyOptik  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/default.css?v=4030d72e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script src="_static/documentation_options.js?v=8a448e45"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'code';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="icon" href="_static/favicon.svg"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="references.html" />
+    <link rel="prev" title="Load optical materials by common name" href="gallery/catalog/plot_material_by_name.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo-dark.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="tutorials.html">
+                        Optics tutorials in Python
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        API reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="references.html">
+                        References
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/MartinPdeS/PyOptik" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/PyOptik/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://anaconda.org/MartinPdeS/PyOptik" title="Anaconda" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Anaconda</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="tutorials.html">
+                        Optics tutorials in Python
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide.html">
+                        User guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        API reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="references.html">
+                        References
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/MartinPdeS/PyOptik" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/PyOptik/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://anaconda.org/MartinPdeS/PyOptik" title="Anaconda" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Anaconda</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">API reference</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="api-reference">
+<span id="source-code"></span><h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
+<p>This page documents the public classes and functions. For task-oriented
+introductions, begin with <a class="reference internal" href="getting_started.html"><span class="doc">Getting started</span></a> or <a class="reference internal" href="examples.html"><span class="doc">Example gallery</span></a>.</p>
+<section id="public-api">
+<h2>Public API<a class="headerlink" href="#public-api" title="Link to this heading">#</a></h2>
+<p>Below, you will find detailed, automatically generated documentation for significant classes and functions in the <cite>PyOptik</cite> library. These descriptions are intended to help you understand how each class and function fits into the overall framework, and how to utilize them effectively in your projects.</p>
+<section id="material-discovery">
+<h3>Material discovery<a class="headerlink" href="#material-discovery" title="Link to this heading">#</a></h3>
+<p>Call <code class="docutils literal notranslate"><span class="pre">material(name,</span> <span class="pre">source=...)</span></code> after <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">PyOptik</span> <span class="pre">import</span> <span class="pre">material</span></code>.
+The equivalent <code class="docutils literal notranslate"><span class="pre">load_material</span></code> function documents the full call signature.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.load_material">
+<span class="sig-name descname"><span class="pre">load_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#PyOptik.MaterialCatalog" title="PyOptik.catalog.MaterialCatalog"><span class="pre">MaterialCatalog</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/discovery.html#load_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.load_material" title="Link to this definition">#</a></dt>
+<dd><p>Load a material by name with documented defaults and source overrides.</p>
+<p>This is also available as <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">PyOptik</span> <span class="pre">import</span> <span class="pre">material;</span> <span class="pre">material(...)</span></code>.
+Common names use documented canonical defaults unless source is supplied
+or use_default is False. Other ambiguous queries raise an error listing
+sources and canonical IDs. Ordering and cache availability never select
+a dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Common name, chemical formula, glass name, or canonical page ID.</p></li>
+<li><p><strong>source</strong> (<em>str</em><em>, </em><em>optional</em>) – Exact page ID or source-description text. Use the exact ID when
+a source publishes several datasets or measurement conditions.</p></li>
+<li><p><strong>catalog</strong> (<a class="reference internal" href="#PyOptik.MaterialCatalog" title="PyOptik.MaterialCatalog"><em>MaterialCatalog</em></a><em>, </em><em>optional</em>) – Existing catalog for custom data or offline operation.</p></li>
+<li><p><strong>data_root</strong> (<em>pathlib.Path</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Snapshot directory. Cannot be combined with catalog.</p></li>
+<li><p><strong>interpolation</strong> (<em>{&quot;linear&quot;</em><em>, </em><em>&quot;pchip&quot;}</em><em>, </em><em>optional</em>) – Interpolation for tabulated data; ignored for formula models.</p></li>
+<li><p><strong>use_default</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use the documented source for a known family alias (default True).
+Set False to require a source whenever several datasets match.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded model, retaining canonical ID and scientific provenance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#PyOptik.SellmeierMaterial" title="PyOptik.SellmeierMaterial">SellmeierMaterial</a> or <a class="reference internal" href="#PyOptik.TabulatedMaterial" title="PyOptik.TabulatedMaterial">TabulatedMaterial</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#PyOptik.AmbiguousMaterialError" title="PyOptik.AmbiguousMaterialError"><strong>AmbiguousMaterialError</strong></a> – More than one dataset matches and no documented default applies, or
+    use_default is False. Inspect candidates or use find_materials.</p></li>
+<li><p><strong>ValueError</strong> – Empty name or source, or conflicting catalog/data_root arguments.</p></li>
+<li><p><strong>TypeError</strong> – Name or source is not a string, or use_default is not a bool.</p></li>
+<li><p><strong>KeyError</strong> – No material or source matches; includes spelling suggestions when possible.</p></li>
+<li><p><strong>FileNotFoundError</strong> – The chosen page has no local data. Run pyoptik setup to repair the cache.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Defaults are main/SiO2/Malitson for silica, main/Au/Johnson for gold,
+main/Ag/Johnson for silver, and main/H2O/Hale for water. BK7 and N-BK7
+refer explicitly to specs/SCHOTT-optical/N-BK7. Loaded models expose
+catalog_id and provenance. A missing default never falls back to another
+dataset. See the materials-and-catalog guide for the full source table.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">material</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gold</span> <span class="o">=</span> <span class="n">material</span><span class="p">(</span><span class="s2">"gold"</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"Johnson"</span><span class="p">)</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gold</span><span class="o">.</span><span class="n">catalog_id</span>  
+<span class="go">'main/Au/Johnson'</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.find_materials">
+<span class="sig-name descname"><span class="pre">find_materials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#PyOptik.MaterialCatalog" title="PyOptik.catalog.MaterialCatalog"><span class="pre">MaterialCatalog</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#PyOptik.MaterialPage" title="PyOptik.catalog.MaterialPage"><span class="pre">MaterialPage</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/PyOptik/discovery.html#find_materials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.find_materials" title="Link to this definition">#</a></dt>
+<dd><p>Find material datasets by common name, formula, or canonical identity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Common name (gold, fused silica, water), formula (Au, SiO2), glass
+name (BK7, N-BK7), or canonical shelf/book/page ID. BK7 is an explicit
+alias for SCHOTT N-BK7. Other aliases select families; find_materials always returns all sources.</p></li>
+<li><p><strong>source</strong> (<em>str</em><em>, </em><em>optional</em>) – Page ID, canonical ID, or source-description text. Exact page IDs
+take precedence over partial matches.</p></li>
+<li><p><strong>catalog</strong> (<a class="reference internal" href="#PyOptik.MaterialCatalog" title="PyOptik.MaterialCatalog"><em>MaterialCatalog</em></a><em>, </em><em>optional</em>) – Existing catalog, including custom or offline catalogs.</p></li>
+<li><p><strong>data_root</strong> (<em>pathlib.Path</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Snapshot location. Cannot be combined with catalog.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Candidates in canonical order, or an empty list if none match.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#PyOptik.MaterialPage" title="PyOptik.MaterialPage">MaterialPage</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Names and source descriptions ignore case, accents, spaces, and punctuation
+for exact matching. General text search uses the catalog’s case-insensitive
+substring search. The first lookup downloads the snapshot if no local
+index exists. An existing index is read locally without a network request.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="PyOptik.AmbiguousMaterialError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AmbiguousMaterialError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#PyOptik.MaterialPage" title="PyOptik.catalog.MaterialPage"><span class="pre">MaterialPage</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/discovery.html#AmbiguousMaterialError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.AmbiguousMaterialError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>A name or source matches several scientific datasets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.AmbiguousMaterialError.candidates">
+<span class="sig-name descname"><span class="pre">candidates</span></span><a class="headerlink" href="#PyOptik.AmbiguousMaterialError.candidates" title="Link to this definition">#</a></dt>
+<dd><p>Matching pages in canonical order, including descriptions and provenance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#PyOptik.MaterialPage" title="PyOptik.MaterialPage">MaterialPage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="catalog">
+<h3>Catalog<a class="headerlink" href="#catalog" title="Link to this heading">#</a></h3>
+<p>PyOptik preserves the upstream <code class="docutils literal notranslate"><span class="pre">shelf</span> <span class="pre">/</span> <span class="pre">book</span> <span class="pre">/</span> <span class="pre">page</span></code> organization used by
+RefractiveIndex.INFO. The catalog API is useful when source provenance matters
+or when downloading a complete material collection.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.MaterialId">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shelf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/catalog.html#MaterialId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialId" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Canonical upstream identity: shelf, book, and page.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.MaterialPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#PyOptik.MaterialId" title="PyOptik.catalog.MaterialId"><span class="pre">MaterialId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/catalog.html#MaterialPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialPage" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A catalog page and its associated optical-data file.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.MaterialCatalog">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialCatalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/catalog.html#MaterialCatalog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialCatalog" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Browse and download materials using the upstream hierarchy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.download_snapshot">
+<span class="sig-name descname"><span class="pre">download_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyOptik.MaterialCatalog" title="PyOptik.catalog.MaterialCatalog"><span class="pre">MaterialCatalog</span></a></span></span><a class="reference internal" href="_modules/PyOptik/catalog.html#download_snapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.download_snapshot" title="Link to this definition">#</a></dt>
+<dd><p>Download and activate the complete upstream material snapshot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_root</strong> (<em>pathlib.Path</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Directory where the snapshot should be stored.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – Refresh an existing snapshot.</p></li>
+<li><p><strong>progress</strong> (<em>callable</em><em>, </em><em>optional</em>) – Callback receiving <code class="docutils literal notranslate"><span class="pre">(downloaded_bytes,</span> <span class="pre">total_bytes)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Catalog backed by the downloaded snapshot.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#PyOptik.MaterialCatalog" title="PyOptik.MaterialCatalog">MaterialCatalog</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_snapshot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">download_snapshot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">silver</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"main/Ag/Johnson"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="material-models">
+<h3>Material models<a class="headerlink" href="#material-models" title="Link to this heading">#</a></h3>
+<section id="sellmeier-material">
+<h4>Sellmeier material<a class="headerlink" href="#sellmeier-material" title="Link to this heading">#</a></h4>
+<p>The <cite>SellmeierMaterial</cite> class extends the <cite>Material</cite> base class to handle materials defined by the Sellmeier equation. It allows for precise modeling of refractive indices using parameters from the Sellmeier formula, which is essential for optical design and simulation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.SellmeierMaterial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SellmeierMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/sellmeier_class.html#SellmeierMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.SellmeierMaterial" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseMaterial</span></code></a></p>
+<p>Class representing a material with Sellmeier coefficients for refractive index computation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#PyOptik.SellmeierMaterial.filename" title="Link to this definition">#</a></dt>
+<dd><p>The name of the YAML file containing material properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.coefficients">
+<span class="sig-name descname"><span class="pre">coefficients</span></span><a class="headerlink" href="#PyOptik.SellmeierMaterial.coefficients" title="Link to this definition">#</a></dt>
+<dd><p>The Sellmeier coefficients used for calculating the refractive index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.wavelength_range">
+<span class="sig-name descname"><span class="pre">wavelength_range</span></span><a class="headerlink" href="#PyOptik.SellmeierMaterial.wavelength_range" title="Link to this definition">#</a></dt>
+<dd><p>The allowable wavelength range for the material in micrometers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[Tuple[float, float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.reference">
+<span class="sig-name descname"><span class="pre">reference</span></span><a class="headerlink" href="#PyOptik.SellmeierMaterial.reference" title="Link to this definition">#</a></dt>
+<dd><p>Reference information for the material data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.formula_type">
+<span class="sig-name descname"><span class="pre">formula_type</span></span><a class="headerlink" href="#PyOptik.SellmeierMaterial.formula_type" title="Link to this definition">#</a></dt>
+<dd><p>The formula type to use for refractive index calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="tabulated-material">
+<h4>Tabulated material<a class="headerlink" href="#tabulated-material" title="Link to this heading">#</a></h4>
+<p>The <cite>TabulatedMaterial</cite> class extends the <cite>Material</cite> base class to handle materials characterized by tabulated refractive index and absorption values. This class is particularly useful when working with empirical data from experiments or literature.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.TabulatedMaterial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TabulatedMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/tabulated_class.html#TabulatedMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.TabulatedMaterial" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseMaterial</span></code></a></p>
+<p>Class representing a material with tabulated refractive index (n) and absorption (k) values.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#PyOptik.TabulatedMaterial.filename" title="Link to this definition">#</a></dt>
+<dd><p>The name of the YAML file containing material properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.wavelength">
+<span class="sig-name descname"><span class="pre">wavelength</span></span><a class="headerlink" href="#PyOptik.TabulatedMaterial.wavelength" title="Link to this definition">#</a></dt>
+<dd><p>Array of wavelengths in micrometers for which the refractive index and absorption values are tabulated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.n_values">
+<span class="sig-name descname"><span class="pre">n_values</span></span><a class="headerlink" href="#PyOptik.TabulatedMaterial.n_values" title="Link to this definition">#</a></dt>
+<dd><p>Array of tabulated refractive index values (n) corresponding to the wavelengths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.k_values">
+<span class="sig-name descname"><span class="pre">k_values</span></span><a class="headerlink" href="#PyOptik.TabulatedMaterial.k_values" title="Link to this definition">#</a></dt>
+<dd><p>Array of tabulated absorption values (k) corresponding to the wavelengths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.reference">
+<span class="sig-name descname"><span class="pre">reference</span></span><a class="headerlink" href="#PyOptik.TabulatedMaterial.reference" title="Link to this definition">#</a></dt>
+<dd><p>Reference information for the material data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="base-material">
+<h4>Base material<a class="headerlink" href="#base-material" title="Link to this heading">#</a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseMaterial</span></span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Common interface for refractive-index material models.</p>
+<p>Subclasses provide <code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_refractive_index()</span></code>; this class supplies
+unit handling, validity-range checks, and group-delay calculations.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="typed-material-documents">
+<h3>Typed material documents<a class="headerlink" href="#typed-material-documents" title="Link to this heading">#</a></h3>
+<p>These immutable data objects provide the validated representation shared by
+catalog loading, user-defined material construction, and YAML export.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.MaterialMetadata">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditions:</span> <span class="pre">~typing.Mapping[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comments:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/dataset.html#MaterialMetadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialMetadata" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Source metadata shared by formula and tabulated datasets.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.FormulaDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FormulaDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coefficients</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/dataset.html#FormulaDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.FormulaDataset" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A validated RefractiveIndex.INFO formula dataset.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.TabulatedDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TabulatedDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength_um</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/dataset.html#TabulatedDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.TabulatedDataset" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>One validated table of <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">k</span></code>, or combined <code class="docutils literal notranslate"><span class="pre">nk</span></code> values.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.MaterialDocument">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialDocument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">datasets:</span> <span class="pre">tuple[~PyOptik.material.dataset.FormulaDataset</span> <span class="pre">|</span> <span class="pre">~PyOptik.material.dataset.TabulatedDataset,</span> <span class="pre">...],</span> <span class="pre">metadata:</span> <span class="pre">~PyOptik.material.dataset.MaterialMetadata</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/dataset.html#MaterialDocument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialDocument" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A parsed optical-material document and its provenance metadata.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.parse_material">
+<span class="sig-name descname"><span class="pre">parse_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyOptik.MaterialDocument" title="PyOptik.material.dataset.MaterialDocument"><span class="pre">MaterialDocument</span></a></span></span><a class="reference internal" href="_modules/PyOptik/material/dataset.html#parse_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.parse_material" title="Link to this definition">#</a></dt>
+<dd><p>Parse and validate a material YAML path or already-loaded mapping.</p>
+</dd></dl>
+
+</section>
+<section id="interface-and-thin-film-optics">
+<h3>Interface and thin-film optics<a class="headerlink" href="#interface-and-thin-film-optics" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.FresnelResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FresnelResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reflection_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmission_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmittance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absorptance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#FresnelResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.FresnelResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Amplitude coefficients and power fractions at one interface.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.ThinFilmLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThinFilmLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#ThinFilmLayer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.ThinFilmLayer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>One homogeneous layer in a coherent optical stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material</strong> (<em>complex</em><em> or </em><a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><em>BaseMaterial</em></a>) – Constant complex refractive index or a PyOptik material model.</p></li>
+<li><p><strong>thickness</strong> (<em>Length</em>) – Physical layer thickness. Bare numbers are interpreted as metres.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.ThinFilmResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThinFilmResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reflection_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmission_amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmittance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absorptance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#ThinFilmResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.ThinFilmResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Coherent reflection, transmission, and absorption of a layer stack.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.fresnel_coefficients">
+<span class="sig-name descname"><span class="pre">fresnel_coefficients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incident_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyOptik.FresnelResult" title="PyOptik.thin_film.FresnelResult"><span class="pre">FresnelResult</span></a></span></span><a class="reference internal" href="_modules/PyOptik/thin_film.html#fresnel_coefficients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.fresnel_coefficients" title="Link to this definition">#</a></dt>
+<dd><p>Calculate Fresnel amplitude coefficients and power fractions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>incident_index</strong> (<em>complex</em><em> or </em><a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><em>BaseMaterial</em></a>) – Refractive indices or material models on either side of the interface.</p></li>
+<li><p><strong>transmitted_index</strong> (<em>complex</em><em> or </em><a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial" title="PyOptik.material.base_class.BaseMaterial"><em>BaseMaterial</em></a>) – Refractive indices or material models on either side of the interface.</p></li>
+<li><p><strong>angle</strong> (<em>float</em><em> or </em><em>angle quantity</em><em>, </em><em>optional</em>) – Incidence angle. Bare values are radians.</p></li>
+<li><p><strong>polarization</strong> (<em>{&quot;s&quot;</em><em>, </em><em>&quot;p&quot;}</em><em>, </em><em>optional</em>) – Electric-field polarization.</p></li>
+<li><p><strong>wavelength</strong> (<em>Length</em><em>, </em><em>optional</em>) – Required when either index is a wavelength-dependent material model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.brewster_angle">
+<span class="sig-name descname"><span class="pre">brewster_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incident_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_index</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#brewster_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.brewster_angle" title="Link to this definition">#</a></dt>
+<dd><p>Return the p-polarized Brewster angle for two lossless media.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.critical_angle">
+<span class="sig-name descname"><span class="pre">critical_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incident_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitted_index</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/thin_film.html#critical_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.critical_angle" title="Link to this definition">#</a></dt>
+<dd><p>Return the total-internal-reflection critical angle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the media are absorbing or the incident index is not larger than
+    the transmitted index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PyOptik.thin_film_stack">
+<span class="sig-name descname"><span class="pre">thin_film_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#PyOptik.ThinFilmLayer" title="PyOptik.thin_film.ThinFilmLayer"><span class="pre">ThinFilmLayer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incident_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#PyOptik.ThinFilmResult" title="PyOptik.thin_film.ThinFilmResult"><span class="pre">ThinFilmResult</span></a></span></span><a class="reference internal" href="_modules/PyOptik/thin_film.html#thin_film_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.thin_film_stack" title="Link to this definition">#</a></dt>
+<dd><p>Evaluate a coherent isotropic multilayer using characteristic matrices.</p>
+<p>Wavelength may be scalar or one-dimensional. Layers may be
+<a class="reference internal" href="#PyOptik.ThinFilmLayer" title="PyOptik.ThinFilmLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThinFilmLayer</span></code></a> objects or <code class="docutils literal notranslate"><span class="pre">(material,</span> <span class="pre">thickness)</span></code> tuples. All
+layers are treated as optically coherent; surface roughness, incoherent
+substrates, anisotropy, and magnetic media are outside this model.</p>
+</dd></dl>
+
+</section>
+<section id="enumerations">
+<h3>Enumerations<a class="headerlink" href="#enumerations" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyOptik.MaterialType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MaterialType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material_type.html#MaterialType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.MaterialType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration of material data representations.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#public-api">Public API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#material-discovery">Material discovery</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.load_material"><code class="docutils literal notranslate"><span class="pre">load_material()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.find_materials"><code class="docutils literal notranslate"><span class="pre">find_materials()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.AmbiguousMaterialError"><code class="docutils literal notranslate"><span class="pre">AmbiguousMaterialError</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.AmbiguousMaterialError.candidates"><code class="docutils literal notranslate"><span class="pre">AmbiguousMaterialError.candidates</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catalog">Catalog</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialId"><code class="docutils literal notranslate"><span class="pre">MaterialId</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialPage"><code class="docutils literal notranslate"><span class="pre">MaterialPage</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialCatalog"><code class="docutils literal notranslate"><span class="pre">MaterialCatalog</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.download_snapshot"><code class="docutils literal notranslate"><span class="pre">download_snapshot()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#material-models">Material models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sellmeier-material">Sellmeier material</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.filename"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.filename</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.coefficients"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.coefficients</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.wavelength_range"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.wavelength_range</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.reference"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.reference</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.SellmeierMaterial.formula_type"><code class="docutils literal notranslate"><span class="pre">SellmeierMaterial.formula_type</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tabulated-material">Tabulated material</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.filename"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.filename</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.wavelength"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.wavelength</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.n_values"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.n_values</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.k_values"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.k_values</span></code></a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedMaterial.reference"><code class="docutils literal notranslate"><span class="pre">TabulatedMaterial.reference</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#base-material">Base material</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.material.base_class.BaseMaterial"><code class="docutils literal notranslate"><span class="pre">BaseMaterial</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typed-material-documents">Typed material documents</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialMetadata"><code class="docutils literal notranslate"><span class="pre">MaterialMetadata</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FormulaDataset"><code class="docutils literal notranslate"><span class="pre">FormulaDataset</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.TabulatedDataset"><code class="docutils literal notranslate"><span class="pre">TabulatedDataset</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialDocument"><code class="docutils literal notranslate"><span class="pre">MaterialDocument</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.parse_material"><code class="docutils literal notranslate"><span class="pre">parse_material()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interface-and-thin-film-optics">Interface and thin-film optics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.FresnelResult"><code class="docutils literal notranslate"><span class="pre">FresnelResult</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmLayer"><code class="docutils literal notranslate"><span class="pre">ThinFilmLayer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.ThinFilmResult"><code class="docutils literal notranslate"><span class="pre">ThinFilmResult</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.fresnel_coefficients"><code class="docutils literal notranslate"><span class="pre">fresnel_coefficients()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.brewster_angle"><code class="docutils literal notranslate"><span class="pre">brewster_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.critical_angle"><code class="docutils literal notranslate"><span class="pre">critical_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.thin_film_stack"><code class="docutils literal notranslate"><span class="pre">thin_film_stack()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerations">Enumerations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#PyOptik.MaterialType"><code class="docutils literal notranslate"><span class="pre">MaterialType</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="_sources/code.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2024, Martin Poinsinet de Sivry-Houle.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -8,6 +8,7 @@ from pathlib import Path
 from matplotlib import pyplot as plt
 from TypedUnit import Length, validate_units, ureg
 
+from PyOptik.validation import validate_refractive_indices
 from PyOptik.material.base_class import BaseMaterial
 from PyOptik.material.dataset import MaterialDocument, MaterialMetadata, TabulatedDataset, parse_material
 from PyOptik.directories import material_paths
@@ -170,25 +171,69 @@ class TabulatedMaterial(BaseMaterial):
     @classmethod
     def from_csv(
         cls, path, *, name=None, wavelength_unit=ureg.micrometer,
-        wavelength_column="wavelength", n_column="n", k_column="k", **kwargs,
+        wavelength_column="wavelength", n_column="n", k_column="k", missing_k=None, **kwargs,
     ):
-        """Construct a material from a header-based CSV file."""
+        """Construct a material from a header-based CSV file.
+
+        Missing columns are allowed; missing cells in present columns raise
+        ValueError. Set ``missing_k`` to a finite replacement (for example 0.0)
+        to fill empty extinction cells explicitly. Missing n is never inferred.
+        """
         path = Path(path)
         with path.open(newline="", encoding="utf-8") as stream:
             rows = list(csv.DictReader(stream))
         if not rows or wavelength_column not in rows[0]:
             raise ValueError(f"CSV must contain a '{wavelength_column}' column")
         wavelength = numpy.asarray([float(row[wavelength_column]) for row in rows]) * wavelength_unit
-        n = [float(row[n_column]) for row in rows] if n_column in rows[0] and rows[0][n_column] != "" else None
-        k = [float(row[k_column]) for row in rows] if k_column in rows[0] and rows[0][k_column] != "" else None
+
+        def component(column, fill=None):
+            """Read a present optical-constant column with explicit missing-cell handling."""
+            if column not in rows[0]:
+                return None
+            values = []
+            for line, row in enumerate(rows, start=2):
+                cell = (row.get(column) or "").strip()
+                if not cell and fill is None:
+                    raise ValueError(f"Missing '{column}' value on CSV line {line}")
+                values.append(float(cell) if cell else float(fill))
+            return values
+
+        if missing_k is not None and not numpy.isfinite(missing_k):
+            raise ValueError("missing_k must be finite")
+        n = component(n_column)
+        k = component(k_column, missing_k)
         return cls.from_arrays(name or path.stem, wavelength, n=n, k=k, **kwargs)
+
+    def to_arrays(self, *, validation="warn", allow_negative_index=False, allow_gain=False):
+        """Return independent wavelength, n, and k arrays on a common grid.
+
+        Wavelengths carry micrometre units. The grid is the sorted union of
+        both component grids within their shared range, including its bounds.
+        Missing n defaults to 1 and missing k to 0, as during evaluation.
+        Validation options are forwarded to compute_refractive_index.
+        Linear interpolation is exactly preserved inside this range. For
+        pchip, the returned values are samples, not cubic coefficients.
+        """
+        lower, upper = self.wavelength_bound.to(ureg.micrometer).magnitude
+        grids = [grid.to(ureg.micrometer).magnitude
+                 for grid in (self._n_wavelength, self._k_wavelength) if grid is not None]
+        grid = numpy.unique(numpy.concatenate([*grids, [lower, upper]]))
+        wavelength = grid[(grid >= lower) & (grid <= upper)] * ureg.micrometer
+        index = self.compute_refractive_index(
+            wavelength=wavelength, out_of_range="raise", validation=validation,
+            allow_negative_index=allow_negative_index, allow_gain=allow_gain,
+        )
+        return wavelength, index.real.copy(), index.imag.copy()
 
     def to_yaml(self, path):
         """Export this material as a validated, reloadable YAML document."""
         return self._document.to_yaml(path)
 
     @validate_units
-    def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> numpy.ndarray:
+    def compute_refractive_index(
+        self, wavelength: Length | float, out_of_range: str = "warn", *,
+        validation: str = "warn", allow_negative_index: bool = False, allow_gain: bool = False,
+    ) -> numpy.ndarray:
         """
         Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).
 
@@ -198,6 +243,14 @@ class TabulatedMaterial(BaseMaterial):
             Wavelength(s) in micrometers for which to interpolate n and k.
         out_of_range : {"warn", "raise", "clip"}, optional
             Policy for wavelengths outside the tabulated range.
+
+        validation : {"ignore", "warn", "raise"}, optional
+            Optical-constant validation policy (default "warn"). Nonfinite
+            results always raise. Checks apply to the evaluated samples only.
+        allow_negative_index : bool, optional
+            Permit zero or negative real index without a validation diagnostic.
+        allow_gain : bool, optional
+            Permit negative extinction coefficients (gain) without a diagnostic.
 
         Returns
         -------
@@ -232,6 +285,7 @@ class TabulatedMaterial(BaseMaterial):
 
         index = n_interp + 1j * k_interp
 
+        validate_refractive_indices(index, policy=validation, allow_negative_index=allow_negative_index, allow_gain=allow_gain)
         return index[0] if return_as_scalar else index
 
     def _interpolate(self, values, wavelengths, data, default: float):

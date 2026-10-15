@@ -8,6 +8,7 @@ from TypedUnit import Length, RefractiveIndex, validate_units, ureg
 
 from PyOptik.directories import material_paths
 from PyOptik.material_type import MaterialType
+from PyOptik.validation import validate_refractive_indices
 from PyOptik.material.base_class import BaseMaterial
 from PyOptik.material.dataset import FormulaDataset, MaterialDocument, MaterialMetadata, parse_material
 
@@ -141,7 +142,10 @@ class SellmeierMaterial(BaseMaterial):
         return self._document.to_yaml(path)
 
     @validate_units
-    def compute_refractive_index(self, wavelength: Length | float, out_of_range: str = "warn") -> RefractiveIndex:
+    def compute_refractive_index(
+        self, wavelength: Length | float, out_of_range: str = "warn", *,
+        validation: str = "warn", allow_negative_index: bool = False, allow_gain: bool = False,
+    ) -> RefractiveIndex:
         r"""
         Computes the refractive index n(\u03bb) using the appropriate
         RefractiveIndex.INFO dispersion formula (types 1 through 9).
@@ -152,6 +156,14 @@ class SellmeierMaterial(BaseMaterial):
             The wavelength \u03bb in meters, can be a single float or a numpy array.
         out_of_range : {"warn", "raise", "clip"}, optional
             Policy for wavelengths outside the source validity range.
+
+        validation : {"ignore", "warn", "raise"}, optional
+            Optical-constant validation policy (default "warn"). Nonfinite
+            results always raise. Checks apply to the evaluated samples only.
+        allow_negative_index : bool, optional
+            Permit zero or negative real index without a validation diagnostic.
+        allow_gain : bool, optional
+            Permit negative extinction coefficients (gain) without a diagnostic.
 
         Returns
         -------
@@ -239,6 +251,7 @@ class SellmeierMaterial(BaseMaterial):
             case _:
                 raise ValueError(f"Unsupported formula type: {self.formula_type}")
 
+        validate_refractive_indices(n, policy=validation, allow_negative_index=allow_negative_index, allow_gain=allow_gain)
         return n[0] if return_as_scalar else n
 
     def plot(self, axes=None, samples: int = 100) -> None:

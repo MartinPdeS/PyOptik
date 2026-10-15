@@ -56,6 +56,8 @@ class TabulatedDataset:
         data = numpy.asarray(self.values, dtype=float)
         if not numpy.all(numpy.isfinite(wavelength)) or not numpy.all(numpy.isfinite(data)):
             raise ValueError("tabulated data must be finite")
+        if numpy.any(wavelength <= 0):
+            raise ValueError("tabulated wavelengths must be strictly positive")
         if numpy.any(numpy.diff(wavelength) <= 0):
             raise ValueError("tabulated wavelengths must be strictly increasing")
 
@@ -194,8 +196,8 @@ def _validate_range(value: tuple[float, float] | None) -> None:
     """Validate an optional increasing two-value wavelength interval."""
     if value is None:
         return
-    if len(value) != 2 or not numpy.all(numpy.isfinite(value)) or value[0] >= value[1]:
-        raise ValueError("wavelength_range must contain two increasing finite values")
+    if len(value) != 2 or not numpy.all(numpy.isfinite(value)) or value[0] <= 0 or value[0] >= value[1]:
+        raise ValueError("wavelength_range must contain two increasing positive finite values")
 
 
 def _format_number(value: float) -> str:

@@ -8,6 +8,8 @@ import logging
 
 from TypedUnit import Length, AnyUnit, Time, ureg, validate_units
 
+from PyOptik.validation import validate_wavelengths
+
 logger = logging.getLogger(__name__)
 
 
@@ -210,6 +212,7 @@ class BaseMaterial(object):
             If ``out_of_range`` is invalid or has value ``"raise"`` for an
             out-of-range wavelength.
         """
+        validate_wavelengths(wavelength)
         if out_of_range not in {"warn", "raise", "clip"}:
             raise ValueError("out_of_range must be 'warn', 'raise', or 'clip'.")
         if self.wavelength_bound is not None:

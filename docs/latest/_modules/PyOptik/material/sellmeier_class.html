@@ -47,7 +47,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
     <link rel="icon" href="../../../_static/favicon.svg"/>
@@ -499,6 +499,7 @@ document.write(`
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">material_paths</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_refractive_indices</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.base_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseMaterial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">FormulaDataset</span><span class="p">,</span> <span class="n">MaterialDocument</span><span class="p">,</span> <span class="n">MaterialMetadata</span><span class="p">,</span> <span class="n">parse_material</span>
 
@@ -634,7 +635,10 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
     <span class="nd">@validate_units</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RefractiveIndex</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">,</span> <span class="n">allow_negative_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">allow_gain</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RefractiveIndex</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        Computes the refractive index n(\u03bb) using the appropriate</span>
 <span class="sd">        RefractiveIndex.INFO dispersion formula (types 1 through 9).</span>
@@ -645,6 +649,14 @@ document.write(`
 <span class="sd">            The wavelength \u03bb in meters, can be a single float or a numpy array.</span>
 <span class="sd">        out_of_range : {"warn", "raise", "clip"}, optional</span>
 <span class="sd">            Policy for wavelengths outside the source validity range.</span>
+
+<span class="sd">        validation : {"ignore", "warn", "raise"}, optional</span>
+<span class="sd">            Optical-constant validation policy (default "warn"). Nonfinite</span>
+<span class="sd">            results always raise. Checks apply to the evaluated samples only.</span>
+<span class="sd">        allow_negative_index : bool, optional</span>
+<span class="sd">            Permit zero or negative real index without a validation diagnostic.</span>
+<span class="sd">        allow_gain : bool, optional</span>
+<span class="sd">            Permit negative extinction coefficients (gain) without a diagnostic.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -732,6 +744,7 @@ document.write(`
             <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported formula type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
+        <span class="n">validate_refractive_indices</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span> <span class="n">allow_negative_index</span><span class="o">=</span><span class="n">allow_negative_index</span><span class="p">,</span> <span class="n">allow_gain</span><span class="o">=</span><span class="n">allow_gain</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_as_scalar</span> <span class="k">else</span> <span class="n">n</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

@@ -48,7 +48,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
     <link rel="icon" href="../../_static/favicon.svg"/>
@@ -567,8 +567,10 @@ infrared wavelength range.</p>
 <span class="n">index</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:220: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:273: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
   self._check_wavelength(wavelength, out_of_range)
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:288: MaterialValidationWarning: The material contains gain; passive data requires imag(n) &gt;= 0. Use allow_gain=True for active materials.
+  validate_refractive_indices(index, policy=validation, allow_negative_index=allow_negative_index, allow_gain=allow_gain)
 </pre></div>
 </div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -593,7 +595,7 @@ infrared wavelength range.</p>
   return np.asanyarray(x, float)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.682 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.194 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-tabulated-plot-silicon-nk-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/8e53266e980903fc9ceab419be25b527/plot_silicon_nk.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silicon_nk.ipynb</span></code></a></p>

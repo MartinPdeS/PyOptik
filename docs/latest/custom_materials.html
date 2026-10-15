@@ -48,7 +48,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
     <link rel="icon" href="_static/favicon.svg"/>
@@ -520,7 +520,8 @@ catalog materials.</p>
 <h2>Tabulated data from arrays<a class="headerlink" href="#tabulated-data-from-arrays" title="Link to this heading">#</a></h2>
 <p>Attach units to the wavelength axis and provide at least one of <code class="docutils literal notranslate"><span class="pre">n</span></code> or <code class="docutils literal notranslate"><span class="pre">k</span></code>.
 The arrays must be one-dimensional, finite, equal in length, and strictly
-increasing in wavelength.</p>
+increasing in strictly positive wavelength. Negative optical constants remain
+representable; the configurable evaluation policy below controls diagnostics.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ureg</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">TabulatedMaterial</span>
 
@@ -598,6 +599,60 @@ wavelengths, unsupported formula types, and malformed metadata raise
 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> with source context. YAML export writes through a temporary file
 and atomically replaces the destination after successful serialization.</p>
 </section>
+<section id="exporting-numerical-arrays">
+<h2>Exporting numerical arrays<a class="headerlink" href="#exporting-numerical-arrays" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">wavelength,</span> <span class="pre">n,</span> <span class="pre">k</span> <span class="pre">=</span> <span class="pre">sample.to_arrays()</span></code> returns independent arrays suitable
+for numerical tools. Wavelengths carry micrometre units. Separate n and k grids
+are combined within their overlapping range, including both bounds. Missing n
+is represented by 1 and missing k by 0. Linear interpolation of these arrays
+preserves the source curves inside the exported range. For pchip materials,
+these are samples; linear interpolation does not preserve the cubic curve.</p>
+<p>CSV columns may be absent, but empty cells in present columns raise
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> with their line number. Use <code class="docutils literal notranslate"><span class="pre">missing_k=0.0</span></code> in <code class="docutils literal notranslate"><span class="pre">from_csv</span></code>
+when empty extinction cells explicitly mean zero. Empty n cells always raise;
+a missing first value never causes the remaining column to be discarded.
+Formula wavelength bounds must also be strictly positive.</p>
+</section>
+<section id="physical-validation-policies">
+<h2>Physical validation policies<a class="headerlink" href="#physical-validation-policies" title="Link to this heading">#</a></h2>
+<p>Material evaluation and <code class="docutils literal notranslate"><span class="pre">to_arrays</span></code> default to <code class="docutils literal notranslate"><span class="pre">validation=&quot;warn&quot;</span></code>.
+A <code class="docutils literal notranslate"><span class="pre">MaterialValidationWarning</span></code> reports nonpositive real refractive index or
+negative extinction coefficient. With PyOptik’s <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">i*k</span></code> convention, positive
+k describes absorption and negative k describes gain. Negative-index and active
+materials remain supported through explicit allowances:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span>
+    <span class="n">wavelength</span><span class="o">=</span><span class="mi">450</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">,</span>
+    <span class="n">validation</span><span class="o">=</span><span class="s2">"raise"</span><span class="p">,</span>
+    <span class="n">allow_negative_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">allow_gain</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">validation=&quot;ignore&quot;</span></code> suppresses these physical-assumption diagnostics;
+<code class="docutils literal notranslate"><span class="pre">&quot;raise&quot;</span></code> turns them into <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. These options are also forwarded by
+<code class="docutils literal notranslate"><span class="pre">nk</span></code>, <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">k</span></code> and the other evaluation helpers. Diagnostics occur when
+values are evaluated or exported, not merely when data is loaded. Checks cover
+only those samples; they do not prove causality or validity at every wavelength.
+Nonempty, finite results and positive, finite wavelengths are required under
+all policies, including <code class="docutils literal notranslate"><span class="pre">&quot;ignore&quot;</span></code>. Dataset construction also rejects
+nonfinite values and nonpositive wavelengths.</p>
+<p>Standalone arrays can use the same implementation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_refractive_indices</span><span class="p">,</span> <span class="n">validate_wavelengths</span>
+
+<span class="n">indices</span> <span class="o">=</span> <span class="n">validate_refractive_indices</span><span class="p">(</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">1.45</span> <span class="o">+</span> <span class="mf">0.01</span><span class="n">j</span><span class="p">,</span> <span class="mf">1.50</span> <span class="o">+</span> <span class="mf">0.02</span><span class="n">j</span><span class="p">],</span>
+    <span class="n">policy</span><span class="o">=</span><span class="s2">"raise"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">validate_wavelengths</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">]</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">nanometer</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">validate_refractive_indices</span></code> returns a complex NumPy array with the input
+shape. Its default tolerance of <code class="docutils literal notranslate"><span class="pre">1e-12</span></code> applies only to tiny negative
+extinction coefficients, and can be overridden with <code class="docutils literal notranslate"><span class="pre">tolerance</span></code>. Negative
+real indices are never silently clamped. <code class="docutils literal notranslate"><span class="pre">allow_negative_index=True</span></code> also
+permits zero real index, including purely imaginary indices. Empty samples,
+nonfinite samples, invalid policies, and invalid tolerances always raise.</p>
+</section>
 </section>
 
 
@@ -623,6 +678,8 @@ and atomically replaces the destination after successful serialization.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-import">CSV import</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-materials">Formula materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typed-documents-and-validation">Typed documents and validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-numerical-arrays">Exporting numerical arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-validation-policies">Physical validation policies</a></li>
 </ul>
   </nav></div>
 

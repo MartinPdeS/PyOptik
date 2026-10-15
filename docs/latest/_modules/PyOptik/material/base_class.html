@@ -47,7 +47,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
     <link rel="icon" href="../../../_static/favicon.svg"/>
@@ -499,6 +499,8 @@ document.write(`
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Length</span><span class="p">,</span> <span class="n">AnyUnit</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">ureg</span><span class="p">,</span> <span class="n">validate_units</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_wavelengths</span>
+
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
@@ -703,6 +705,7 @@ document.write(`
 <span class="sd">            If ``out_of_range`` is invalid or has value ``"raise"`` for an</span>
 <span class="sd">            out-of-range wavelength.</span>
 <span class="sd">        """</span>
+        <span class="n">validate_wavelengths</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">out_of_range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"warn"</span><span class="p">,</span> <span class="s2">"raise"</span><span class="p">,</span> <span class="s2">"clip"</span><span class="p">}:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"out_of_range must be 'warn', 'raise', or 'clip'."</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

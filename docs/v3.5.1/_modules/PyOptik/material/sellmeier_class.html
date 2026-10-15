@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyOptik.material.sellmeier_class &#8212; PyOptik  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/docs/source/_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css?v=4030d72e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script src="../../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/PyOptik/material/sellmeier_class';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.1';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="icon" href="../../../_static/favicon.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/logo-dark.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../tutorials.html">
+                        Optics tutorials in Python
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide.html">
+                        User guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../examples.html">
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../code.html">
+                        API reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../../references.html">
+                        References
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/MartinPdeS/PyOptik" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/PyOptik/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://anaconda.org/MartinPdeS/PyOptik" title="Anaconda" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Anaconda</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../tutorials.html">
+                        Optics tutorials in Python
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide.html">
+                        User guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../examples.html">
+                        Example gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../code.html">
+                        API reference
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../../../references.html">
+                        References
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/MartinPdeS/PyOptik" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/PyOptik/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://anaconda.org/MartinPdeS/PyOptik" title="Anaconda" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Anaconda</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">PyOptik.mate...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for PyOptik.material.sellmeier_class</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">TypedUnit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Length</span><span class="p">,</span> <span class="n">RefractiveIndex</span><span class="p">,</span> <span class="n">validate_units</span><span class="p">,</span> <span class="n">ureg</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">material_paths</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaterialType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_refractive_indices</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.base_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseMaterial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyOptik.material.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">FormulaDataset</span><span class="p">,</span> <span class="n">MaterialDocument</span><span class="p">,</span> <span class="n">MaterialMetadata</span><span class="p">,</span> <span class="n">parse_material</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SellmeierMaterial">
+<a class="viewcode-back" href="../../../code.html#PyOptik.SellmeierMaterial">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SellmeierMaterial</span><span class="p">(</span><span class="n">BaseMaterial</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Class representing a material with Sellmeier coefficients for refractive index computation.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        The name of the YAML file containing material properties.</span>
+<span class="sd">    coefficients : numpy.ndarray</span>
+<span class="sd">        The Sellmeier coefficients used for calculating the refractive index.</span>
+<span class="sd">    wavelength_range : Optional[Tuple[float, float]]</span>
+<span class="sd">        The allowable wavelength range for the material in micrometers.</span>
+<span class="sd">    reference : Optional[str]</span>
+<span class="sd">        Reference information for the material data.</span>
+<span class="sd">    formula_type : int</span>
+<span class="sd">        The formula type to use for refractive index calculation.</span>
+<span class="sd">    """</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Initializes the SellmeierMaterial with a filename.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        filename : str</span>
+<span class="sd">            The name of the YAML file containing material properties.</span>
+<span class="sd">        file_path : pathlib.Path, optional</span>
+<span class="sd">            Explicit YAML path for hierarchy-preserving catalog pages. When</span>
+<span class="sd">            omitted, the user material directory is searched.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_coefficients</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the material name and ``Sellmeier`` model type."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">'[Sellmeier]'</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Loads the Sellmeier coefficients, wavelength range, formula type, and reference from the specified YAML file.</span>
+<span class="sd">        """</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="ow">or</span> <span class="nb">next</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml"</span>
+             <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">material_paths</span><span class="p">(</span><span class="n">MaterialType</span><span class="o">.</span><span class="n">SELLMEIER</span><span class="p">)</span>
+             <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml"</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span>
+            <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sellmeier YAML file '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.yml' not found."</span><span class="p">)</span>
+
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">'.yml'</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">document</span> <span class="o">=</span> <span class="n">parse_material</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid Sellmeier data in YAML file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Loaded Sellmeier data from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">document</span><span class="o">.</span><span class="n">formula_datasets</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No formula dataset found in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">formula_datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_document</span> <span class="o">=</span> <span class="n">document</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">formula_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">wavelength_range</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span>
+            <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">wavelength_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">reference</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">conditions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">comments</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Validated Sellmeier material '</span><span class="si">%s</span><span class="s2">' with formula </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_coefficients</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">coefficients</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">formula_type</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">wavelength_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">reference</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">comments</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Construct a formula material without an intermediate YAML file.</span>
+
+<span class="sd">        ``wavelength_range`` may be a unit-bearing two-element quantity or a</span>
+<span class="sd">        pair interpreted as micrometres.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">wavelength_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wavelength_range</span><span class="p">,</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">wavelength_range</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">wavelength_range</span><span class="p">)</span>
+        <span class="n">document</span> <span class="o">=</span> <span class="n">MaterialDocument</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">FormulaDataset</span><span class="p">(</span><span class="n">formula_type</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="p">),</span> <span class="n">bounds</span><span class="p">),),</span>
+            <span class="n">MaterialMetadata</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">conditions</span> <span class="ow">or</span> <span class="p">{}),</span> <span class="n">comments</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">_document</span> <span class="o">=</span> <span class="n">document</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">formula_datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">formula_type</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">formula_type</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">wavelength_bound</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span> <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">reference</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">conditions</span> <span class="ow">or</span> <span class="p">{})</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="n">comments</span>
+        <span class="k">return</span> <span class="n">material</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_yaml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Export this material as a validated, reloadable YAML document."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="nd">@validate_units</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_refractive_index</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">Length</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"warn"</span><span class="p">,</span> <span class="n">allow_negative_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">allow_gain</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RefractiveIndex</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
+<span class="sd">        Computes the refractive index n(\u03bb) using the appropriate</span>
+<span class="sd">        RefractiveIndex.INFO dispersion formula (types 1 through 9).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : Length | float</span>
+<span class="sd">            The wavelength \u03bb in meters, can be a single float or a numpy array.</span>
+<span class="sd">        out_of_range : {"warn", "raise", "clip"}, optional</span>
+<span class="sd">            Policy for wavelengths outside the source validity range.</span>
+
+<span class="sd">        validation : {"ignore", "warn", "raise"}, optional</span>
+<span class="sd">            Optical-constant validation policy (default "warn"). Nonfinite</span>
+<span class="sd">            results always raise. Checks apply to the evaluated samples only.</span>
+<span class="sd">        allow_negative_index : bool, optional</span>
+<span class="sd">            Permit zero or negative real index without a validation diagnostic.</span>
+<span class="sd">        allow_gain : bool, optional</span>
+<span class="sd">            Permit negative extinction coefficients (gain) without a diagnostic.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        RefractiveIndex</span>
+<span class="sd">            The refractive index n(\u03bb) for the given wavelength or array of wavelengths.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the wavelength is outside the specified range or if an unsupported formula type is encountered.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">Length</span><span class="p">):</span>
+            <span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">meter</span>
+
+        <span class="n">return_as_scalar</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">out_of_range</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">out_of_range</span> <span class="o">==</span> <span class="s2">"clip"</span><span class="p">:</span>
+            <span class="n">wavelength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clip_wavelength</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
+
+        <span class="c1"># Formula definitions follow the RefractiveIndex.INFO database</span>
+        <span class="c1"># documentation. Wavelengths are expressed in micrometres here.</span>
+        <span class="n">wavelength_um</span> <span class="o">=</span> <span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">coefficients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span>
+        <span class="n">padded</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="p">:</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Formula 1 computation (standard Sellmeier)</span>
+                <span class="n">n_squared</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">n_squared</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">C</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_squared</span><span class="p">)</span>
+
+            <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Formula 2 computation (extended Sellmeier)</span>
+                <span class="n">n_squared</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">n_squared</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">C</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_squared</span><span class="p">)</span>
+
+            <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># Polynomial</span>
+                <span class="n">n_squared</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">exponent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">n_squared</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="n">exponent</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_squared</span><span class="p">)</span>
+
+            <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>  <span class="c1"># RefractiveIndex.INFO</span>
+                <span class="n">n_squared</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)),</span> <span class="mi">4</span><span class="p">):</span>
+                    <span class="n">B</span><span class="p">,</span> <span class="n">exponent</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]</span>
+                    <span class="n">n_squared</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="n">exponent</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">C</span><span class="o">**</span><span class="n">power</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">exponent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">9</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">10</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">n_squared</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="n">exponent</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_squared</span><span class="p">)</span>
+
+            <span class="k">case</span> <span class="mi">5</span><span class="p">:</span>  <span class="c1"># Formula 5 computation (extended Sellmeier)</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">exponent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">n</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="n">exponent</span>
+
+            <span class="k">case</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">n</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">/</span> <span class="p">(</span><span class="n">C</span> <span class="o">-</span> <span class="n">wavelength_um</span><span class="o">**-</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="k">case</span> <span class="mi">7</span><span class="p">:</span>  <span class="c1"># Herzberger</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">0.028</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">0.028</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">coefficient</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coefficients</span><span class="p">[</span><span class="mi">3</span><span class="p">:],</span> <span class="n">start</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+                    <span class="n">n</span> <span class="o">+=</span> <span class="n">coefficient</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">index</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span>
+
+            <span class="k">case</span> <span class="mi">8</span><span class="p">:</span>  <span class="c1"># Retro</span>
+                <span class="n">temporary</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">padded</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">temporary</span> <span class="o">+=</span> <span class="n">padded</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">temporary</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">temporary</span><span class="p">))</span>
+
+            <span class="k">case</span> <span class="mi">9</span><span class="p">:</span>  <span class="c1"># Exotic</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                    <span class="n">padded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength_um</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">padded</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                    <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">wavelength_um</span> <span class="o">-</span> <span class="n">padded</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+                    <span class="o">/</span> <span class="p">((</span><span class="n">wavelength_um</span> <span class="o">-</span> <span class="n">padded</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">padded</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+                <span class="p">)</span>
+
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported formula type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="n">validate_refractive_indices</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span> <span class="n">allow_negative_index</span><span class="o">=</span><span class="n">allow_negative_index</span><span class="p">,</span> <span class="n">allow_gain</span><span class="o">=</span><span class="n">allow_gain</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_as_scalar</span> <span class="k">else</span> <span class="n">n</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Plots the refractive index as a function of wavelength over a specified range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axes : matplotlib.axes.Axes, optional</span>
+<span class="sd">            Axes on which to draw the dispersion curve. A compact, styled</span>
+<span class="sd">            figure is created when omitted.</span>
+<span class="sd">        samples : int</span>
+<span class="sd">            The number of samples to use for the wavelength range.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            The supplied axes are modified in place.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the wavelength is not a 1D array or list of float values.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">axes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">"constrained"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">figure</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">figure</span>
+        <span class="n">figure</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="n">forward</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+            <span class="n">samples</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="o">.</span><span class="n">units</span>
+
+        <span class="c1"># Calculate the refractive index over the wavelength range</span>
+        <span class="n">refractive_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelength</span><span class="p">)</span>
+
+        <span class="n">axes</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Refractive Index'</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">'Wavelength [$\mu$m]'</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Refractive index: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">get_title</span><span class="p">(),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xlabel</span><span class="p">(),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">get_ylabel</span><span class="p">(),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">refractive_index</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'n'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Provides a formal string representation of the Material object, including key attributes.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Formal representation of the Material object.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Material: '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">',</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"coefficients: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"wavelength_range: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelength_bound</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"formula_type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula_type</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"reference: '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="si">}</span><span class="s2">')"</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2024, Martin Poinsinet de Sivry-Houle.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

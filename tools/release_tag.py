@@ -10,6 +10,15 @@ try:
     if run("git", "tag", "--list", value, capture_output=True).stdout: raise RuntimeError(f"tag {value} already exists")
     env = os.environ | {"SETUPTOOLS_SCM_PRETEND_VERSION": match.group(1)}
     run(sys.executable, "-m", "vcs_versioning", "--force-write-version-files", env=env)
-    run("git", "add", str(VERSION_FILE.relative_to(ROOT))); run("git", "commit", "-m", f"Release {value}"); run("git", "tag", "-a", value, "-m", f"Release {value}")
+    run("git", "add", str(VERSION_FILE.relative_to(ROOT)))
+    run(
+        "git",
+        "commit",
+        "-m",
+        f"Release {value}",
+        "-m",
+        "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
+    )
+    run("git", "tag", "-a", value, "-m", f"Release {value}")
 except (RuntimeError, subprocess.CalledProcessError) as error: raise SystemExit(f"release aborted: {error}")
 print(f"created release commit and annotated tag {value}")

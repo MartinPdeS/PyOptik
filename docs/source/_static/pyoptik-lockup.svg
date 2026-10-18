@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title description">
-  <title id="title">PyOptik</title>
-  <desc id="description">PyOptik with the RefractiveIndex.info catalogue reference.</desc>
-  <image href="pyoptik-symbol.png" x="20" y="20" width="260" height="260" preserveAspectRatio="xMidYMid meet"/>
-  <text x="330" y="143" fill="#14213d" font-family="system-ui, -apple-system, sans-serif" font-size="86" font-weight="600" letter-spacing="-3">PyOptik</text>
-  <text x="338" y="195" fill="#1aa6a6" font-family="system-ui, -apple-system, sans-serif" font-size="31" font-weight="500">RefractiveIndex.info</text>
-</svg>

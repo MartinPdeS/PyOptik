@@ -45,8 +45,8 @@ extensions = [
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 
-html_logo = "_static/logo.svg"
-html_favicon = "_static/favicon.svg"
+html_logo = "_static/logo-simple.svg"
+html_favicon = "_static/favicon-simple.svg"
 
 
 examples_files = [

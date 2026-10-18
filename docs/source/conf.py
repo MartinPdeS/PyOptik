@@ -45,8 +45,8 @@ extensions = [
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 
-html_logo = "_static/logo-simple.svg"
-html_favicon = "_static/favicon-simple.svg"
+html_logo = "_static/pyoptik-lockup.svg"
+html_favicon = "_static/pyoptik-symbol.png"
 
 
 examples_files = [

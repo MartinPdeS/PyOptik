@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title id="title">PyOptik prism</title>
+  <defs>
+    <linearGradient id="prism" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#278bd5"/>
+      <stop offset="1" stop-color="#0b2c4d"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="42" fill="#101923"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M108 28 181 190H35Z" fill="url(#prism)" stroke="#62d5f2" stroke-width="6"/>
+    <path d="M8 125 94 110" stroke="#eaf8ff" stroke-width="10"/>
+    <path d="M94 110 125 106" stroke="#ffffff" stroke-width="10"/>
+    <path d="M125 106 224 70" stroke="#50d7f6" stroke-width="9"/>
+    <path d="M125 106 230 111" stroke="#48d8aa" stroke-width="9"/>
+    <path d="M125 106 221 151" stroke="#ffc95c" stroke-width="9"/>
+  </g>
+</svg>

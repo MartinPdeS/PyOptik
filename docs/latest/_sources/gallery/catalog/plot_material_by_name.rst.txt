@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_gallery_catalog_plot_material_by_name.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -160,7 +160,7 @@ Disable defaults to require an explicit source for an ambiguous family.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.539 seconds)
+   **Total running time of the script:** (0 minutes 4.288 seconds)
 
 
 .. _sphx_glr_download_gallery_catalog_plot_material_by_name.py:
@@ -176,6 +176,10 @@ Disable defaults to require an explicit source for an ambiguous family.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_material_by_name.py <plot_material_by_name.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_material_by_name.zip <plot_material_by_name.zip>`
 
 
 .. only:: html

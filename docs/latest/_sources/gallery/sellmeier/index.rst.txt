@@ -18,56 +18,27 @@ Usage
 To run these examples, make sure you have installed all required dependencies as outlined in the main `PyOptik` README. Navigate to this folder and execute the Python scripts as follows:
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
-
-.. only:: html
-
-  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_silica_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_gallery_sellmeier_plot_silica.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Silica</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
-
-.. only:: html
-
-  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_water_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_gallery_sellmeier_plot_water.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Water</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material BK7 glass over a specified range of wavelengths.">
 
 .. only:: html
 
   .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_bk7_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_sellmeier_plot_bk7.py`
+  :doc:`/gallery/sellmeier/plot_bk7`
 
 .. raw:: html
 
@@ -77,14 +48,14 @@ To run these examples, make sure you have installed all required dependencies as
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example compares two common optical glasses available in MaterialCatalog. It computes and ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example compares two common optical glasses available in MaterialCatalog. It computes and plots the refractive index of BK7 and fused silica over the visible to near infrared wavelength range.">
 
 .. only:: html
 
   .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_compare_glasses_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_sellmeier_plot_compare_glasses.py`
+  :doc:`/gallery/sellmeier/plot_compare_glasses`
 
 .. raw:: html
 
@@ -94,16 +65,52 @@ To run these examples, make sure you have installed all required dependencies as
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material Silica glass over a specified range of wavelengths.">
+
+.. only:: html
+
+  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_silica_thumb.png
+    :alt:
+
+  :doc:`/gallery/sellmeier/plot_silica`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Silica</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This module demonstrates the usage of the PyOptik library to calculate and plot the refractive index of the optical material water over a specified range of wavelengths.">
+
+.. only:: html
+
+  .. image:: /gallery/sellmeier/images/thumb/sphx_glr_plot_water_thumb.png
+    :alt:
+
+  :doc:`/gallery/sellmeier/plot_water`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot the Refractive Index of Optical Material: Water</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
     </div>
 
 
 .. toctree::
    :hidden:
 
-   /gallery/sellmeier/plot_silica
-   /gallery/sellmeier/plot_water
    /gallery/sellmeier/plot_bk7
    /gallery/sellmeier/plot_compare_glasses
+   /gallery/sellmeier/plot_silica
+   /gallery/sellmeier/plot_water
 
 
 

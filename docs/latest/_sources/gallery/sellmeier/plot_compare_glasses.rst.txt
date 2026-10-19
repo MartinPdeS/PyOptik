@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_gallery_sellmeier_plot_compare_glasses.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -93,7 +93,7 @@ infrared wavelength range.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.179 seconds)
+   **Total running time of the script:** (0 minutes 0.671 seconds)
 
 
 .. _sphx_glr_download_gallery_sellmeier_plot_compare_glasses.py:
@@ -109,6 +109,10 @@ infrared wavelength range.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_compare_glasses.py <plot_compare_glasses.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_compare_glasses.zip <plot_compare_glasses.zip>`
 
 
 .. only:: html

@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_gallery_custom_materials_plot_measured_material.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -111,7 +111,7 @@ Exported files use the same validated schema as catalog materials.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.188 seconds)
+   **Total running time of the script:** (0 minutes 0.090 seconds)
 
 
 .. _sphx_glr_download_gallery_custom_materials_plot_measured_material.py:
@@ -127,6 +127,10 @@ Exported files use the same validated schema as catalog materials.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_measured_material.py <plot_measured_material.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_measured_material.zip <plot_measured_material.zip>`
 
 
 .. only:: html

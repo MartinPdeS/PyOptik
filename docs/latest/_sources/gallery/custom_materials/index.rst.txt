@@ -8,28 +8,35 @@ and round-trip them through PyOptik's YAML representation.
 
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example builds a complex refractive-index model from measured arrays, evaluates the interp...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example builds a complex refractive-index model from measured arrays, evaluates the interpolation, and verifies a YAML export/reload round trip.">
 
 .. only:: html
 
   .. image:: /gallery/custom_materials/images/thumb/sphx_glr_plot_measured_material_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_custom_materials_plot_measured_material.py`
+  :doc:`/gallery/custom_materials/plot_measured_material`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Create and export a measured material</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

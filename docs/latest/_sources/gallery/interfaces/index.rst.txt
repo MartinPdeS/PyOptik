@@ -8,28 +8,35 @@ a single planar interface.
 
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Compare s and p polarization at an air-to-glass interface and identify the Brewster angle where...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Compare s and p polarization at an air-to-glass interface and identify the Brewster angle where p-polarized reflection vanishes.">
 
 .. only:: html
 
   .. image:: /gallery/interfaces/images/thumb/sphx_glr_plot_fresnel_angles_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_interfaces_plot_fresnel_angles.py`
+  :doc:`/gallery/interfaces/plot_fresnel_angles`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Fresnel reflectance versus incidence angle</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

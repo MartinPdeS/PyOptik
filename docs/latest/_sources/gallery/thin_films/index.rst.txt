@@ -8,22 +8,27 @@ spectral power response.
 
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Design the ideal single-layer coating for an air-to-glass interface and compare its spectrum wi...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Design the ideal single-layer coating for an air-to-glass interface and compare its spectrum with the uncoated substrate.">
 
 .. only:: html
 
   .. image:: /gallery/thin_films/images/thumb/sphx_glr_plot_antireflection_coating_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_thin_films_plot_antireflection_coating.py`
+  :doc:`/gallery/thin_films/plot_antireflection_coating`
 
 .. raw:: html
 
@@ -33,20 +38,22 @@ spectral power response.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Build an alternating high/low-index quarter-wave stack and observe how adding layer pairs incre...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Build an alternating high/low-index quarter-wave stack and observe how adding layer pairs increases reflectance around the design wavelength.">
 
 .. only:: html
 
   .. image:: /gallery/thin_films/images/thumb/sphx_glr_plot_bragg_mirror_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_thin_films_plot_bragg_mirror.py`
+  :doc:`/gallery/thin_films/plot_bragg_mirror`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Dielectric Bragg mirror</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

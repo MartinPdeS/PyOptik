@@ -8,22 +8,27 @@ source provenance alongside calculated results.
 
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Find locally available BK7 datasets, inspect their canonical identities, and compare representa...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Find locally available BK7 datasets, inspect their canonical identities, and compare representative glass pages at a standard wavelength.">
 
 .. only:: html
 
   .. image:: /gallery/catalog/images/thumb/sphx_glr_plot_catalog_search_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_catalog_plot_catalog_search.py`
+  :doc:`/gallery/catalog/plot_catalog_search`
 
 .. raw:: html
 
@@ -33,20 +38,22 @@ source provenance alongside calculated results.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Use chemical formulas or familiar names for a first calculation, inspect the documented source ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Use chemical formulas or familiar names for a first calculation, inspect the documented source choices, and override them when another measurement is needed. Discovery still exposes every dataset and its canonical identity.">
 
 .. only:: html
 
   .. image:: /gallery/catalog/images/thumb/sphx_glr_plot_material_by_name_thumb.png
     :alt:
 
-  :ref:`sphx_glr_gallery_catalog_plot_material_by_name.py`
+  :doc:`/gallery/catalog/plot_material_by_name`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Load optical materials by common name</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

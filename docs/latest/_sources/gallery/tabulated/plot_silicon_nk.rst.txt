@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_gallery_tabulated_plot_silicon_nk.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -100,7 +100,7 @@ infrared wavelength range.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.187 seconds)
+   **Total running time of the script:** (0 minutes 0.654 seconds)
 
 
 .. _sphx_glr_download_gallery_tabulated_plot_silicon_nk.py:
@@ -116,6 +116,10 @@ infrared wavelength range.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_silicon_nk.py <plot_silicon_nk.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_silicon_nk.zip <plot_silicon_nk.zip>`
 
 
 .. only:: html

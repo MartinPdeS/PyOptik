@@ -60,6 +60,7 @@ documentation = [
     "sphinx-gallery ==0.15.0",
     "sphinx-rtd-theme ==2.0.0",
     "pydata-sphinx-theme ==0.14.1",
+    "MartinPdeS-docs @ git+https://github.com/MartinPdeS/MartinPdeS-docs.git",
 ]
 
 dev = [

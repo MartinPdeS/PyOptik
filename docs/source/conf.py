@@ -30,9 +30,7 @@ globals().update(
         prefer_installed_package=True,
         gallery_sections=examples_files,
         gallery_default_thumb="_static/pyoptik-symbol.png",
-        html_theme_options={
-            "logo": {"text": "", "image": "../images/logo.svg"},
-        },
+        logo_text="",
     )
 )
 

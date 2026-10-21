@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   quality:
-    uses: MartinPdeS/MPSActions/.github/workflows/run_quality.yml@v15
+    uses: MartinPdeS/MPSActions/.github/workflows/run_quality.yml@v16
     with:
       install-command: python -m pip install "flake8==7.1.1"
       quality-command: python -m flake8 PyOptik tests

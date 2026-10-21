@@ -31,11 +31,11 @@
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="/home/runner/work/PyOptik/PyOptik/docs/source/_static/default.css?v=4030d72e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=c83e6b79" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css?v=4030d72e" />
     <link rel="stylesheet" type="text/css" href="../../_static/martinpdes_layout.css?v=a8cc01cd" />
   
@@ -49,6 +49,7 @@
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/tabulated/plot_silicon_nk';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.17.1';
@@ -65,7 +66,7 @@
     <link rel="prev" title="Plot the Refractive Index of Optical Material: Polyethylene" href="plot_polyethylene.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="3.5.6" />
+  <meta name="docsearch:version" content="" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -568,9 +569,9 @@ infrared wavelength range.</p>
 </span><span class="n">wavelengths</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="o">*</span> <span class="n">ureg</span><span class="o">.</span><span class="n">micrometer</span><span class="w">
 </span><span class="n">index</span> <span class="o">=</span> <a class="sphx-glr-backref-module-PyOptik sphx-glr-backref-type-py-class sphx-glr-backref-instance reference internal" href="../../code.html#PyOptik.TabulatedMaterial" title="PyOptik.TabulatedMaterial"><span class="n">material</span></a><span class="o">.</span><span class="n">compute_refractive_index</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/PyOptik/PyOptik/PyOptik/material/tabulated_class.py:273: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:273: UserWarning: Wavelength range goes from 299.99999999999994 nanometer to 1.1 micrometer which is outside the allowable range of 206.6 nanometer to 826.5999999999999 nanometer µm. [Material: Aspnes]
   self._check_wavelength(wavelength, out_of_range)
-/home/runner/work/PyOptik/PyOptik/PyOptik/material/tabulated_class.py:288: MaterialValidationWarning: The material contains gain; passive data requires imag(n) &gt;= 0. Use allow_gain=True for active materials.
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/PyOptik/material/tabulated_class.py:288: MaterialValidationWarning: The material contains gain; passive data requires imag(n) &gt;= 0. Use allow_gain=True for active materials.
   validate_refractive_indices(index, policy=validation, allow_negative_index=allow_negative_index, allow_gain=allow_gain)
 </pre></div>
 </div>
@@ -595,7 +596,7 @@ infrared wavelength range.</p>
   return np.asanyarray(x, float)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.119 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.235 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-gallery-tabulated-plot-silicon-nk-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/8e53266e980903fc9ceab419be25b527/plot_silicon_nk.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_silicon_nk.ipynb</span></code></a></p>
@@ -629,7 +630,7 @@ infrared wavelength range.</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/MartinPdeS/PyOptik/edit/v3.5.6/gallery/tabulated/plot_silicon_nk.rst">
+    <a href="https://github.com/MartinPdeS/PyOptik/edit/master/gallery/tabulated/plot_silicon_nk.rst">
       <i class="fa-solid fa-pencil"></i>
       
       

@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   pure_package:
-    uses: MartinPdeS/MPSActions/.github/workflows/publish_pure_package_to_PyPi.yml@v5
+    uses: MartinPdeS/MPSActions/.github/workflows/publish_pure_package_to_PyPi.yml@v7
     with:
       python-version: "3.11"
     secrets:

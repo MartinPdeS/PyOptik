@@ -1,19 +1,17 @@
-name: Static quality checks
+name: Quality
+
 on:
   push:
-    branches: ["master"]
+    branches: [master]
   pull_request:
-    branches: ["master"]
+    branches: [master]
+
 permissions:
   contents: read
+
 jobs:
-  flake8:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Python and CI dependencies
-        uses: MartinPdeS/MPSActions/actions/setup-python@0f5927acf88b25b5d253421e508387897096a2cc
-        with:
-          python-version: "3.11"
-          install-command: >-
-            python -m pip install "flake8==7.1.1"
-      - run: python -m flake8 PyOptik tests
+  quality:
+    uses: MartinPdeS/MPSActions/.github/workflows/run_quality.yml@v7
+    with:
+      install-command: python -m pip install "flake8==7.1.1"
+      quality-command: python -m flake8 PyOptik tests

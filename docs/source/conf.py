@@ -7,7 +7,7 @@ from martinpdes_docs import configure
 package_name = "PyOptik"
 project = package_name
 author = "Martin Poinsinet de Sivry-Houle"
-autodoc_mock_imports = ["numpy", "matplotlib", "numpydoc"]
+autodoc_mock_imports = ["numpy", "matplotlib"]
 
 examples_files = [
     "sellmeier",

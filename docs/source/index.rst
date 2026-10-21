@@ -55,5 +55,4 @@ Quick example
    tutorials
    user_guide
    examples
-   code
-   references
+   Reference <reference>

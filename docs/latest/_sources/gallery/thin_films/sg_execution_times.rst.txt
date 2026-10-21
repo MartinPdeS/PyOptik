@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:02.521** total execution time for 2 files **from gallery/thin_films**:
+**00:02.501** total execution time for 2 files **from gallery/thin_films**:
 
 .. container::
 
@@ -33,8 +33,8 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_gallery_thin_films_plot_bragg_mirror.py` (``plot_bragg_mirror.py``)
-     - 00:02.182
+     - 00:02.168
      - 0.0
    * - :ref:`sphx_glr_gallery_thin_films_plot_antireflection_coating.py` (``plot_antireflection_coating.py``)
-     - 00:00.338
+     - 00:00.334
      - 0.0

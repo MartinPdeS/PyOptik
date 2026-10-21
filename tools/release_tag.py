@@ -9,7 +9,17 @@ try:
     if run("git", "status", "--porcelain", capture_output=True).stdout: raise RuntimeError("working tree is not clean")
     if run("git", "tag", "--list", value, capture_output=True).stdout: raise RuntimeError(f"tag {value} already exists")
     env = os.environ | {"SETUPTOOLS_SCM_PRETEND_VERSION": match.group(1)}
-    run(sys.executable, "-m", "vcs_versioning", "--force-write-version-files", env=env)
+    run(
+        sys.executable,
+        "-c",
+        (
+            "import setuptools_scm; "
+            f"setuptools_scm.get_version(root={str(ROOT)!r}, "
+            f"write_to={str(VERSION_FILE.relative_to(ROOT))!r}, "
+            "version_scheme='only-version', local_scheme='no-local-version')"
+        ),
+        env=env,
+    )
     run("git", "add", str(VERSION_FILE.relative_to(ROOT)))
     run(
         "git",

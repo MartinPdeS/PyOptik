@@ -25,12 +25,14 @@ globals().update(
         package=package_name,
         author=author,
         repository="MartinPdeS/PyOptik",
-        logo="../images/logo.svg",
-        favicon="_static/pyoptik-symbol.png",
+        logo="../images/logo.png",
+        favicon="../images/favicon.png",
         prefer_installed_package=True,
         gallery_sections=examples_files,
-        gallery_default_thumb="_static/pyoptik-symbol.png",
+        gallery_default_thumb="../images/icon.png",
         logo_text="",
+        logo_alt_text="PyOptik — RefractiveIndex.info",
+        html_css_files=["branding.css"],
     )
 )
 

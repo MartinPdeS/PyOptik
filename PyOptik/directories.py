@@ -31,7 +31,7 @@ doc_path = project_path.joinpath('docs')
 
 doc_css_path = doc_path.joinpath('source/_static/default.css')
 
-logo_path = doc_path.joinpath('images/logo.svg')
+logo_path = doc_path.joinpath('images/logo.png')
 
 examples_path = root_path.joinpath('examples')
 

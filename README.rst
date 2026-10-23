@@ -548,7 +548,7 @@ material page for its original scientific or manufacturer reference.
    :alt: Supported Python versions
    :target: https://pypi.org/project/pyoptik/
 
-.. |logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.svg
+.. |logo| image:: https://github.com/MartinPdeS/PyOptik/raw/master/docs/images/logo.png
    :alt: PyOptik logo
 
 .. |docs| image:: https://github.com/martinpdes/pyoptik/actions/workflows/deploy_documentation.yml/badge.svg

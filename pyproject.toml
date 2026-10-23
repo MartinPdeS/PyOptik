@@ -29,7 +29,7 @@ dependencies = [
     "requests ~=2.31",
     "pyyaml ~=6.0",
     "tabulate ~=0.9",
-    "TypedUnit"
+    "TypedUnit>=0.2.9"
 ]
 
 [project.scripts]

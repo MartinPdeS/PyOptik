@@ -24,7 +24,7 @@ requirements:
   run:
     - python >=3.10
     - pint ~= 0.24
-    - martinpdes::typedunit
+    - martinpdes::typedunit >=0.2.9
     - pyyaml ~=6.0
     - requests ~=2.31
     - matplotlib ~=3.8

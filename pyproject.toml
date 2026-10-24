@@ -45,6 +45,7 @@ version_scheme = "only-version"
 local_scheme = "no-local-version"
 
 [project.optional-dependencies]
+release = ["martinpdes-maintenance[scm]==0.2.1"]
 testing = [
     "pytest >=7.4,<9.0",
     "pytest-cov >=2,<6",
@@ -64,3 +65,7 @@ dev = [
 ui = [
     "textual >=1.0",
 ]
+
+[tool.mps-maintenance]
+version-file = "PyOptik/_version.py"
+version-method = "setuptools-scm"

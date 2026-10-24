@@ -8,7 +8,7 @@ RELEASE_KIND := $(filter major minor patch,$(MAKECMDGOALS))
 .PHONY: help quality test docs build install uninstall quick rebuild editable \
 	 setup download-all clean
 
-.PHONY: release tag major minor patch
+.PHONY: release-check release tag major minor patch
 
 help:
 	@echo "PyOptik development targets:"
@@ -23,6 +23,7 @@ help:
 	@echo "  make quick         Run quality checks, tests, and build"
 	@echo "  make rebuild       Clean, then run the quick workflow"
 	@echo "  make clean         Remove generated build and test artifacts"
+	@echo "  make release-check Check release metadata"
 	@echo "  make release patch Create and push the next patch release"
 
 quality:
@@ -58,6 +59,9 @@ setup:
 
 download-all:
 	$(PYTHON) -m PyOptik download-all $(ARGS)
+
+release-check:
+	$(PYTHON) tools/check_release.py $(if $(VERSION),--version $(VERSION),)
 
 tag:
 	$(PYTHON) tools/release_tag.py "$(VERSION)"

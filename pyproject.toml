@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=40.8.0", "wheel", "setuptools_scm[toml]>=8.0"]
+requires = ["setuptools>=40.8.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "PyOptik"
-dynamic = ["version"]
+version = "3.5.12"
 description = "A package for refractive index values."
 license = {file = "LICENSE"}
 readme = "README.rst"
@@ -40,13 +40,10 @@ packages = {find = {where = ["."], include = ["PyOptik*"]}}
 include-package-data = true
 
 
-[tool.setuptools_scm]
-version_scheme = "only-version"
-local_scheme = "no-local-version"
-
 [project.optional-dependencies]
-release = ["martinpdes-maintenance[scm]==0.2.1"]
+release = ["martinpdes-maintenance==0.2.1"]
 testing = [
+    "tomli>=2; python_version < '3.11'",
     "pytest >=7.4,<9.0",
     "pytest-cov >=2,<6",
     "pytest-json-report ~=1.5",
@@ -68,4 +65,5 @@ ui = [
 
 [tool.mps-maintenance]
 version-file = "PyOptik/_version.py"
-version-method = "setuptools-scm"
+version-method = "literal"
+conda-recipe = "conda.recipe/meta.yaml"

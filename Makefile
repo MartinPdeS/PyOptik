@@ -61,14 +61,14 @@ download-all:
 	$(PYTHON) -m PyOptik download-all $(ARGS)
 
 release-check:
-	$(PYTHON) tools/check_release.py $(if $(VERSION),--version $(VERSION),)
+	$(PYTHON) -m martinpdes_maintenance.cli check $(if $(VERSION),--version $(VERSION),)
 
 tag:
-	$(PYTHON) tools/release_tag.py "$(VERSION)"
+	$(PYTHON) -m martinpdes_maintenance.cli tag "$(VERSION)"
 
 release:
 	@test "$(words $(RELEASE_KIND))" -eq 1 || { echo "usage: make release [patch|minor|major]" >&2; exit 2; }
-	@set -eu; tag="$$($(PYTHON) tools/next_release_version.py $(RELEASE_KIND))"; $(PYTHON) tools/release_tag.py "$$tag"; git push origin HEAD "refs/tags/$$tag"
+	@set -eu; tag="$$($(PYTHON) -m martinpdes_maintenance.cli next $(RELEASE_KIND))"; $(PYTHON) -m martinpdes_maintenance.cli tag "$$tag"; git push origin HEAD "refs/tags/$$tag"
 
 major minor patch:
 	@:

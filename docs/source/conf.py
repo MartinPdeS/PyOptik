@@ -7,8 +7,6 @@ from martinpdes_docs import configure
 package_name = "PyOptik"
 project = package_name
 author = "Martin Poinsinet de Sivry-Houle"
-autodoc_mock_imports = ["numpy", "matplotlib"]
-
 examples_files = [
     "sellmeier",
     "tabulated",
@@ -23,6 +21,7 @@ globals().update(
     configure(
         project=project,
         package=package_name,
+        version="auto",
         author=author,
         repository="MartinPdeS/PyOptik",
         logo="../images/logo.png",

@@ -2,7 +2,11 @@
 
 import re
 import runpy
+from importlib.metadata import version as distribution_version
 from pathlib import Path
+
+from packaging.version import Version
+import pytest
 
 try:
     import tomllib
@@ -27,3 +31,15 @@ def test_explicit_release_metadata_agrees():
     assert metadata["tool"]["mps-maintenance"]["version-method"] == "literal"
     dependencies = metadata["build-system"]["requires"] + project["dependencies"]
     assert not any("setuptools-scm" in item.replace("_", "-") for item in dependencies)
+
+
+def test_documentation_version_uses_package_version(monkeypatch):
+    """Sphinx and its switcher use the package version instead of the tag environment."""
+    pytest.importorskip("martinpdes_docs")
+    if Version(distribution_version("MartinPdeS-docs")) < Version("0.4.0"):
+        pytest.skip("automatic version discovery requires MartinPdeS-docs 0.4.0")
+    monkeypatch.setenv("tag", "v9.9.9")
+    config = runpy.run_path(str(ROOT / "docs" / "source" / "conf.py"))
+    expected = runpy.run_path(str(ROOT / "PyOptik" / "_version.py"))["__version__"]
+    assert config["version"] == config["release"] == expected
+    assert config["html_theme_options"]["switcher"]["version_match"] == expected

@@ -1,0 +1,9 @@
+/* Preserve the prism's colors and the full wordmark in both theme modes. */
+.bd-header .navbar-brand img.logo__image {
+    filter: none !important;
+    width: 15rem !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 5.5rem !important;
+    object-fit: contain;
+}

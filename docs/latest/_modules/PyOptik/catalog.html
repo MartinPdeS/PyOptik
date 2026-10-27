@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PyOptik.catalog &#8212; PyOptik  documentation</title>
+    <title>PyOptik.catalog &#8212; PyOptik 3.5.15 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-    <script src="../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../_static/documentation_options.js?v=9b7abe5e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -53,7 +53,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.23.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'v3.5.12';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '3.5.15';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -64,7 +64,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
+  <meta name="docsearch:version" content="3.5.15" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -223,6 +223,21 @@
   </div>
 </div></div>
       
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
@@ -366,6 +381,21 @@
     role="listbox" aria-labelledby="pst-version-switcher-button-3">
     <!-- dropdown will be populated by javascript on page load -->
   </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
 </div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
@@ -555,6 +585,8 @@
         <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">YAMLError</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
 
+<div class="viewcode-block" id="MaterialPage.provenance">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialPage.provenance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">provenance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Return the canonical identity and source information for this page.</span>
 
@@ -571,7 +603,8 @@
             <span class="s2">"source_url"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_url</span><span class="p">,</span>
             <span class="s2">"local_path"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">"available"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">available</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="p">}</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">local_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
@@ -593,6 +626,8 @@
         <span class="n">state</span> <span class="o">=</span> <span class="s2">"available"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">available</span> <span class="k">else</span> <span class="s2">"missing"</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"MaterialPage(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, data=</span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">)"</span>
 
+<div class="viewcode-block" id="MaterialPage.load">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialPage.load">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">interpolation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"linear"</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Load this page as the appropriate PyOptik material object.</span>
 
@@ -642,6 +677,7 @@
             <span class="s2">"'from PyOptik import download_snapshot; download_snapshot()' "</span>
             <span class="s2">"or from the terminal with 'pyoptik setup'."</span>
         <span class="p">)</span></div>
+</div>
 
 
 
@@ -681,6 +717,8 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"MaterialCatalog(pages=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">)</span><span class="si">}</span><span class="s2">, data_root=</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">)</span><span class="si">!r}</span><span class="s2">)"</span>
 
+<div class="viewcode-block" id="MaterialCatalog.from_upstream">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.from_upstream">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_upstream</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data_root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">UPSTREAM_CATALOG_URL</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Download and load the current upstream catalog index.</span>
@@ -725,8 +763,11 @@
                     <span class="s2">"updated_at"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
                 <span class="p">}</span>
         <span class="n">catalog</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">catalog</span>
+        <span class="k">return</span> <span class="n">catalog</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.from_snapshot">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.from_snapshot">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_snapshot</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
@@ -850,8 +891,11 @@
             <span class="p">}</span>
         <span class="n">catalog</span><span class="o">.</span><span class="n">_write_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracted upstream snapshot with </span><span class="si">%s</span><span class="s2"> catalog pages"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">pages</span><span class="p">()))</span>
-        <span class="k">return</span> <span class="n">catalog</span>
+        <span class="k">return</span> <span class="n">catalog</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.load_catalog">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.load_catalog">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog_file</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Load an upstream ``catalog-nk.yml`` file."""</span>
         <span class="n">catalog_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">catalog_file</span><span class="p">)</span>
@@ -886,8 +930,11 @@
                 <span class="n">walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content"</span><span class="p">,</span> <span class="p">[]),</span> <span class="n">current_shelf</span><span class="p">,</span> <span class="n">current_book</span><span class="p">)</span>
 
         <span class="n">walk</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Loaded </span><span class="si">%s</span><span class="s2"> material pages from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">),</span> <span class="n">catalog_file</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Loaded </span><span class="si">%s</span><span class="s2"> material pages from </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">),</span> <span class="n">catalog_file</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.pages">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.pages">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Return pages filtered by shelf and/or book.</span>
 
@@ -906,8 +953,11 @@
              <span class="k">if</span> <span class="p">(</span><span class="n">shelf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">shelf</span> <span class="o">==</span> <span class="n">shelf</span><span class="p">)</span>
              <span class="ow">and</span> <span class="p">(</span><span class="n">book</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">book</span> <span class="o">==</span> <span class="n">book</span><span class="p">)),</span>
             <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">page</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.search">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.search">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -966,8 +1016,11 @@
             <span class="k">if</span> <span class="n">available</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">material_page</span><span class="o">.</span><span class="n">available</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">matched</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">material_page</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">matched</span>
+        <span class="k">return</span> <span class="n">matched</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.shelves">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.shelves">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">shelves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Return sorted upstream shelf identifiers.</span>
 
@@ -976,8 +1029,11 @@
 <span class="sd">        list of str</span>
 <span class="sd">            Unique shelf identifiers represented in the catalog.</span>
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">shelf</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">shelf</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.books">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.books">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">books</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Return sorted book identifiers, optionally within one shelf.</span>
 
@@ -991,7 +1047,8 @@
 <span class="sd">        list of str</span>
 <span class="sd">            Unique book identifiers.</span>
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">book</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">)})</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">book</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">(</span><span class="n">shelf</span><span class="o">=</span><span class="n">shelf</span><span class="p">)})</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">manifest_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
@@ -1030,6 +1087,8 @@
                 <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
+<div class="viewcode-block" id="MaterialCatalog.verify_integrity">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.verify_integrity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">verify_integrity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">MaterialId</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Verify checksums recorded in the local download manifest.</span>
 
@@ -1054,8 +1113,11 @@
                 <span class="k">continue</span>
             <span class="n">identifier</span> <span class="o">=</span> <span class="n">MaterialId</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"/"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">checked</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sha256</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
-        <span class="k">return</span> <span class="n">checked</span>
+        <span class="k">return</span> <span class="n">checked</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.get">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.get">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">MaterialId</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">book</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MaterialPage</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Get a page by ``MaterialId``, canonical path, or components.</span>
 
@@ -1088,8 +1150,11 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown material page: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown material page: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.download">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.download">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">shelf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1192,8 +1257,11 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">executor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">selected</span>
+        <span class="k">return</span> <span class="n">selected</span></div>
 
+
+<div class="viewcode-block" id="MaterialCatalog.download_all">
+<a class="viewcode-back" href="../../code.html#PyOptik.MaterialCatalog.download_all">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">download_all</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
@@ -1225,7 +1293,8 @@
             <span class="n">continue_on_error</span><span class="o">=</span><span class="n">continue_on_error</span><span class="p">,</span>
             <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
             <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">MaterialPage</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Iterate over catalog pages in canonical identifier order."""</span>
@@ -1277,6 +1346,12 @@
               
               
               
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
             </div>
             
             
@@ -1313,23 +1388,6 @@
     </div>
   
   
-  
-    <div class="footer-items__end">
-      
-        <div class="footer-item">
-
-  <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
-  </p>
-</div>
-      
-        <div class="footer-item">
-<p class="theme-version">
-  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
-</p></div>
-      
-    </div>
   
 </div>
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "PyOptik"
-version = "3.5.13"
+version = "3.5.14"
 description = "A package for refractive index values."
 license = {file = "LICENSE"}
 readme = "README.rst"

@@ -1,5 +1,28 @@
 |logo|
 
+.. list-table::
+   :widths: 35 65
+   :header-rows: 1
+
+   * - Badge
+     - Status
+   * - Python versions
+     - |python|
+   * - Documentation
+     - |docs|
+   * - Continuous integration
+     - |ci/cd|
+   * - Test coverage
+     - |coverage|
+   * - PyPI package
+     - |PyPi|
+   * - PyPI downloads
+     - |PyPi_download|
+   * - Anaconda package
+     - |anaconda|
+   * - Anaconda downloads
+     - |anaconda_download|
+
 PyOptik
 =======
 
@@ -8,8 +31,6 @@ open-source Python package for wavelength-dependent optical constants,
 dispersion, Fresnel interfaces, and coherent thin-film stacks. It brings the
 `RefractiveIndex.INFO database <https://refractiveindex.info/>`_ into
 unit-aware Python workflows while preserving the source of each dataset.
-
-|python| |docs| |ci/cd| |coverage| |PyPi| |anaconda|
 
 Features
 --------

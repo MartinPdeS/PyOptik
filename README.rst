@@ -1,82 +1,82 @@
 |logo|
 
-.. list-table::
-   :widths: 35 65
-   :header-rows: 1
-
-   * - Badge
-     - Status
-   * - Python versions
-     - |python|
-   * - Documentation
-     - |docs|
-   * - Continuous integration
-     - |ci/cd|
-   * - Test coverage
-     - |coverage|
-   * - PyPI package
-     - |PyPi|
-   * - PyPI downloads
-     - |PyPi_download|
-   * - Anaconda package
-     - |anaconda|
-   * - Anaconda downloads
-     - |anaconda_download|
-
 PyOptik
 =======
 
-**Get wavelength-dependent optical constants and calculate dispersion or
-coating reflectance in Python.** PyOptik combines the RefractiveIndex.INFO
-material catalog with unit-aware calculations for optical materials,
-interfaces, and coherent thin-film stacks.
+**Optical materials and thin films, from data to calculation.** PyOptik is an
+open-source Python package for wavelength-dependent optical constants,
+dispersion, Fresnel interfaces, and coherent thin-film stacks. It brings the
+`RefractiveIndex.INFO database <https://refractiveindex.info/>`_ into
+unit-aware Python workflows while preserving the source of each dataset.
 
-.. image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/master/docs/source/_static/tutorials/antireflection_coating.png
-   :alt: Coated glass has a reflection minimum at 550 nm compared with uncoated glass.
-   :width: 700
+|python| |docs| |ci/cd| |coverage| |PyPi| |anaconda|
 
-Make your first plot
---------------------
+Features
+--------
 
-Install PyOptik:
+* Find materials by name or select a specific catalog source.
+* Evaluate dispersion formulas and tabulated complex refractive indices.
+* Calculate group index, group delay, and group-delay dispersion.
+* Model Fresnel interfaces and coherent, isotropic multilayer films.
+* Import, validate, and export custom material data.
+* Work with scalar or NumPy array wavelengths and physical units.
+
+See PyOptik in action
+---------------------
+
+**Design an antireflection coating**
+
+Compare the reflectance of bare glass with an ideal quarter-wave coating.
+The example uses lossless, constant refractive indices at normal incidence;
+the coating minimizes reflection at its 550 nm design wavelength. Explore the
+`coating tutorial <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/antireflection_coating.html>`_.
+
+.. image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/master/docs/images/readme_coating.png
+   :width: 900
+   :align: center
+   :alt: Diagram of a coating on glass and reflectance spectra showing a minimum at 550 nanometers.
+
+**Explore dispersion in fused silica**
+
+Compare phase and group index and calculate group-delay dispersion through
+1 mm of glass using the Malitson model. See the
+`silica dispersion tutorial <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/silica_dispersion.html>`_.
+
+.. image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/master/docs/source/_static/tutorials/silica_dispersion.png
+   :width: 900
+   :align: center
+   :alt: Phase index, group index, and group-delay dispersion of fused silica versus wavelength.
+
+**Inspect measured optical constants**
+
+Plot the refractive index and extinction coefficient of gold from the
+Johnson and Christy dataset. See the
+`gold optical constants tutorial <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/gold_optical_constants.html>`_.
+
+.. image:: https://raw.githubusercontent.com/MartinPdeS/PyOptik/master/docs/source/_static/tutorials/gold_optical_constants.png
+   :width: 900
+   :align: center
+   :alt: Measured refractive index and extinction coefficient of gold versus wavelength.
+
+Installation
+------------
+
+Install from PyPI or Anaconda:
 
 .. code-block:: bash
 
    python -m pip install PyOptik
+   # Or: conda install -c martinpdes pyoptik
 
-Compare bare glass with an ideal quarter-wave coating. This example needs
-no material database download:
+Verify the installation with ``python -c "import PyOptik; print(PyOptik.__version__)"``.
+Material data is downloaded on first lookup and cached locally. To initialize
+the complete snapshot in advance, run ``pyoptik setup``.
 
-.. code-block:: python
+First calculation
+-----------------
 
-   import matplotlib.pyplot as plt
-   import numpy as np
-   from TypedUnit import ureg
-   from PyOptik import ThinFilmLayer, thin_film_stack
-
-   wavelengths = np.linspace(350, 900, 600) * ureg.nanometer
-   coating_index = np.sqrt(1.52)
-   coating = ThinFilmLayer(coating_index, 550 * ureg.nanometer / (4 * coating_index))
-   bare = thin_film_stack(wavelengths, [], substrate_index=1.52)
-   coated = thin_film_stack(wavelengths, [coating], substrate_index=1.52)
-
-   plt.plot(wavelengths.magnitude, 100 * bare.reflectance, label="Bare glass")
-   plt.plot(wavelengths.magnitude, 100 * coated.reflectance, label="Coated glass")
-   plt.xlabel("Vacuum wavelength [nm]")
-   plt.ylabel("Reflectance [%]")
-   plt.legend()
-   plt.show()
-
-The ideal coating suppresses reflection at 550 nm. The
-`full coating tutorial <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/antireflection_coating.html>`_
-explains the physics and assumptions.
-
-Load a material by name
------------------------
-
-Use a familiar name or formula. Common names load documented datasets;
-choose another source whenever your experiment needs it. The first lookup
-downloads the material snapshot; later lookups use the local cache:
+Load a material by name and evaluate its refractive index at a wavelength with
+units:
 
 .. code-block:: python
 
@@ -84,465 +84,75 @@ downloads the material snapshot; later lookups use the local cache:
    from TypedUnit import ureg
 
    bk7 = material("N-BK7")
-   silica = material("SiO2")
-   gold = material("Au")
-
-   print(bk7.n(532 * ureg.nm))
-   print(gold.nk(633 * ureg.nm))
-   print(gold.catalog_id)  # main/Au/Johnson
+   print(bk7.n(532 * ureg.nanometer))
+   print(bk7.catalog_id)  # specs/SCHOTT-optical/N-BK7
    bk7.plot()
 
-Defaults are Malitson for silica, Johnson and Christy for gold and silver,
-Hale and Querry for water, and SCHOTT N-BK7 for ``BK7``/``N-BK7``. Inspect the
-resolved source through ``catalog_id`` and ``provenance``. Override a default
-with ``material("Au", source="Rakic-LD")``, or inspect all candidates with
-``find_materials("gold")``. Use ``use_default=False`` to require a source
-when several datasets match. Other ambiguous names list the candidates
-instead of guessing. See the
-`default-source table <https://martinpdes.github.io/PyOptik/docs/latest/materials_and_catalog.html#find-a-material-by-name>`_
-for canonical IDs; use ``material("main/Au/Johnson")`` to pin a dataset.
-
-Learn through a useful result
------------------------------
-
-* `Calculate silica group index and dispersion in Python <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/silica_dispersion.html>`_
-  — compare phase and group index, then calculate GDD through 1 mm of glass.
-* `Plot gold's refractive index and extinction coefficient <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/gold_optical_constants.html>`_
-  — load measured optical constants and plot n and k.
-* `Design an antireflection coating in Python <https://martinpdes.github.io/PyOptik/docs/latest/tutorials/antireflection_coating.html>`_
-  — choose a layer thickness and compare coated and uncoated glass.
-
-Each tutorial includes a plot, a downloadable script and notebook, and an
-**Open in Colab** button.
-
-Documentation
--------------
-
-The full documentation is organized by task:
-
-* `Getting started <https://martinpdes.github.io/PyOptik/getting_started.html>`_
-  for installation and a first unit-aware calculation.
-* `Materials and catalog <https://martinpdes.github.io/PyOptik/materials_and_catalog.html>`_
-  for model selection, search, provenance, and cache integrity.
-* `Custom materials <https://martinpdes.github.io/PyOptik/custom_materials.html>`_
-  for arrays, CSV import, coefficients, validation, and YAML export.
-* `Interfaces and thin films <https://martinpdes.github.io/PyOptik/thin_films.html>`_
-  for Fresnel coefficients and coherent multilayer design.
-* `Example gallery <https://martinpdes.github.io/PyOptik/examples.html>`_
-  for complete, executable workflows.
-* `API reference <https://martinpdes.github.io/PyOptik/code.html>`_ for public
-  classes and functions.
-
-Features
---------
-
-* Material lookup by common name with documented defaults and source overrides.
-* Sellmeier and other dispersion-formula models.
-* Tabulated complex refractive index data, ``n + i k``.
-* Unit-aware wavelength calculations through ``TypedUnit`` and Pint.
-* Group index, group velocity, group delay, and group-delay dispersion.
-* Fresnel interfaces and coherent multilayer thin-film calculations.
-* NumPy-compatible scalar and array evaluation.
-* Plotting helpers for dispersion and absorption data.
-* Hierarchical catalog access using upstream ``shelf / book / page`` identity.
-* Explicit upstream page selection using ``shelf/book/page`` identifiers.
-* Downloadable custom and upstream material data with local caching.
-
-Installation
-------------
-
-Install the latest release from PyPI:
-
-.. code-block:: bash
-
-   python -m pip install PyOptik
-
-The package is also available through Anaconda:
-
-.. code-block:: bash
-
-   conda install -c martinpdes pyoptik
-
-Verify the installation with the same interpreter that will run your code:
-
-.. code-block:: bash
-
-   python -c "import PyOptik; print(PyOptik.__version__)"
-
-Material data is not bundled with PyOptik. Install the package first, then
-download the upstream snapshot when it is needed:
-
-.. code-block:: bash
-
-   pyoptik setup
-
-or from Python:
-
-.. code-block:: python
-
-   from PyOptik import download_snapshot
-
-   catalog = download_snapshot()
-
-First calculation
------------------
-
-Wavelengths should carry units. This avoids ambiguity between metres,
-micrometres, and nanometres.
-
-.. code-block:: python
-
-   from TypedUnit import ureg
-   from PyOptik import MaterialCatalog
-
-   catalog = MaterialCatalog.from_snapshot()
-   bk7 = catalog.get("specs/SCHOTT-optical/P-BK7").load()
-   index = bk7.compute_refractive_index(550 * ureg.nanometer)
-
-   print(index)
-
-For backward compatibility, bare numeric wavelengths are interpreted as
-metres. Unit-bearing quantities are recommended for new code.
-
-Material models
----------------
-
-Sellmeier materials evaluate a dispersion formula:
-
-.. code-block:: python
-
-   from TypedUnit import ureg
-   from PyOptik import MaterialCatalog
-
-   catalog = MaterialCatalog.from_snapshot()
-   silica = catalog.get("main/SiO2/Malitson").load()
-   wavelengths = [800, 1310, 1550] * ureg.nanometer
-   index = silica.compute_refractive_index(wavelengths)
-
-Tabulated materials interpolate complex optical constants:
-
-.. code-block:: python
-
-   from PyOptik import MaterialCatalog
-
-   catalog = MaterialCatalog.from_snapshot()
-   silicon = catalog.get("main/Si/Aspnes").load()
-   index = silicon.compute_refractive_index(1.55 * ureg.micrometer)
-
-The real part is the refractive index ``n`` and the imaginary part is the
-extinction coefficient ``k``.
-
-Use ``material.n(wavelength)``, ``material.k(wavelength)``,
-``material.relative_permittivity(wavelength)``, and
-``material.absorption_coefficient(wavelength)`` for common derived properties.
-See the documentation's physical-conventions page for the vacuum-wavelength,
-``n + i k``, GDD, interpolation, and extrapolation conventions.
-
-User-defined materials
-~~~~~~~~~~~~~~~~~~~~~~
-
-Create tabulated materials directly from measured arrays or a CSV file, then
-export them in the same validated YAML format used by the catalog:
-
-.. code-block:: python
-
-   from TypedUnit import ureg
-   from PyOptik import TabulatedMaterial
-
-   sample = TabulatedMaterial.from_arrays(
-       "sample",
-       [400, 500, 600] * ureg.nanometer,
-       n=[1.40, 1.45, 1.50],
-       k=[0.01, 0.02, 0.04],
-       reference="Laboratory measurement",
-   )
-   sample.to_yaml("sample.yml")
-
-   # CSV headers default to: wavelength,n,k
-   imported = TabulatedMaterial.from_csv(
-       "sample.csv",
-       wavelength_unit=ureg.nanometer,
-   )
-
-Formula materials can be authored in the same way with
-``SellmeierMaterial.from_coefficients(...)`` and exported with ``to_yaml()``.
-
-Validity ranges
-~~~~~~~~~~~~~~~
-
-Material data is only valid over the wavelength range supplied by its source.
-Out-of-range behavior can be selected explicitly:
-
-.. code-block:: python
-
-   wavelength = 300 * ureg.nanometer
-
-   # Default: issue a warning and evaluate.
-   index = bk7.compute_refractive_index(wavelength, out_of_range="warn")
-
-   # Fail fast for production calculations.
-   index = bk7.compute_refractive_index(wavelength, out_of_range="raise")
-
-   # Evaluate at the nearest validity boundary.
-   index = bk7.compute_refractive_index(wavelength, out_of_range="clip")
-
-Group and pulse properties
---------------------------
-
-Every material model provides group-related quantities:
-
-.. code-block:: python
-
-   wavelength = 1550 * ureg.nanometer
-
-   group_index = silica.compute_group_index(wavelength)
-   group_velocity = silica.compute_group_velocity(wavelength)
-   group_delay = silica.compute_group_delay(
-       wavelength,
-       length=10 * ureg.centimeter,
-   )
-   group_delay_dispersion = silica.compute_group_delay_dispersion(wavelength)
-
-   # The wavelength-space slope is available separately.
-   group_delay_wavelength_slope = silica.compute_group_delay_wavelength_slope(wavelength)
-
-These methods accept scalar or array wavelengths and return unit-aware values.
-``compute_group_delay_dispersion`` is the conventional frequency-domain GDD,
-``dτ_g/dω`` (typically expressed in fs²); use
-``compute_group_delay_wavelength_slope`` for ``dτ_g/dλ``.
+The first lookup needs an internet connection. The catalog preserves source
+identity: use ``material("main/Au/Johnson")`` to select a specific dataset,
+or ``find_materials("gold")`` to explore candidates. See the
+`materials guide <https://martinpdes.github.io/PyOptik/docs/latest/materials_and_catalog.html>`_
+for defaults, source selection, and provenance.
 
 Interfaces and thin films
 -------------------------
 
-Calculate s- or p-polarized Fresnel coefficients at a single interface:
+An ideal coating can also be calculated without downloading material data:
 
 .. code-block:: python
 
-   from TypedUnit import ureg
-   from PyOptik import fresnel_coefficients, brewster_angle, critical_angle
-
-   interface = fresnel_coefficients(
-       1.0,
-       1.5,
-       angle=45 * ureg.degree,
-       polarization="p",
-   )
-   print(interface.reflectance, interface.transmittance)
-
-   print(brewster_angle(1.0, 1.5).to(ureg.degree))
-   print(critical_angle(1.5, 1.0).to(ureg.degree))
-
-For coherent multilayers, supply constant indices or PyOptik material models.
-Each thickness should carry units:
-
-.. code-block:: python
-
-   import numpy
+   import numpy as np
    from PyOptik import ThinFilmLayer, thin_film_stack
+   from TypedUnit import ureg
 
-   wavelength = 600 * ureg.nanometer
-   substrate_index = 1.5
-   coating_index = numpy.sqrt(substrate_index)
-   coating = ThinFilmLayer(
-       coating_index,
-       wavelength / (4 * coating_index),
-   )
-   spectrum = thin_film_stack(
-       [500, 550, 600, 650, 700] * ureg.nanometer,
-       [coating],
-       incident_index=1.0,
-       substrate_index=substrate_index,
-       polarization="s",
-   )
+   wavelengths = np.linspace(350, 900, 600) * ureg.nanometer
+   coating_index = np.sqrt(1.52)
+   coating = ThinFilmLayer(coating_index, 550 * ureg.nanometer / (4 * coating_index))
+   result = thin_film_stack(wavelengths, [coating], substrate_index=1.52)
+   print(result.reflectance)
 
-The returned results contain complex amplitude coefficients and the power
-fractions ``reflectance``, ``transmittance``, and ``absorptance``. The model is
-coherent and isotropic; it does not model roughness, anisotropy, or incoherent
-thick substrates.
+The stack model assumes coherent, isotropic layers; it does not model surface
+roughness, anisotropy, or incoherent thick substrates. See the
+`interfaces and thin films guide <https://martinpdes.github.io/PyOptik/docs/latest/thin_films.html>`_.
 
-Plotting
---------
-
-Material models include simple dispersion plots:
-
-.. code-block:: python
-
-   from PyOptik import MaterialCatalog
-
-   catalog = MaterialCatalog.from_snapshot()
-   catalog.get("specs/SCHOTT-optical/P-BK7").load().plot()
-   catalog.get("main/Au/Johnson").load().plot()
-
-For non-interactive environments such as CI or servers, select a headless
-Matplotlib backend before importing plotting code:
-
-.. code-block:: python
-
-   import matplotlib
-   matplotlib.use("Agg")
-
-Worked examples
----------------
-
-The documentation gallery includes downloadable Python scripts and notebooks
-for:
-
-* Sellmeier and tabulated material dispersion;
-* group index and group velocity;
-* importing, interpolating, exporting, and reloading measured optical data;
-* s- and p-polarized Fresnel reflectance and Brewster angle;
-* quarter-wave antireflection coatings;
-* multilayer dielectric Bragg mirrors; and
-* catalog search, canonical source selection, and provenance capture.
-
-Hierarchical material catalog
------------------------------
-
-RefractiveIndex.INFO organizes data by **shelf**, **book**, and **page**.
-PyOptik preserves this identity so that materials from different sources do
-not collide simply because they share a short name.
-
-Load the upstream catalog index:
-
-.. code-block:: python
-
-   from PyOptik import MaterialCatalog
-
-   catalog = MaterialCatalog.from_upstream()
-
-   print(catalog.shelves())
-   print(catalog.books(shelf="specs"))
-
-Download a complete source collection, such as an optical-glass book:
-
-.. code-block:: python
-
-   catalog.download(
-       shelf="specs",
-       book="SCHOTT-optical",
-   )
-
-Download the complete optical catalog, including tabulated and formula-based
-materials, with resumable progress tracking:
-
-.. code-block:: python
-
-   catalog.download_all()
-
-Each page is stored once and recorded in ``manifest.json`` with its source URL,
-local path, status, timestamp, and SHA-256 checksum. Re-running the command
-uses cached files, so interrupted downloads can resume safely.
-
-Access a page by its canonical identifier and load its material model:
-
-.. code-block:: python
-
-   page = catalog.get("specs/SCHOTT-optical/N-BK7")
-   bk7 = page.load()
-
-   # Search by ID, descriptive name, or source URL; retain only cached pages.
-   for page in catalog.search("BK7", shelf="specs", available=True):
-       print(page.provenance())
-
-Material data is cached in a user data directory. Set
-``PYOPTIK_DATA_DIR`` to choose a different location.
-
-The command-line interface provides the canonical catalog workflow:
-
-.. code-block:: bash
-
-   pyoptik setup
-   python -m PyOptik download-all --data-root ./refractiveindex-data
-   python -m PyOptik download-all --source pages --workers 8
-
-After installation, the equivalent console command is ``pyoptik
-download-all --data-root ./refractiveindex-data``.
-
-An optional terminal interface provides live search and a provenance pane for
-browsing the downloaded database:
-
-.. code-block:: bash
-
-   python -m pip install "PyOptik[ui]"
-   pyoptik setup
-   pyoptik browse
-
-Use the arrow keys or mouse to select a page, ``/`` to focus search, and ``q``
-to quit. Pass ``--data-root`` when browsing a non-default snapshot location.
-
-For a beginner-friendly first-time setup, use:
-
-.. code-block:: bash
-
-   pyoptik setup
-
-This downloads the complete upstream snapshot, preserves the original
-hierarchy, and can be safely run again. Use ``pyoptik setup --force`` to
-refresh the local snapshot.
-
-The same setup is available from Python:
-
-.. code-block:: python
-
-   from PyOptik import download_snapshot
-
-   catalog = download_snapshot()
-   silver = catalog.get("main/Ag/Johnson").load()
-
-The default ``download-all`` command downloads one upstream snapshot and
-extracts every material page locally, preserving its ``shelf/book/page``
-hierarchy. This avoids thousands of individual HTTP requests. Existing
-snapshots are reused; pass ``--force`` to refresh the snapshot. The
-``--source pages`` fallback downloads individual pages and supports bounded
-parallelism with ``--workers``. ``--fail-fast`` stops after the first failed
-page, while ``--verbose`` enables detailed diagnostics.
-
-Common issues
+Documentation
 -------------
 
-* Attach units to wavelengths whenever possible.
-* Use ``out_of_range="raise"`` when extrapolation would invalidate a result.
-* Use the canonical catalog identifier when provenance or source selection
-  matters.
-* Use ``MPLBACKEND=Agg`` for documentation builds, CI, and remote servers.
-* If a material cannot be found, run ``pyoptik setup`` or call
-  ``download_snapshot()`` before loading its canonical page.
+* `Getting started <https://martinpdes.github.io/PyOptik/docs/latest/getting_started.html>`_
+* `Materials and catalog <https://martinpdes.github.io/PyOptik/docs/latest/materials_and_catalog.html>`_
+* `Custom materials <https://martinpdes.github.io/PyOptik/docs/latest/custom_materials.html>`_
+* `Example gallery <https://martinpdes.github.io/PyOptik/docs/latest/examples.html>`_
+* `API reference <https://martinpdes.github.io/PyOptik/docs/latest/code.html>`_
 
-Development and testing
------------------------
+Wavelengths should carry units; bare numeric wavelengths are interpreted as
+metres for backward compatibility. Material data has a source-specific
+validity range; use ``out_of_range="raise"`` when extrapolation is unsuitable.
+See the `physical conventions <https://martinpdes.github.io/PyOptik/docs/latest/conventions.html>`_
+for the complex-index and dispersion conventions.
 
-Clone the repository and install development dependencies:
+Citing PyOptik
+--------------
+
+If you use PyOptik in research, please cite the software using the metadata in
+`CITATION.cff <https://github.com/MartinPdeS/PyOptik/blob/master/CITATION.cff>`_.
+Also cite the RefractiveIndex.INFO database and the original sources for the
+material datasets used in your work; source details are available through
+``catalog_id`` and ``provenance``.
+
+Development and contributions
+-----------------------------
 
 .. code-block:: bash
 
    git clone https://github.com/MartinPdeS/PyOptik.git
    cd PyOptik
    python -m pip install -e ".[testing,documentation,dev]"
-
-Run the offline test suite:
-
-.. code-block:: bash
-
    MPLBACKEND=Agg pytest -m "not network"
-
-Build the documentation:
-
-.. code-block:: bash
-
    MPLBACKEND=Agg sphinx-build -b html -W docs/source docs/build/html
 
-Network-dependent tests are marked with ``network`` and are excluded from
-normal CI runs.
-
-Documentation and references
-----------------------------
-
-* `Online documentation <https://martinpdes.github.io/PyOptik/>`_
-* `RefractiveIndex.INFO database <https://github.com/polyanskiy/refractiveindex.info-database>`_
-* `PyOptik source repository <https://github.com/MartinPdeS/PyOptik>`_
-
-The material data is sourced from RefractiveIndex.INFO. Refer to each
-material page for its original scientific or manufacturer reference.
+See `CONTRIBUTING.md <https://github.com/MartinPdeS/PyOptik/blob/master/CONTRIBUTING.md>`_
+for contribution guidance. PyOptik is distributed under the
+`MIT license <https://github.com/MartinPdeS/PyOptik/blob/master/LICENSE>`_.
 
 .. |python| image:: https://img.shields.io/pypi/pyversions/pyoptik.svg
    :alt: Supported Python versions

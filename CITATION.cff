@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use PyOptik in your research, please cite this software."
+title: "PyOptik: optical materials, dispersion, and thin films in Python"
+type: software
+authors:
+  - family-names: "Poinsinet de Sivry-Houle"
+    given-names: "Martin"
+abstract: >
+  PyOptik is an open-source Python package for wavelength-dependent optical
+  constants, material dispersion, Fresnel interfaces, and coherent thin films.
+  It provides access to the RefractiveIndex.INFO material catalog.
+license: "MIT"
+repository-code: "https://github.com/MartinPdeS/PyOptik"
+keywords:
+  - optics
+  - refractive index
+  - optical materials
+  - dispersion
+  - thin films

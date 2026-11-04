@@ -26,6 +26,8 @@
 !pytest.ini
 !.coveragerc
 !CHANGELOG.md
+!CITATION.cff
+!.zenodo.json
 !CONTRIBUTING.md
 
 # But ignore docs/build inside docs and code

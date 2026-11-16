@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; PyOptik 3.5.16 documentation</title>
+    <title>API reference &#8212; PyOptik 3.5.17 documentation</title>
   
   
   
@@ -26,35 +26,35 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=c83e6b79" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=6a604523" />
     <link rel="stylesheet" type="text/css" href="_static/default.css?v=4030d72e" />
     <link rel="stylesheet" type="text/css" href="_static/martinpdes_layout.css?v=a8cc01cd" />
     <link rel="stylesheet" type="text/css" href="_static/branding.css?v=4f9d8165" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="_static/documentation_options.js?v=bbcb24b5"></script>
+    <script src="_static/documentation_options.js?v=128b50d3"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/sg-tags.js?v=d80f6fa4"></script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="_static/design-tabs.js?v=fcb327ea"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'code';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.23.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.24.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/MartinPdeS/PyOptik/documentation_page/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '3.5.16';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '3.5.17';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
@@ -67,7 +67,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="3.5.16" />
+  <meta name="docsearch:version" content="3.5.17" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -115,7 +115,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -230,14 +230,14 @@
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
   <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
       
@@ -294,7 +294,7 @@
   
 
   
-    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -308,7 +308,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
@@ -392,14 +392,14 @@
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
   <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
         
@@ -497,7 +497,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     
@@ -1115,8 +1115,31 @@ pair interpreted as micrometres.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.compute_refractive_index">
-<span class="sig-name descname"><span class="pre">compute_refractive_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.SellmeierMaterial.compute_refractive_index" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_refractive_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_of_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_negative_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_gain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/sellmeier_class.html#SellmeierMaterial.compute_refractive_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.SellmeierMaterial.compute_refractive_index" title="Link to this definition">#</a></dt>
+<dd><p>Computes the refractive index n(u03bb) using the appropriate
+RefractiveIndex.INFO dispersion formula (types 1 through 9).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>Length</em><em> | </em><em>float</em>) – The wavelength u03bb in meters, can be a single float or a numpy array.</p></li>
+<li><p><strong>out_of_range</strong> (<em>{&quot;warn&quot;</em><em>, </em><em>&quot;raise&quot;</em><em>, </em><em>&quot;clip&quot;}</em><em>, </em><em>optional</em>) – Policy for wavelengths outside the source validity range.</p></li>
+<li><p><strong>validation</strong> (<em>{&quot;ignore&quot;</em><em>, </em><em>&quot;warn&quot;</em><em>, </em><em>&quot;raise&quot;}</em><em>, </em><em>optional</em>) – Optical-constant validation policy (default “warn”). Nonfinite
+results always raise. Checks apply to the evaluated samples only.</p></li>
+<li><p><strong>allow_negative_index</strong> (<em>bool</em><em>, </em><em>optional</em>) – Permit zero or negative real index without a validation diagnostic.</p></li>
+<li><p><strong>allow_gain</strong> (<em>bool</em><em>, </em><em>optional</em>) – Permit negative extinction coefficients (gain) without a diagnostic.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The refractive index n(u03bb) for the given wavelength or array of wavelengths.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>RefractiveIndex</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the wavelength is outside the specified range or if an unsupported formula type is encountered.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.SellmeierMaterial.plot">
@@ -1219,8 +1242,31 @@ pchip, the returned values are samples, not cubic coefficients.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.compute_refractive_index">
-<span class="sig-name descname"><span class="pre">compute_refractive_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.TabulatedMaterial.compute_refractive_index" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_refractive_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_of_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_negative_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_gain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/tabulated_class.html#TabulatedMaterial.compute_refractive_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.TabulatedMaterial.compute_refractive_index" title="Link to this definition">#</a></dt>
+<dd><p>Interpolates the refractive index (n) and absorption (k) values for the given wavelength(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>Length</em><em> | </em><em>float</em>) – Wavelength(s) in micrometers for which to interpolate n and k.</p></li>
+<li><p><strong>out_of_range</strong> (<em>{&quot;warn&quot;</em><em>, </em><em>&quot;raise&quot;</em><em>, </em><em>&quot;clip&quot;}</em><em>, </em><em>optional</em>) – Policy for wavelengths outside the tabulated range.</p></li>
+<li><p><strong>validation</strong> (<em>{&quot;ignore&quot;</em><em>, </em><em>&quot;warn&quot;</em><em>, </em><em>&quot;raise&quot;}</em><em>, </em><em>optional</em>) – Optical-constant validation policy (default “warn”). Nonfinite
+results always raise. Checks apply to the evaluated samples only.</p></li>
+<li><p><strong>allow_negative_index</strong> (<em>bool</em><em>, </em><em>optional</em>) – Permit zero or negative real index without a validation diagnostic.</p></li>
+<li><p><strong>allow_gain</strong> (<em>bool</em><em>, </em><em>optional</em>) – Permit negative extinction coefficients (gain) without a diagnostic.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Complex refractive index values (n + i*k). A scalar input returns
+a scalar complex value; array-like input returns an array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex or numpy.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the wavelength is outside the tabulated range.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.TabulatedMaterial.plot">
@@ -1390,8 +1436,23 @@ and catalog identity when the material was loaded from a catalog.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.absorption_coefficient">
-<span class="sig-name descname"><span class="pre">absorption_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.absorption_coefficient" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">absorption_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial.absorption_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.absorption_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Return the intensity absorption coefficient, <code class="docutils literal notranslate"><span class="pre">α</span> <span class="pre">=</span> <span class="pre">4πk</span> <span class="pre">/</span> <span class="pre">λ</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>Length</em>) – Vacuum wavelength.</p></li>
+<li><p><strong>**kwargs</strong> – Forwarded to <a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial.k" title="PyOptik.material.base_class.BaseMaterial.k"><code class="xref py py-meth docutils literal notranslate"><span class="pre">k()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Absorption coefficient with inverse-length units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnyUnit</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.ensure_units">
@@ -1413,28 +1474,123 @@ converts them to metre-based <code class="xref py py-class docutils literal notr
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.compute_group_index">
-<span class="sig-name descname"><span class="pre">compute_group_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_index" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_group_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Quantity(1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'nanometer')&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial.compute_group_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_index" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the group refractive index n_g(λ).
+The group index is defined as n_g(λ) = n(λ) - λ * dn/dλ,
+where n(λ) is the refractive index and dn/dλ is the derivative of
+the refractive index with respect to wavelength.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>ureg.Quantity</em>) – Wavelength at which to compute the group index, in metres.</p></li>
+<li><p><strong>delta</strong> (<em>ureg.Quantity</em><em>, </em><em>optional</em>) – Small change in wavelength for numerical differentiation, default is 1 nanometer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>ureg.Quantity</em> – Group refractive index at the specified wavelength, in dimensionless ureg.</p></li>
+<li><p><em>——-</em></p></li>
+<li><p><em>ureg.Quantity</em> – Group refractive index at the specified wavelength, in dimensionless ureg.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Length</em></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.compute_group_velocity">
-<span class="sig-name descname"><span class="pre">compute_group_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_velocity" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_group_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial.compute_group_velocity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_velocity" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the group velocity v_g(λ) = c / n_g(λ),
+where c is the speed of light in vacuum and n_g(λ) is the group index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wavelength</strong> (<em>Length</em>) – Wavelength at which to compute the group velocity, in metres.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Group velocity at the specified wavelength, in metres per second.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnyUnit</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.compute_group_delay">
-<span class="sig-name descname"><span class="pre">compute_group_delay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_group_delay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Quantity(1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'meter')&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial.compute_group_delay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the group delay for a given propagation length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>Length</em>) – Wavelength at which to compute the group delay, in metres.</p></li>
+<li><p><strong>length</strong> (<em>Length</em><em>, </em><em>optional</em>) – Propagation length (default is 1 metre).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Group delay for the specified wavelength and length.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Time</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.compute_group_delay_wavelength_slope">
-<span class="sig-name descname"><span class="pre">compute_group_delay_wavelength_slope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay_wavelength_slope" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_group_delay_wavelength_slope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Quantity(1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'meter')&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Quantity(1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'nanometer')&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial.compute_group_delay_wavelength_slope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay_wavelength_slope" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the wavelength slope <code class="docutils literal notranslate"><span class="pre">dτ_g/dλ</span></code> for a given length.</p>
+<p>This is a wavelength-space derivative, not conventional GDD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>Length</em>) – Central wavelength for the computation, in metres.</p></li>
+<li><p><strong>length</strong> (<em>Length</em><em>, </em><em>optional</em>) – Propagation length (default is 1 metre).</p></li>
+<li><p><strong>delta</strong> (<em>Length</em><em>, </em><em>optional</em>) – Wavelength step used for the numerical differentiation (default is
+1 nanometre).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Wavelength derivative of group delay evaluated at <code class="docutils literal notranslate"><span class="pre">wavelength</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnyUnit</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="PyOptik.material.base_class.BaseMaterial.compute_group_delay_dispersion">
-<span class="sig-name descname"><span class="pre">compute_group_delay_dispersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay_dispersion" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">compute_group_delay_dispersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Quantity(1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'meter')&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_angular_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Quantity(6.28318531e+12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'1</span> <span class="pre">/</span> <span class="pre">second')&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyOptik/material/base_class.html#BaseMaterial.compute_group_delay_dispersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay_dispersion" title="Link to this definition">#</a></dt>
+<dd><p>Calculate conventional GDD, <code class="docutils literal notranslate"><span class="pre">dτ_g/dω</span> <span class="pre">=</span> <span class="pre">d²β/dω²</span> <span class="pre">×</span> <span class="pre">length</span></code>.</p>
+<p>The derivative is evaluated with a centred finite difference in
+angular frequency and has time-squared units (commonly fs²). Use
+<a class="reference internal" href="#PyOptik.material.base_class.BaseMaterial.compute_group_delay_wavelength_slope" title="PyOptik.material.base_class.BaseMaterial.compute_group_delay_wavelength_slope"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_group_delay_wavelength_slope()</span></code></a> for <code class="docutils literal notranslate"><span class="pre">dτ_g/dλ</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<em>Length</em>) – Central vacuum wavelength.</p></li>
+<li><p><strong>length</strong> (<em>Length</em><em>, </em><em>optional</em>) – Propagation length.</p></li>
+<li><p><strong>delta_angular_frequency</strong> (<em>ureg.Quantity</em><em>, </em><em>optional</em>) – Positive centred angular-frequency increment. The default is
+<code class="docutils literal notranslate"><span class="pre">2π</span> <span class="pre">×</span> <span class="pre">1</span> <span class="pre">THz</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Conventional group-delay dispersion with time-squared units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnyUnit</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">delta_angular_frequency</span></code> does not carry units.</p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">delta_angular_frequency</span></code> is not positive.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -1851,7 +2007,7 @@ substrates, anisotropy, and magnetic media are outside this model.</p>
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
@@ -2034,7 +2190,7 @@ substrates, anisotropy, and magnetic media are outside this model.</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/MartinPdeS/PyOptik/edit/v3.5.16/docs/source/code.rst">
+    <a href="https://github.com/MartinPdeS/PyOptik/edit/v3.5.17/docs/source/code.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
@@ -2068,8 +2224,8 @@ substrates, anisotropy, and magnetic media are outside this model.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">

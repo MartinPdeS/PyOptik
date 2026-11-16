@@ -27,7 +27,7 @@ help:
 	@echo "  make release patch Create and push the next patch release"
 
 quality:
-	$(PYTHON) -m flake8 PyOptik tests
+	$(PYTHON) -m ruff check PyOptik tests
 
 test:
 	MPLBACKEND=Agg MPLCONFIGDIR=$${TMPDIR:-/tmp}/pyoptik-matplotlib \

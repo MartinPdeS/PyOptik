@@ -67,3 +67,10 @@ select = ["E9", "F63", "F7", "F82"]
 version-file = "PyOptik/_version.py"
 version-method = "literal"
 conda-recipe = "conda.recipe/meta.yaml"
+
+[project.urls]
+Documentation = "https://martinpdes.github.io/PyOptik/"
+Repository = "https://github.com/MartinPdeS/PyOptik"
+
+[dependency-groups]
+readme = ["martinpdes-maintenance @ git+https://github.com/MartinPdeS/MartinPdeS-maintenance.git@1f47c0ca92f8d6fd7440190aa16c7bea662cd26d"]

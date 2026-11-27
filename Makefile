@@ -76,3 +76,8 @@ major minor patch:
 clean:
 	rm -rf $(BUILD_DIR) $(DIST_DIR) $(DOCS_BUILD_DIR) \
 		.pytest_cache htmlcov .coverage
+
+# Install the generator with: python -m pip install --group readme
+.PHONY: readme
+readme:
+	$(PYTHON) -m martinpdes_maintenance.cli readme

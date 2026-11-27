@@ -1,0 +1,12 @@
+introduction: |-
+  Select a measured optical dataset or dispersion model, then evaluate refractive index
+  over a wavelength range. Use wavelength quantities with explicit units, check the
+  source validity range, and cite the dataset used in your calculation.
+
+  See the `usage guide <https://github.com/MartinPdeS/PyOptik/blob/HEAD/USAGE.rst>`__ for further examples and implementation details.
+quickstart:
+  title: Calculate silica dispersion
+  source: docs/examples/sellmeier/plot_silica.py
+  figure:
+    path: docs/source/_static/tutorials/silica_dispersion.png
+    caption: Wavelength dependence of the silica refractive index.
